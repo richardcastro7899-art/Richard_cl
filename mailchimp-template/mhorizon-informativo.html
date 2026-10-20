@@ -6,151 +6,285 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="x-apple-disable-message-reformatting">
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-<meta name="color-scheme" content="light">
-<meta name="supported-color-schemes" content="light">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only">
 <title>*|MC:SUBJECT|*</title>
 <!--[if mso]>
 <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
 <![endif]-->
 <!--[if !mso]><!-->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
 <!--<![endif]-->
 <style type="text/css">
-  /* Reset */
-  body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-  table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
-  img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
-  body { margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #F4F5F7; }
-  a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
-  u + #body a { color: inherit; text-decoration: none; }
-  .footer-text a { color: #171E27; text-decoration: underline; }
+  body, table, td, a { -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
+  table, td { mso-table-lspace:0pt; mso-table-rspace:0pt; }
+  img { -ms-interpolation-mode:bicubic; border:0; outline:none; text-decoration:none; }
+  body { margin:0 !important; padding:0 !important; width:100% !important; background-color:#F4F5F7; }
+  a[x-apple-data-detectors] { color:inherit !important; text-decoration:none !important; }
+  u + #body a { color:inherit; text-decoration:none; }
+  .lnk-white a { color:#FFFFFF; text-decoration:none; }
+  .lnk-navy a { color:#171E27; text-decoration:underline; }
 
-  /* Móvil */
-  @media only screen and (max-width: 680px) {
-    .container { width: 100% !important; }
-    .fluid { width: 100% !important; height: auto !important; }
-    .stack { display: block !important; width: 100% !important; box-sizing: border-box !important; }
-    .btn-cell { padding: 0 20px 14px 20px !important; }
-    .btn-cell table { width: 100% !important; }
-    .btn-cell a { display: block !important; }
-    .pad-x { padding-left: 20px !important; padding-right: 20px !important; }
+  @media only screen and (max-width:680px) {
+    .container { width:100% !important; }
+    .px { padding-left:24px !important; padding-right:24px !important; }
+    .hero-r { padding-right:24px !important; }
+    .hero-bg { background-image:none !important; }
+    .h1 { font-size:27px !important; line-height:32px !important; }
+    .stack { display:block !important; width:100% !important; box-sizing:border-box !important; }
+    .gap-m { padding-left:0 !important; padding-top:12px !important; }
+    .btn-block { width:100% !important; }
+    .btn-block a { display:block !important; text-align:center !important; }
+    .meta-r { text-align:left !important; padding-top:6px !important; }
+    .ct-item { padding-bottom:14px !important; }
   }
 </style>
 </head>
 
 <body id="body" style="margin:0; padding:0; background-color:#F4F5F7;">
 
+<!--*|IF:MC_PREVIEW_TEXT|*-->
+<!--[if !gte mso 9]><!--><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">*|MC_PREVIEW_TEXT|*</span><!--<![endif]-->
+<!--*|END:IF|*-->
+
 <!-- ======================================================================
-     PLANTILLA INFORMATIVO MHORIZON · Rebranding 2026
-     Zonas editables en Mailchimp (mc:edit):
-       informativo  -> imagen completa del informativo (660 px de ancho)
-       btn_pdf      -> botón DESCARGAR PDF   (cambiar el enlace en cada envío)
-       btn_web      -> botón SITIO WEB MHORIZON
-       btn_suscribir-> botón SUSCRIBIRME
-     Colores de marca: Azul Corporativo #171E27 · Ámbar Horizonte #D4681C
-                       Blanco #FFFFFF · Gris Técnico #F4F5F7
-     Tipografía: Inter (cuerpos y correos), fallback Helvetica/Arial.
+     INFORMATIVO MHORIZON CHECK · Plantilla Mailchimp · Rebranding 2026
+     Marca: Azul Corporativo #171E27 · Ámbar Horizonte #D4681C · Blanco #FFFFFF · Gris Técnico #F4F5F7
+     Tipografía: Plus Jakarta Sans (títulos) + Inter (cuerpos); fallback Arial.
+     Zonas editables (mc:edit): fecha, ley, titulo, chip_norma, lead, cuerpo, card1, card2,
+       atencion, cta_texto, btn_pdf, btn_web, asesoria_texto, btn_asesoria, btn_suscribir
      ====================================================================== -->
 
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#F4F5F7" style="background-color:#F4F5F7;">
-  <tr>
-    <td align="center" style="padding:0;">
+<tr><td align="center" style="padding:0;">
 
-      <!--[if mso]><table role="presentation" border="0" cellpadding="0" cellspacing="0" width="660" align="center"><tr><td><![endif]-->
-      <table role="presentation" class="container" border="0" cellpadding="0" cellspacing="0" width="660" style="width:660px; max-width:660px; background-color:#FFFFFF;" bgcolor="#FFFFFF">
+  <!--[if mso]><table role="presentation" border="0" cellpadding="0" cellspacing="0" width="660" align="center"><tr><td><![endif]-->
+  <table role="presentation" class="container" border="0" cellpadding="0" cellspacing="0" width="660" style="width:660px; max-width:660px;">
 
-        <!-- 1. INFORMATIVO (imagen incrustada) -->
-        <tr>
-          <td mc:edit="informativo" align="center" style="padding:0; font-size:0; line-height:0;">
-            <img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/informativo-placeholder.png" alt="Informativo MHORIZON" width="660" class="fluid" style="display:block; width:100%; max-width:660px; height:auto; border:0;">
+    <!-- Barra utilitaria -->
+    <tr>
+      <td class="px" style="padding:14px 40px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:16px; color:#5B6573;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+          <td align="left" style="font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:16px; color:#5B6573;">Informativo tributario</td>
+          <td align="right" style="font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:16px;"><a href="*|ARCHIVE|*" target="_blank" style="color:#5B6573; text-decoration:underline;">Ver en el navegador</a></td>
+        </tr></table>
+      </td>
+    </tr>
+
+    <!-- Cabecera: logotipo + serie -->
+    <tr>
+      <td class="px" bgcolor="#171E27" style="background-color:#171E27; padding:28px 40px 0 40px; border-radius:12px 12px 0 0;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+          <td align="left" valign="middle">
+            <a href="https://www.mhorizon.com.ec" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/logo-mhorizon-blanco.png" alt="MHORIZON" width="150" style="display:block; width:150px; height:auto; border:0;"></a>
           </td>
-        </tr>
+          <td align="right" valign="middle">
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr>
+              <td bgcolor="#D4681C" style="background-color:#D4681C; border-radius:4px; padding:6px 12px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:14px; font-weight:700; letter-spacing:2px; color:#FFFFFF;">CHECK</td>
+            </tr></table>
+          </td>
+        </tr></table>
+      </td>
+    </tr>
 
-        <!-- 2. BOTONES: DESCARGAR PDF / SITIO WEB -->
-        <tr>
-          <td style="padding:32px 0 8px 0;">
-            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-              <tr>
-                <td class="stack btn-cell" width="50%" align="center" valign="top" style="padding:0 0 0 0;">
-                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td mc:edit="btn_pdf" align="center" bgcolor="#D4681C" style="background-color:#D4681C; border-radius:6px; mso-padding-alt:17px 34px;">
-                        <a href="https://www.mhorizon.com.ec" target="_blank" style="display:inline-block; padding:17px 34px; font-family:'Inter', Helvetica, Arial, sans-serif; font-size:15px; line-height:18px; font-weight:700; letter-spacing:0.2px; color:#FFFFFF; text-decoration:none; text-transform:uppercase; border-radius:6px;">Descargar PDF</a>
-                      </td>
-                    </tr>
-                  </table>
+    <!-- Hero -->
+    <tr>
+      <td class="px hero-bg" background="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/hero-anillo.png" bgcolor="#171E27" valign="top" style="background-color:#171E27; background-image:url('https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/hero-anillo.png'); background-repeat:no-repeat; background-position:right center; background-size:cover; padding:36px 40px 44px 40px;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tr>
+            <td class="stack" valign="top" style="font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:18px; font-weight:700; letter-spacing:2px; color:#D4681C; text-transform:uppercase;">Marco normativo</td>
+            <td class="stack meta-r" mc:edit="fecha" align="right" valign="top" style="font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:18px; font-weight:600; letter-spacing:1.5px; color:#FFFFFF; text-transform:uppercase;">14 de octubre 2026</td>
+          </tr>
+          <tr>
+            <td colspan="2" mc:edit="ley" style="padding:2px 0 0 0; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:18px; font-weight:500; letter-spacing:1.5px; color:#F4F5F7; text-transform:uppercase;">Ley de Régimen Tributario Interno</td>
+          </tr>
+          <tr>
+            <td colspan="2" class="hero-r" style="padding:22px 150px 0 0;">
+              <div mc:edit="titulo" class="h1" style="font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif; font-size:35px; line-height:40px; font-weight:800; color:#FFFFFF; text-transform:uppercase; text-align:left;">Ingreso exento por enajenación <span style="color:#D4681C;">ocasional de inmuebles</span></div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding:26px 0 0 0;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr>
+                <td mc:edit="chip_norma" bgcolor="#F4F5F7" style="background-color:#F4F5F7; border-radius:4px; padding:7px 12px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:14px; font-weight:700; letter-spacing:1px; color:#171E27; text-transform:uppercase;">LRTI Art. 9 Num. 14</td>
+                <td style="padding-left:10px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:14px; font-weight:600; letter-spacing:1px; color:#F4F5F7; text-transform:uppercase;">Lectura · 1 min</td>
+              </tr></table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- Cuerpo blanco -->
+    <tr>
+      <td bgcolor="#FFFFFF" style="background-color:#FFFFFF; padding:0;">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+
+          <!-- Lo esencial -->
+          <tr>
+            <td class="px" style="padding:36px 40px 0 40px;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#F4F5F7" style="background-color:#F4F5F7; border-radius:0 10px 10px 0;">
+                <tr>
+                  <td width="4" bgcolor="#D4681C" style="width:4px; background-color:#D4681C; font-size:0; line-height:0;">&nbsp;</td>
+                  <td style="padding:22px 26px;">
+                    <div style="font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:16px; font-weight:700; letter-spacing:2px; color:#171E27; text-transform:uppercase; padding-bottom:8px;">Lo esencial</div>
+                    <div mc:edit="lead" style="font-family:'Inter', Arial, Helvetica, sans-serif; font-size:19px; line-height:28px; font-weight:600; color:#171E27;">Vender un inmueble de forma ocasional no paga Impuesto a la Renta, con un máximo de 2 enajenaciones por año.</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Texto -->
+          <tr>
+            <td class="px" style="padding:28px 40px 0 40px;">
+              <div mc:edit="cuerpo" style="font-family:'Inter', Arial, Helvetica, sans-serif; font-size:16px; line-height:26px; font-weight:400; color:#171E27; text-align:left;">
+                <p style="margin:0 0 16px 0;">Los ingresos obtenidos por la <strong>enajenación ocasional de inmuebles</strong>, efectuada por personas naturales o jurídicas, serán <strong>exentos del Impuesto a la Renta</strong>.</p>
+                <p style="margin:0 0 16px 0;">Las enajenaciones de quienes, dentro de su giro empresarial, realizan actividades de <em>lotización, urbanización, construcción y promoción de inmuebles</em>, no se consideran ocasionales, sino <strong>habituales</strong>.</p>
+                <p style="margin:0; font-weight:700;">Para el efecto, se deberá observar lo siguiente:</p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Tarjetas -->
+          <tr>
+            <td class="px" style="padding:20px 40px 0 40px;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+                <td class="stack" mc:edit="card1" width="49%" valign="top" bgcolor="#F4F5F7" style="background-color:#F4F5F7; border-radius:10px; padding:24px 22px 26px 22px; font-family:'Inter', Arial, Helvetica, sans-serif; text-align:left;">
+                  <div style="font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif; font-size:60px; line-height:60px; font-weight:800; color:#D4681C;">2</div>
+                  <div style="font-size:13px; line-height:18px; font-weight:700; letter-spacing:1.2px; color:#171E27; text-transform:uppercase; padding:10px 0 8px 0;">Enajenaciones por año</div>
+                  <div style="font-size:14px; line-height:22px; font-weight:400; color:#171E27;">La exención aplica hasta un máximo de <strong>2 enajenaciones por año</strong>, realizadas por cualquier persona natural o jurídica.</div>
                 </td>
-                <td class="stack btn-cell" width="50%" align="center" valign="top" style="padding:0;">
-                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td mc:edit="btn_web" align="center" bgcolor="#D4681C" style="background-color:#D4681C; border-radius:6px; mso-padding-alt:17px 34px;">
-                        <a href="https://www.mhorizon.com.ec" target="_blank" style="display:inline-block; padding:17px 34px; font-family:'Inter', Helvetica, Arial, sans-serif; font-size:15px; line-height:18px; font-weight:700; letter-spacing:0.2px; color:#FFFFFF; text-decoration:none; text-transform:uppercase; border-radius:6px;">Sitio web MHORIZON</a>
-                      </td>
-                    </tr>
-                  </table>
+                <td class="stack" width="12" style="width:12px; height:12px; font-size:0; line-height:0;">&nbsp;</td>
+                <td class="stack" mc:edit="card2" width="49%" valign="top" bgcolor="#F4F5F7" style="background-color:#F4F5F7; border-radius:10px; padding:24px 22px 26px 22px; font-family:'Inter', Arial, Helvetica, sans-serif; text-align:left;">
+                  <div style="font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif; font-size:60px; line-height:60px; font-weight:800; color:#D4681C;">+</div>
+                  <div style="font-size:13px; line-height:18px; font-weight:700; letter-spacing:1.2px; color:#171E27; text-transform:uppercase; padding:10px 0 8px 0;">Bienes accesorios incluidos</div>
+                  <div style="font-size:14px; line-height:22px; font-weight:400; color:#171E27;">Se incluyen los bienes <strong>accesorios del inmueble</strong>, como parqueaderos, bodegas y similares, siempre que la transferencia se realice <strong>en un solo acto</strong>.</div>
                 </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
+              </tr></table>
+            </td>
+          </tr>
 
-        <!-- 3. ISOTIPO -->
-        <tr>
-          <td align="center" style="padding:24px 0 20px 0; font-size:0; line-height:0;">
-            <a href="https://www.mhorizon.com.ec" target="_blank" style="text-decoration:none;">
-              <img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/isotipo.png" alt="MHORIZON" width="120" height="120" style="display:block; width:120px; height:120px; border:0;">
-            </a>
-          </td>
-        </tr>
-
-        <!-- 4. REDES SOCIALES -->
-        <tr>
-          <td align="center" style="padding:0 0 28px 0;">
-            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-              <tr>
-                <!-- VERIFICAR: URL de Facebook -->
-                <td style="padding:0 8px; font-size:0; line-height:0;"><a href="https://www.facebook.com/mhorizon.ec" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-facebook.png" alt="Facebook" width="40" height="40" style="display:block; width:40px; height:40px; border:0;"></a></td>
-                <td style="padding:0 8px; font-size:0; line-height:0;"><a href="https://www.instagram.com/mhorizon.ec" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-instagram.png" alt="Instagram" width="40" height="40" style="display:block; width:40px; height:40px; border:0;"></a></td>
-                <!-- VERIFICAR: URL de X -->
-                <td style="padding:0 8px; font-size:0; line-height:0;"><a href="https://x.com/mhorizon_ec" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-x.png" alt="X" width="40" height="40" style="display:block; width:40px; height:40px; border:0;"></a></td>
-                <!-- VERIFICAR: URL de LinkedIn -->
-                <td style="padding:0 8px; font-size:0; line-height:0;"><a href="https://www.linkedin.com/company/mhorizon-ecuador" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-linkedin.png" alt="LinkedIn" width="40" height="40" style="display:block; width:40px; height:40px; border:0;"></a></td>
-                <td style="padding:0 8px; font-size:0; line-height:0;"><a href="https://www.mhorizon.com.ec" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-web.png" alt="Sitio web" width="40" height="40" style="display:block; width:40px; height:40px; border:0;"></a></td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <!-- 5. SUSCRIBIRME -->
-        <tr>
-          <td align="center" style="padding:0 0 32px 0;">
-            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-              <tr>
-                <td mc:edit="btn_suscribir" align="center" bgcolor="#D4681C" style="background-color:#D4681C; border-radius:6px; mso-padding-alt:17px 34px;">
-                  <a href="https://www.mhorizon.com.ec" target="_blank" style="display:inline-block; padding:17px 34px; font-family:'Inter', Helvetica, Arial, sans-serif; font-size:15px; line-height:18px; font-weight:700; letter-spacing:0.2px; color:#FFFFFF; text-decoration:none; text-transform:uppercase; border-radius:6px;">Suscribirme</a>
+          <!-- Atención -->
+          <tr>
+            <td class="px" style="padding:12px 40px 0 40px;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#171E27" style="background-color:#171E27; border-radius:10px;"><tr>
+                <td width="36" valign="top" style="padding:24px 0 24px 24px;"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-alerta.png" alt="" width="36" height="36" style="display:block; width:36px; height:36px;"></td>
+                <td mc:edit="atencion" valign="top" style="padding:24px 26px 24px 16px; font-family:'Inter', Arial, Helvetica, sans-serif; text-align:left;">
+                  <div style="font-size:12px; line-height:16px; font-weight:700; letter-spacing:2px; color:#D4681C; text-transform:uppercase;">Atención</div>
+                  <div style="font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif; font-size:19px; line-height:25px; font-weight:800; color:#FFFFFF; padding:4px 0 6px 0;">Costos no deducibles</div>
+                  <div style="font-size:15px; line-height:23px; font-weight:400; color:#F4F5F7;">Los costos, gastos e impuestos incurridos para la generación de estos ingresos exentos deberán ser considerados no deducibles.</div>
                 </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
+              </tr></table>
+            </td>
+          </tr>
 
-        <!-- 6. FOOTER LEGAL -->
-        <tr>
-          <td class="pad-x footer-text" align="center" style="padding:0 40px 40px 40px; font-family:'Inter', Helvetica, Arial, sans-serif; font-size:13px; line-height:24px; color:#171E27;">
-            <em>Copyright (C) *|CURRENT_YEAR|* MHORIZON-ECUADOR S.A. Todos los derechos reservados.</em><br>
-            Has recibido este correo electrónico porque estás en nuestra base de datos.<br>
-            <br>
-            *|HTML:LIST_ADDRESS_HTML|*<br>
-            ¿Quieres cambiar la forma en que recibes estos correos electrónicos?<br>
-            Puedes <a href="*|UPDATE_PROFILE|*" style="color:#171E27; text-decoration:underline;">actualizar tus preferencias</a> o <a href="*|UNSUB|*" style="color:#171E27; text-decoration:underline;">cancelar la suscripción</a>
-          </td>
-        </tr>
+          <!-- CTA: descargar -->
+          <tr>
+            <td class="px" style="padding:40px 40px 8px 40px;">
+              <div mc:edit="cta_texto" style="text-align:left;">
+                <div style="font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif; font-size:23px; line-height:29px; font-weight:800; color:#171E27;">Llévate el informe completo</div>
+                <div style="font-family:'Inter', Arial, Helvetica, sans-serif; font-size:15px; line-height:23px; color:#171E27; padding-top:6px;">Descárgalo en PDF para consultarlo cuando lo necesites o compartirlo con tu equipo.</div>
+              </div>
+              <table role="presentation" class="btn-block" border="0" cellpadding="0" cellspacing="0" style="margin-top:20px;"><tr>
+                <td class="stack" valign="top">
+                  <table role="presentation" class="btn-block" border="0" cellpadding="0" cellspacing="0"><tr>
+                    <td mc:edit="btn_pdf" align="center" bgcolor="#D4681C" style="background-color:#D4681C; border-radius:6px; mso-padding-alt:17px 32px;"><a href="https://www.mhorizon.com.ec" target="_blank" style="display:inline-block; padding:17px 32px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:14px; line-height:18px; font-weight:700; letter-spacing:0.6px; color:#FFFFFF; text-decoration:none; text-transform:uppercase;">Descargar PDF</a></td>
+                  </tr></table>
+                </td>
+                <td class="stack gap-m" valign="top" style="padding-left:12px;">
+                  <table role="presentation" class="btn-block" border="0" cellpadding="0" cellspacing="0"><tr>
+                    <td mc:edit="btn_web" align="center" style="border:2px solid #171E27; border-radius:6px; mso-padding-alt:15px 30px;"><a href="https://www.mhorizon.com.ec" target="_blank" style="display:inline-block; padding:15px 30px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:14px; line-height:18px; font-weight:700; letter-spacing:0.6px; color:#171E27; text-decoration:none; text-transform:uppercase;">Sitio web MHORIZON</a></td>
+                  </tr></table>
+                </td>
+              </tr></table>
+            </td>
+          </tr>
 
-      </table>
-      <!--[if mso]></td></tr></table><![endif]-->
+          <tr><td style="font-size:0; line-height:0; height:40px;">&nbsp;</td></tr>
+        </table>
+      </td>
+    </tr>
 
-    </td>
-  </tr>
+    <!-- Banda de asesoría + contacto -->
+    <tr>
+      <td class="px" bgcolor="#171E27" style="background-color:#171E27; padding:38px 40px 40px 40px;">
+        <div mc:edit="asesoria_texto" style="text-align:left;">
+          <div style="font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif; font-size:23px; line-height:29px; font-weight:800; color:#FFFFFF;">¿Necesitas asesoría sobre este tema?</div>
+          <div style="font-family:'Inter', Arial, Helvetica, sans-serif; font-size:15px; line-height:23px; color:#F4F5F7; padding-top:6px;">Nuestros consultores pueden revisar tu caso y ayudarte a tomar la mejor decisión tributaria.</div>
+        </div>
+
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:24px;" class="lnk-white">
+          <tr>
+            <td class="stack ct-item" width="50%" valign="top" style="padding:0 12px 16px 0;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr>
+                <td width="28" valign="top"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/ct-ubicacion.png" alt="" width="28" height="28" style="display:block; width:28px; height:28px;"></td>
+                <td valign="middle" style="padding-left:12px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:14px; line-height:20px; color:#FFFFFF;"><a href="https://maps.google.com/?q=Carchi+601+y+Quisquis+Guayaquil" target="_blank" style="color:#FFFFFF; text-decoration:none;">Carchi 601 y Quisquis<br>Edificio Quil 1, Piso 12</a></td>
+              </tr></table>
+            </td>
+            <td class="stack ct-item" width="50%" valign="top" style="padding:0 0 16px 0;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr>
+                <td width="28" valign="top"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/ct-correo.png" alt="" width="28" height="28" style="display:block; width:28px; height:28px;"></td>
+                <td valign="middle" style="padding-left:12px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:14px; line-height:28px; color:#FFFFFF;"><a href="mailto:consultores@mhorizon.com.ec" style="color:#FFFFFF; text-decoration:none;">consultores@mhorizon.com.ec</a></td>
+              </tr></table>
+            </td>
+          </tr>
+          <tr>
+            <td class="stack ct-item" width="50%" valign="top" style="padding:0 12px 0 0;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr>
+                <td width="28" valign="top"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/ct-telefono.png" alt="" width="28" height="28" style="display:block; width:28px; height:28px;"></td>
+                <td valign="middle" style="padding-left:12px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:14px; line-height:28px; color:#FFFFFF;"><a href="tel:+593983643310" style="color:#FFFFFF; text-decoration:none;">+593 98 364 3310</a></td>
+              </tr></table>
+            </td>
+            <td class="stack ct-item" width="50%" valign="top" style="padding:0;">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr>
+                <td width="28" valign="top"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/ct-web.png" alt="" width="28" height="28" style="display:block; width:28px; height:28px;"></td>
+                <td valign="middle" style="padding-left:12px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:14px; line-height:28px; color:#FFFFFF;"><a href="https://www.mhorizon.com.ec" target="_blank" style="color:#FFFFFF; text-decoration:none;">www.mhorizon.com.ec</a></td>
+              </tr></table>
+            </td>
+          </tr>
+        </table>
+
+        <table role="presentation" class="btn-block" border="0" cellpadding="0" cellspacing="0" style="margin-top:28px;"><tr>
+          <td mc:edit="btn_asesoria" align="center" bgcolor="#D4681C" style="background-color:#D4681C; border-radius:6px; mso-padding-alt:17px 32px;"><a href="mailto:consultores@mhorizon.com.ec?subject=Solicitud%20de%20asesor%C3%ADa" style="display:inline-block; padding:17px 32px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:14px; line-height:18px; font-weight:700; letter-spacing:0.6px; color:#FFFFFF; text-decoration:none; text-transform:uppercase;">Agendar asesoría</a></td>
+        </tr></table>
+      </td>
+    </tr>
+
+    <!-- Pie -->
+    <tr>
+      <td class="px" align="center" bgcolor="#FFFFFF" style="background-color:#FFFFFF; padding:36px 40px 40px 40px; border-radius:0 0 12px 12px;">
+        <a href="https://www.mhorizon.com.ec" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/isotipo-claro.png" alt="MHORIZON" width="56" height="56" style="display:block; width:56px; height:56px; margin:0 auto;"></a>
+
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style="margin:22px auto 0 auto;"><tr>
+          <!-- VERIFICAR: URLs de Facebook, X y LinkedIn -->
+          <td style="padding:0 6px; font-size:0; line-height:0;"><a href="https://www.facebook.com/mhorizon.ec" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-facebook.png" alt="Facebook" width="36" height="36" style="display:block; width:36px; height:36px;"></a></td>
+          <td style="padding:0 6px; font-size:0; line-height:0;"><a href="https://www.instagram.com/mhorizon.ec" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-instagram.png" alt="Instagram" width="36" height="36" style="display:block; width:36px; height:36px;"></a></td>
+          <td style="padding:0 6px; font-size:0; line-height:0;"><a href="https://x.com/mhorizon_ec" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-x.png" alt="X" width="36" height="36" style="display:block; width:36px; height:36px;"></a></td>
+          <td style="padding:0 6px; font-size:0; line-height:0;"><a href="https://www.linkedin.com/company/mhorizon-ecuador" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-linkedin.png" alt="LinkedIn" width="36" height="36" style="display:block; width:36px; height:36px;"></a></td>
+          <td style="padding:0 6px; font-size:0; line-height:0;"><a href="https://www.mhorizon.com.ec" target="_blank"><img src="https://raw.githubusercontent.com/richardcastro7899-art/Richard_cl/claude/lucid-heisenberg-0sdcsl/mailchimp-template/assets/icon-web.png" alt="Sitio web" width="36" height="36" style="display:block; width:36px; height:36px;"></a></td>
+        </tr></table>
+
+        <div style="margin-top:28px; padding-top:28px; border-top:1px solid #E3E6EB; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:14px; line-height:22px; color:#171E27;">¿Te reenviaron este informativo?</div>
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style="margin:12px auto 0 auto;"><tr>
+          <td mc:edit="btn_suscribir" align="center" bgcolor="#D4681C" style="background-color:#D4681C; border-radius:6px; mso-padding-alt:13px 26px;"><a href="https://www.mhorizon.com.ec" target="_blank" style="display:inline-block; padding:13px 26px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:13px; line-height:18px; font-weight:700; letter-spacing:0.6px; color:#FFFFFF; text-decoration:none; text-transform:uppercase;">Suscribirme</a></td>
+        </tr></table>
+
+        <div class="lnk-navy" style="margin-top:28px; font-family:'Inter', Arial, Helvetica, sans-serif; font-size:12px; line-height:20px; color:#5B6573; text-align:center;">
+          <em>Copyright (C) *|CURRENT_YEAR|* MHORIZON-ECUADOR S.A. Todos los derechos reservados.</em><br>
+          Has recibido este correo electrónico porque estás en nuestra base de datos.<br><br>
+          *|HTML:LIST_ADDRESS_HTML|*<br>
+          ¿Quieres cambiar la forma en que recibes estos correos electrónicos?<br>
+          Puedes <a href="*|UPDATE_PROFILE|*" style="color:#171E27; text-decoration:underline;">actualizar tus preferencias</a>, <a href="*|FORWARD|*" style="color:#171E27; text-decoration:underline;">reenviar a un colega</a> o <a href="*|UNSUB|*" style="color:#171E27; text-decoration:underline;">cancelar la suscripción</a>
+        </div>
+      </td>
+    </tr>
+
+    <tr><td style="font-size:0; line-height:0; height:24px;">&nbsp;</td></tr>
+  </table>
+  <!--[if mso]></td></tr></table><![endif]-->
+
+</td></tr>
 </table>
 
 </body>
