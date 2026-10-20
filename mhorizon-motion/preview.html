@@ -1,0 +1,145 @@
+<title>Revisar antes de solicitar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  /* Una sola estética oscura, alineada con la pieza: video a la izquierda, mesa de control a la derecha. */
+  :root {
+    --bg: #11161D;
+    --panel: #171E27;
+    --line: rgba(255,255,255,0.12);
+    --fg: #FFFFFF;
+    --muted: rgba(255,255,255,0.58);
+    --accent: #D4681C;
+    --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: dark;
+  }
+  html, body { background: var(--bg); color: var(--fg); font-family: var(--font); }
+  body {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 24px;
+  }
+  .wrap {
+    max-width: 1080px; margin: 0 auto;
+    display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 40px; align-items: start;
+  }
+  .stage {
+    height: min(86vh, 960px); aspect-ratio: 9 / 16; max-width: 100%;
+    background: #171E27; border: 1px solid var(--line); border-radius: 6px; overflow: hidden;
+  }
+  video { display: block; width: 100%; height: 100%; object-fit: contain; background: #171E27; }
+  .panel { display: flex; flex-direction: column; gap: 28px; min-width: 0; padding-top: 8px; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: 34px; line-height: 1.05; letter-spacing: -0.03em; margin: 8px 0 0; font-weight: 700; text-wrap: balance; }
+  .spec { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .spec span { font-size: 12px; font-weight: 500; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; font-variant-numeric: tabular-nums; }
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; }
+  button {
+    font: 600 14px/1 var(--font); color: var(--fg); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 8px; padding: 12px 18px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  button.primary { background: var(--accent); border-color: var(--accent); }
+  button:hover { border-color: rgba(255,255,255,0.35); }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+  .time { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; margin-bottom: 10px; }
+  .time b { color: var(--fg); font-weight: 600; }
+  .track { position: relative; }
+  input[type=range] { width: 100%; accent-color: var(--accent); margin: 0; }
+  .scenes { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .scenes li {
+    display: grid; grid-template-columns: 70px 1fr; gap: 14px; padding: 12px 12px;
+    border-radius: 6px; cursor: pointer; border: 1px solid transparent;
+  }
+  .scenes li:hover { border-color: var(--line); }
+  .scenes li.on { background: var(--panel); border-color: var(--line); }
+  .scenes .tc { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
+  .scenes .name { font-size: 15px; font-weight: 600; }
+  .scenes .txt { font-size: 13px; color: var(--muted); margin-top: 3px; }
+  .scenes li.on .tc { color: var(--accent); }
+  .note { font-size: 13px; line-height: 1.55; color: var(--muted); max-width: 46ch; }
+  @media (max-width: 760px) {
+    .wrap { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .stage { height: auto; width: 100%; max-width: 420px; margin: 0 auto; }
+  }
+</style>
+
+<main class="wrap">
+  <div class="stage">
+    <video id="v" src="out/mhorizon-revisar-antes-de-solicitar.mp4" poster="out/poster.jpg" muted playsinline autoplay preload="auto"></video>
+  </div>
+
+  <section class="panel" aria-label="Controles de reproducción">
+    <div>
+      <div class="eyebrow">MHORIZON · Cápsula tributaria</div>
+      <h1>Revisar antes de solicitar</h1>
+      <div class="spec"><span>1080 × 1920</span><span>9:16</span><span>30 fps</span><span>17 s · 510 fotogramas</span><span>Sin audio</span></div>
+    </div>
+
+    <div class="controls">
+      <button class="primary" id="play" type="button"><span id="playLabel">Pausar</span></button>
+      <button id="restart" type="button">Reiniciar</button>
+      <button id="back" type="button" aria-label="Fotograma anterior">−1 f</button>
+      <button id="fwd" type="button" aria-label="Fotograma siguiente">+1 f</button>
+    </div>
+
+    <div>
+      <div class="time"><span><b id="tc">00:00</b> / 00:17</span><span id="fr">f 0 / 509</span></div>
+      <div class="track"><input id="scrub" type="range" min="0" max="509" step="1" value="0" aria-label="Posición en fotogramas"></div>
+    </div>
+
+    <ol class="scenes" id="scenes">
+      <li data-t="0"><span class="tc">0–4 s</span><div><div class="name">Documentación</div><div class="txt">Declaraciones tributarias · Soportes contables</div></div></li>
+      <li data-t="4"><span class="tc">4–9 s</span><div><div class="name">Proceso de revisión</div><div class="txt">Conexiones al núcleo, lupa e indicadores en análisis</div></div></li>
+      <li data-t="9"><span class="tc">9–13 s</span><div><div class="name">Evaluación de saldos</div><div class="txt">Tarjeta de saldos sin montos, evaluación en curso</div></div></li>
+      <li data-t="13"><span class="tc">13–17 s</span><div><div class="name">Mensaje principal</div><div class="txt">REVISAR antes de solicitar, legible 2,1 s</div></div></li>
+    </ol>
+
+    <p class="note">Video renderizado con Remotion desde el código fuente. El último fotograma termina en el fondo azul medianoche para enlazar con la siguiente escena.</p>
+  </section>
+</main>
+
+<script>
+  const v = document.getElementById('v');
+  const FPS = 30, LAST = 509;
+  const $ = (id) => document.getElementById(id);
+  const scenes = [...document.querySelectorAll('#scenes li')];
+
+  function frameOf(t) { return Math.min(LAST, Math.floor(t * FPS + 1e-3)); }
+  function fmt(t) { const s = Math.floor(t); const cs = Math.floor((t - s) * 100); return '00:' + String(s).padStart(2, '0') + '.' + String(cs).padStart(2, '0'); }
+
+  function render() {
+    const t = v.currentTime || 0, f = frameOf(t);
+    $('tc').textContent = fmt(t);
+    $('fr').textContent = 'f ' + f + ' / ' + LAST;
+    $('scrub').value = f;
+    $('playLabel').textContent = v.ended ? 'Reproducir de nuevo' : (v.paused ? 'Reproducir' : 'Pausar');
+    scenes.forEach((li, i) => {
+      const a = +li.dataset.t, b = i < scenes.length - 1 ? +scenes[i + 1].dataset.t : 99;
+      li.classList.toggle('on', t >= a && t < b);
+    });
+  }
+  function loop() { render(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+
+  function seekFrame(f) { v.pause(); v.currentTime = (Math.max(0, Math.min(LAST, f)) + 0.5) / FPS; }
+
+  $('play').addEventListener('click', () => {
+    if (v.ended) v.currentTime = 0;
+    v.paused || v.ended ? v.play().catch(() => {}) : v.pause();
+  });
+  $('restart').addEventListener('click', () => { v.currentTime = 0; v.play().catch(() => {}); });
+  $('back').addEventListener('click', () => seekFrame(frameOf(v.currentTime) - 1));
+  $('fwd').addEventListener('click', () => seekFrame(frameOf(v.currentTime) + 1));
+  $('scrub').addEventListener('input', (e) => seekFrame(+e.target.value));
+  scenes.forEach((li) => li.addEventListener('click', () => { v.currentTime = +li.dataset.t; v.play().catch(() => {}); }));
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.code === 'Space') { e.preventDefault(); $('play').click(); }
+    if (e.key === 'ArrowLeft') $('back').click();
+    if (e.key === 'ArrowRight') $('fwd').click();
+    if (e.key === 'r' || e.key === 'R') $('restart').click();
+  });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) v.removeAttribute('autoplay');
+</script>
