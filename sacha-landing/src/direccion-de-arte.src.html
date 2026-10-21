@@ -1,0 +1,676 @@
+<title>Sacha Dirección de Arte</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/*FONTS*/
+/*TOKENS*/
+
+/* Concepto: láminas de manual de campo. Fondos planos de la paleta, arcos y colinas
+   orgánicas como formas, fotografía y mascota como protagonistas. Sin animación. */
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-text);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+img,svg{max-width:100%}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--fg);margin:0;text-wrap:balance;line-height:1.05;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--dorado);outline-offset:3px;border-radius:4px}
+
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.sec{padding-block:clamp(56px,8vw,104px)}
+.sec.alt{background:var(--bg-alt)}
+.eyebrow{font-family:var(--font-text);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-muted)}
+.sec-head{display:grid;gap:14px;max-width:62ch;margin-bottom:clamp(28px,4vw,48px)}
+.sec-head h2{font-size:clamp(36px,5.5vw,64px);font-weight:700}
+.lead{font-family:var(--font-display);font-weight:300;font-size:clamp(19px,2.2vw,23px);line-height:1.4;color:var(--fg)}
+.small{font-size:14px;line-height:1.45;color:var(--fg-muted)}
+.label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted)}
+.note{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.45;color:var(--fg-muted);margin-top:20px;max-width:70ch}
+.note b{color:var(--fg);font-weight:400;text-decoration:underline;text-decoration-color:var(--dorado);text-underline-offset:3px}
+.logo{display:block;width:100%;height:auto;color:var(--logo-ink)}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:clamp(16px,3vw,40px);padding-block:12px;flex-wrap:wrap}
+.top .brand{display:block;width:104px;flex:none}
+.top nav{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;font-size:15px}
+.top nav::-webkit-scrollbar{display:none}
+.top nav a{text-decoration:none;white-space:nowrap;padding:4px 0;border-bottom:2px solid transparent}
+.top nav a:hover{border-bottom-color:var(--dorado)}
+.tag{flex:none;font-size:12px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);border-radius:var(--r-pill);padding:5px 12px;color:var(--fg-muted)}
+@media (max-width:640px){.top nav{order:3;flex-basis:100%}.tag{margin-left:auto}}
+
+/* ---------- portada ---------- */
+.hero{padding-top:clamp(36px,6vw,72px);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(20px,5vw,72px);align-items:end}
+.hero-copy{display:grid;gap:24px;padding-bottom:clamp(36px,6vw,80px);align-self:center}
+.hero h1{font-size:clamp(48px,8.4vw,112px);font-weight:700;line-height:.95;letter-spacing:-.025em}
+.hero h1 em{font-style:normal;color:var(--dorado)}
+:root[data-theme="dark"] .hero h1 em{color:var(--arena)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hero h1 em{color:var(--arena)}}
+.dots{display:flex;gap:0;border-radius:var(--r-pill);overflow:hidden;width:min(100%,360px);height:14px}
+.dots i{flex:1}
+.hero-art{position:relative;aspect-ratio:4/5;width:min(100%,520px);justify-self:end}
+.hero-art .hill{position:absolute;left:-6%;right:-90%;bottom:0;height:68%;background:var(--arena);border-top-left-radius:60% 100%}
+.hero-art img{position:absolute;left:50%;bottom:0;height:98%;width:auto;max-width:none;transform:translateX(-46%)}
+@media (max-width:820px){.hero .wrap{grid-template-columns:1fr}.hero-art{justify-self:center;width:min(86%,420px)}}
+
+/* ---------- logotipo ---------- */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.tile{display:grid;place-items:center;aspect-ratio:16/10;border-radius:var(--r-md);padding:8%}
+.tile .logo{width:min(100%,380px);color:inherit}
+.tile figcaption{position:absolute}
+.tilefig{margin:0;position:relative}
+.tilefig figcaption{position:static;margin-top:8px}
+@media (max-width:640px){.tiles{grid-template-columns:1fr}}
+.versions{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:16px;margin-top:16px}
+.vcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:22px;display:grid;gap:18px;align-content:space-between;min-width:0}
+.vcard .stage{display:grid;place-items:center;min-height:150px;border-radius:var(--r-sm);background:var(--bg);border:1px dashed var(--line)}
+.vcard h3{font-size:22px;font-weight:600}
+.vcard .logo{color:var(--logo-ink)}
+.clear{--w:min(300px,62vw);padding:calc(var(--w)*.1136);outline:1.5px dashed var(--terracota);outline-offset:-1px;background:color-mix(in srgb,var(--terracota) 10%,transparent)}
+.clear .logo{width:var(--w);outline:1px solid var(--line)}
+@media (max-width:900px){.versions{grid-template-columns:1fr}}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.rule{border-top:2px solid var(--fg);padding-top:14px;display:grid;gap:6px}
+.rule b{font-family:var(--font-display);font-weight:600;font-size:19px;color:var(--fg)}
+@media (max-width:760px){.rules{grid-template-columns:1fr}}
+
+/* ---------- color ---------- */
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.sw{background:var(--c);color:var(--on);border-radius:var(--r-md);padding:20px;min-height:250px;display:grid;align-content:space-between;gap:28px;border:1px solid color-mix(in srgb,var(--fg) 12%,transparent)}
+.sw h3{font-size:30px;font-weight:700;color:inherit}
+.sw .role{font-size:14px;line-height:1.35;margin-top:6px}
+.sw dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:14px;font-variant-numeric:tabular-nums}
+.sw dt{opacity:.78}.sw dd{margin:0;font-weight:700}
+.ratio{display:flex;height:64px;border-radius:var(--r-md);overflow:hidden;margin-top:36px;border:1px solid var(--line)}
+.ratio span{display:flex;align-items:flex-end;padding:8px 10px;font-size:12px;min-width:0;overflow:hidden}
+.meanings{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px}
+.mean{display:flex;gap:14px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--card)}
+.mean i{flex:none;width:44px;height:44px;border-radius:50%;background:var(--c)}
+.mean b{display:block;font-family:var(--font-display);font-weight:600;font-size:18px;color:var(--fg)}
+.pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-top:12px}
+.pair{border-radius:var(--r-md);padding:16px;background:var(--c);color:var(--t);display:grid;gap:10px;border:1px solid color-mix(in srgb,var(--fg) 12%,transparent)}
+.pair .aa{font-family:var(--font-display);font-size:38px;font-weight:700;line-height:1}
+.pair small{font-size:12.5px;line-height:1.3;font-variant-numeric:tabular-nums}
+.h3s{font-size:26px;font-weight:600;margin-top:clamp(36px,5vw,56px);margin-bottom:6px}
+
+/* ---------- tipografía ---------- */
+.type-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(22px,3vw,36px);display:grid;gap:22px;align-content:start;min-width:0}
+.big-aa{font-family:var(--font-display);font-size:clamp(96px,16vw,190px);line-height:.85;font-weight:700;color:var(--fg)}
+.weights{display:grid;gap:2px}
+.weights div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-family:var(--font-display);font-size:clamp(24px,3.4vw,34px);border-bottom:1px solid var(--line);padding:6px 0;color:var(--fg)}
+.weights span{font-family:var(--font-text);font-size:12px;letter-spacing:.1em;color:var(--fg-muted);font-variant-numeric:tabular-nums}
+.glyphs{font-family:var(--font-display);font-size:clamp(20px,2.4vw,26px);line-height:1.4;word-break:break-word;color:var(--fg)}
+.myr{font-family:var(--font-text);font-size:clamp(70px,11vw,130px);line-height:.9;color:var(--fg)}
+.scale{margin-top:16px;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--card)}
+.scale>div{display:grid;grid-template-columns:130px 1fr;gap:18px;align-items:baseline;padding:18px clamp(16px,3vw,32px);border-bottom:1px solid var(--line)}
+.scale>div:last-child{border-bottom:0}
+.scale .spec{font-size:12px;letter-spacing:.06em;color:var(--fg-muted);line-height:1.5}
+.scale .s{min-width:0;overflow-wrap:anywhere;color:var(--fg)}
+.s.display{font-family:var(--font-display);font-weight:700;font-size:clamp(38px,6vw,80px);line-height:.98;letter-spacing:-.02em}
+.s.h2{font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,48px);line-height:1.05}
+.s.h3{font-family:var(--font-display);font-weight:600;font-size:clamp(22px,2.6vw,28px);line-height:1.15}
+.s.lead2{font-family:var(--font-display);font-weight:300;font-size:clamp(19px,2.2vw,23px);line-height:1.4}
+.s.body{font-size:17px;line-height:1.55;max-width:62ch}
+.s.cap{font-size:13px;line-height:1.4}
+.s.btn2{font-family:var(--font-display);font-weight:600;font-size:18px}
+@media (max-width:860px){.type-grid{grid-template-columns:1fr}.scale>div{grid-template-columns:1fr;gap:6px}}
+
+/* ---------- texturas ---------- */
+.pats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;align-items:start}
+.pat{display:grid;gap:10px;min-width:0}
+.pat .pchip{aspect-ratio:1;border-radius:var(--r-md);background-size:cover;background-position:center;border:1px solid color-mix(in srgb,var(--fg) 14%,transparent)}
+.pat b{font-family:var(--font-display);font-weight:600;font-size:19px;color:var(--fg)}
+@media (max-width:900px){.pats{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:520px){.pats{grid-template-columns:repeat(2,1fr)}}
+.shapes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+.shape{position:relative;height:200px;border-radius:var(--r-md);overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.shape i{position:absolute;display:block}
+.shape .s1{left:-10%;right:-25%;bottom:-6%;height:70%;background:var(--arena);border-radius:70% 30% 0 0/90% 80% 0 0}
+.shape .s2{left:14%;right:14%;bottom:0;height:78%;background:var(--selva);border-radius:50% 50% 0 0/42% 42% 0 0}
+.shape .s3{left:-20%;top:8%;width:70%;aspect-ratio:1;background:var(--menta);border-radius:58% 42% 52% 48%/48% 56% 44% 52%}
+.shape .s4{right:-18%;top:-24%;width:75%;aspect-ratio:1;background:var(--terracota);border-radius:50% 50% 46% 54%/54% 46% 54% 46%}
+.shape span{position:absolute;left:14px;bottom:12px;z-index:2;font-size:13px;color:var(--fg-strong);background:color-mix(in srgb,var(--card) 86%,transparent);padding:2px 8px;border-radius:var(--r-pill)}
+.uses{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px}
+
+/* ---------- mascota ---------- */
+.mascot-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(20px,5vw,72px);align-items:center}
+.mascot-card{position:relative;aspect-ratio:1/1.05;border-radius:var(--r-lg);overflow:hidden;background:var(--crema)}
+.mascot-card .hill{position:absolute;left:-8%;right:-30%;bottom:-6%;height:62%;background:var(--arena);border-radius:60% 40% 0 0/80% 70% 0 0}
+.mascot-card img{position:absolute;left:50%;bottom:0;height:96%;width:auto;max-width:none;transform:translateX(-44%)}
+.hola{font-family:var(--font-display);font-weight:700;font-size:clamp(54px,9vw,112px);line-height:.92;color:var(--fg)}
+.hola small{display:block;font-weight:500;font-size:.34em;margin-top:.5em;letter-spacing:0}
+.facts{display:grid;gap:0;margin-top:22px;border-top:1px solid var(--line)}
+.facts div{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:16px}
+.facts dt{color:var(--fg-muted);font-size:13px;letter-spacing:.1em;text-transform:uppercase;padding-top:3px}
+.facts dd{margin:0;color:var(--fg)}
+@media (max-width:860px){.mascot-grid{grid-template-columns:1fr}}
+.turn{margin-top:clamp(36px,5vw,64px);background:#fff;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line)}
+.turn-scroll{overflow-x:auto}
+.turn img{display:block;width:100%;min-width:760px;height:auto}
+.turn figcaption{padding:12px 18px;background:var(--card);color:var(--fg-muted);font-size:14px;border-top:1px solid var(--line)}
+.posters{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+.poster{margin:0;display:grid;gap:10px;min-width:0}
+.poster img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:var(--r-md);border:1px solid color-mix(in srgb,var(--fg) 12%,transparent)}
+.poster b{font-family:var(--font-display);font-weight:600;font-size:18px;color:var(--fg);display:block}
+@media (max-width:900px){.posters{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- composición ---------- */
+.plates{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.plate{position:relative;aspect-ratio:4/5;border-radius:var(--r-md);overflow:hidden;isolation:isolate;min-width:0}
+.plate .ph{position:absolute;object-fit:cover;display:block}
+.plate .t{position:absolute;z-index:3;font-family:var(--font-display);line-height:1;display:grid;gap:.06em}
+.plate .t small{font-weight:500;font-size:clamp(15px,1.7vw,19px)}
+.plate .t strong{font-weight:700;font-size:clamp(34px,4.2vw,50px);letter-spacing:-.01em}
+.plate.rana{background:var(--menta)}
+.plate.rana .ph{left:0;bottom:0;width:93%;height:80%;border-top-right-radius:90% 62%;object-position:30% 50%}
+.plate.rana .t{top:6%;right:7%;text-align:right;color:var(--selva)}
+.plate.oce{background:var(--selva)}
+.plate.oce .ph{inset:0;width:100%;height:100%;object-position:50% 20%}
+.plate.oce svg.band{position:absolute;left:0;right:0;bottom:0;width:100%;height:42%;z-index:2}
+.plate.oce .t{left:8%;bottom:7%;color:#fff}
+.plate.oce .mini{position:absolute;z-index:3;right:3%;bottom:0;height:34%;width:auto}
+.plate.ser{background:var(--crema)}
+.plate.ser .ph{left:0;right:0;bottom:0;width:100%;height:76%;border-radius:50% 50% 0 0/36% 36% 0 0;object-position:62% 50%}
+.plate.ser .t{top:7%;left:0;right:0;text-align:center;color:var(--selva)}
+@media (max-width:900px){.plates{grid-template-columns:1fr;max-width:460px;margin-inline:auto}}
+.pairs2{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.pcard{border-radius:var(--r-md);overflow:hidden;position:relative;aspect-ratio:4/5;min-width:0;background:var(--c)}
+.pcard .bgp{position:absolute;inset:0;background-size:cover;background-position:center}
+.pcard svg.arc{position:absolute;left:0;right:0;bottom:0;width:100%;height:50%;z-index:1}
+.pcard .t{position:absolute;left:9%;bottom:7%;z-index:3;font-family:var(--font-display);color:#fff;line-height:1}
+.pcard .t small{display:block;font-weight:500;font-size:clamp(14px,1.6vw,18px)}
+.pcard .t strong{font-size:clamp(30px,3.6vw,44px);font-weight:700}
+.pcard img.m{position:absolute;right:-6%;bottom:0;height:70%;width:auto;z-index:2;max-width:none}
+@media (max-width:900px){.pairs2{grid-template-columns:1fr;max-width:460px;margin-inline:auto}}
+
+/* ---------- componentes ---------- */
+.comp{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.cbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(20px,3vw,32px);display:grid;gap:18px;align-content:start;min-width:0}
+.cbox.span2{grid-column:1/-1}
+@media (max-width:860px){.comp{grid-template-columns:1fr}}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:18px;line-height:1;border-radius:var(--r-pill);padding:16px 28px;text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn.pri{background:var(--selva);color:var(--crema)}
+.btn.sec2{background:transparent;color:var(--fg);border-color:var(--fg)}
+.btn.urg{background:var(--terracota);color:#fff}
+.btn.don{background:var(--menta);color:var(--selva);border-color:var(--selva)}
+.btn.inv{background:var(--crema);color:var(--selva)}
+.dark-stage{background:var(--selva);border-radius:var(--r-md);padding:20px}
+:root[data-theme="dark"] .btn.pri{background:var(--crema);color:var(--selva)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.pri{background:var(--crema);color:var(--selva)}}
+.chip{display:inline-flex;align-items:center;gap:8px;border-radius:var(--r-pill);padding:7px 14px;font-size:14px;background:var(--c);color:var(--t)}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.7}
+.tabs{display:flex;gap:4px;background:var(--bg-alt);border-radius:var(--r-pill);padding:4px;width:max-content;max-width:100%;overflow-x:auto}
+.tabs span{font-family:var(--font-display);font-weight:600;font-size:16px;padding:10px 20px;border-radius:var(--r-pill);white-space:nowrap;color:var(--fg)}
+.tabs span.on{background:var(--selva);color:var(--crema)}
+:root[data-theme="dark"] .tabs span.on{background:var(--crema);color:var(--selva)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tabs span.on{background:var(--crema);color:var(--selva)}}
+.cap-card{position:relative;width:min(100%,240px);aspect-ratio:9/16;border-radius:var(--r-md);overflow:hidden;background:#0d1a14;color:#fff}
+.cap-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cap-card::after{content:"";position:absolute;inset:auto 0 0;height:60%;background:linear-gradient(to top,rgba(13,26,20,.92),rgba(13,26,20,0))}
+.cap-card .dur{position:absolute;top:12px;left:12px;z-index:2;font-size:12px;background:rgba(13,26,20,.7);padding:3px 10px;border-radius:var(--r-pill);font-variant-numeric:tabular-nums}
+.cap-card .play{position:absolute;z-index:2;top:50%;left:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:var(--crema);display:grid;place-items:center}
+.cap-card .play::before{content:"";margin-left:4px;border-left:16px solid var(--selva);border-top:10px solid transparent;border-bottom:10px solid transparent}
+.cap-card .meta{position:absolute;z-index:2;left:14px;right:14px;bottom:14px;display:grid;gap:4px}
+.cap-card .meta small{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--menta)}
+.cap-card .meta b{font-family:var(--font-display);font-weight:600;font-size:20px;line-height:1.1}
+.step{display:flex;gap:16px;align-items:flex-start;padding:18px;border-radius:var(--r-md);background:var(--bg-alt)}
+.step .n{flex:none;width:52px;height:52px;border-radius:50%;background:var(--arena);color:var(--negro);display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:24px}
+.step b{font-family:var(--font-display);font-weight:600;font-size:21px;color:var(--fg);display:block}
+.field{display:grid;gap:6px}
+.field label{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-muted)}
+.field input{font:inherit;font-size:17px;color:var(--fg);background:var(--bg);border:2px solid var(--line);border-radius:var(--r-sm);padding:13px 16px;width:100%}
+.field input:focus-visible{border-color:var(--selva);outline-offset:2px}
+.cwrap{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+
+/* ---------- vista previa ---------- */
+.browser{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--crema);box-shadow:var(--shadow);color:var(--selva)}
+.bar{display:flex;gap:7px;align-items:center;padding:12px 16px;background:#E5DECF;border-bottom:1px solid rgba(63,90,79,.18)}
+.bar i{width:11px;height:11px;border-radius:50%;background:rgba(63,90,79,.28)}
+.bar span{margin-left:12px;font-size:13px;color:#526459;background:rgba(255,255,255,.55);padding:3px 14px;border-radius:var(--r-pill)}
+.site-nav{display:flex;align-items:center;gap:28px;padding:18px clamp(16px,3vw,40px);flex-wrap:wrap}
+.site-nav .logo{width:118px;color:var(--dorado)}
+.site-nav nav{display:flex;gap:24px;flex:1;font-size:16px;flex-wrap:wrap}
+.site-nav .btn{padding:12px 22px;font-size:16px;background:var(--selva);color:var(--crema)}
+.site-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(12px,3vw,40px);align-items:end;padding:clamp(16px,3vw,40px) clamp(16px,3vw,40px) 0;overflow:hidden}
+.site-hero .copy{display:grid;gap:22px;padding-bottom:clamp(28px,5vw,64px);align-self:center}
+.site-hero h2,.site-hero h3{color:var(--selva)}
+.site-hero h3{font-size:clamp(34px,5vw,64px);font-weight:700;line-height:1;letter-spacing:-.02em}
+.site-hero p{font-size:clamp(16px,1.6vw,19px);max-width:46ch;color:#3F5A4F}
+.site-hero .where{display:flex;gap:8px;flex-wrap:wrap}
+.site-hero .where .chip{--c:var(--menta);--t:var(--selva);font-size:13px}
+.site-hero .stage{position:relative;aspect-ratio:1/1.1;min-width:0}
+.site-hero .arch{position:absolute;left:6%;right:0;bottom:0;height:86%;border-radius:50% 50% 0 0/42% 42% 0 0;background:url(assets/patterns/selva.svg) center/cover}
+.site-hero .stage img{position:absolute;left:50%;bottom:0;height:100%;width:auto;max-width:none;transform:translateX(-36%)}
+@media (max-width:760px){.site-hero{grid-template-columns:1fr}.site-hero .stage{width:min(80%,340px);justify-self:center}.site-nav nav{display:none}.site-nav .btn{margin-left:auto}}
+.site-foot{background:var(--selva);color:var(--crema);display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:center;padding:clamp(24px,4vw,48px) clamp(16px,3vw,40px)}
+.site-foot h4{font-size:clamp(26px,3.2vw,40px);color:var(--crema);font-weight:700;line-height:1.05}
+.site-foot .logo{width:150px;color:var(--arena);margin-bottom:14px}
+.site-foot .row{justify-content:flex-start}
+.site-foot .btn.vol{background:transparent;color:var(--crema);border-color:var(--crema)}
+@media (max-width:760px){.site-foot{grid-template-columns:1fr}}
+
+/* ---------- tokens ---------- */
+.code{position:relative;background:#101a15;color:#E9F1EC;border-radius:var(--r-md);padding:22px;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13.5px;line-height:1.65;white-space:pre}
+.copy-btn{position:sticky;left:calc(100% - 100px);float:right;font:inherit;font-family:var(--font-text);font-size:13px;color:#101a15;background:var(--arena);border:0;border-radius:var(--r-pill);padding:6px 14px;cursor:pointer}
+footer.end{padding-block:40px;border-top:1px solid var(--line)}
+footer.end .wrap{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+footer.end .logo{width:110px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<!--SYMBOLS-->
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#portada" aria-label="Proyecto Sacha, ir al inicio"><svg class="logo" viewBox="0 0 1157 276" role="img" aria-label="Sacha"><use href="#sy-wordmark"/></svg></a>
+    <nav aria-label="Secciones">
+      <a href="#logotipo">Logotipo</a><a href="#color">Color</a><a href="#tipografia">Tipografía</a><a href="#texturas">Texturas</a><a href="#mascota">Mascota</a><a href="#composicion">Composición</a><a href="#componentes">Componentes</a><a href="#vista-previa">Vista previa</a>
+    </nav>
+    <span class="tag">Sin animación</span>
+  </div>
+</header>
+
+<main>
+<!-- PORTADA -->
+<section class="hero" id="portada">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">Fundación Proyecto Sacha · Landing page</span>
+      <h1>Dirección <em>de arte</em></h1>
+      <p class="lead">Logotipo, paleta, tipografía, texturas y mascota reunidos en un solo lugar antes de maquetar el sitio. Conservación de fauna silvestre, con cara amable.</p>
+      <div class="dots" aria-hidden="true"><i style="background:#D17A5B"></i><i style="background:#F4EFE6"></i><i style="background:#AF7409"></i><i style="background:#D9B97A"></i><i style="background:#CBEFD4"></i><i style="background:#3F5A4F"></i><i style="background:#000"></i></div>
+    </div>
+    <div class="hero-art">
+      <div class="hill"></div>
+      <img src="assets/mascot/sacha-saluda.webp" alt="Sacha, una pequeña felina con sombrero de explorador y chaleco verde, saluda con la pata" width="1228" height="1976">
+    </div>
+  </div>
+</section>
+
+<!-- LOGOTIPO -->
+<section class="sec" id="logotipo">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Logotipo 2026</span>
+      <h2>Los ojos de Sacha viven en las dos A</h2>
+      <p class="lead">El logotipo se usa siempre en un solo color, sobre fondos planos de la paleta. El descriptor "Conservación de fauna silvestre" acompaña a la versión completa.</p>
+    </div>
+
+    <div class="tiles">
+      <figure class="tilefig"><div class="tile" style="background:#F4EFE6;color:#AF7409;border:1px solid var(--line)"><svg class="logo" viewBox="0 0 1157 438" role="img" aria-label="Logotipo dorado sobre crema"><use href="#sy-logo"/></svg></div><figcaption class="small">Principal · dorado sobre crema</figcaption></figure>
+      <figure class="tilefig"><div class="tile" style="background:#3F5A4F;color:#F4EFE6"><svg class="logo" viewBox="0 0 1157 438" role="img" aria-label="Logotipo crema sobre verde selva"><use href="#sy-logo"/></svg></div><figcaption class="small">Sobre fondo oscuro · crema sobre selva</figcaption></figure>
+      <figure class="tilefig"><div class="tile" style="background:#CBEFD4;color:#000"><svg class="logo" viewBox="0 0 1157 438" role="img" aria-label="Logotipo negro sobre menta"><use href="#sy-logo"/></svg></div><figcaption class="small">Monocromo · negro sobre menta</figcaption></figure>
+      <figure class="tilefig"><div class="tile" style="background:#D17A5B;color:#fff"><svg class="logo" viewBox="0 0 1157 438" role="img" aria-label="Logotipo blanco sobre terracota"><use href="#sy-logo"/></svg></div><figcaption class="small">Campañas urgentes · blanco sobre terracota</figcaption></figure>
+    </div>
+
+    <div class="versions">
+      <div class="vcard">
+        <span class="label">Zona de respeto · propuesta web</span>
+        <div class="stage" style="padding:18px"><div class="clear"><svg class="logo" viewBox="0 0 1157 438" role="img" aria-label="Logotipo con zona de respeto"><use href="#sy-logo"/></svg></div></div>
+        <p class="small">Margen libre igual a media altura de la letra S en todos los lados. El manual no lo define; esta medida es una propuesta para el sitio.</p>
+      </div>
+      <div class="vcard">
+        <span class="label">Reducción</span>
+        <div class="stage"><svg class="logo" style="width:150px" viewBox="0 0 1157 276" role="img" aria-label="Palabra Sacha sin descriptor"><use href="#sy-wordmark"/></svg></div>
+        <div><h3>Solo SACHA</h3><p class="small">Para la barra de navegación y tamaños bajo 160 px de ancho. Sin "Proyecto" ni descriptor.</p></div>
+      </div>
+      <div class="vcard">
+        <span class="label">Símbolo</span>
+        <div class="stage"><svg class="logo" style="width:64px" viewBox="0 0 207 270" role="img" aria-label="Ojo de Sacha dentro de la letra A"><use href="#sy-ojo"/></svg></div>
+        <div><h3>El ojo</h3><p class="small">La A con el ojo funciona como favicon, avatar de redes y marca de carga. Mínimo 24 px.</p></div>
+      </div>
+    </div>
+
+    <div class="rules">
+      <div class="rule"><b>Un solo color</b><span class="small">Dorado, negro, crema o blanco según el fondo. No se rellena con degradados ni con las texturas.</span></div>
+      <div class="rule"><b>Fondos planos</b><span class="small">Sobre fotografía solo en zonas tranquilas y oscuras, o dentro de una franja de color.</span></div>
+      <div class="rule"><b>Sin deformar</b><span class="small">No se estira, no se rota, no se le agrega sombra ni contorno.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOR -->
+<section class="sec alt" id="color">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Paleta</span>
+      <h2>Siete colores, cada uno con un trabajo</h2>
+      <p class="lead">Valores tomados del manual de marca. El color también clasifica la información: quien ve el verde sabe que es naturaleza, quien ve el terracota sabe que es urgente.</p>
+    </div>
+
+    <div class="swatches">
+      <article class="sw" style="--c:#D17A5B;--on:#000"><div><h3>Terracota</h3><p class="role">Urgente, importante, alertas y formas de apoyo. No para texto sobre crema.</p></div><dl><dt>HEX</dt><dd>#D17A5B</dd><dt>RGB</dt><dd>209, 122, 91</dd><dt>CMYK</dt><dd>15, 61, 68, 2</dd></dl></article>
+      <article class="sw" style="--c:#F4EFE6;--on:#3F5A4F;box-shadow:inset 0 0 0 1px rgba(63,90,79,.25)"><div><h3>Crema</h3><p class="role">Fondo base de todo el sitio. Es el lienzo, ocupa más de la mitad de cada pantalla.</p></div><dl><dt>HEX</dt><dd>#F4EFE6</dd><dt>RGB</dt><dd>244, 239, 230</dd><dt>CMYK</dt><dd>3, 4, 8, 0</dd></dl></article>
+      <article class="sw" style="--c:#AF7409;--on:#000"><div><h3>Dorado</h3><p class="role">Color de marca. Logotipo, felinos, títulos grandes y detalles de énfasis.</p></div><dl><dt>HEX</dt><dd>#AF7409</dd><dt>RGB</dt><dd>175, 116, 9</dd><dt>CMYK</dt><dd>27, 54, 100, 10</dd></dl></article>
+      <article class="sw" style="--c:#D9B97A;--on:#000"><div><h3>Arena</h3><p class="role">Colinas y arcos detrás de la mascota, fondos cálidos de apoyo.</p></div><dl><dt>HEX</dt><dd>#D9B97A</dd><dt>RGB</dt><dd>217, 185, 122</dd><dt>CMYK</dt><dd>15, 25, 60, 0</dd></dl></article>
+      <article class="sw" style="--c:#CBEFD4;--on:#3F5A4F"><div><h3>Menta</h3><p class="role">Donaciones y ayuda. Fondo fresco para las llamadas a participar.</p></div><dl><dt>HEX</dt><dd>#CBEFD4 · en uso</dd><dt>Manual</dt><dd>#C5FFE6</dd><dt>CMYK</dt><dd>19, 0, 16, 0</dd></dl></article>
+      <article class="sw" style="--c:#3F5A4F;--on:#F4EFE6"><div><h3>Verde selva</h3><p class="role">Texto principal, información, secciones oscuras y botones.</p></div><dl><dt>HEX</dt><dd>#3F5A4F</dd><dt>RGB</dt><dd>63, 90, 79</dd><dt>CMYK</dt><dd>74, 47, 64, 32</dd></dl></article>
+      <article class="sw" style="--c:#000;--on:#F4EFE6"><div><h3>Negro</h3><p class="role">Logotipo monocromo y texto de máximo contraste sobre colores claros.</p></div><dl><dt>HEX</dt><dd>#000000</dd><dt>RGB</dt><dd>0, 0, 0</dd><dt>CMYK</dt><dd>75, 68, 67, 90</dd></dl></article>
+    </div>
+
+    <div class="note"><span class="label">Dato</span><span>El manual imprime el menta como <b>#C5FFE6</b>, pero los pósters y láminas usan <b>#CBEFD4</b>, más suave. El sitio usa #CBEFD4 hasta confirmar cuál es el oficial.</span></div>
+
+    <h3 class="h3s">Proporción de uso</h3>
+    <p class="small">Propuesta por pantalla: crema y verde selva llevan casi todo, los demás colores aparecen como acento.</p>
+    <div class="ratio" role="img" aria-label="Proporción: crema 46 por ciento, verde selva 22, dorado 12, arena 8, menta 6, terracota 4, negro 2">
+      <span style="flex:46;background:#F4EFE6;color:#3F5A4F">Crema 46</span>
+      <span style="flex:22;background:#3F5A4F;color:#F4EFE6">Selva 22</span>
+      <span style="flex:12;background:#AF7409;color:#000">Dorado 12</span>
+      <span style="flex:8;background:#D9B97A;color:#000">Arena 8</span>
+      <span style="flex:6;background:#CBEFD4;color:#3F5A4F"></span>
+      <span style="flex:4;background:#D17A5B;color:#000"></span>
+      <span style="flex:2;background:#000;color:#fff"></span>
+    </div>
+
+    <h3 class="h3s">Color que significa algo</h3>
+    <p class="small">Cada color queda asociado a un tipo de información, como en los pósters del manual.</p>
+    <div class="meanings">
+      <div class="mean" style="--c:#D17A5B"><i></i><span><b>Urgente · Importante</b><span class="small">Rescates en curso, alertas, avisos</span></span></div>
+      <div class="mean" style="--c:#CBEFD4"><i style="box-shadow:inset 0 0 0 1px rgba(63,90,79,.3)"></i><span><b>Donaciones · Ayuda</b><span class="small">Cómo aportar, voluntariado</span></span></div>
+      <div class="mean" style="--c:#3F5A4F"><i></i><span><b>Naturaleza · Información</b><span class="small">Selva, reptiles, guía de convivencia</span></span></div>
+      <div class="mean" style="--c:#AF7409"><i></i><span><b>Marca · Felinos</b><span class="small">Ocelotes, identidad, cápsulas</span></span></div>
+    </div>
+    <div class="note"><span class="label">Por definir</span><span>El terracota hoy sirve para urgencias y también para el patrón de reptiles. Conviene decidir si los reptiles usan otro color para que "urgente" siga siendo exclusivo.</span></div>
+
+    <h3 class="h3s">Combinaciones de texto y su contraste</h3>
+    <p class="small">Ratios calculados con la fórmula WCAG. El texto pequeño necesita 4.5:1 o más; el texto grande (desde 24 px, o 19 px en negrita) necesita 3:1.</p>
+    <div class="pairs">
+      <div class="pair" style="--c:#F4EFE6;--t:#3F5A4F"><span class="aa">Aa</span><small>Selva sobre crema<br><b>6.6:1</b> · todo tamaño</small></div>
+      <div class="pair" style="--c:#CBEFD4;--t:#3F5A4F"><span class="aa">Aa</span><small>Selva sobre menta<br><b>6.0:1</b> · todo tamaño</small></div>
+      <div class="pair" style="--c:#3F5A4F;--t:#F4EFE6"><span class="aa">Aa</span><small>Crema sobre selva<br><b>6.6:1</b> · todo tamaño</small></div>
+      <div class="pair" style="--c:#D9B97A;--t:#000"><span class="aa">Aa</span><small>Negro sobre arena<br><b>11.2:1</b> · todo tamaño</small></div>
+      <div class="pair" style="--c:#D17A5B;--t:#000"><span class="aa">Aa</span><small>Negro sobre terracota<br><b>6.7:1</b> · todo tamaño</small></div>
+      <div class="pair" style="--c:#AF7409;--t:#000"><span class="aa">Aa</span><small>Negro sobre dorado<br><b>5.3:1</b> · todo tamaño</small></div>
+      <div class="pair" style="--c:#D17A5B;--t:#fff"><span class="aa">Aa</span><small>Blanco sobre terracota<br><b>3.2:1</b> · solo texto grande</small></div>
+      <div class="pair" style="--c:#F4EFE6;--t:#AF7409;box-shadow:inset 0 0 0 1px rgba(63,90,79,.2)"><span class="aa">Aa</span><small>Dorado sobre crema<br><b>3.4:1</b> · solo texto grande</small></div>
+      <div class="pair" style="--c:#F4EFE6;--t:#D17A5B;box-shadow:inset 0 0 0 1px rgba(63,90,79,.2)"><span class="aa">Aa</span><small>Terracota sobre crema<br><b>2.8:1</b> · no usar como texto</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPOGRAFÍA -->
+<section class="sec" id="tipografia">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Tipografía</span>
+      <h2>Dos familias, cada una en su lugar</h2>
+      <p class="lead">Oktah Round Variable lleva titulares, botones y textos de introducción. Myriad Pro lleva los textos pequeños. Nunca más de dos.</p>
+    </div>
+
+    <div class="type-grid">
+      <div class="tcard">
+        <span class="label">Titulares · Oktah Round Variable</span>
+        <div class="big-aa" aria-hidden="true">Aa</div>
+        <div class="weights" aria-label="Pesos de Oktah Round">
+          <div style="font-weight:100">Rescatamos fauna <span>100 · Thin</span></div>
+          <div style="font-weight:300">Rescatamos fauna <span>300 · Light</span></div>
+          <div style="font-weight:400">Rescatamos fauna <span>400 · Regular</span></div>
+          <div style="font-weight:600">Rescatamos fauna <span>600 · SemiBold</span></div>
+          <div style="font-weight:700">Rescatamos fauna <span>700 · Bold</span></div>
+          <div style="font-weight:900">Rescatamos fauna <span>900 · Black</span></div>
+        </div>
+        <p class="glyphs">Áá Éé Íí Óó Úú Ññ Üü ¿Cómo ayudar? ¡Urgente! 0123456789</p>
+      </div>
+      <div class="tcard">
+        <span class="label">Textos pequeños · Myriad Pro Regular</span>
+        <div class="myr" aria-hidden="true">Aa</div>
+        <p style="font-size:19px;line-height:1.5;color:var(--fg)">Detrás de cada animal hay horas de trabajo médico, trámites, kilómetros y meses de cuidado.</p>
+        <p class="small">Subtítulos, párrafos, etiquetas, pies de foto, datos de contacto y textos legales. De 13 a 19 px.</p>
+        <p class="glyphs" style="font-family:var(--font-text)">Áá Éé Íí Óó Úú Ññ ¿? ¡! 0123456789</p>
+      </div>
+    </div>
+
+    <div class="scale">
+      <div><span class="spec">DISPLAY<br>Oktah 700 · 38–80 px<br>interlineado 0.98</span><span class="s display">La ciudad también es hogar</span></div>
+      <div><span class="spec">TÍTULO DE SECCIÓN<br>Oktah 700 · 30–48 px</span><span class="s h2">Lo que no se ve en un rescate</span></div>
+      <div><span class="spec">SUBTÍTULO<br>Oktah 600 · 22–28 px</span><span class="s h3">Paso 2: atención veterinaria</span></div>
+      <div><span class="spec">INTRODUCCIÓN<br>Oktah 300 · 19–23 px</span><span class="s lead2">Rescatamos, curamos y devolvemos animales silvestres urbanos a su hábitat.</span></div>
+      <div><span class="spec">TEXTO<br>Myriad 400 · 17 px<br>interlineado 1.55</span><span class="s body">Tu aporte financia medicinas, traslados y rehabilitación. Tu tiempo y tu voz también salvan vidas. Mantén los párrafos en una columna de hasta 65 caracteres.</span></div>
+      <div><span class="spec">BOTÓN<br>Oktah 600 · 18 px</span><span class="s btn2">Donar ahora</span></div>
+      <div><span class="spec">PIE Y ETIQUETA<br>Myriad 400 · 12–14 px<br>mayúsculas con espaciado</span><span class="s cap">GUAYAQUIL · CENTRO URBANO &nbsp;/&nbsp; Foto: equipo de rescate, Santa Elena</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEXTURAS -->
+<section class="sec alt" id="texturas">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Patrones y formas</span>
+      <h2>La piel de los animales, en vector</h2>
+      <p class="lead">Cinco patrones inspirados en pelajes y escamas, dibujados con la paleta. Son planos, sin grano ni sombra, y escalan sin perder nitidez.</p>
+    </div>
+
+    <div class="pats">
+      <div class="pat"><div class="pchip" style="background-image:url(assets/patterns/felino.svg)"></div><b>Felino</b><span class="small">Pelaje dorado. Cápsulas y notas sobre felinos.</span></div>
+      <div class="pat"><div class="pchip" style="background-image:url(assets/patterns/selva.svg)"></div><b>Selva</b><span class="small">Verde y menta. Naturaleza e información.</span></div>
+      <div class="pat"><div class="pchip" style="background-image:url(assets/patterns/rayas.svg)"></div><b>Rayas</b><span class="small">Terracota y crema. Acentos de campaña.</span></div>
+      <div class="pat"><div class="pchip" style="background-image:url(assets/patterns/manchas.svg)"></div><b>Manchas</b><span class="small">Dorado y arena. Fondos cálidos.</span></div>
+      <div class="pat"><div class="pchip" style="background-image:url(assets/patterns/reptil.svg)"></div><b>Reptil</b><span class="small">Terracota sobre crema. Escamas.</span></div>
+    </div>
+
+    <h3 class="h3s">Formas de apoyo</h3>
+    <p class="small">Arcos y colinas curvas sostienen a la mascota y a las fotografías. Nada de esquinas rectas grandes ni líneas diagonales duras.</p>
+    <div class="shapes">
+      <div class="shape"><i class="s1"></i><span>Colina</span></div>
+      <div class="shape"><i class="s2"></i><span>Arco</span></div>
+      <div class="shape"><i class="s3"></i><span>Mancha</span></div>
+      <div class="shape"><i class="s4"></i><span>Isla</span></div>
+    </div>
+
+    <div class="uses">
+      <div class="rule"><b>Detrás, nunca debajo del texto</b><span class="small">Un patrón ocupa una zona propia. El texto va sobre crema, verde selva o una franja de color plano.</span></div>
+      <div class="rule"><b>Uno por pantalla</b><span class="small">Cada sección elige un solo patrón, según el tema: felino, selva, rayas, manchas o reptil.</span></div>
+      <div class="rule"><b>Recortado por una forma</b><span class="small">Se asoma dentro de un arco o una colina. Casi nunca llena una pantalla completa.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MASCOTA -->
+<section class="sec" id="mascota">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Mascota</span>
+      <h2>Sacha, la guía del recorrido</h2>
+    </div>
+    <div class="mascot-grid">
+      <div class="mascot-card"><div class="hill"></div><img src="assets/mascot/sacha-saluda.webp" alt="Sacha saludando" width="1228" height="1976" loading="lazy"></div>
+      <div>
+        <p class="hola">¡Hola!<small>Soy Sacha</small></p>
+        <p class="lead" style="margin-top:22px">Pequeña felina divertida, en 3D al estilo Pixar, con rasgos humanos, apariencia amistosa y aire de explorador.</p>
+        <dl class="facts">
+          <div><dt>Especie</dt><dd>Felino manchado, de la familia del ocelote</dd></div>
+          <div><dt>Vestuario</dt><dd>Sombrero de safari beige con cordón y chaleco verde oliva con bolsillos</dd></div>
+          <div><dt>Rasgos</dt><dd>Ojos verdes grandes, pelaje dorado con manchas, cola anillada</dd></div>
+          <div><dt>En el sitio</dt><dd>Saluda, señala y acompaña. Máximo una Sacha por pantalla.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <figure class="turn" style="margin-inline:0">
+      <div class="turn-scroll"><img src="assets/mascot/sacha-turnaround.jpg" alt="Sacha vista de frente, tres cuartos, perfil y espalda" width="3200" height="1357" loading="lazy"></div>
+      <figcaption>Hoja de personaje: frente, tres cuartos, perfil y espalda. Fondo blanco original del manual.</figcaption>
+    </figure>
+
+    <h3 class="h3s">Un estado, un color</h3>
+    <p class="small">Sacha cambia de gesto y de fondo según el mensaje. Los pósters del manual muestran cuatro estados.</p>
+    <div class="posters">
+      <figure class="poster"><img src="assets/posters/importante.jpg" alt="Sacha saludando sobre fondo crema y arena" loading="lazy" width="1080" height="1350"><figcaption><b>Aviso</b><span class="small">Crema y arena, título terracota</span></figcaption></figure>
+      <figure class="poster"><img src="assets/posters/donaciones.jpg" alt="Sacha con el sombrero en las manos pidiendo ayuda sobre fondo menta" loading="lazy" width="1080" height="1350"><figcaption><b>Donaciones</b><span class="small">Menta, mirada tierna y sombrero en mano</span></figcaption></figure>
+      <figure class="poster"><img src="assets/posters/serpiente.jpg" alt="Sacha sosteniendo una pequeña serpiente sobre fondo verde selva" loading="lazy" width="1080" height="1350"><figcaption><b>Dato de fauna</b><span class="small">Verde selva y menta, animal en la mano</span></figcaption></figure>
+      <figure class="poster"><img src="assets/posters/urgente.jpg" alt="Sacha alimentando a una cría de oso hormiguero sobre fondo terracota" loading="lazy" width="1080" height="1350"><figcaption><b>Urgente</b><span class="small">Terracota, rescate en brazos</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- COMPOSICIÓN -->
+<section class="sec alt" id="composicion">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Composición</span>
+      <h2>La fotografía manda, el diseño acompaña</h2>
+      <p class="lead">Las láminas del manual siguen una receta corta: foto grande, una forma curva, un título en dos tamaños y, si hace falta, Sacha en una esquina.</p>
+    </div>
+
+    <div class="plates">
+      <article class="plate rana"><img class="ph" src="assets/photos/rana.jpg" alt="Rana de ojos rojos sobre una flor" loading="lazy"><div class="t"><small>Todo sobre las</small><strong>ranas</strong></div></article>
+      <article class="plate oce"><img class="ph" src="assets/photos/ocelote.jpg" alt="Ocelote entre la vegetación" loading="lazy">
+        <svg class="band" viewBox="0 0 100 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 14 C26 30 66 -6 100 8 L100 42 L0 42 Z" fill="#AF7409"/></svg>
+        <div class="t"><small>Todo sobre los</small><strong>ocelotes</strong></div>
+        <img class="mini" src="assets/mascot/sacha-saluda.webp" alt="" width="1228" height="1976" loading="lazy"></article>
+      <article class="plate ser"><img class="ph" src="assets/photos/serpiente.jpg" alt="Serpiente verde enroscada en una rama" loading="lazy"><div class="t"><strong>¡Serpientes!</strong></div></article>
+    </div>
+    <p class="small" style="margin-top:12px">Fotografías de referencia tomadas del manual. En el sitio se reemplazan por fotos propias de la fundación.</p>
+
+    <div class="pairs2">
+      <article class="pcard" style="--c:#AF7409"><div class="bgp" style="background-image:url(assets/patterns/felino.svg)"></div><svg class="arc" viewBox="0 0 100 50" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 C 40 40 70 14 100 0 L100 50 L0 50Z" fill="#3F5A4F"/></svg><img class="m" src="assets/mascot/sacha-saluda.webp" alt="" width="1228" height="1976" loading="lazy"><div class="t"><small>Todo sobre los</small><strong>felinos</strong></div></article>
+      <article class="pcard" style="--c:#F4EFE6"><div class="bgp" style="background-image:url(assets/patterns/reptil.svg)"></div><svg class="arc" viewBox="0 0 100 50" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 C 40 40 70 14 100 0 L100 50 L0 50Z" fill="#3F5A4F"/></svg><img class="m" src="assets/mascot/sacha-saluda.webp" alt="" width="1228" height="1976" loading="lazy"><div class="t"><small>Todo sobre los</small><strong>reptiles</strong></div></article>
+      <article class="pcard" style="--c:#3F5A4F"><div class="bgp" style="background-image:url(assets/patterns/selva.svg)"></div><svg class="arc" viewBox="0 0 100 50" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 C 40 40 70 14 100 0 L100 50 L0 50Z" fill="#3F5A4F"/></svg><img class="m" src="assets/mascot/sacha-saluda.webp" alt="" width="1228" height="1976" loading="lazy"><div class="t"><small>Todo sobre la</small><strong>selva</strong></div></article>
+    </div>
+
+    <div class="rules" style="margin-top:28px">
+      <div class="rule"><b>Foto entre 80 y 90 %</b><span class="small">El animal es el protagonista. Menos fondo, más historia.</span></div>
+      <div class="rule"><b>Una franja, un título</b><span class="small">Título en dos tamaños: línea corta arriba, palabra clave grande abajo.</span></div>
+      <div class="rule"><b>Plantillas simples</b><span class="small">Foto + título, o foto + historia del animal. Nada más.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPONENTES -->
+<section class="sec" id="componentes">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Componentes base</span>
+      <h2>Las piezas con las que se arma el sitio</h2>
+      <p class="lead">Esquinas redondeadas, botones en forma de píldora y un solo gesto de color por pieza. Aquí se ven en reposo, sin interacción.</p>
+    </div>
+
+    <div class="comp">
+      <div class="cbox">
+        <span class="label">Botones</span>
+        <div class="row"><a class="btn pri" href="#componentes">Donar ahora</a><a class="btn sec2" href="#componentes">Ver cápsulas</a></div>
+        <div class="row"><a class="btn don" href="#componentes">Ser voluntario</a><a class="btn urg" href="#componentes">Reportar un animal</a></div>
+        <div class="dark-stage"><a class="btn inv" href="#componentes">Donar ahora</a></div>
+        <p class="small">Siempre 18 px en negrita media o más. El botón terracota lleva texto blanco, válido solo por ser texto grande.</p>
+      </div>
+
+      <div class="cbox">
+        <span class="label">Etiquetas por tema</span>
+        <div class="row">
+          <span class="chip" style="--c:#D9B97A;--t:#000">Felinos</span>
+          <span class="chip" style="--c:#3F5A4F;--t:#F4EFE6">Selva</span>
+          <span class="chip" style="--c:#CBEFD4;--t:#3F5A4F">Donaciones</span>
+          <span class="chip" style="--c:#D17A5B;--t:#000">Urgente</span>
+          <span class="chip" style="--c:#F4EFE6;--t:#3F5A4F;box-shadow:inset 0 0 0 1px rgba(63,90,79,.3)">Reptiles</span>
+        </div>
+        <span class="label">Pestañas</span>
+        <div class="tabs" role="tablist" aria-label="Ejemplo de pestañas"><span class="on" role="tab" aria-selected="true">Convivir</span><span role="tab">Rescatar</span><span role="tab">Rehabilitar</span></div>
+        <span class="label">Campo de formulario</span>
+        <div class="field"><label for="demo-correo">Correo electrónico</label><input id="demo-correo" type="email" placeholder="nombre@correo.com" autocomplete="off"></div>
+      </div>
+
+      <div class="cbox span2">
+        <span class="label">Cápsula de video y paso del proceso</span>
+        <div class="cwrap">
+          <article class="cap-card"><img src="assets/photos/ocelote.jpg" alt="" loading="lazy"><span class="dur">0:48</span><span class="play" aria-hidden="true"></span><div class="meta"><small>Convivir</small><b>Un ocelote en la ciudad</b></div></article>
+          <article class="cap-card"><img src="assets/photos/serpiente.jpg" alt="" loading="lazy" style="object-position:70% 50%"><span class="dur">1:02</span><span class="play" aria-hidden="true"></span><div class="meta"><small>Convivir</small><b>Qué hacer si aparece una serpiente</b></div></article>
+          <div style="flex:1 1 280px;display:grid;gap:12px;min-width:0">
+            <div class="step"><span class="n">1</span><div><b>Rescate</b><span class="small">Llegamos al lugar, evaluamos y trasladamos al animal.</span></div></div>
+            <div class="step"><span class="n">2</span><div><b>Atención veterinaria</b><span class="small">Revisión, tratamiento y primeras 48 horas de observación.</span></div></div>
+            <div class="step"><span class="n">3</span><div><b>Rehabilitación</b><span class="small">Meses de cuidado hasta que puede volver a su hábitat.</span></div></div>
+          </div>
+        </div>
+        <p class="small">Cápsulas en vertical 9:16 con la foto o un fotograma, duración arriba, etiqueta de eje y título abajo. Los textos de los pasos son de ejemplo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISTA PREVIA -->
+<section class="sec alt" id="vista-previa">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Todo junto</span>
+      <h2>Así se siente la portada del sitio</h2>
+      <p class="lead">Una muestra del arranque y del cierre con la identidad aplicada. Es solo dirección de arte: la estructura final de secciones se arma en el siguiente paso.</p>
+    </div>
+
+    <div class="browser">
+      <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>proyectosacha.org</span></div>
+      <div class="site-nav">
+        <svg class="logo" viewBox="0 0 1157 276" role="img" aria-label="Sacha"><use href="#sy-wordmark"/></svg>
+        <nav><span>Cápsulas</span><span>El proceso</span><span>Detrás de escena</span><span>Contacto</span></nav>
+        <a class="btn" href="#vista-previa">Donar</a>
+      </div>
+      <div class="site-hero">
+        <div class="copy">
+          <div class="where"><span class="chip">Guayaquil · Centro urbano</span><span class="chip">Santa Elena · Centro rural</span></div>
+          <h3>La ciudad también es hogar de fauna silvestre. Aprendamos a convivir.</h3>
+          <p>Rescatamos, curamos y devolvemos animales silvestres urbanos a su hábitat. Mira lo que realmente implica cada rescate.</p>
+          <div class="row"><a class="btn pri" href="#vista-previa">Donar ahora</a><a class="btn sec2" href="#vista-previa" style="color:var(--selva);border-color:var(--selva)">Ver cápsulas</a></div>
+        </div>
+        <div class="stage"><div class="arch"></div><img src="assets/mascot/sacha-saluda.webp" alt="" width="1228" height="1976" loading="lazy"></div>
+      </div>
+      <div class="site-foot">
+        <div><svg class="logo" viewBox="0 0 1157 438" role="img" aria-label="Proyecto Sacha"><use href="#sy-logo"/></svg><h4>Forma parte de una comunidad informada y empática.</h4></div>
+        <div>
+          <p style="margin-bottom:18px;font-size:17px">Tu aporte financia medicinas, traslados y rehabilitación. Tu tiempo y tu voz también salvan vidas.</p>
+          <div class="row"><a class="btn inv" href="#vista-previa">Donar</a><a class="btn vol" href="#vista-previa">Ser voluntario</a></div>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:12px">El titular y los textos salen del wireframe v1 de la landing.</p>
+  </div>
+</section>
+
+<!-- TOKENS -->
+<section class="sec" id="tokens">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Para desarrollo</span>
+      <h2>Tokens listos para usar</h2>
+      <p class="lead">Colores, tipografías y formas como variables CSS. El tema oscuro solo cambia fondos y textos; los colores de marca no se tocan.</p>
+    </div>
+    <div class="code" id="tok" tabindex="0" aria-label="Tokens CSS"><button class="copy-btn" id="copy" type="button">Copiar</button>:root {
+  --terracota: #D17A5B;   --crema: #F4EFE6;
+  --dorado: #AF7409;      --arena: #D9B97A;
+  --menta: #CBEFD4;       --selva: #3F5A4F;
+  --negro: #000000;
+
+  --font-display: "Oktah Round", ui-rounded, system-ui, sans-serif;
+  --font-text: "Myriad Pro", "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --r-sm: 10px;  --r-md: 20px;  --r-lg: 32px;  --r-pill: 999px;
+
+  /* semánticos, tema claro */
+  --bg: #F4EFE6;  --bg-alt: #EBE4D4;  --card: #FBF8F2;
+  --fg: #3F5A4F;  --fg-muted: #526459;  --logo-ink: #AF7409;
+}</div>
+  </div>
+</section>
+</main>
+
+<footer class="end">
+  <div class="wrap">
+    <svg class="logo" viewBox="0 0 1157 438" role="img" aria-label="Proyecto Sacha"><use href="#sy-logo"/></svg>
+    <span class="small">Dirección de arte · versión 1 · sin animación</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('copy'),box=document.getElementById('tok');
+  if(!btn||!box)return;
+  btn.addEventListener('click',function(){
+    var txt=box.textContent.replace(/^Copiar/,'').trim();
+    function done(m){btn.textContent=m;setTimeout(function(){btn.textContent='Copiar'},1600)}
+    function fallback(){var r=document.createRange();r.selectNodeContents(box);var s=window.getSelection();s.removeAllRanges();s.addRange(r);done('Seleccionado')}
+    try{navigator.clipboard.writeText(txt).then(function(){done('Copiado')},fallback)}catch(e){fallback()}
+  });
+})();
+</script>
