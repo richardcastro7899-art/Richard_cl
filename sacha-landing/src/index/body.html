@@ -9,13 +9,20 @@
   <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5l12 7.5-12 7.5z"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
   <symbol id="i-ext" viewBox="0 0 24 24"><path d="M9 5H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3M14 4h6v6M20 4l-9 9"/></symbol>
   <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4.5M12 17.2v.1"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
   <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
   <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.1"/></symbol>
-  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+  <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="7" cy="9" r="2"/><circle cx="12" cy="6.5" r="2"/><circle cx="17" cy="9" r="2"/><path d="M8 17c0-3 2-5 4-5s4 2 4 5c0 2-2 2.5-4 2.5S8 19 8 17z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-baby" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2 11h11l2-8H6.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></symbol>
 </svg>
 
 <header class="top" id="top">
@@ -24,7 +31,7 @@
     <nav id="nav" aria-label="Secciones"></nav>
     <div class="actions">
       <button class="btn urg sm rep" data-go="encontre">Reportar</button>
-      <button class="btn inv sm" data-go="donar">Donar</button>
+      <button class="btn pri sm" data-go="donar">Donar</button>
       <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
@@ -34,41 +41,72 @@
 
 <main>
 <!-- INICIO -->
-<section class="hero" id="inicio" aria-label="Inicio">
-  <div class="hero-media"><video id="heroVid" autoplay muted loop playsinline preload="auto" poster="assets/video/hero-poster.jpg" aria-hidden="true" tabindex="-1"></video></div>
-  <div class="hero-shade"></div>
-  <div class="hero-ctl">
-    <span class="ref" id="heroRef">Imagen de referencia</span>
-    <button class="vbtn" id="heroPause" aria-label="Pausar el video de fondo"><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg><span>Pausar video</span></button>
-  </div>
-  <div class="wrap hero-in">
+<section class="hero lt" id="inicio" aria-label="Inicio">
+  <div class="wrap hero-grid">
     <div class="hero-copy">
       <span class="eyebrow">Fundación Proyecto Sacha · Guayaquil, Ecuador</span>
-      <h1>Todos los días los ves. ¿Los <span class="pf felino">reconoces</span>?</h1>
-      <p class="lead">La fauna silvestre vive en Guayaquil y casi nadie la nota. Rescatamos, rehabilitamos y liberamos animales de la costa ecuatoriana. Si encontraste uno, empieza aquí.</p>
-      <div class="entry">
-        <button class="ent first" data-go="encontre"><em>Urgente</em><b>Encontré un animal</b><span>Qué hacer ahora y cómo avisar</span><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-        <button class="ent" data-go="videos"><b>Ver los videos</b><span>Convivencia, identidad y rescate</span><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-        <button class="ent" data-go="donar"><b>Quiero donar</b><span>Operar un año cuesta $350.000</span><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-      </div>
+      <h1>Todos los días los ves. <span class="l2">¿Los <span class="pf tone felino">reconoces</span>?</span></h1>
+      <p class="lead">Rescatamos, curamos y devolvemos a su hábitat la fauna silvestre de la costa. Mira lo que casi nunca se ve de un rescate y aprende qué hacer si encuentras un animal.</p>
+      <div class="cta"><button class="btn pri" data-go="videos"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Ver los videos</button><button class="btn urg" data-go="encontre">Encontré un animal</button></div>
+      <ul class="hero-meta"><li class="tag" style="--c:var(--dorado)">8 cápsulas</li><li class="tag" style="--c:var(--selva)">Videos y podcast</li><li class="tag" style="--c:var(--terracota)">Guía de rescate</li></ul>
     </div>
-    <div class="hero-sacha">
-      <div class="bubble"><b>Hola, soy Sacha.</b>¿Encontraste un animal silvestre? Te guío paso a paso.<br><button data-go="encontre">Empezar →</button></div>
-      <img src="assets/mascot/sacha-saluda.webp" alt="Sacha, la ocelote guía de la fundación, saluda con la pata" width="1228" height="1976" fetchpriority="high">
+    <div class="stage">
+      <div class="hill" aria-hidden="true"></div>
+      <figure class="hv">
+        <video id="heroVid" autoplay muted loop playsinline preload="auto" poster="assets/video/hero-poster.jpg" aria-hidden="true" tabindex="-1"></video>
+        <span class="badge">Tráiler · imagen de referencia</span>
+        <div class="hv-ui">
+          <button class="hv-play" data-hplay="trailer"><i><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></i>Ver videos</button>
+          <button class="vbtn" id="heroPause" aria-label="Pausar el video de fondo"><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg><span>Pausar</span></button>
+        </div>
+      </figure>
+      <div class="hs"><img class="hs-in" src="assets/mascot/sacha-saluda.webp" alt="Sacha, la ocelote guía de la fundación, saluda con la pata" width="1228" height="1976" fetchpriority="high"></div>
+      <div class="hbubble"><b>¡Hola! Soy Sacha.</b>Te muestro lo que pasa detrás de cada rescate.</div>
     </div>
   </div>
 </section>
 
 <!-- CIFRAS -->
-<section class="facts" aria-label="La fundación en cifras"><div class="wrap"><div class="grid" id="facts"></div></div></section>
+<section class="facts lt" aria-label="La fundación en cifras"><div class="wrap"><div class="grid" id="facts" data-stagger></div></div></section>
 
-<!-- ENCONTRÉ UN ANIMAL -->
-<section class="sec lt" id="encontre">
+<!-- VIDEOS -->
+<section class="sec up sv" id="videos">
   <div class="wrap">
     <div class="sec-head" data-rv>
-      <span class="eyebrow">Guía de acción</span>
-      <h2 class="h2">Encontré un animal silvestre. ¿Qué hago?</h2>
-      <p class="lead">Responde dos preguntas y te decimos qué hacer ahora, qué evitar y cómo avisar al equipo de rescate.</p>
+      <span class="eyebrow" style="--c:var(--arena)">Videos</span>
+      <h2 class="h2">Lo que casi nunca <em>se ve de un rescate</em></h2>
+      <p class="lead">Cápsulas verticales para ver en un minuto y videos horizontales para quedarse más tiempo. Toca una cápsula y se reproducen en orden, como historias.</p>
+    </div>
+    <div class="vhead">
+      <div><h3>Cápsulas</h3><p class="small">Videos verticales de uno a dos minutos</p></div>
+      <div class="tabs" id="capTabs" role="tablist" aria-label="Ejes de las cápsulas"></div>
+      <div class="arrows"><button class="arrow" id="reelPrev" aria-label="Ver cápsulas anteriores"><svg class="ic" aria-hidden="true"><use href="#i-left"/></svg></button><button class="arrow" id="reelNext" aria-label="Ver más cápsulas"><svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></button></div>
+    </div>
+  </div>
+  <div class="reels" id="reels" aria-label="Cápsulas en video"></div>
+  <div class="wrap">
+    <div class="hgrid" id="horizontales">
+      <div>
+        <div class="vhead" style="margin-bottom:14px"><div><h3>Videos horizontales</h3><p class="small">Historia, tráiler y podcast en video</p></div><div class="tabs" id="hTabs" role="tablist" aria-label="Tipo de video"></div></div>
+        <div class="player" id="pl-h"></div>
+        <div class="hinfo"><span class="label" id="hKick"></span><h3 id="hTitle"></h3><p id="hDesc"></p><div class="acts"><button class="btn inv" id="hShare"><svg class="ic" aria-hidden="true"><use href="#i-share"/></svg>Compartir</button><a class="btn line" href="#videos" data-noop>Canal de YouTube ↗</a></div></div>
+      </div>
+      <div class="hlist" id="hlist"></div>
+    </div>
+    <div class="more"><p>Las cápsulas también viven en nuestras redes, en cortes para cada plataforma.</p><button class="btn inv" data-go="redes">Ver redes →</button></div>
+  </div>
+</section>
+
+<!-- ENCONTRÉ UN ANIMAL -->
+<section class="sec up lt" id="encontre">
+  <div class="wrap">
+    <div class="tool-head">
+      <div class="sec-head" data-rv>
+        <span class="eyebrow" style="--c:var(--terracota)">Guía de acción</span>
+        <h2 class="h2">Encontré un animal. <em>¿Qué hago?</em></h2>
+        <p class="lead">Responde dos preguntas y Sacha te dice qué hacer ahora, qué evitar y cómo avisar al equipo de rescate.</p>
+      </div>
+      <figure class="isle-fig peek" data-rv><img src="assets/mascot/sacha-rescate.webp" alt="Sacha alimenta con biberón a una cría de oso hormiguero" width="736" height="1016" loading="lazy"><span class="tag">Urgente · rescate</span></figure>
     </div>
     <div class="tool" data-rv>
       <div class="tmain" id="tmain"></div>
@@ -80,43 +118,31 @@
   </div>
 </section>
 
-<!-- VIDEOS -->
-<section class="sec up dk" id="videos">
+<!-- EL RESCATE -->
+<section class="sec up alt" id="rescate">
   <div class="wrap">
     <div class="sec-head" data-rv>
-      <span class="eyebrow">Videos</span>
-      <h2 class="h2">Lo que casi nunca se ve de un rescate</h2>
-      <p class="lead">Ocho videos cortos en tres ejes. Se reproducen en orden y avanzan solos si dejas activado el autoplay.</p>
+      <span class="eyebrow">El recorrido de un rescate</span>
+      <h2 class="h2">Entregar al animal <em>es solo el comienzo</em></h2>
+      <p class="lead">Detrás de cada animal hay horas de trabajo médico, trámites, kilómetros y meses de cuidado. Cada paso tiene su cápsula.</p>
     </div>
-    <div class="caps">
-      <div class="reel" id="pl-cap"></div>
-      <div class="caps-side">
-        <div class="tabs" id="capTabs" role="tablist" aria-label="Ejes de los videos"></div>
-        <div class="now"><span class="label" id="capKick"></span><h3 id="capTitle"></h3><p id="capDesc"></p></div>
-        <div class="acts">
-          <button class="btn line" id="capPrev">← Anterior</button>
-          <button class="btn line" id="capNext">Siguiente →</button>
-          <button class="switch" id="autoplay" aria-pressed="true"><i></i>Autoplay</button>
-          <button class="btn inv" id="capShare">Compartir</button>
-        </div>
-        <div><p class="label" id="relHead" style="margin-bottom:12px"></p><div class="eplist" id="eplist"></div></div>
-      </div>
+    <ol class="journey" id="journey"></ol>
+    <div class="jfoot" data-rv>
+      <div class="jcard"><span class="label">Trabajamos con</span><ul class="allies" id="allies"></ul><p class="small">Cada ingreso se informa a la autoridad ambiental y la liberación se coordina con ella.</p></div>
+      <div class="jcard" id="alert"></div>
     </div>
-    <div class="more"><p>El mismo contenido, en cortes verticales, vive también en nuestras redes.</p><button class="btn inv" data-go="redes">Ver redes →</button></div>
   </div>
 </section>
 
-<!-- EL RESCATE -->
-<section class="sec up lt" id="rescate">
-  <div class="wrap proc">
-    <div class="proc-side" data-rv>
-      <span class="eyebrow">El rescate real</span>
-      <h2 class="h2">Entregar al animal no es el final. Es el comienzo.</h2>
-      <p class="lead">Detrás de cada animal hay horas de trabajo médico, trámites, kilómetros y meses de cuidado.</p>
-      <ul class="nodes" id="nodes"></ul>
-      <div class="allies"><span class="label">Trabajamos con</span><ul id="allies"></ul></div>
+<!-- HISTORIAS -->
+<section class="sec up lt" id="historias">
+  <div class="wrap">
+    <div class="sec-head" data-rv>
+      <span class="eyebrow" style="--c:var(--terracota)">Historias de rescate</span>
+      <h2 class="h2">Casos reales <em>de la costa</em></h2>
+      <p class="lead">Animales atendidos o reportados en Guayas y Santa Elena, contados por la prensa. Pronto podrás apadrinar a un paciente y seguir su recuperación.</p>
     </div>
-    <div class="steps" id="steps"></div>
+    <div class="stories" id="stories" data-stagger></div>
   </div>
 </section>
 
@@ -125,7 +151,7 @@
   <div class="wrap">
     <div class="sec-head" data-rv>
       <span class="eyebrow">Detrás de escena</span>
-      <h2 class="h2">El trabajo, tal como es</h2>
+      <h2 class="h2">El trabajo, <em>tal como es</em></h2>
       <p class="lead">Fotografía técnica y veterinaria. Toca una foto para ampliarla.</p>
     </div>
     <div class="filters" id="filters" role="group" aria-label="Filtrar fotos"></div>
@@ -138,20 +164,28 @@
 <section class="sec up lt" id="nosotros">
   <div class="wrap">
     <div class="who">
-      <figure class="sfig" data-rv><div class="arc"></div><img src="assets/mascot/sacha-saluda.webp" alt="Sacha, mascota de la fundación" width="1228" height="1976" loading="lazy"><figcaption><span class="tag">Mascota de la fundación</span></figcaption></figure>
+      <figure class="mcard" data-rv><div class="hill"></div><img class="in" src="assets/mascot/sacha-saluda.webp" alt="Sacha, mascota de la fundación" width="1228" height="1976" loading="lazy"></figure>
       <div class="who-copy" data-rv>
         <span class="eyebrow">Quiénes somos</span>
-        <h2 class="h2">Una cría de ocelote y la fundación que nació de ella</h2>
-        <div class="body" id="story"></div>
-        <ol class="tl" id="timeline"></ol>
-        <div class="player" id="pl-sacha"></div>
+        <p class="hola">¡Hola!<small>Soy Sacha</small></p>
+        <p class="lead">Soy una felina curiosa con alma de exploradora. Te acompaño por todo el sitio para mostrarte lo que pasa detrás de un rescate.</p>
+        <dl class="ficha" id="ficha"></dl>
       </div>
+    </div>
+
+    <div class="storyrow">
+      <div class="body" data-rv>
+        <span class="eyebrow" style="--c:var(--terracota)">La historia real</span>
+        <h3>Una cría de ocelote y la fundación que nació de ella</h3>
+        <div id="story" style="display:grid;gap:14px"></div>
+      </div>
+      <ol class="tl" id="timeline" data-rv></ol>
     </div>
 
     <div class="where-block" id="ubicacion">
       <div class="sec-head" data-rv>
-        <span class="eyebrow">Dónde estamos</span>
-        <h2 class="h2">En la costa, no en la Amazonía</h2>
+        <span class="eyebrow" style="--c:var(--menta)">Dónde estamos</span>
+        <h2 class="h2">En la costa, <em>no en la Amazonía</em></h2>
         <p class="lead">Sacha significa «selva» en kichwa, y por eso muchos creen que estamos lejos. Nuestros centros están en Guayaquil y en la provincia de Santa Elena.</p>
       </div>
       <div class="maps" data-rv>
@@ -171,56 +205,40 @@
 <!-- FAUNA -->
 <section class="sec up alt" id="fauna">
   <div class="wrap">
-    <div class="sec-head" data-rv>
-      <span class="eyebrow">Guía de campo</span>
-      <h2 class="h2">Fauna que vive a tu alrededor</h2>
-      <p class="lead">Reconocerla es el primer paso para cuidarla. Cada ficha te lleva a la guía de acción con ese tipo de animal ya elegido.</p>
+    <div class="fauna-head">
+      <div class="sec-head" data-rv>
+        <span class="eyebrow" style="--c:var(--selva)">Guía de campo</span>
+        <h2 class="h2">Todo sobre <em>tus vecinos silvestres</em></h2>
+        <p class="lead">Reconocerlos es el primer paso para cuidarlos. Cada ficha te lleva a la guía de acción con ese tipo de animal ya elegido.</p>
+      </div>
+      <figure class="arch-fig peek" data-rv><img src="assets/mascot/sacha-dato.webp" alt="Sacha sostiene una pequeña serpiente y levanta el pulgar" width="854" height="1032" loading="lazy"></figure>
     </div>
     <div class="filters" id="ffilters" role="group" aria-label="Filtrar por grupo"></div>
     <div class="fgrid3" id="fauna-list"></div>
-    <div class="myths" id="myths"></div>
+    <div class="myths" id="myths" data-stagger></div>
     <div class="faq-wrap">
-      <h3>Preguntas frecuentes</h3>
-      <div class="faq" id="faq"></div>
-    </div>
-    <div class="news">
-      <div><span class="label">Fuentes y lectura</span><p class="small" style="margin-top:6px;max-width:62ch">Reportajes y notas que respaldan los datos de esta página. Se abren en el sitio de cada medio.</p></div>
-      <ul id="news"></ul>
-    </div>
-  </div>
-</section>
-
-<!-- PODCAST -->
-<section class="sec up lt" id="podcast">
-  <div class="wrap">
-    <div class="sec-head" data-rv>
-      <span class="eyebrow">Podcast en video</span>
-      <h2 class="h2">Las voces del equipo</h2>
-      <p class="lead">Conversaciones largas con quienes rescatan, curan y liberan. Alojado en YouTube.</p>
-    </div>
-    <div class="pod" data-rv>
-      <div>
-        <div class="player" id="pl-pod"></div>
-        <div class="pod-info"><h3 id="podTitle"></h3><p class="small">Invitado/a, descripción del episodio y duración por confirmar.</p><div><a class="btn pri" href="#podcast" data-noop>Suscribirse en YouTube ↗</a></div></div>
-      </div>
-      <div class="eps" id="eps"></div>
+      <h3 data-rv>Preguntas frecuentes</h3>
+      <div class="faq" id="faq" data-rv></div>
     </div>
   </div>
 </section>
 
 <!-- DONAR -->
-<section class="sec up dk" id="donar">
+<section class="sec up mt" id="donar">
   <div class="wrap">
-    <div class="sec-head" data-rv>
-      <span class="eyebrow">Ayudar</span>
-      <h2 class="h2">Operar un año cuesta <span class="pf manchas" style="display:inline-block;padding-bottom:.08em">$350.000</span></h2>
-      <p class="lead">Hoy las donaciones no alcanzan. Cada aporte sostiene la hospitalización, los traslados y la rehabilitación de los animales.</p>
+    <div class="give-top">
+      <div class="sec-head" data-rv>
+        <span class="eyebrow">Donaciones</span>
+        <h2 class="h2">Operar un año cuesta <em><span class="pf tone manchas" style="display:inline-block;padding-bottom:.06em">$350.000</span></em></h2>
+        <p class="lead">Hoy las donaciones no alcanzan. Cada aporte sostiene la hospitalización, los traslados y la rehabilitación de los animales.</p>
+      </div>
+      <figure class="don-fig peek" data-rv><img src="assets/mascot/sacha-donar.webp" alt="Sacha sostiene su sombrero con las dos patas, pidiendo ayuda" width="946" height="1073" loading="lazy"></figure>
     </div>
     <div class="give" data-rv>
       <div class="gv" id="give"></div>
       <div class="ways">
-        <button class="way" data-go="encontre"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg></span><b>Avisa</b><p>Si ves un animal en riesgo, mantén la distancia y repórtalo. Eres los ojos del rescate.</p><u>Abrir la guía de acción</u></button>
-        <button class="way" id="shareSite"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-share"/></svg></span><b>Comparte</b><p>Cuéntales a otros lo que aprendiste. Reconocer a la fauna también se contagia.</p><u>Copiar el enlace de esta página</u></button>
+        <button class="way" data-go="encontre" style="--c:var(--terracota)"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg></span><b>Avisa</b><p>Si ves un animal en riesgo, mantén la distancia y repórtalo. Eres los ojos del rescate.</p><u>Abrir la guía de acción</u></button>
+        <button class="way" id="shareSite" style="--c:var(--arena)"><span class="ico"><svg class="ic" aria-hidden="true"><use href="#i-share"/></svg></span><b>Comparte</b><p>Comparte una cápsula: reconocer a la fauna también se contagia.</p><u>Copiar el enlace de esta página</u></button>
         <div class="gv" id="conv"></div>
       </div>
     </div>
@@ -232,16 +250,16 @@
   <div class="wrap">
     <div class="sec-head" data-rv>
       <span class="eyebrow">Redes</span>
-      <h2 class="h2">Síguenos donde publicamos cada día</h2>
-      <p class="lead">Videos verticales, fotos del trabajo y avisos de la comunidad.</p>
+      <h2 class="h2">Síguenos <em>donde publicamos cada día</em></h2>
+      <p class="lead">Videos verticales, fotos del trabajo y avisos de liberaciones.</p>
     </div>
-    <div class="soc" id="soc" data-rv></div>
+    <div class="soc" id="soc" data-stagger></div>
   </div>
 </section>
 </main>
 
 <footer class="foot" id="contacto">
-  <img class="peek" src="assets/mascot/sacha-saluda.webp" alt="" aria-hidden="true" width="1228" height="1976" loading="lazy">
+  <img class="foot-sacha peek" data-rv src="assets/mascot/sacha-dato.webp" alt="" aria-hidden="true" width="854" height="1032" loading="lazy">
   <div class="wrap">
     <div class="big"><svg class="logo" viewBox="0 0 1157 438" role="img" aria-label="Proyecto Sacha, conservación de fauna silvestre"><use href="#sy-logo"/></svg></div>
     <div class="cols">
@@ -257,9 +275,16 @@
 <button class="btn urg fab" id="fab" data-go="encontre">Reportar un animal</button>
 <div class="toast" id="toast" role="status"></div>
 
+<div class="story" id="story-v" role="dialog" aria-modal="true" aria-label="Cápsula en video" hidden>
+  <button class="st-nav" id="stPrev" aria-label="Cápsula anterior"><svg class="ic" aria-hidden="true"><use href="#i-left"/></svg></button>
+  <div class="st-frame" id="stFrame"></div>
+  <button class="st-nav" id="stNext" aria-label="Cápsula siguiente"><svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></button>
+  <button class="st-close" id="stClose" aria-label="Cerrar"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+</div>
+
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Foto ampliada">
   <div class="box">
-    <div class="top2"><span class="small" id="lbN"></span><button class="btn line sm" id="lbClose">Cerrar ✕</button></div>
+    <div class="top2"><span class="small" id="lbN" style="color:var(--on-dk2)"></span><button class="btn inv sm" id="lbClose">Cerrar ✕</button></div>
     <div class="view" id="lbView"><button class="arrow l" id="lbPrev" aria-label="Anterior">←</button><button class="arrow r" id="lbNext" aria-label="Siguiente">→</button></div>
     <h3 id="lbCap"></h3><p class="pend" id="lbCat"></p>
   </div>
