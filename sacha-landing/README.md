@@ -9,12 +9,17 @@ Paso 1 · Dirección de arte (sin animación).
 
 Pendiente de confirmar: HEX oficial del menta (#C5FFE6 del manual vs #CBEFD4 usado en láminas) y licencia web de Myriad Pro.
 
-## Paso 2 · Landing (`index.html`)
+## Paso 2 · Landing (`index.html`) · «Todos los días los ves. ¿Los reconoces?»
 
-Fuente en `src/index.src.html`. Basada en el wireframe v3 con la dirección de arte aplicada.
+Fuente en `src/index.src.html`. Todo el contenido editable (textos, ejes de cápsulas, pasos, mitos, especies, datos de donación) está en el bloque `CONTENIDO EDITABLE` del script.
 
-- Videos: en el `<script>`, el objeto `VIDEOS` (hero, sacha, 8 cápsulas, 2 podcast). Vacío = reproductor de maqueta; con una ruta .mp4 usa el video real.
-- Textos marcados "por confirmar": datos de Sacha, número de emergencia, direcciones, teléfono, episodios del podcast.
-- Donaciones: el paso final muestra los datos de transferencia del Canva. No procesa pagos.
-- Voluntariado: valida y confirma en pantalla, pero no envía datos a ningún lado todavía.
-- Galería: marcos con patrones hasta tener las fotos reales.
+Decisiones que salen del brief y la entrevista con la directora (Drive: INTEGRADORA - PROYECTO SACHA):
+- La gente no reconoce la fauna urbana y cree que el rescate termina al entregar al animal: hero «reconocer», sección de especies y de proceso.
+- Creen que Sacha está en la Amazonía: bloque «Estamos en Guayaquil».
+- No hay voluntariado externo (seguridad, animales de allanamientos): el formulario es de convenios con universidades.
+- El WhatsApp es interno y no sirve como línea pública: el canal de reporte queda por definir.
+- Presupuesto operativo anual de $350.000: se usa como argumento de donación.
+- Estética tomada de «Referencias narrativas Sacha»: macro y fondo verde bosque, dato hecho imagen (pixel), Sacha solo como guía.
+
+Videos: objeto `VIDEOS` (vacío = reproductor de maqueta). Fotos: rutas en `SPECIES`. Las fotos de rana, serpiente y ocelote son de referencia del manual y deben reemplazarse por fotos de especies locales.
+Donaciones y convenios son maqueta: no procesan pagos ni envían datos.
