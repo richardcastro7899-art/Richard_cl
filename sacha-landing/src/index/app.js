@@ -9,7 +9,7 @@ var VIDEOS={hero:['assets/video/hero.mp4','assets/video/hero.webm'],caps:['','',
 var MOCK_SECONDS=8;           /* duración de cada cápsula de maqueta en el visor */
 var YEAR_COST=350000;
 
-var NAV=[['Videos','videos'],['Encontré un animal','encontre'],['El rescate','rescate'],['Historias','historias'],['Nosotros','nosotros'],['Fauna','fauna']];
+var NAV=[['Videos','videos'],['¿Mito o realidad?','quiz'],['Encontré un animal','encontre'],['El rescate','rescate'],['Historias','historias'],['Nosotros','nosotros'],['Fauna','fauna']];
 
 var FACTS=[
  {n:2018,plain:true,pat:'felino',t:'Sacha, una cría de ocelote, llega a manos de la Dra. Eliana Molineros tras ser rescatada de una tienda en Vinces. De ahí nace la fundación.',s:'Primicias',u:'https://www.primicias.ec/noticias/tecnologia/sacha-ocelote-espacio-cuidar-fauna-silvestre/'},
@@ -125,6 +125,14 @@ var FAUNA=[
  {pre:'Todo sobre la',n:'lechuza',full:'Lechuza de campanario',l:'Tyto alba',g:'Ave',ani:'ave',pat:'manchas',t:'Cazadora nocturna que se alimenta sobre todo de roedores. Anida en techos y construcciones.'}
 ];
 var GROUP_C={'Mamífero':'var(--dorado)','Ave':'var(--selva)','Reptil':'var(--terracota)'};
+var QUIZ=[
+ {q:'La zarigüeya transmite la rabia y es peligrosa.',a:false,t:'Es inofensiva, huye de las personas y ayuda a controlar plagas.',s:'Expreso · UTPL'},
+ {q:'Si encuentras una cría sola, siempre está abandonada.',a:false,t:'Muchas veces su madre está cerca y no se acerca si hay gente. Obsérvala de lejos y avisa antes de tocarla.'},
+ {q:'Darle leche a un animal silvestre lo ayuda a recuperarse.',a:false,t:'No: puede enfermarlo o ahogarlo. Nunca le des comida ni bebida; avisa al equipo.'},
+ {q:'Cada animal que llega a la fundación se informa al Ministerio del Ambiente.',a:true,t:'Cada ingreso se informa a la autoridad ambiental y a la Policía de Medio Ambiente, y la liberación se coordina con ellos.'},
+ {q:'Proyecto Sacha está en la Amazonía.',a:false,t:'Estamos en la costa: en Guayaquil y en la provincia de Santa Elena. Sacha significa «selva» en kichwa.'},
+ {q:'Operar la fundación durante un año cuesta unos $350.000.',a:true,t:'Y hoy las donaciones no alcanzan para cubrirlo.'}
+];
 var MYTHS=[
  ['La zarigüeya es peligrosa y transmite la rabia.','Es inofensiva y ayuda a controlar plagas. Que transmita la rabia es un mito.'],
  ['Si lo llevo a la fundación, el problema se resuelve.','El rescate recién empieza: hospitalización, trámites, traslado y meses de cuidado.'],
@@ -177,7 +185,7 @@ document.addEventListener('click',function(e){
   var n=e.target.closest('[data-noop]');if(n){e.preventDefault();toast('Este enlace se conecta cuando esté definido')}
   var c=e.target.closest('[data-copy-num]');if(c){var v=c.getAttribute('data-copy-num');copy(v,v+' copiado')}
 });
-var SPY=[['inicio',null],['videos','videos'],['encontre','encontre'],['rescate','rescate'],['historias','historias'],['galeria','historias'],['nosotros','nosotros'],['fauna','fauna'],['donar',null],['redes',null],['contacto',null]];
+var SPY=[['inicio',null],['videos','videos'],['quiz','quiz'],['encontre','encontre'],['rescate','rescate'],['historias','historias'],['galeria','historias'],['nosotros','nosotros'],['fauna','fauna'],['donar',null],['redes',null],['contacto',null]];
 var lastAct='',lastShow=null;
 function onScroll(){
   var y=window.scrollY,h=document.documentElement.scrollHeight-window.innerHeight,act=null;
@@ -191,6 +199,57 @@ function onScroll(){
 }
 window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll);
 
+/* ======================  INICIO: MAZO DE CÁPSULAS, PALABRA CON PIEL Y OJOS QUE MIRAN  ====================== */
+var DECK=[{k:'trailer',say:'Este es el tráiler. Toca y míralo completo.'},{k:0,say:'¿Sabías que la zarigüeya es inofensiva? Mira la cápsula 1.'},{k:1,say:'Si encuentras una cría sola, mira esta cápsula antes de tocarla.'},{k:5,say:'Así es un rescate en campo, sin filtros.'},{k:7,say:'Mi momento favorito: cuando vuelven a su hábitat.'}];
+var DK={order:DECK.map(function(d,i){return i}),paused:false,timer:null};
+(function(){
+  var deck=$('#deck');
+  DECK.forEach(function(d,i){if(d.k==='trailer')return;var c=CAPS[d.k];
+    deck.insertAdjacentHTML('beforeend','<button class="dk-card" data-dk="'+i+'" aria-label="Ver cápsula '+(d.k+1)+': '+esc(c.pre+' '+c.title)+'">'+capCover(d.k,true)+'<span class="dk-pl">'+ico('i-play')+'</span></button>')});
+  $('.dk-card.trailer').setAttribute('data-dk','0');$('.dk-card.trailer').insertAdjacentHTML('beforeend','<span class="dk-pl">'+ico('i-play')+'</span>');
+  $('#deckDots').innerHTML=DECK.map(function(){return '<i></i>'}).join('');
+  dkPaint();
+  if(!reduced)DK.timer=setInterval(function(){if(!DK.paused&&!ST.open)dkNext()},4200);
+})();
+function dkPaint(){
+  var cards=$$('#deck .dk-card');
+  DK.order.forEach(function(idx,pos){var el=cards.filter(function(c){return +c.getAttribute('data-dk')===idx})[0];if(!el)return;el.style.setProperty('--i',Math.min(pos,3));el.style.visibility=pos>3?'hidden':'visible';el.tabIndex=pos===0?0:-1;el.setAttribute('aria-hidden',pos===0?'false':'true')});
+  $$('#deckDots i').forEach(function(d,i){d.classList.toggle('on',i===DK.order[0])});
+  var say=$('#hsay');if(say)say.textContent=DECK[DK.order[0]].say;
+}
+function dkNext(){
+  var first=DK.order[0],el=$$('#deck .dk-card').filter(function(c){return +c.getAttribute('data-dk')===first})[0];
+  if(el&&!reduced){el.classList.add('out');setTimeout(function(){el.classList.remove('out');DK.order.push(DK.order.shift());dkPaint()},420)}
+  else{DK.order.push(DK.order.shift());dkPaint()}
+}
+$('#deckNext').addEventListener('click',dkNext);
+document.addEventListener('click',function(e){var c=e.target.closest('[data-dk]');if(!c)return;var d=DECK[+c.getAttribute('data-dk')];
+  var idx=+c.getAttribute('data-dk');if(idx!==DK.order[0]){while(DK.order[0]!==idx)DK.order.push(DK.order.shift());dkPaint();return}
+  if(d.k==='trailer'){S.h=1;S.htab=0;renderH();go('horizontales');setTimeout(function(){var v=$('#pl-h video');if(v){var p=v.play();if(p&&p.catch)p.catch(function(){})}},700)}else openStory(d.k)});
+/* la palabra «reconoces» cambia de piel cada pocos segundos */
+(function(){
+  if(reduced)return;var P=['felino','manchas','selva','rayas'],i=0,kb=$('#kw .kb'),kt=$('#kw .kt');
+  setInterval(function(){if(DK.paused)return;i=(i+1)%P.length;var n=P[(i+1)%P.length];
+    kb.className='pf tone '+P[i]+' kb';kt.className='pf tone '+n+' kt';void kt.offsetWidth;kt.classList.add('go')},2800);
+  kt.classList.add('go');
+})();
+/* los ojos de las dos A del logo siguen el puntero */
+(function(){
+  if(reduced||!window.matchMedia('(pointer:fine)').matches)return;
+  var logos=$$('svg.logo'),raf=0,mx=0,my=0;
+  function upd(){raf=0;logos.forEach(function(l){var r=l.getBoundingClientRect();if(!r.width||r.bottom<0||r.top>innerHeight)return;
+    var dx=mx-(r.left+r.width/2),dy=my-(r.top+r.height/2),d=Math.hypot(dx,dy)||1,k=Math.min(1,d/320)*13;
+    l.style.setProperty('--px',(dx/d*k).toFixed(1)+'px');l.style.setProperty('--py',(dy/d*k).toFixed(1)+'px')})}
+  document.addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(upd)},{passive:true});
+})();
+/* inclinación suave de las tarjetas de video bajo el puntero */
+(function(){
+  if(reduced||!window.matchMedia('(pointer:fine)').matches)return;
+  document.addEventListener('pointermove',function(e){var c=e.target.closest&&e.target.closest('.rc');if(!c)return;var r=c.getBoundingClientRect();
+    c.style.setProperty('--ry',((e.clientX-r.left)/r.width*10-5).toFixed(1)+'deg');c.style.setProperty('--rx',(5-(e.clientY-r.top)/r.height*10).toFixed(1)+'deg')},{passive:true});
+  document.addEventListener('pointerout',function(e){var c=e.target.closest&&e.target.closest('.rc');if(c&&!c.contains(e.relatedTarget)){c.style.removeProperty('--rx');c.style.removeProperty('--ry')}});
+})();
+
 /* ======================  INICIO: TRÁILER SIN AUDIO  ====================== */
 (function(){
   var v=$('#heroVid'),b=$('#heroPause'),lab=$('span',b),use=$('use',b),manual=false,auto=false,srcs=[].concat(VIDEOS.hero||[]),fails=0;
@@ -198,16 +257,16 @@ window.addEventListener('scroll',onScroll,{passive:true});window.addEventListene
   if(reduced)v.removeAttribute('autoplay');
   v.innerHTML=srcs.map(function(u){return '<source src="'+u+'" type="video/'+(/\.webm$/.test(u)?'webm':'mp4')+'">'}).join('');
   v.load();
-  function ui(p){lab.textContent=p?'Pausar':'Reproducir';b.setAttribute('aria-label',p?'Pausar el video de fondo':'Reproducir el video de fondo');use.setAttribute('href',p?'#i-pause':'#i-play')}
+  function ui(p){lab.textContent=p?'Pausar':'Reproducir';b.setAttribute('aria-label',p?'Pausar el video y el carrusel':'Reproducir el video y el carrusel');use.setAttribute('href',p?'#i-pause':'#i-play')}
   function play(){var p=v.play();if(p&&p.catch)p.catch(function(){})}
   v.addEventListener('play',function(){ui(true)});v.addEventListener('pause',function(){ui(false)});
   v.addEventListener('error',function(){if(++fails>=srcs.length)b.style.display='none'},true);
   ui(false);
-  b.addEventListener('click',function(){manual=true;if(v.paused)play();else v.pause()});
+  b.addEventListener('click',function(){manual=true;if(v.paused){play();DK.paused=false}else{v.pause();DK.paused=true}});
   if('IntersectionObserver' in window)new IntersectionObserver(function(es){
     if(!es[0].isIntersecting){if(!v.paused){auto=true;v.pause()}}
     else if(auto&&!manual){auto=false;play()}
-  },{threshold:.05}).observe($('.hv'));
+  },{threshold:.05}).observe($('#deck'));
 })();
 
 /* ======================  CIFRAS (cuentan al aparecer)  ====================== */
@@ -223,7 +282,7 @@ function countUp(el){
 
 /* ======================  CÁPSULAS (verticales)  ====================== */
 function capList(){return CAPS.map(function(c,i){return i}).filter(function(i){return S.ctab<0||CAPS[i].tab===S.ctab})}
-function capCover(i){var c=CAPS[i],t=TABS[c.tab];return plate({pat:t.pat,bg:t.bg,pre:c.pre,title:c.title,m:c.m})}
+function capCover(i,noM){var c=CAPS[i],t=TABS[c.tab];return plate({pat:t.pat,bg:t.bg,pre:c.pre,title:c.title,m:noM?'':c.m})}
 function renderReels(){
   $('#capTabs').innerHTML=[{name:'Todas'}].concat(TABS).map(function(t,k){var i=k-1,n=i<0?CAPS.length:CAPS.filter(function(x){return x.tab===i}).length;
     return '<button class="tab" role="tab" aria-selected="'+(S.ctab===i)+'" data-ctab="'+i+'">'+t.name+' <small>('+n+')</small></button>'}).join('');
@@ -413,7 +472,7 @@ $('#journey').innerHTML=STEPS.map(function(s,i){
 $('#allies').innerHTML=ALLIES.map(function(a){return '<li class="tag" style="--c:'+a[1]+'">'+a[0]+'</li>'}).join('');
 function journeySpy(){
   var j=$('#journey'),r=j.getBoundingClientRect(),vh=window.innerHeight,p=Math.max(0,Math.min(1,(vh*.8-r.top)/(r.height+vh*.25)));
-  j.style.setProperty('--p',p.toFixed(3));
+  j.style.setProperty('--p',p.toFixed(3));$('#jwrap').style.setProperty('--p',p.toFixed(3));
   $$('.jstep',j).forEach(function(el,i){el.classList.toggle('on',p>=i/STEPS.length+.04)});
 }
 function renderAlert(){
@@ -480,8 +539,30 @@ function renderFauna(){
     return '<article class="fcard" data-rv><div class="cov">'+plate({pat:f.pat,pre:f.pre,title:f.n})+'</div><div class="in"><span class="tag" style="--c:'+GROUP_C[f.g]+'">'+f.g+'</span><h3 style="font-size:22px;font-weight:800">'+f.full+'</h3><em>'+f.l+'</em><p>'+esc(f.t)+'</p><div class="foot"><button class="btn line sm" data-fani="'+f.ani+'">Si lo encuentras</button>'+(f.s?'<span class="src">Fuente: '+(f.u?'<a href="'+f.u+'" target="_blank" rel="noopener">'+f.s+'</a>':f.s)+'</span>':'')+'</div></div></article>'}).join('');
 }
 document.addEventListener('click',function(e){var b=e.target.closest('[data-fg]');if(b){S.fg=b.getAttribute('data-fg');renderFauna()}});
-$('#myths').innerHTML=MYTHS.map(function(m,i){return '<button class="myth" data-myth data-rv style="--d:'+(i*.08)+'s" aria-label="Mito: '+esc(m[0])+' Toca para ver la realidad"><span class="fc"><span class="side front"><span class="k">Mito</span><q>'+esc(m[0])+'</q><small>Toca para ver la realidad ↻</small></span><span class="side back"><span class="k">Realidad</span><p>'+esc(m[1])+'</p><small>Toca para volver ↻</small></span></span></button>'}).join('');
-document.addEventListener('click',function(e){var b=e.target.closest('[data-myth]');if(b)b.classList.toggle('flip')});
+/* ======================  QUIZ: ¿MITO O REALIDAD?  ====================== */
+var Q={i:0,ans:[]};
+function renderQuiz(){
+  var el=$('#quizBox'),done=Q.i>=QUIZ.length,ok=Q.ans.filter(Boolean).length,answered=Q.ans.length>Q.i;
+  var pose=done?(ok>=5?'sacha-dato':'sacha-saluda'):(answered?(Q.ans[Q.i]?'sacha-dato':'sacha-donar'):'sacha-saluda');
+  var bar='<div class="qbar" aria-hidden="true">'+QUIZ.map(function(x,i){return '<i class="'+(i<Q.ans.length?(Q.ans[i]?'ok':'ko'):(i===Q.i?'cur':''))+'"></i>'}).join('')+'</div>';
+  var body;
+  if(done){
+    body='<span class="label" style="color:var(--on-dk2)">Resultado</span><p class="qtext">'+ok+' de '+QUIZ.length+'. '+(ok===QUIZ.length?'¡Reconoces a tus vecinos!':ok>=4?'¡Muy bien! Ya casi.':'Ahora ya sabes un poco más.')+'</p><p style="color:var(--on-dk)">Comparte el quiz para que más personas reconozcan a la fauna de la costa.</p><div class="qbtns"><button class="btn inv" id="qShare">'+ico('i-share')+'Compartir resultado</button><button class="btn line" id="qAgain" style="color:var(--crema)">Jugar de nuevo</button><button class="btn mint" data-go="fauna">Ver la guía de campo</button></div>';
+  }else{
+    var x=QUIZ[Q.i];
+    body='<span class="label" style="color:var(--on-dk2)">Frase '+(Q.i+1)+' de '+QUIZ.length+'</span><p class="qtext" id="qText" tabindex="-1">«'+esc(x.q)+'»</p>'+
+     (answered?'<div class="qfb '+(Q.ans[Q.i]?'ok':'ko')+'"><b>'+(Q.ans[Q.i]?'¡Exacto! ':'Casi. ')+(x.a?'Es realidad.':'Es un mito.')+'</b><p>'+esc(x.t)+'</p>'+(x.s?'<span class="small">Fuente: '+x.s+'</span>':'')+'</div><div class="qbtns"><button class="btn inv" id="qNext">'+(Q.i<QUIZ.length-1?'Siguiente frase':'Ver resultado')+' '+ico('i-arrow')+'</button></div>'
+     :'<div class="qbtns"><button class="btn urg" data-qa="0">Mito</button><button class="btn mint" data-qa="1">Realidad</button></div>');
+  }
+  el.innerHTML='<figure class="qfig"><span class="qscore">'+ok+' / '+QUIZ.length+'</span><img src="assets/mascot/'+pose+'.webp" alt="Sacha reacciona a tu respuesta"></figure><div class="qbody">'+bar+body+'</div>';
+}
+document.addEventListener('click',function(e){
+  var a=e.target.closest('[data-qa]');if(a){Q.ans[Q.i]=(a.getAttribute('data-qa')==='1')===QUIZ[Q.i].a;renderQuiz();var n=$('#qNext');if(n)n.focus({preventScroll:true});return}
+  if(e.target.closest('#qNext')){Q.i++;renderQuiz();var t=$('#qText')||$('#qShare');if(t)t.focus({preventScroll:true});return}
+  if(e.target.closest('#qAgain')){Q={i:0,ans:[]};renderQuiz();return}
+  if(e.target.closest('#qShare')){var ok=Q.ans.filter(Boolean).length;copy('Saqué '+ok+' de '+QUIZ.length+' en «¿Mito o realidad?» de Proyecto Sacha. ¿Reconoces a la fauna de la costa? '+location.href.split('#')[0]+'#quiz','Resultado copiado')}
+});
+
 function renderFaq(){
   $('#faq').innerHTML=FAQS.map(function(f,i){var o=S.faq===i;return '<div class="item'+(o?' open':'')+'"><h4><button data-faq="'+i+'" aria-expanded="'+o+'" id="fq'+i+'" aria-controls="fa'+i+'"><span>'+f[0]+'</span><span class="pm" aria-hidden="true">'+(o?'−':'+')+'</span></button></h4><div class="ans" id="fa'+i+'" role="region" aria-labelledby="fq'+i+'">'+f[1]+'</div></div>'}).join('');
 }
@@ -508,13 +589,13 @@ function renderGive(){
   }
   el.innerHTML='<span class="label">Elige cómo aportar</span><h3>Dona a Proyecto Sacha</h3>'+
    '<div class="seg" role="group" aria-label="Tipo de aporte">'+FREQ.map(function(x,i){return '<button data-freq="'+i+'" aria-pressed="'+(S.freq===i)+'">'+x+'</button>'}).join('')+'</div>'+
-   '<div class="amts" role="group" aria-label="Monto">'+AMTS.map(function(x,i){return '<button data-amt="'+i+'" aria-pressed="'+(S.amt===i)+'">$'+x+'</button>'}).join('')+'<input id="customAmt" type="number" min="1" inputmode="decimal" placeholder="Otro $" aria-label="Otro monto" value="'+esc(S.custom)+'"></div>'+
+   '<div class="bigamt" id="bigAmt">'+money(a)+'<small>'+(S.freq?'/ mes':'una vez')+'</small></div>'+'<div class="amts" role="group" aria-label="Montos sugeridos">'+AMTS.map(function(x,i){return '<button data-amt="'+i+'" aria-pressed="'+(S.amt===i)+'">$'+x+'</button>'}).join('')+'</div>'+'<label class="range"><span class="label">O desliza para elegir otro monto</span><input id="amtRange" type="range" min="1" max="300" step="1" value="'+a+'" aria-label="Monto de la donación en dólares"><span class="rl"><span>$1</span><span>$300</span></span></label>'+
    '<div class="impact" id="impact" aria-live="polite">'+impactHTML()+'</div>'+
    '<div class="covers"><b>Tu aporte cubre:</b><ul><li>Medicinas e insumos</li><li>Traslados y logística</li><li>Alimentación en rehabilitación</li></ul></div>'+
    '<button class="btn pri" id="doGive" '+(a>0?'':'disabled')+'>'+ico('i-heart')+'<span>Donar '+(a>0?money(a)+(S.freq?' / mes':''):'')+'</span></button>'+
    '<p class="small">Montos de ejemplo. Métodos: transferencia ahora; tarjeta y PayPal próximamente.'+(S.freq===2?' Apadrinar es una función próxima: por ahora funciona como aporte mensual.':'')+'</p>';
 }
-function syncGive(){var a=amount(),b=$('#doGive'),im=$('#impact');if(im)im.innerHTML=impactHTML();if(b){b.disabled=!(a>0);$('span',b).textContent='Donar '+(a>0?money(a)+(S.freq?' / mes':''):'')}}
+function syncGive(){var a=amount(),b=$('#doGive'),im=$('#impact'),big=$('#bigAmt');if(big){big.innerHTML=money(a)+'<small>'+(S.freq?'/ mes':'una vez')+'</small>';big.classList.remove('bump');void big.offsetWidth;big.classList.add('bump')}if(im)im.innerHTML=impactHTML();if(b){b.disabled=!(a>0);$('span',b).textContent='Donar '+(a>0?money(a)+(S.freq?' / mes':''):'')}}
 document.addEventListener('click',function(e){
   var f=e.target.closest('[data-freq]');if(f){S.freq=+f.getAttribute('data-freq');renderGive();return}
   var m=e.target.closest('[data-amt]');if(m){S.amt=+m.getAttribute('data-amt');S.custom='';renderGive();return}
@@ -523,7 +604,7 @@ document.addEventListener('click',function(e){
   var c=e.target.closest('[data-copy]');if(c){var b=BANK[+c.getAttribute('data-copy')];copy(b[1],b[0]+' copiado')}
   if(e.target.closest('#shareSite'))copy(location.href.split('#')[0],'Enlace copiado');
 });
-document.addEventListener('input',function(e){if(e.target.id==='customAmt'){S.custom=e.target.value;S.amt=e.target.value?-1:2;if(!e.target.value){renderGive();$('#customAmt').focus();return}$$('.amts button').forEach(function(x){x.setAttribute('aria-pressed','false')});syncGive()}});
+document.addEventListener('input',function(e){if(e.target.id==='amtRange'){S.custom=e.target.value;var k=AMTS.indexOf(+e.target.value);S.amt=k;$$('.amts button').forEach(function(x,i){x.setAttribute('aria-pressed',i===k?'true':'false')});syncGive()}});
 
 /* ======================  CONVENIOS (en lugar de voluntariado abierto)  ====================== */
 function renderConv(){
@@ -547,7 +628,7 @@ document.addEventListener('click',function(e){if(e.target.id==='convBack'){S.cOk
 $('#soc').innerHTML=SOC.map(function(s,i){return '<div class="sc'+(s[3]?' main':'')+'" data-rv style="--c:'+s[2]+';--d:'+(i*.08)+'s"><h3>'+s[0]+'</h3><p class="small">'+s[1]+'</p><a class="btn '+(s[3]?'inv':'line')+' sm" href="#redes" data-noop>Seguir ↗</a></div>'}).join('');
 
 /* ======================  ARRANQUE Y APARICIONES  ====================== */
-renderReels();renderH();renderTool(false);renderAlert();renderMap();renderFauna();renderFaq();renderGallery();renderGive();renderConv();onScroll();
+renderReels();renderH();renderQuiz();renderTool(false);renderAlert();renderMap();renderFauna();renderFaq();renderGallery();renderGive();renderConv();onScroll();
 (function(){
   var els=$$('[data-rv]');
   if(reduced||!('IntersectionObserver' in window)){$$('[data-count]').forEach(countUp);return}

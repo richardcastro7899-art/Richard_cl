@@ -12,13 +12,17 @@ fonts = (
   '@font-face{font-family:"Myriad Pro";src:url(data:font/woff2;base64,%s) format("woff2");font-weight:400;font-style:normal;font-display:swap}'
 ) % (b64("assets/fonts/OktahRound-var.woff2"), b64("assets/fonts/MyriadPro-Regular.woff2"))
 
-def sym(name, sid):
+# Las pupilas de los ojos (las dos A) se pueden mover con --px/--py desde la página que usa el símbolo
+PUPIL = ' style="transform:translate(var(--px,0px),var(--py,0px));transition:transform .18s ease-out"'
+def sym(name, sid, pupils=()):
     s = rd(f"assets/logo/{name}.svg")
     vb = re.search(r'viewBox="([^"]+)"', s).group(1)
     body = re.search(r'<svg[^>]*>(.*)</svg>', s, re.S).group(1)
+    n = iter(range(10**4))
+    body = re.sub(r'<path', lambda m: '<path' + (PUPIL if next(n) in pupils else ''), body)
     return f'<symbol id="{sid}" viewBox="{vb}" fill="currentColor">{body}</symbol>'
 sprite = '<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">' + \
-         sym("sacha-logo","sy-logo") + sym("sacha-wordmark","sy-wordmark") + sym("sacha-ojo","sy-ojo") + '</svg>'
+         sym("sacha-logo","sy-logo",(7,11)) + sym("sacha-wordmark","sy-wordmark",(7,11)) + sym("sacha-ojo","sy-ojo",(3,)) + '</svg>'
 
 def includes(txt):
     """<!--include:ruta--> se reemplaza por el contenido del archivo (relativo a src/)."""

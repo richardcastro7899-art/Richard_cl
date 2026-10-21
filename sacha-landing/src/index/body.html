@@ -45,23 +45,27 @@
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <span class="eyebrow">Fundación Proyecto Sacha · Guayaquil, Ecuador</span>
-      <h1>Todos los días los ves. <span class="l2">¿Los <span class="pf tone felino">reconoces</span>?</span></h1>
+      <h1>Todos los días los ves. <span class="l2">¿Los <span class="kw" id="kw"><span class="pf tone felino kb">reconoces</span><span class="pf tone manchas kt" aria-hidden="true">reconoces</span></span>?</span></h1>
       <p class="lead">Rescatamos, curamos y devolvemos a su hábitat la fauna silvestre de la costa. Mira lo que casi nunca se ve de un rescate y aprende qué hacer si encuentras un animal.</p>
       <div class="cta"><button class="btn pri" data-go="videos"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Ver los videos</button><button class="btn urg" data-go="encontre">Encontré un animal</button></div>
       <ul class="hero-meta"><li class="tag" style="--c:var(--dorado)">8 cápsulas</li><li class="tag" style="--c:var(--selva)">Videos y podcast</li><li class="tag" style="--c:var(--terracota)">Guía de rescate</li></ul>
     </div>
     <div class="stage">
       <div class="hill" aria-hidden="true"></div>
-      <figure class="hv">
-        <video id="heroVid" autoplay muted loop playsinline preload="auto" poster="assets/video/hero-poster.jpg" aria-hidden="true" tabindex="-1"></video>
-        <span class="badge">Tráiler · imagen de referencia</span>
-        <div class="hv-ui">
-          <button class="hv-play" data-hplay="trailer"><i><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></i>Ver videos</button>
-          <button class="vbtn" id="heroPause" aria-label="Pausar el video de fondo"><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg><span>Pausar</span></button>
-        </div>
-      </figure>
+      <div class="deck" id="deck" aria-label="Cápsulas destacadas">
+        <button class="dk-card trailer" data-dk="trailer" aria-label="Ver el tráiler">
+          <video id="heroVid" autoplay muted loop playsinline preload="auto" poster="assets/video/hero-poster.jpg" aria-hidden="true" tabindex="-1"></video>
+          <span class="dk-shade"></span><span class="badge">Tráiler · imagen de referencia</span>
+          <span class="dk-tx"><small>Todos los días</small><b>los ves</b></span>
+        </button>
+      </div>
+      <div class="deck-ctl">
+        <button class="vbtn" id="heroPause" aria-label="Pausar el video y el carrusel"><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg><span>Pausar</span></button>
+        <div class="dots" id="deckDots" aria-hidden="true"></div>
+        <button class="vbtn" id="deckNext" aria-label="Siguiente cápsula"><svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></button>
+      </div>
       <div class="hs"><img class="hs-in" src="assets/mascot/sacha-saluda.webp" alt="Sacha, la ocelote guía de la fundación, saluda con la pata" width="1228" height="1976" fetchpriority="high"></div>
-      <div class="hbubble"><b>¡Hola! Soy Sacha.</b>Te muestro lo que pasa detrás de cada rescate.</div>
+      <div class="hbubble" aria-live="polite"><b>¡Hola! Soy Sacha.</b><span id="hsay">Toca una cápsula y mira lo que pasa detrás de un rescate.</span></div>
     </div>
   </div>
 </section>
@@ -97,6 +101,18 @@
   </div>
 </section>
 
+<!-- QUIZ -->
+<section class="sec up alt" id="quiz">
+  <div class="wrap">
+    <div class="sec-head" data-rv>
+      <span class="eyebrow" style="--c:var(--menta)">¿Cuánto sabes?</span>
+      <h2 class="h2">¿Mito <em>o realidad?</em></h2>
+      <p class="lead">Seis frases que escuchamos todos los días. Responde y Sacha te cuenta la verdad.</p>
+    </div>
+    <div class="quiz" id="quizBox" data-rv></div>
+  </div>
+</section>
+
 <!-- ENCONTRÉ UN ANIMAL -->
 <section class="sec up lt" id="encontre">
   <div class="wrap">
@@ -126,7 +142,7 @@
       <h2 class="h2">Entregar al animal <em>es solo el comienzo</em></h2>
       <p class="lead">Detrás de cada animal hay horas de trabajo médico, trámites, kilómetros y meses de cuidado. Cada paso tiene su cápsula.</p>
     </div>
-    <ol class="journey" id="journey"></ol>
+    <div class="jwrap" id="jwrap"><img class="walker" src="assets/mascot/sacha-saluda.webp" alt="" aria-hidden="true" width="1228" height="1976"><ol class="journey" id="journey"></ol></div>
     <div class="jfoot" data-rv>
       <div class="jcard"><span class="label">Trabajamos con</span><ul class="allies" id="allies"></ul><p class="small">Cada ingreso se informa a la autoridad ambiental y la liberación se coordina con ella.</p></div>
       <div class="jcard" id="alert"></div>
@@ -215,7 +231,6 @@
     </div>
     <div class="filters" id="ffilters" role="group" aria-label="Filtrar por grupo"></div>
     <div class="fgrid3" id="fauna-list"></div>
-    <div class="myths" id="myths" data-stagger></div>
     <div class="faq-wrap">
       <h3 data-rv>Preguntas frecuentes</h3>
       <div class="faq" id="faq" data-rv></div>
