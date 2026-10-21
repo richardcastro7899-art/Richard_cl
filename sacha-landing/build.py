@@ -20,8 +20,13 @@ def sym(name, sid):
 sprite = '<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">' + \
          sym("sacha-logo","sy-logo") + sym("sacha-wordmark","sy-wordmark") + sym("sacha-ojo","sy-ojo") + '</svg>'
 
+def includes(txt):
+    """<!--include:ruta--> se reemplaza por el contenido del archivo (relativo a src/)."""
+    return re.sub(r'<!--include:([^ >]+)-->', lambda m: rd("src/" + m.group(1)), txt)
+
 for srcpath, dest in PAGES:
-    src = rd(srcpath)
+    src = includes(rd(srcpath))
+    src = src.replace("<!--MAPSVG-->", rd("assets/map/sedes-map.svg")).replace("<!--INSETSVG-->", rd("assets/map/ecuador-inset.svg"))
     out = src.replace("/*FONTS*/", fonts).replace("/*TOKENS*/", rd("css/tokens.css")).replace("<!--SYMBOLS-->", sprite)
     if len(sys.argv) > 1:
         open(os.path.join(sys.argv[1], dest.replace(".html", ".artifact.html")), "w", encoding="utf-8").write(out)
