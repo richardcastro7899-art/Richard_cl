@@ -73,3 +73,11 @@ Evolución de «Todo sobre…» con más blanco y fotografía:
 - **Videos**: video introductorio «¿Quién es Sacha?», reportaje y tráiler horizontales con lista, carrusel de 8 cápsulas verticales con visor tipo historia y podcast de YouTube incrustado. Rutas en `VIDEOS` (`src/h/app.js`).
 - **Fotos de referencia**: 25 imágenes de observaciones de iNaturalist (inaturalist-open-data, licencias CC BY / CC BY-NC / CC BY-SA), en `assets/photos/ref/`. Autor, licencia y enlace en `src/h/photos.js`; el pie muestra los créditos. Son para maqueta: se reemplazan por fotos propias.
 - **Código**: `src/h/` sobre `src/e/` y `src/g/`.
+
+## Propuesta «Recorrido» (`propuesta-recorrido.html`) · landing 3D por scroll
+Respuesta a la referencia de diseño 3D: al hacer scroll la cámara avanza por **siete escenas** (portada → video introductorio → cápsulas verticales → podcast → fotografías → rescate → participa); cada escena se acerca con perspectiva y se desvanece, con anillos y arcos finos que pasan de largo, paralaje suave con el mouse y fondo que cambia de verde-negro a crema y blanco. Tras la última escena el escenario se libera y el pie (redes, contacto, créditos) se recorre con scroll libre.
+- **Videos primero**: video introductorio «¿Quién es Sacha?» con lista de horizontales, **carrusel 3D de 8 cápsulas verticales** (flechas, teclado, arrastre; abre el visor tipo historia) y podcast de YouTube incrustado. Fotografías en un muro en perspectiva con visor.
+- **Funciones en cajones laterales** (ficha «Encontraste una…», guía de reporte, mapa de sedes), para no cargar las escenas.
+- **Marca**: paleta sin cambios (verde-negro, crema, blanco, selva; dorado y terracota solo como acento), Oktah Round + Myriad, láminas con colina, mascota solo en el video, la donación (triste→alegre→agradecida) y el pie.
+- **Degradación**: móvil, pantallas bajas (<620 px) o «reducir movimiento» → página normal con las mismas escenas apiladas (`html.rig-on` activa el modo 3D).
+- **Código**: `src/i/` (`body.html`, `style.css`, `app.js` con el motor en «RECORRIDO EN 3D»: `DEPTH`, `HOLD`, `TAIL`, `DECO`).
