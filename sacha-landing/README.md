@@ -64,3 +64,12 @@ Parte del manual: las láminas «Todo sobre las ranas / los ocelotes», «¡Serp
 - **Imágenes**: solo hay tres fotos (las del manual: ocelote, rana, serpiente) y el video/portada de referencia. Las láminas sin foto usan los patrones del manual; cada una puede pasar a foto cambiando `v` y `photo` en `FICHAS` (`src/g/app.js`).
 - **Código**: `src/g/` sobre `src/e/` y `src/e/moods.*`.
 - **Investigación**: ver el resumen de hallazgos en la conversación (donación mensual por defecto con costos concretos, historias conectadas con el sitio, adopción simbólica, vías de denuncia en Ecuador).
+
+## Propuesta final (`propuesta-final.html`)
+Evolución de «Todo sobre…» con más blanco y fotografía:
+- **Fondo**: blanco como base, crema para alternar, una banda con foto de fondo ($350.000) y verde solo en el pie.
+- **Portada**: solo la foto del animal (fija, sin video ni mascota), curva dorada del manual, titular, «Ver los videos», «Donar» y chips «¿Encontraste una…?».
+- **Guía de campo**: 12 láminas con foto (zarigüeya, iguana, boa, cocodrilo, mono aullador, ocelote, rana, aves, perezoso, lechuza, caimán, sapo); cada una abre su ficha.
+- **Videos**: video introductorio «¿Quién es Sacha?», reportaje y tráiler horizontales con lista, carrusel de 8 cápsulas verticales con visor tipo historia y podcast de YouTube incrustado. Rutas en `VIDEOS` (`src/h/app.js`).
+- **Fotos de referencia**: 25 imágenes de observaciones de iNaturalist (inaturalist-open-data, licencias CC BY / CC BY-NC / CC BY-SA), en `assets/photos/ref/`. Autor, licencia y enlace en `src/h/photos.js`; el pie muestra los créditos. Son para maqueta: se reemplazan por fotos propias.
+- **Código**: `src/h/` sobre `src/e/` y `src/g/`.
