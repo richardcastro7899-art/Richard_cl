@@ -81,3 +81,8 @@ Respuesta a la referencia de diseño 3D: al hacer scroll la cámara avanza por *
 - **Marca**: paleta sin cambios (verde-negro, crema, blanco, selva; dorado y terracota solo como acento), Oktah Round + Myriad, láminas con colina, mascota solo en el video, la donación (triste→alegre→agradecida) y el pie.
 - **Degradación**: móvil, pantallas bajas (<620 px) o «reducir movimiento» → página normal con las mismas escenas apiladas (`html.rig-on` activa el modo 3D).
 - **Código**: `src/i/` (`body.html`, `style.css`, `app.js` con el motor en «RECORRIDO EN 3D»: `DEPTH`, `HOLD`, `TAIL`, `DECO`).
+
+## Propuesta «Landing» (`propuesta-landing.html`) · el diseño del recorrido, como página normal
+Misma identidad que `propuesta-recorrido.html` (que se conserva intacta como versión 3D), pero con scroll libre y más contenido: cifras (2018, +3.500, ~1.100, $350.000), videos (introductorio, horizontales, carrusel de cápsulas, podcast), **mosaico de fotografías** con visor, **historia de Sacha** (línea de tiempo, ficha y mascota con ánimos), **ubicaciones** (mapa interactivo de las dos sedes, «Cómo llegar» y aviso de que no hay visitas), rescate con preguntas frecuentes, prensa (enlaces reales, incluidos casos de 2026), donación y convenios, y redes en el pie.
+- Cabecera transparente sobre la portada que se oscurece al avanzar, con menú de secciones y resaltado de la sección actual; títulos y tarjetas aparecen con una leve profundidad al entrar en pantalla.
+- **Código**: `src/j/` (`body.html`, `style.css`, `app.js`) reutilizando `src/e/`, `g/`, `h/` e `i/`.

@@ -1,0 +1,93 @@
+/* =====================  LANDING CORRIDA: el mismo diseño del recorrido 3D, como página para recorrer libremente  =====================
+   Capa sobre e/ (componentes), g/ (fichas y prensa), h/ (reproductores y visor) e i/ (escenas, carrusel, cajones).
+   No usa html.rig-on: cada escena es una sección normal. Suma cifras, historia de Sacha, ubicaciones con mapa,
+   preguntas frecuentes y prensa, y un mosaico de fotografías. */
+html{scroll-behavior:auto}
+#sacha{--bg:#F4EFE6}#ubicaciones,#prensa,#podcast{--bg:#FFFFFF}#rescate{--bg:#F4EFE6}#fotos{--bg:#0F1814}#video{--bg:#121B17}
+.scene{--card:#FFFFFF}
+#rescate,#sacha{--card:#FFFFFF}
+.scene[data-tone="dark"]{--card:rgba(255,255,255,.07)}
+#participa{--card:rgba(255,255,255,.1)}
+
+/* cabecera: transparente sobre la portada, oscura al avanzar */
+html:not(.rig-on) .hd{background:transparent;color:#F4EFE6;box-shadow:none;transition:background-color .35s,box-shadow .35s}
+html:not(.rig-on) .hd.solid{background:rgba(15,24,20,.94);box-shadow:0 1px 0 rgba(244,239,230,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.hnav{display:flex;gap:2px;flex:1;justify-content:center;min-width:0}
+.hnav button{position:relative;background:none;border:0;padding:8px 12px;font-family:var(--font-text);font-size:15px;color:inherit;white-space:nowrap;opacity:.78}
+.hnav button::after{content:"";position:absolute;left:12px;right:12px;bottom:2px;height:2px;background:#D9B97A;transform:scaleX(0);transform-origin:0 50%;transition:transform .35s var(--ease)}
+.hnav button:hover{opacity:1}
+.hnav button[aria-current="true"]{opacity:1;font-weight:700}
+.hnav button[aria-current="true"]::after,.hnav button:hover::after{transform:none}
+@media (max-width:1180px){.hnav{display:none}.hd{justify-content:space-between}}
+.hd-r{margin-left:auto}
+
+/* portada */
+.sc-hero{min-height:100svh}
+.hx-cue{left:max(24px,calc((100% - 1240px) / 2));translate:none;justify-items:start}
+.hx-copy>*{animation:rise 1s var(--ease) both}
+
+/* cifras */
+.statband{background:#0F1814;color:#F4EFE6;border-top:1px solid rgba(244,239,230,.12)}
+.statband ul{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding-block:clamp(26px,3.4vw,44px)}
+.statband li{display:grid;gap:2px;align-content:start;padding:0 clamp(14px,2vw,28px);border-left:1px solid rgba(244,239,230,.16)}
+.statband li:first-child{border-left:0;padding-left:0}
+.statband small{font-family:var(--font-display);font-weight:500;font-size:15px;color:#B7CBBF}
+.statband b{font-family:var(--font-display);font-weight:800;font-size:clamp(34px,4.4vw,64px);line-height:1;letter-spacing:-.045em;color:#D9B97A}
+.statband span{font-size:13.5px;line-height:1.35;color:#B7CBBF;max-width:28ch;margin-top:4px}
+@media (max-width:860px){.statband ul{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:22px}.statband li:nth-child(3){border-left:0;padding-left:0}}
+
+/* mosaico de fotografías */
+.mosaic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(150px,17vw,230px);grid-auto-flow:dense;gap:12px}
+.mosaic .wt{--tz:0px;width:100%;height:100%;transform:none}
+.mosaic .wt:nth-child(1){grid-column:span 2;grid-row:span 2}
+.mosaic .wt:nth-child(4){grid-row:span 2}
+.mosaic .wt:nth-child(7){grid-column:span 2}
+.mosaic .wt:nth-child(10){grid-column:span 2}
+.mosaic .wt:hover,.mosaic .wt:focus-visible{transform:translateY(-4px);z-index:2}
+.mosaic .wt .wc{opacity:1;transform:none;padding-top:44px}
+.mosaic .wt:nth-child(1) .wc b{font-size:22px}
+@media (max-width:900px){.mosaic{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:min(44vw,210px)}.mosaic .wt:nth-child(1){grid-column:span 2}.mosaic .wt:nth-child(4),.mosaic .wt:nth-child(7),.mosaic .wt:nth-child(10){grid-row:auto;grid-column:auto}}
+.sc-h.center .lead{margin-inline:auto;text-align:center}
+
+/* historia de Sacha */
+#sacha .sc-in.two{align-items:start}
+#sacha .sc-h{position:sticky;top:96px}
+#sacha .meetcol{position:static;max-width:340px;margin-top:10px}
+#sacha .sc-b{gap:22px}
+#sacha .txt p{font-size:18px}
+.tl{list-style:none;display:grid;border-top:1px solid var(--rule)}
+.tl li{display:grid;grid-template-columns:130px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--rule)}
+.tl b{font-family:var(--font-display);font-weight:700;font-size:17px}
+.tl span{font-size:15.5px;line-height:1.45}
+.src{font-size:13px;color:var(--fg-muted)}
+.src a{text-decoration-color:var(--accent);text-underline-offset:3px}
+@media (max-width:979px){#sacha .sc-h{position:static}.tl li{grid-template-columns:1fr;gap:2px}}
+
+/* ubicaciones */
+.loc .sedes{border-top:1px solid var(--rule);margin-top:10px}
+.loc .sede{padding:16px 0}
+.loc .mapbox{border-radius:12px;box-shadow:0 30px 60px -40px rgba(36,54,46,.55)}
+.loc .sc-b{align-content:start}
+@media (min-width:980px){.loc .mapbox{position:sticky;top:92px}}
+
+/* rescate + preguntas */
+.faqrow{grid-template-columns:minmax(0,.82fr) minmax(0,1.38fr);align-items:start;padding-top:0}
+.faqrow .sc-h h3{font-size:clamp(24px,2.6vw,36px);letter-spacing:-.03em}
+@media (max-width:979px){.faqrow{grid-template-columns:1fr}}
+.ppanel2{height:clamp(280px,32vw,440px)}
+
+/* prensa */
+#prensa .sc-in{gap:clamp(18px,2.6vw,32px)}
+.nw{background:var(--card);border-radius:12px}
+.nw.big{border-radius:12px}
+
+/* aparición al desplazarse: leve profundidad, sin movimiento de fondo */
+.js .rv{opacity:0;transform:perspective(900px) translate3d(0,34px,-50px) rotateX(5deg);transform-origin:50% 100%}
+.js .rv.in{opacity:1;transform:none;transition:opacity .9s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+.scene .sc-b{min-width:0}
+.cf-info{margin-top:6px}
+.cf{margin-inline:auto;width:100%}
+
+.mosaic .wall-in{display:contents}
+#sacha .sc-h h2{font-size:clamp(30px,3.7vw,54px)}
+.news{grid-template-columns:repeat(3,minmax(0,1fr))}
