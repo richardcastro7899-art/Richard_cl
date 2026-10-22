@@ -55,3 +55,12 @@ Adapta la composición de una referencia (portada oscura con foto grande a la de
 - **Bloques**: fauna por grupo (cada tarjeta abre la guía), misión, apoyo, cómo ayudar, Sacha, video y podcast, cápsulas, proceso, preguntas, mapa, donación, convenios, newsletter y redes.
 - **Esquinas**: 18 px en tarjetas y 14 px en piezas internas (tokens `--r-card`, `--r-lg`, `--r-md` en `src/f/style.css`); los botones siguen en píldora y las láminas conservan la colina.
 - **Código**: `src/f/` (`body.html`, `style.css`, `app.js`), sobre `src/e/` (reproductores, reporte, mapa, donación) y `src/e/moods.*`. Las tres fotos son de referencia, no de la fundación.
+
+## Propuesta «Todo sobre…» (`propuesta-todo-sobre.html`) · la lámina del manual como sistema de página
+Parte del manual: las láminas «Todo sobre las ranas / los ocelotes», «¡Serpientes!», «Encontraste una…» y los pósters de patrón con Sacha. La página se arma con ese lenguaje (títulos en dos tamaños, foto + curva, foto en arco, foto en esquina, patrón + Sacha; esquinas de 10 px como en el manual).
+- **Portada**: video con curva dorada, titular, Sacha en la esquina y «¿Encontraste una…?» con chips por animal; cifras como láminas de estado (arena, menta, selva, terracota).
+- **Guía de campo**: ocho láminas filtrables. Cada una abre una ficha lateral «Encontraste una…» con dato, mito/realidad, qué hacer, qué no hacer, 911, «Reportar este caso» (abre la guía de reporte con el animal elegido) y la cápsula relacionada.
+- **Resto**: cápsulas verticales, proceso, Sacha en ánimos, mapa, prensa (enlaces reales, incluidos casos de 2026), donación y convenios, podcast y redes (Facebook con la página real).
+- **Imágenes**: solo hay tres fotos (las del manual: ocelote, rana, serpiente) y el video/portada de referencia. Las láminas sin foto usan los patrones del manual; cada una puede pasar a foto cambiando `v` y `photo` en `FICHAS` (`src/g/app.js`).
+- **Código**: `src/g/` sobre `src/e/` y `src/e/moods.*`.
+- **Investigación**: ver el resumen de hallazgos en la conversación (donación mensual por defecto con costos concretos, historias conectadas con el sitio, adopción simbólica, vías de denuncia en Ecuador).
