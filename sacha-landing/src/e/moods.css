@@ -1,0 +1,44 @@
+/* Ánimos de Sacha: cada ánimo = una pose del manual (o del turnaround) + una expresión editada + un gesto vectorial
+   (símbolos en la paleta de marca) + un movimiento. Se usan como estados de la interfaz. */
+.sx{position:relative;display:inline-block;line-height:0;height:var(--h,200px);--em:1}
+.sx>img{display:block;height:100%;width:auto;max-width:none;transform-origin:50% 100%}
+.sx .em{position:absolute;pointer-events:none;overflow:visible}
+.sx .em svg{display:block;width:100%;height:100%;overflow:visible}
+.sx.in-place>img{animation:none}
+@keyframes m-sway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+@keyframes m-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px) rotate(-1deg)}40%{transform:translateX(3px) rotate(1deg)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+@keyframes m-droop{0%,100%{transform:rotate(-1deg) scaleY(1)}50%{transform:rotate(-2.4deg) scaleY(.99)}}
+@keyframes m-breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.012)}}
+@keyframes m-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3%)}}
+@keyframes m-float{0%{transform:translateY(8px) scale(.7);opacity:0}25%{opacity:1}100%{transform:translateY(-34px) scale(1.05);opacity:0}}
+@keyframes m-pulse{0%,100%{transform:scale(1) rotate(-6deg)}50%{transform:scale(1.14) rotate(4deg)}}
+@keyframes m-twinkle{0%,100%{transform:scale(.4) rotate(0);opacity:.2}50%{transform:scale(1) rotate(25deg);opacity:1}}
+@keyframes m-drip{0%{transform:translateY(-6px) scale(.7);opacity:0}30%{opacity:1}100%{transform:translateY(46px) scale(1);opacity:0}}
+@keyframes m-z{0%{transform:translate(0,10px) scale(.6);opacity:0}30%{opacity:1}100%{transform:translate(16px,-26px) scale(1.15);opacity:0}}
+@keyframes m-step{0%,100%{opacity:.15}40%,60%{opacity:1}}
+.sx.a-sway>img{animation:m-sway 5.5s ease-in-out infinite}
+.sx.a-shake>img{animation:m-shake .7s ease-in-out 2,m-sway 5.5s 1.6s ease-in-out infinite}
+.sx.a-droop>img{animation:m-droop 4.5s ease-in-out infinite}
+.sx.a-breathe>img{animation:m-breathe 3.6s ease-in-out infinite}
+.sx.a-bob>img{animation:m-bob 2.6s ease-in-out infinite}
+.sx .em .i{transform-box:fill-box;transform-origin:50% 50%}
+.sx .em.hearts .i{animation:m-float 2.6s ease-out infinite}
+.sx .em.hearts .i:nth-child(2){animation-delay:.9s}.sx .em.hearts .i:nth-child(3){animation-delay:1.7s}
+.sx .em.exclam .i{animation:m-pulse 1s ease-in-out infinite}
+.sx .em.question .i{animation:m-bob 2.2s ease-in-out infinite}
+.sx .em.sparkle .i{animation:m-twinkle 2.2s ease-in-out infinite}
+.sx .em.sparkle .i:nth-child(2){animation-delay:.7s}.sx .em.sparkle .i:nth-child(3){animation-delay:1.4s}
+.sx .em.tear .i{animation:m-drip 2.8s ease-in infinite}
+.sx .em.zzz .i{animation:m-z 3.2s ease-out infinite}
+.sx .em.zzz .i:nth-child(2){animation-delay:1s}.sx .em.zzz .i:nth-child(3){animation-delay:2s}
+.sx .em.paws .i{animation:m-step 2.4s ease-in-out infinite}
+.sx .em.paws .i:nth-child(2){animation-delay:.5s}.sx .em.paws .i:nth-child(3){animation-delay:1s}
+/* posición de cada gesto respecto de la figura */
+.sx .em.hearts{right:-12%;top:4%;width:46%;height:30%}
+.sx .em.exclam{right:-6%;top:-2%;width:34%;height:22%}
+.sx .em.question{right:-6%;top:-2%;width:30%;height:20%}
+.sx .em.sparkle{right:-14%;top:6%;width:44%;height:30%}
+.sx .em.tear{left:20%;top:20%;width:12%;height:10%}
+.sx .em.zzz{right:-14%;top:2%;width:42%;height:26%}
+.sx .em.paws{left:50%;top:-4%;width:46%;height:20%;transform:translateX(-50%)}
+@media (prefers-reduced-motion:reduce){.sx>img,.sx .em .i{animation:none!important}.sx .em .i{opacity:1}}

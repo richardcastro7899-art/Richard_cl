@@ -1,0 +1,3 @@
+var BG={alegre:['#F4EFE6','#D9B97A'],guino:['#CBEFD4','#F4EFE6'],gracias:['#D9B97A','#F4EFE6'],curiosa:['#3F5A4F','#CBEFD4'],alerta:['#D17A5B','#F4EFE6'],triste:['#CBEFD4','#F4EFE6'],cuidadora:['#F4EFE6','#D17A5B'],orgullosa:['#3F5A4F','#D9B97A'],dormida:['#AF7409','#D9B97A'],explora:['#D9B97A','#3F5A4F']};
+document.getElementById('grid').innerHTML=Object.keys(MOODS).map(function(k,i){var m=MOODS[k],c=BG[k];
+  return '<article class="card"><div class="poster" id="p-'+k+'" style="--bgc:'+c[0]+';--hc:'+c[1]+'"><div class="hill"></div><span class="tag">'+(i+1)+' · '+m.t+'</span>'+sacha(k,{alt:'',eager:true})+'</div><h3>'+m.t+'</h3><p>'+m.use+'</p></article>'}).join('');
