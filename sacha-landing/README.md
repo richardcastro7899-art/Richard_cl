@@ -48,3 +48,10 @@ Sigue los bloques del wireframe (hero con video en bucle, hilo narrativo por cap
 ### Ánimos de Sacha (`animos-de-sacha.html`)
 Diez estados de la mascota usados como estados de la interfaz (triste sin donación → alegre con monto → agradecida al donar; alerta en reportes; dormida en episodios por publicar…). Cada ánimo = pose del manual/turnaround (`assets/mascot/`) + expresión retocada (`tools/mascot_expresiones.py`) + gesto vectorial en la paleta + movimiento corto. Definidos en `src/e/moods.{js,css}`; usar con `sacha('alerta',{h:'200px'})`. PNG transparentes de cada ánimo en `assets/mascot/animos/`.
 Son variantes sobre el render existente, no ilustraciones 3D nuevas: para más expresiones conviene un ilustrador 3D.
+
+## Propuesta «bento» (`propuesta-bento.html`) · referencia de conservación
+Adapta la composición de una referencia (portada oscura con foto grande a la derecha, barra de acción, cifras con íconos, cuadrícula de bloques claros y oscuros con foto, franja de valores, llamado final a ancho completo) a la marca Sacha: paleta, Oktah Round + Myriad, patrones, colinas de las láminas y mascota (en la esquina derecha del hero) se mantienen.
+- **Barra de acción del hero**: «¿Qué pasa? / ¿Qué animal?» abre la guía de reporte ya con la selección hecha (en la referencia era un buscador de especies).
+- **Bloques**: fauna por grupo (cada tarjeta abre la guía), misión, apoyo, cómo ayudar, Sacha, video y podcast, cápsulas, proceso, preguntas, mapa, donación, convenios, newsletter y redes.
+- **Esquinas**: 18 px en tarjetas y 14 px en piezas internas (tokens `--r-card`, `--r-lg`, `--r-md` en `src/f/style.css`); los botones siguen en píldora y las láminas conservan la colina.
+- **Código**: `src/f/` (`body.html`, `style.css`, `app.js`), sobre `src/e/` (reproductores, reporte, mapa, donación) y `src/e/moods.*`. Las tres fotos son de referencia, no de la fundación.

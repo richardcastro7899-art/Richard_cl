@@ -6,7 +6,7 @@ R = os.path.dirname(os.path.abspath(__file__))
 rd = lambda p: open(os.path.join(R, p), encoding="utf-8").read()
 b64 = lambda p: base64.b64encode(open(os.path.join(R, p), "rb").read()).decode()
 
-PAGES = [("src/direccion-de-arte.src.html", "direccion-de-arte.html"), ("src/index.src.html", "index.html"), ("src/propuesta-24h.src.html", "propuesta-24h.html"), ("src/propuesta-capitulos.src.html", "propuesta-capitulos.html"), ("src/propuesta-institucional.src.html", "propuesta-institucional.html"), ("src/animos.src.html", "animos-de-sacha.html"), ("src/propuesta-esencia.src.html", "propuesta-esencia.html")]
+PAGES = [("src/direccion-de-arte.src.html", "direccion-de-arte.html"), ("src/index.src.html", "index.html"), ("src/propuesta-24h.src.html", "propuesta-24h.html"), ("src/propuesta-capitulos.src.html", "propuesta-capitulos.html"), ("src/propuesta-institucional.src.html", "propuesta-institucional.html"), ("src/animos.src.html", "animos-de-sacha.html"), ("src/propuesta-esencia.src.html", "propuesta-esencia.html"), ("src/propuesta-bento.src.html", "propuesta-bento.html")]
 fonts = (
   '@font-face{font-family:"Oktah Round";src:url(data:font/woff2;base64,%s) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}\n'
   '@font-face{font-family:"Myriad Pro";src:url(data:font/woff2;base64,%s) format("woff2");font-weight:400;font-style:normal;font-display:swap}'
