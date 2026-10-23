@@ -1,4 +1,3 @@
 node_modules/
-# out/ es zona de trabajo: solo se versiona el video final
-out/*
-!out/milton-cumpleanos.mp4
+# out/ es zona de trabajo y de entrega local: los videos no se versionan
+out/
