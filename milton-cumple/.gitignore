@@ -1,6 +1,4 @@
 node_modules/
-out/stills/
-out/sheet*.jpg
-out/*.wav
-out/render.log
-out/frame*.png
+# out/ es zona de trabajo: solo se versiona el video final
+out/*
+!out/milton-cumpleanos.mp4
