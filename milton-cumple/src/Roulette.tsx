@@ -41,11 +41,11 @@ const Sparks: React.FC<{t: number}> = ({t}) => {
   );
 };
 
-const Dial: React.FC<{phi: number; stopped: number}> = ({phi, stopped}) => {
+const Dial: React.FC<{phi: number; stopped: number; t: number}> = ({phi, stopped, t}) => {
   const ticks = Array.from({length: 72}, (_, i) => i);
   return (
     <svg width={1100} height={1100} viewBox="-550 -550 1100 1100" style={{position: 'absolute', left: 960 - 550, top: 540 - 550}}>
-      <g transform={`rotate(${-phi * 0.5})`} opacity={0.5}>
+      <g transform={`rotate(${-phi * 0.5 + t * 5})`} opacity={0.5}>
         <circle r={500} fill="none" stroke="rgba(242,238,229,0.28)" strokeWidth={2} />
         {ticks.map((i) => {
           const major = i % 6 === 0;
@@ -77,9 +77,9 @@ export const Roulette: React.FC<{t: number}> = ({t}) => {
   const copies = still ? [phi0] : raw;
   const blurPx = Math.min(2.2, spread / 14);
 
-  const drumScale = 0.92 + 0.08 * appear + out * 0.35;
+  const drumScale = 0.92 + 0.08 * appear + out * 0.35 + emph * (0.03 * prog(t, 6.0, 7.0) + 0.012 * Math.sin(t * 3.2));
   const drumOpacity = appear * (1 - out);
-  const tiltY = Math.sin(t * 0.8) * 5 * (1 - emph) + (1 - appear) * 25;
+  const tiltY = Math.sin(t * 0.8) * 5 * (1 - emph * 0.5) + (1 - appear) * 25;
   const tiltZ = -3 + emph * 3 + Math.sin(t * 0.55) * 1.2;
 
   // anillo expansivo: su borde descubre el papel (ver Stage)
@@ -92,7 +92,7 @@ export const Roulette: React.FC<{t: number}> = ({t}) => {
       <div style={{position: 'absolute', inset: 0, background: `radial-gradient(ellipse 45% 55% at 50% 50%, rgba(232,148,106,${0.3 * rouletteWarm(t)}) 0%, rgba(232,148,106,0) 70%)`}} />
       <Sparks t={t} />
       <div style={{opacity: drumOpacity, transform: `scale(${drumScale})`, transformOrigin: '960px 540px'}}>
-        <Dial phi={phi0} stopped={stopped} />
+        <Dial phi={phi0} stopped={stopped} t={t} />
       </div>
 
       {/* tambor con proyección cilíndrica y motion blur por muestreo temporal */}

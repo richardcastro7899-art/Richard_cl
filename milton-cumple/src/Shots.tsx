@@ -5,7 +5,8 @@ import {HAND, SERIF, SOFT} from './fonts';
 import {Doodle, DoodleKind, Scribble} from './doodles';
 
 const SHRINK = 0.9; // la foto ocupa algo menos para dejar sitio al marco polaroid
-const eAway = bezier(0.55, 0, 0.85, 0.6);
+const eAway = bezier(0.3, 0.16, 0.68, 0.62); // la salida arranca ya en movimiento
+const eSettle = bezier(0.2, 0.62, 0.3, 1); // la entrada se asienta sin frenar en seco
 
 type Anim = {transform: string; opacity: number; lift: number};
 
@@ -36,14 +37,14 @@ function exitAnim(kind: Exit, q: number): Anim {
 }
 
 // ───────────────────────── una foto del plano ─────────────────────────
-const PhotoItem: React.FC<{it: Item; t: number; s: number; dur: number}> = ({it, t, s, dur}) => {
+const PhotoItem: React.FC<{it: Item; t: number; s: number; dur: number; multi: boolean}> = ({it, t, s, dur, multi}) => {
   const ph = fitBox(it.idx, it.h ? it.h * SHRINK : undefined, it.w ? it.w * SHRINK : undefined);
   const fr = frameDims(ph.w, ph.h);
   const d = it.delay ?? 0;
   const pIn = prog(t, s - TR + d, s + TR + d + 0.3);
   const qOut = prog(t, s + dur - TR + d * 0.4, s + dur + TR + 0.2 + d * 0.4);
   if (t < s - TR + d - 0.05 || pIn <= 0) return null;
-  const a1 = enterAnim(it.enter, it.enter === 'drop' ? eBack(pIn) : eOut(pIn));
+  const a1 = enterAnim(it.enter, it.enter === 'drop' ? eBack(pIn) : eSettle(pIn));
   const a2 = qOut > 0 ? exitAnim(it.exit, eAway(qOut)) : undefined;
 
   let cx = it.cx;
@@ -60,10 +61,18 @@ const PhotoItem: React.FC<{it: Item; t: number; s: number; dur: number}> = ({it,
     lift = Math.sin(Math.PI * sp) * (it.cx < it.swapTo.cx ? -80 : 80);
     sw = 1 + 0.04 * Math.sin(Math.PI * sp);
   }
-  const tt = t - s;
-  const dx = (it.drift?.[0] ?? 0) * tt;
-  const dy = (it.drift?.[1] ?? 0) * tt;
-  const kb = 1 + (it.zoom ?? 0.03) * 0.7 * prog(t, s - TR, s + dur + TR);
+  // Movimiento continuo: la foto nunca queda congelada (deriva + balanceo + respiración)
+  const tt = t - (s - TR + d);
+  const sgn = it.idx % 2 ? 1 : -1;
+  // varias fotos: derivas pequeñas que se alejan del centro (no se solapan); una sola: deriva algo mayor
+  const outward = it.cx < 800 ? -1 : it.cx > 1120 ? 1 : 0;
+  const vx = it.drift?.[0] ?? (multi ? outward * 9 : sgn * 20);
+  const vy = it.drift?.[1] ?? (multi ? ((it.idx % 3) - 1) * 5 : ((it.idx % 3) - 1) * 11);
+  const dx = vx * tt;
+  const dy = vy * tt;
+  rot += Math.sin(tt * 0.95 + it.idx) * 0.9;
+  sw *= 1 + 0.012 * Math.sin(tt * 0.7 + it.idx * 1.7);
+  const kb = 1 + Math.max(it.zoom ?? 0.03, 0.08) * prog(t, s - TR, s + dur + TR);
   const tape = (it.idx * 7) % 5 < 2 ? it.idx % 3 : -1;
 
   return (
@@ -129,7 +138,7 @@ const Phrase: React.FC<{shot: Shot; t: number; s: number}> = ({shot, t, s}) => {
     <div style={{position: 'absolute', inset: 0}}>
       <DoodleSlot kind={dd[0]} x={250} y={850} scale={dd[0] === 'balloons' ? 0.82 : 1.15} rot={-4} p={eOut(prog(t, s + 0.25, s + 2.4))} fade={fade} bg="chalk" />
       <DoodleSlot kind={dd[1]} x={1690} y={850} scale={dd[1] === 'balloons' ? 0.82 : 1.15} rot={4} p={eOut(prog(t, s + 0.5, s + 2.6))} fade={fade} bg="chalk" />
-      <div style={{position: 'absolute', inset: 0, top: -40, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', transform: `translateY(${-qOut * 30}px)`, opacity: fade, filter: qOut > 0.02 ? `blur(${qOut * 6}px)` : undefined}}>
+      <div style={{position: 'absolute', inset: 0, top: -40, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', transform: `translateY(${-qOut * 30 + Math.sin((t - s) * 1.3) * 5}px) scale(${1 + 0.035 * prog(t, s - 0.2, s + shot.dur + 0.4)})`, opacity: fade, filter: qOut > 0.02 ? `blur(${qOut * 6}px)` : undefined}}>
         {lines.map((ln, li) => (
           <div key={li} style={{display: 'flex', gap: FS * 0.26, height: FS * 1.3, alignItems: 'flex-start'}}>
             {ln.map((wd, wi) => {
@@ -192,7 +201,7 @@ const ShotView: React.FC<{shot: Shot; t: number; s: number; z: number}> = ({shot
           bg={bg}
         />
       )}
-      {shot.kind === 'photos' && items.map((it) => <PhotoItem key={it.idx} it={it} t={t} s={s} dur={shot.dur} />)}
+      {shot.kind === 'photos' && items.map((it) => <PhotoItem key={it.idx} it={it} t={t} s={s} dur={shot.dur} multi={items.length > 1} />)}
       {shot.kind === 'phrase' && <Phrase shot={shot} t={t} s={s} />}
     </div>
   );

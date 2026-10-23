@@ -201,9 +201,9 @@ export const SHOTS: Shot[] = [
   {
     id: 'c1', bg: 'chalk', kind: 'photos', dur: 4.6, flare: true,
     items: [
-      { idx: 3, cx: 345, cy: 560, h: 720, enter: 'rise', exit: 'swipeUp', rot: -2 },
+      { idx: 3, cx: 385, cy: 560, h: 720, enter: 'rise', exit: 'swipeUp', rot: -2 },
       { idx: 7, cx: 975, cy: 500, w: 740, enter: 'pop', exit: 'lift', delay: 0.35, zoom: 0.05 },
-      { idx: 9, cx: 1590, cy: 560, h: 720, enter: 'drop', exit: 'swipeDown', delay: 0.7, rot: 2 },
+      { idx: 9, cx: 1550, cy: 560, h: 720, enter: 'drop', exit: 'swipeDown', delay: 0.7, rot: 2 },
     ],
   },
   { id: 'c2', bg: 'chalk', kind: 'photos', dur: 2.4, chapter: 'aventuras', ghostSide: 'R', doodle: 'balloons', doodleSide: 'R', items: [{ idx: 15, cx: 840, cy: 540, h: 920, enter: 'rotL', exit: 'swipeR', zoom: 0.06 }] },
@@ -222,9 +222,9 @@ export const SHOTS: Shot[] = [
   {
     id: 'd1', bg: 'paper', kind: 'photos', dur: 4.4, flare: true,
     items: [
-      { idx: 10, cx: 400, cy: 545, h: 800, enter: 'rise', exit: 'swipeUp', rot: -1.5 },
+      { idx: 10, cx: 440, cy: 545, h: 800, enter: 'rise', exit: 'swipeUp', rot: -1.5 },
       { idx: 17, cx: 985, cy: 505, h: 800, enter: 'drop', exit: 'swipeDown', delay: 0.3, rot: 1 },
-      { idx: 18, cx: 1545, cy: 550, h: 800, enter: 'rise', exit: 'swipeUp', delay: 0.6, rot: -1 },
+      { idx: 18, cx: 1510, cy: 550, h: 800, enter: 'rise', exit: 'swipeUp', delay: 0.6, rot: -1 },
     ],
   },
   {

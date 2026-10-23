@@ -99,7 +99,7 @@ const Greeting: React.FC<{t: number; exitP: number}> = ({t, exitP}) => {
   const shine = prog(t, T.nameHit + 0.7, T.nameHit + 1.5);
   const ex = eInOut(exitP);
   return (
-    <div style={{position: 'absolute', left: X0, top: 0, width: 1920 - X0 - 60, height: 1080, opacity: 1 - ex, transform: `translateY(${-ex * 50}px)`}}>
+    <div style={{position: 'absolute', left: X0, top: 0, width: 1920 - X0 - 60, height: 1080, opacity: 1 - ex, transform: `translateY(${-ex * 50 + Math.sin(t * 1.1) * 3}px)`}}>
       <div style={{position: 'absolute', left: 4, top: 318, fontFamily: SERIF, fontVariationSettings: SOFT, fontStyle: 'italic', fontWeight: 500, fontSize: 96, color: C.inkSoft, whiteSpace: 'pre', lineHeight: 1.1}}>
         {GREET.split('').map((ch, i) => {
           const p = clamp(nChars - i);
@@ -122,7 +122,7 @@ const Greeting: React.FC<{t: number; exitP: number}> = ({t, exitP}) => {
             <span
               key={i}
               style={{
-                display: 'inline-block', opacity: clamp(p * 4), transform: `translateY(${(1 - eBack(p)) * 80}px) rotate(${(1 - eBack(p)) * (i % 2 ? 6 : -6)}deg) scale(${lerp(1.3, 1, eBack(p))})`,
+                display: 'inline-block', opacity: clamp(p * 4), transform: `translateY(${(1 - eBack(p)) * 80 + Math.sin(t * 2.4 + i * 0.7) * 4 * clamp(tn - 0.9)}px) rotate(${(1 - eBack(p)) * (i % 2 ? 6 : -6) + Math.sin(t * 1.7 + i) * 0.8 * clamp(tn - 0.9)}deg) scale(${lerp(1.3, 1, eBack(p))})`,
                 color: accent ? C.terracotta : C.ink, filter: p < 1 ? `blur(${(1 - p) * 5}px)` : undefined,
                 textShadow: sh > 0 ? `0 0 ${sh * 30}px rgba(255,236,206,${sh})` : 'none',
               }}
@@ -169,10 +169,10 @@ export const Intro: React.FC<{t: number}> = ({t}) => {
 
   const heroCard = cards.find((k) => k.c.j === 0)!;
   const heroSX = lerp(960 + heroCard.x, HERO_FINAL.cx, sel);
-  const heroSY = lerp(540 + heroCard.y, HERO_FINAL.cy, sel);
+  const heroSY = lerp(540 + heroCard.y, HERO_FINAL.cy, sel) + Math.sin(t * 0.8) * 7 * sel;
   const heroScale = lerp(heroCard.c.baseH / HERO_FINAL.h, 1, sel);
   const heroZ = 260 * Math.sin(Math.PI * sel);
-  const heroRot = lerp(0, HERO_FINAL.rot, sel);
+  const heroRot = lerp(0, HERO_FINAL.rot, sel) + Math.sin(t * 0.9) * 0.9 * sel; // balanceo continuo
 
   const hw = heroPhoto.w * heroScale;
   const hh = heroPhoto.h * heroScale;
@@ -219,7 +219,7 @@ export const Intro: React.FC<{t: number}> = ({t}) => {
               transform: `translateZ(${heroZ}px) translateX(${-exitHero * 1300}px) rotateZ(${heroRot - exitHero * 14}deg)`,
             }}
           >
-            <Polaroid idx={HERO} w={hw} h={hh} tape={sel > 0.75 ? 0 : -1} tapeIn={eOut(prog(t, 15.7, 16.3))} lift={Math.sin(Math.PI * sel) * 0.6} />
+            <Polaroid idx={HERO} w={hw} h={hh} kb={1 + 0.07 * prog(t, 15.0, 21.6)} tape={sel > 0.75 ? 0 : -1} tapeIn={eOut(prog(t, 15.7, 16.3))} lift={Math.sin(Math.PI * sel) * 0.6} />
           </div>
         </div>
       </div>

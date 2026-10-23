@@ -25,14 +25,14 @@ const Mosaic: React.FC<{t: number}> = ({t}) => {
   const idxs = CLOSE.mosaic;
   const r = rng(12);
   const po = eInOut(out);
-  const scale = lerp(1.06, 1, eOut(prog(t, inP, inP + 2.4))) * lerp(1, 0.72, po);
+  const scale = lerp(1.06, 1, eOut(prog(t, inP, inP + 2.4))) * lerp(1, 0.72, po) * (1 + 0.035 * prog(t, inP + 1.2, CLOSE.mosaicHold + 1.0));
   return (
     <div style={{position: 'absolute', inset: 0, opacity: 1 - eInOut(prog(t, CLOSE.mosaicHold + 0.4, CLOSE.mosaicOut))}}>
       <div style={{position: 'absolute', left: 960 - MW / 2, top: 540 - MH / 2, width: MW, height: MH, transform: `scale(${scale}) rotate(${-2 * po}deg)`}}>
         {idxs.map((idx, k) => {
           const col = k % COLS;
           const row = Math.floor(k / COLS);
-          const rot = (r() - 0.5) * 9;
+          const rot0 = (r() - 0.5) * 9;
           const jx = (r() - 0.5) * 14;
           const jy = (r() - 0.5) * 16 + (col % 2 === 0 ? -10 : 10);
           const dist = Math.hypot(col - 2.5, row - 0.5);
@@ -41,7 +41,7 @@ const Mosaic: React.FC<{t: number}> = ({t}) => {
           const e = eBack(p);
           const fromX = (col - 2.5) * 260;
           return (
-            <div key={idx} style={{position: 'absolute', left: col * (FW + GX) + jx, top: row * (FH + GY) + jy, width: FW, height: FH, transform: `translate(${(1 - e) * fromX}px, ${(1 - e) * -620}px) rotate(${rot + (1 - e) * 14}deg)`, opacity: clamp(p * 4)}}>
+            <div key={idx} style={{position: 'absolute', left: col * (FW + GX) + jx, top: row * (FH + GY) + jy, width: FW, height: FH, transform: `translate(${(1 - e) * fromX}px, ${(1 - e) * -620}px) rotate(${rot0 + (1 - e) * 14 + Math.sin(t * 0.9 + k) * 0.8}deg)`, opacity: clamp(p * 4)}}>
               <Polaroid idx={idx} w={PW} h={PH} lift={1 - e} tape={k % 4 === 1 ? k % 3 : -1} />
             </div>
           );
@@ -66,7 +66,7 @@ const Message: React.FC<{t: number}> = ({t}) => {
   const FS = 88;
   let n = 0;
   return (
-    <div style={{position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', opacity: 1 - out, transform: `translateY(${-out * 28}px)`, filter: out > 0.02 ? `blur(${out * 6}px)` : undefined}}>
+    <div style={{position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', opacity: 1 - out, transform: `translateY(${-out * 28 + Math.sin(t * 1.2) * 4}px) scale(${1 + 0.03 * prog(t, CLOSE.msgStart, CLOSE.msgEnd)})`, filter: out > 0.02 ? `blur(${out * 6}px)` : undefined}}>
       {MSG.map((ln, li) => (
         <div key={li} style={{display: 'flex', gap: FS * 0.26, height: FS * 1.4, alignItems: 'flex-start'}}>
           {ln.map((wd, wi) => {
@@ -109,8 +109,8 @@ const Happy: React.FC<{t: number}> = ({t}) => {
   const nChars = clamp((t - CLOSE.happy) / 0.055, 0, text.length);
   const under = eOut(prog(t, CLOSE.happy + 1.1, CLOSE.happy + 1.9));
   return (
-    <div style={{position: 'absolute', inset: 0}}>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 540 - FS * 0.62 + y, display: 'flex', justifyContent: 'center', transform: `scale(${sc})`, transformOrigin: '50% 50%', whiteSpace: 'pre', fontFamily: BRUSH, fontSize: FS, lineHeight: 1.15}}>
+    <div style={{position: 'absolute', inset: 0, transform: `scale(${1 + 0.03 * prog(t, CLOSE.happy, CLOSE.end)})`, transformOrigin: '50% 50%'}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 540 - FS * 0.62 + y, display: 'flex', justifyContent: 'center', transform: `scale(${sc})`, transformOrigin: '50% 50%', whiteSpace: 'pre', fontFamily: BRUSH, fontSize: FS, lineHeight: 1.15, translate: `0 ${Math.sin(t * 1.4) * 5}px`}}>
         {text.split('').map((ch, i) => {
           const p = clamp(nChars - i);
           const word2 = i >= 7;
@@ -125,7 +125,7 @@ const Happy: React.FC<{t: number}> = ({t}) => {
         <Scribble p={under} w={800} h={30} color={C.terraLight} kind="swoosh" sw={8} />
       </div>
 
-      <div style={{position: 'absolute', left: 0, right: 0, top: 604, textAlign: 'center'}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 604, textAlign: 'center', transform: `translateY(${Math.sin(t * 1.2 + 1) * 3}px)`}}>
         <div style={{opacity: sign1, transform: `translateY(${(1 - sign1) * 22}px)`, fontFamily: SERIF, fontVariationSettings: SOFT, fontStyle: 'italic', fontWeight: 400, fontSize: 60, color: C.chalkSoft}}>Con mucho cariño,</div>
         <div style={{opacity: sign2, transform: `translateY(${(1 - sign2) * 22}px)`, marginTop: 12, fontFamily: SERIF, fontVariationSettings: SOFT, fontWeight: 400, fontSize: 70, color: C.chalk}}>
           tu familia y todo el equipo de <span style={{fontWeight: 650, fontStyle: 'italic', color: C.terraLight}}>MHORIZON</span>.
