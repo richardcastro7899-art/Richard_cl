@@ -1,0 +1,20 @@
+{
+  "name": "milton-cumple",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Video de cumpleaños para Milton · 1920x1080 · 30 fps (Remotion)",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render MiltonCumple out/milton-cumpleanos.mp4",
+    "still": "remotion still MiltonCumple out/frame.png"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.537",
+    "@remotion/media-utils": "4.0.537",
+    "@types/react": "^18.3.12",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "4.0.537",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,351 @@
+{
+ "bpm": 100,
+ "bar": 2.4,
+ "duration": 105,
+ "ticks": [
+  1.486141444884606,
+  1.7090401698572806,
+  1.8586230251259162,
+  1.9717144722422293,
+  2.062592478099168,
+  2.1385918867215428,
+  2.204124868448116,
+  2.2621156957789483,
+  2.314629141417617,
+  2.363237495615476,
+  2.4091999050725006,
+  2.4535279440511197,
+  2.4971262752453645,
+  2.540779928348775,
+  2.585235386709564,
+  2.631218317004868,
+  2.6794291140389306,
+  2.730618253938655,
+  2.7855488075078476,
+  2.8451076802711666,
+  2.910235914697159,
+  2.982061619728983,
+  3.061921570381809,
+  3.151424246264331,
+  3.252617858234907,
+  3.3681929111121,
+  3.5017504298467883,
+  3.6584819996253373,
+  3.8462987108879587,
+  4.078490884883058,
+  4.38089812230978,
+  4.820263991401726,
+  5.842766627852097
+ ],
+ "spinEnd": 6.1,
+ "T": {
+  "rouletteEnd": 7.2,
+  "carouselStart": 7.2,
+  "selectStart": 14.4,
+  "greetStart": 16.8,
+  "nameHit": 19.2,
+  "s4Start": 21.6,
+  "s4End": 91.2,
+  "closingStart": 91.2
+ },
+ "close": {
+  "mosaicIn": 90.9,
+  "mosaicHold": 93.2,
+  "mosaicOut": 94.8,
+  "msgStart": 94.3,
+  "msgEnd": 99.6,
+  "happy": 99.4,
+  "signStart": 101.5,
+  "logoIn": 102.8,
+  "fadeStart": 104.1,
+  "end": 105,
+  "mosaic": [
+   3,
+   4,
+   5,
+   9,
+   12,
+   16,
+   17,
+   18,
+   19,
+   21,
+   25,
+   30
+  ]
+ },
+ "shots": [
+  {
+   "id": "p1",
+   "kind": "phrase",
+   "start": 21.6,
+   "dur": 3.4,
+   "flare": false,
+   "nItems": 0,
+   "words": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    true
+   ],
+   "wordLens": [
+    3,
+    8,
+    3,
+    2,
+    10,
+    2,
+    9,
+    13
+   ],
+   "swap": false
+  },
+  {
+   "id": "a1",
+   "kind": "photos",
+   "start": 25,
+   "dur": 3.8,
+   "flare": true,
+   "nItems": 2,
+   "swap": true
+  },
+  {
+   "id": "a2",
+   "kind": "photos",
+   "start": 28.8,
+   "dur": 2.4,
+   "flare": false,
+   "nItems": 1,
+   "swap": false
+  },
+  {
+   "id": "a3",
+   "kind": "photos",
+   "start": 31.2,
+   "dur": 2.4,
+   "flare": false,
+   "nItems": 1,
+   "swap": false
+  },
+  {
+   "id": "b1",
+   "kind": "photos",
+   "start": 33.6,
+   "dur": 2.6,
+   "flare": true,
+   "nItems": 1,
+   "swap": false
+  },
+  {
+   "id": "b2",
+   "kind": "photos",
+   "start": 36.2,
+   "dur": 2.4,
+   "flare": false,
+   "nItems": 1,
+   "swap": false
+  },
+  {
+   "id": "b3",
+   "kind": "photos",
+   "start": 38.6,
+   "dur": 3.4,
+   "flare": false,
+   "nItems": 2,
+   "swap": false
+  },
+  {
+   "id": "b4",
+   "kind": "photos",
+   "start": 42,
+   "dur": 2.4,
+   "flare": false,
+   "nItems": 1,
+   "swap": false
+  },
+  {
+   "id": "p2",
+   "kind": "phrase",
+   "start": 44.4,
+   "dur": 3.2,
+   "flare": false,
+   "nItems": 0,
+   "words": [
+    false,
+    false,
+    false,
+    false,
+    true,
+    false,
+    false
+   ],
+   "wordLens": [
+    1,
+    8,
+    3,
+    5,
+    10,
+    4,
+    9
+   ],
+   "swap": false
+  },
+  {
+   "id": "c1",
+   "kind": "photos",
+   "start": 47.6,
+   "dur": 4.6,
+   "flare": true,
+   "nItems": 3,
+   "swap": false
+  },
+  {
+   "id": "c2",
+   "kind": "photos",
+   "start": 52.2,
+   "dur": 2.4,
+   "flare": false,
+   "nItems": 1,
+   "swap": false
+  },
+  {
+   "id": "c3",
+   "kind": "photos",
+   "start": 54.6,
+   "dur": 3.4,
+   "flare": false,
+   "nItems": 2,
+   "swap": true
+  },
+  {
+   "id": "p3",
+   "kind": "phrase",
+   "start": 58,
+   "dur": 3.2,
+   "flare": false,
+   "nItems": 0,
+   "words": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    true
+   ],
+   "wordLens": [
+    3,
+    5,
+    6,
+    7,
+    4,
+    8
+   ],
+   "swap": false
+  },
+  {
+   "id": "d1",
+   "kind": "photos",
+   "start": 61.2,
+   "dur": 4.4,
+   "flare": true,
+   "nItems": 3,
+   "swap": false
+  },
+  {
+   "id": "d2",
+   "kind": "photos",
+   "start": 65.60000000000001,
+   "dur": 3.4,
+   "flare": false,
+   "nItems": 2,
+   "swap": false
+  },
+  {
+   "id": "d3",
+   "kind": "photos",
+   "start": 69.00000000000001,
+   "dur": 2.4,
+   "flare": false,
+   "nItems": 1,
+   "swap": false
+  },
+  {
+   "id": "d4",
+   "kind": "photos",
+   "start": 71.40000000000002,
+   "dur": 3.4,
+   "flare": false,
+   "nItems": 2,
+   "swap": true
+  },
+  {
+   "id": "d5",
+   "kind": "photos",
+   "start": 74.80000000000003,
+   "dur": 3.4,
+   "flare": false,
+   "nItems": 2,
+   "swap": false
+  },
+  {
+   "id": "e1",
+   "kind": "photos",
+   "start": 78.20000000000003,
+   "dur": 3.4,
+   "flare": true,
+   "nItems": 2,
+   "swap": false
+  },
+  {
+   "id": "e2",
+   "kind": "photos",
+   "start": 81.60000000000004,
+   "dur": 3.6,
+   "flare": false,
+   "nItems": 2,
+   "swap": true
+  },
+  {
+   "id": "e3",
+   "kind": "photos",
+   "start": 85.20000000000003,
+   "dur": 2.6,
+   "flare": false,
+   "nItems": 1,
+   "swap": false
+  },
+  {
+   "id": "p4",
+   "kind": "phrase",
+   "start": 87.80000000000003,
+   "dur": 3.4,
+   "flare": false,
+   "nItems": 0,
+   "words": [
+    false,
+    false,
+    false,
+    true,
+    false,
+    false,
+    false,
+    true
+   ],
+   "wordLens": [
+    1,
+    3,
+    2,
+    5,
+    7,
+    4,
+    3,
+    6
+   ],
+   "swap": false
+  }
+ ]
+}
