@@ -5,15 +5,15 @@ import {C, rnd} from './theme';
 export const Defs: React.FC = () => (
   <defs>
     <linearGradient id="gPawnBody" x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0" stopColor="#050505" />
-      <stop offset=".3" stopColor="#4a4a49" />
-      <stop offset=".58" stopColor="#161616" />
-      <stop offset="1" stopColor="#020202" />
+      <stop offset="0" stopColor="#06090d" />
+      <stop offset=".3" stopColor="#46515f" />
+      <stop offset=".58" stopColor="#171e27" />
+      <stop offset="1" stopColor="#030508" />
     </linearGradient>
     <radialGradient id="gPawnHead" cx=".35" cy=".3" r=".8">
-      <stop offset="0" stopColor="#92928f" />
-      <stop offset=".35" stopColor="#2e2e2d" />
-      <stop offset="1" stopColor="#030303" />
+      <stop offset="0" stopColor="#929ba7" />
+      <stop offset=".35" stopColor="#2a323d" />
+      <stop offset="1" stopColor="#04070b" />
     </radialGradient>
     <filter id="fBlur6" x="-60%" y="-60%" width="220%" height="220%">
       <feGaussianBlur stdDeviation="6" />
@@ -34,14 +34,24 @@ export const Defs: React.FC = () => (
       <stop offset="1" stopColor="#9c9993" />
     </radialGradient>
     <radialGradient id="gPinHead" cx=".34" cy=".3" r=".8">
-      <stop offset="0" stopColor="#a9bdff" />
-      <stop offset=".35" stopColor="#2c55f0" />
-      <stop offset="1" stopColor="#0f2486" />
+      <stop offset="0" stopColor="#f6b98a" />
+      <stop offset=".35" stopColor="#D4681C" />
+      <stop offset="1" stopColor="#7d3a0a" />
     </radialGradient>
     <linearGradient id="gPinStem" x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0" stopColor="#0f2486" />
-      <stop offset=".4" stopColor="#4f74ff" />
-      <stop offset="1" stopColor="#0b1b6a" />
+      <stop offset="0" stopColor="#7d3a0a" />
+      <stop offset=".4" stopColor="#ea8a45" />
+      <stop offset="1" stopColor="#6a3008" />
+    </linearGradient>
+    <radialGradient id="gPinHeadN" cx=".34" cy=".3" r=".8">
+      <stop offset="0" stopColor="#8d9bb0" />
+      <stop offset=".35" stopColor="#2a3544" />
+      <stop offset="1" stopColor="#05080c" />
+    </radialGradient>
+    <linearGradient id="gPinStemN" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stopColor="#05080c" />
+      <stop offset=".4" stopColor="#47576c" />
+      <stop offset="1" stopColor="#030508" />
     </linearGradient>
     <linearGradient id="gNeedle" x1="0" x2="1" y1="0" y2="0">
       <stop offset="0" stopColor="#8f8f8f" />
@@ -119,8 +129,8 @@ export const Floor: React.FC<{
         <polygon
           key={`${ix}-${iz}`}
           points={`${a.x},${a.y} ${b.x},${b.y} ${c.x},${c.y} ${d.x},${d.y}`}
-          fill={dark ? '#55534f' : '#e2dfd6'}
-          stroke={dark ? '#55534f' : '#e2dfd6'}
+          fill={dark ? '#47505c' : '#e2dfd6'}
+          stroke={dark ? '#47505c' : '#e2dfd6'}
           strokeWidth={0.6}
         />,
       );
@@ -163,31 +173,33 @@ export const Pawn: React.FC<{x: number; y: number; s: number; op?: number; dy?: 
 );
 
 /* ───────── pin azul (origen: punta de la aguja) ───────── */
-export const Pin: React.FC<{x: number; y: number; s?: number; rot?: number; op?: number}> = ({
+export const Pin: React.FC<{x: number; y: number; s?: number; rot?: number; op?: number; navy?: boolean}> = ({
   x,
   y,
   s = 1,
   rot = 0,
   op = 1,
+  navy = false,
 }) => (
   <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`} opacity={op}>
     <ellipse cx={10} cy={2} rx={20} ry={5} fill="rgba(0,0,0,.35)" filter="url(#fBlur6)" />
     <polygon points="-3,-30 3,-30 0,0" fill="url(#gNeedle)" />
-    <rect x={-10} y={-56} width={20} height={28} rx={4} fill="url(#gPinStem)" />
-    <ellipse cx={0} cy={-56} rx={26} ry={7} fill="#1c3bc4" />
-    <circle cx={0} cy={-84} r={28} fill="url(#gPinHead)" />
+    <rect x={-10} y={-56} width={20} height={28} rx={4} fill={navy ? 'url(#gPinStemN)' : 'url(#gPinStem)'} />
+    <ellipse cx={0} cy={-56} rx={26} ry={7} fill={navy ? '#0d131b' : '#a8520f'} />
+    <circle cx={0} cy={-84} r={28} fill={navy ? 'url(#gPinHeadN)' : 'url(#gPinHead)'} />
     <ellipse cx={-9} cy={-95} rx={9} ry={5.5} fill="rgba(255,255,255,.75)" transform="rotate(-30 -9 -95)" />
   </g>
 );
 
 /* ───────── moneda y pila de monedas ───────── */
-export const Coin: React.FC<{cx: number; cy: number; r: number; h: number; label?: boolean; op?: number}> = ({
+export const Coin: React.FC<{cx: number; cy: number; r: number; h: number; label?: boolean; op?: number; accent?: boolean}> = ({
   cx,
   cy,
   r,
   h,
   label,
   op = 1,
+  accent,
 }) => {
   const ry = r * 0.3;
   return (
@@ -197,7 +209,7 @@ export const Coin: React.FC<{cx: number; cy: number; r: number; h: number; label
         fill="url(#gCoinSide)"
       />
       <ellipse cx={cx} cy={cy} rx={r} ry={ry} fill="url(#gCoinTop)" stroke="rgba(0,0,0,.28)" strokeWidth={1.2} />
-      <ellipse cx={cx} cy={cy} rx={r * 0.8} ry={ry * 0.8} fill="none" stroke="rgba(0,0,0,.2)" strokeWidth={1.4} />
+      <ellipse cx={cx} cy={cy} rx={r * 0.8} ry={ry * 0.8} fill="none" stroke={accent ? C.orange : 'rgba(0,0,0,.2)'} strokeWidth={accent ? 3.2 : 1.4} />
       {label && (
         <text
           transform={`translate(${cx} ${cy}) scale(1 .3)`}
@@ -206,7 +218,7 @@ export const Coin: React.FC<{cx: number; cy: number; r: number; h: number; label
           fontFamily="Montserrat MH, Montserrat, sans-serif"
           textAnchor="middle"
           dominantBaseline="central"
-          fill="rgba(0,0,0,.42)"
+          fill={accent ? C.orange : 'rgba(0,0,0,.42)'}
         >
           $
         </text>
@@ -224,6 +236,8 @@ export const PaperBoat: React.FC<{x: number; y: number; s?: number; rot?: number
     <polygon points="0,-300 250,40 0,40" fill="url(#gSailR)" />
     <polygon points="0,-300 -40,-150 -250,40 0,40" fill="none" stroke="rgba(0,0,0,.14)" strokeWidth={2} />
     <line x1={0} y1={-300} x2={0} y2={40} stroke="rgba(0,0,0,.22)" strokeWidth={2} />
+    <line x1={0} y1={-300} x2={0} y2={-372} stroke={C.navy} strokeWidth={5} strokeLinecap="round" />
+    <polygon points="3,-370 70,-350 3,-330" fill={C.orange} />
     {/* casco */}
     <polygon points="-340,40 0,40 0,160 -236,160" fill="url(#gHullL)" />
     <polygon points="0,40 340,40 236,160 0,160" fill="url(#gHullR)" />
@@ -306,8 +320,8 @@ export const Globe: React.FC<{
             <path
               d={`M${h.x} ${h.y} Q${qx} ${qy} ${p.x} ${p.y}`}
               fill="none"
-              stroke={C.ink}
-              strokeWidth={5}
+              stroke={C.orange}
+              strokeWidth={6}
               strokeLinecap="round"
               strokeDasharray="16 14"
               strokeDashoffset={-flow}
@@ -353,7 +367,7 @@ export const Pie: React.FC<{cx: number; cy: number; r: number; sweep: number; pu
     layers.push(
       <g key={i} transform={`translate(0 ${i})`}>
         <path d={sector(cx, cy, r, a1, a0 + Math.PI * 2)} fill="#a9a69e" />
-        <path d={sector(cx + ox, cy + oy, r, a0, a1)} fill="#050505" />
+        <path d={sector(cx + ox, cy + oy, r, a0, a1)} fill="#8a410f" />
       </g>,
     );
   }
@@ -362,8 +376,8 @@ export const Pie: React.FC<{cx: number; cy: number; r: number; sweep: number; pu
       <ellipse cx={cx + 20} cy={cy + depth + 50} rx={r * 0.95} ry={r * 0.95} fill="rgba(0,0,0,.28)" filter="url(#fBlur16)" />
       {layers}
       <path d={sector(cx, cy, r, a1, a0 + Math.PI * 2)} fill="url(#gPieLight)" stroke="rgba(0,0,0,.18)" strokeWidth={2} />
-      <path d={sector(cx + ox, cy + oy, r, a0, a1)} fill="#161616" />
-      <path d={sector(cx + ox, cy + oy, r, a0, a1)} fill="none" stroke="rgba(255,255,255,.18)" strokeWidth={2} />
+      <path d={sector(cx + ox, cy + oy, r, a0, a1)} fill={C.orange} />
+      <path d={sector(cx + ox, cy + oy, r, a0, a1)} fill="none" stroke="rgba(255,255,255,.3)" strokeWidth={2} />
     </g>
   );
 };

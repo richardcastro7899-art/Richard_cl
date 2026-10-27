@@ -13,10 +13,11 @@ Motion graphic vertical hecho con [Remotion](https://www.remotion.dev) como recu
 
 Referencia: collage surrealista en blanco y negro sobre papel crema, viñeta, grano, tipografía Montserrat Black y revelado palabra por palabra con blur.
 
-- **Paleta:** monocromo cálido + un único acento azul (el pin), igual que en la referencia.
+- **Paleta de marca:** papel crema + azul marino `#171E27` como tinta (texto, peones, calendario) y naranja `#D4681C` solo como acento: pins, arcos del globo, porción del 25 %, bandera del barco, 10 primeras figuras de «Pequeña», símbolo de las monedas superiores, bola del anillo, barra de progreso y marcas de esquina.
+- **Zonas seguras (Reels/TikTok/Shorts):** todo el contenido importante queda entre x 110–970 e y 300–1480; solo fondo y decoración sangran.
 - **Metáfora:** peones de ajedrez = trabajadores; monedas = ventas; barco de papel = exportación; globo y arcos = exportaciones netas; pastel = 25 %; calendario con pins = 6 en 6 meses / 3 en 3; anillo cíclico = producción y ejercicio fiscal.
 - **Movimiento:** cada palabra entra en el instante exacto en que se pronuncia (tiempos sacados de la transcripción); las escenas cambian con un barrido de desenfoque; el anillo final reacciona a la energía del audio.
-- **Marco:** etiqueta superior que cambia con el tema (Microempresa → Pequeña empresa → Exportador habitual), guías punteadas y estrellas cromadas en las esquinas.
+- **Marco:** etiqueta superior que cambia con el tema (Microempresa → Pequeña empresa → Exportador habitual), guías punteadas y marcas de esquina corporativas y barra de progreso.
 
 ## Escenas
 
@@ -24,7 +25,7 @@ Referencia: collage surrealista en blanco y negro sobre papel crema, viñeta, gr
 |---|---|---|
 | 0,0–2,5 s | «Eres micro… de 1 a 9 trabajadores» | 9 peones sobre el tablero; el primero lleva el pin («tú») |
 | 2,5–4,9 s | «…vendes hasta 100 mil dólares al año» | Pila de monedas que cae |
-| 4,9–7,0 s | «…pequeña… de 10 a 49» | 49 peones llenan el tablero |
+| 4,9–7,0 s | «…pequeña… de 10 a 49» | Tarjeta de equipo: 49 figuras, las primeras 10 en naranja (gráfico distinto al de Micro) |
 | 7,0–8,7 s | «…vendes hasta un millón» | Torre de 56 monedas frente a la pila de $100 mil (10×) |
 | 8,7–10,4 s | «Se considera exportador habitual» | Barco de papel |
 | 10,4–12,9 s | «…contribuyente cuyas exportaciones netas…» | Globo con arcos de exportación |

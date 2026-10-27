@@ -7,13 +7,17 @@ export const FPS = 30;
 export const DURATION = 707;
 
 export const C = {
-  ink: '#121211',
+  ink: '#171E27',
   paper: '#ecEAE3',
   paperHi: '#f7f6f1',
-  grey: '#8c8a85',
-  greyLt: '#c8c6bf',
-  blue: '#2c55f0',
+  grey: '#878b91',
+  greyLt: '#c6c7c6',
+  orange: '#D4681C',
+  navy: '#171E27',
 };
+
+// Zonas seguras para redes (Reels / TikTok / Shorts)
+export const SAFE = {x0: 110, x1: 970, top: 300, bottom: 1480};
 
 export const FONT = "'Montserrat MH', Montserrat, system-ui, sans-serif";
 

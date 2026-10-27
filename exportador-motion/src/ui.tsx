@@ -1,7 +1,7 @@
 import React, {createContext, useContext} from 'react';
 import {AbsoluteFill, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import energyData from './energy.json';
-import {C, DURATION, easeIn, easeOut, FONT, H, prog, sec, W} from './theme';
+import {C, DURATION, easeIn, easeOut, FONT, H, prog, SAFE, sec, W} from './theme';
 
 /* ───────── tiempo global ───────── */
 const SceneCtx = createContext(0);
@@ -173,21 +173,6 @@ export const Scene: React.FC<{start: number; next: number; noEnter?: boolean; ch
 );
 
 /* ───────── fondo y marco ───────── */
-const Star: React.FC<{x: number; y: number; s: number; rot: number}> = ({x, y, s, rot}) => (
-  <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`}>
-    <path
-      d="M0,-150 C10,-46 46,-10 150,0 C46,10 10,46 0,150 C-10,46 -46,10 -150,0 C-46,-10 -10,-46 0,-150Z"
-      fill="url(#gStar)"
-    />
-    <path
-      d="M0,-150 C10,-46 46,-10 150,0 C46,10 10,46 0,150 C-10,46 -46,10 -150,0 C-46,-10 -10,-46 0,-150Z"
-      fill="none"
-      stroke="rgba(255,255,255,.55)"
-      strokeWidth={1.4}
-    />
-  </g>
-);
-
 export const Frame: React.FC = () => {
   const f = useCurrentFrame();
   const dash = {stroke: 'rgba(0,0,0,.13)', strokeWidth: 2, strokeDasharray: '6 9'} as const;
@@ -199,22 +184,19 @@ export const Frame: React.FC = () => {
         }}
       />
       <svg width={W} height={H} style={{position: 'absolute', inset: 0}}>
-        <defs>
-          <linearGradient id="gStar" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#f2f2f0" />
-            <stop offset=".35" stopColor="#6d6d6b" />
-            <stop offset=".6" stopColor="#151515" />
-            <stop offset="1" stopColor="#8a8a88" />
-          </linearGradient>
-        </defs>
-        {[300, 960, 1560].map((y) => (
-          <line key={y} x1={70} x2={W - 70} y1={y} y2={y} {...dash} />
+        {[SAFE.top, SAFE.bottom].map((y) => (
+          <line key={y} x1={SAFE.x0 - 40} x2={SAFE.x1 + 40} y1={y} y2={y} {...dash} />
         ))}
-        {[70, W - 70].map((x) => (
-          <line key={x} x1={x} x2={x} y1={160} y2={H - 160} {...dash} />
+        {[SAFE.x0 - 40, SAFE.x1 + 40].map((x) => (
+          <line key={x} x1={x} x2={x} y1={SAFE.top} y2={SAFE.bottom} {...dash} />
         ))}
-        <Star x={30} y={50} s={0.62} rot={-12 + f * 0.05} />
-        <Star x={W - 24} y={H - 40} s={0.78} rot={20 - f * 0.05} />
+        {/* marcas de esquina corporativas */}
+        <g fill="none" stroke={C.navy} strokeWidth={4} strokeLinecap="square">
+          <path d="M64 132 V64 H132" />
+          <path d={`M${W - 64} ${H - 132} V${H - 64} H${W - 132}`} />
+        </g>
+        <rect x={52} y={52} width={16} height={16} fill={C.orange} />
+        <rect x={W - 68} y={H - 68} width={16} height={16} fill={C.orange} />
       </svg>
     </AbsoluteFill>
   );
@@ -229,8 +211,12 @@ export const Overlay: React.FC = () => {
   const open = prog(f, 0, 13);
   const R = open * 1500;
   const close = prog(f, DURATION - 10, 9, (t) => t);
+  const bw = SAFE.x1 - SAFE.x0;
   return (
     <>
+      <div style={{position: 'absolute', left: SAFE.x0, top: 1852, width: bw, height: 4, background: 'rgba(23,30,39,.12)'}}>
+        <div style={{width: (f / (DURATION - 1)) * bw, height: 4, background: C.orange}} />
+      </div>
       <AbsoluteFill
         style={{
           backgroundImage: `url(${staticFile(`grain${grain}.png`)})`,
@@ -276,7 +262,7 @@ export const TopTag: React.FC = () => {
             key={t.label}
             style={{
               position: 'absolute',
-              top: 112,
+              top: SAFE.top + 6,
               left: 0,
               width: W,
               display: 'flex',
@@ -287,15 +273,15 @@ export const TopTag: React.FC = () => {
               filter: `blur(${(1 - p) * 10 + q * 10}px)`,
               fontFamily: FONT,
               fontWeight: 800,
-              fontSize: 26,
-              letterSpacing: '0.34em',
+              fontSize: 24,
+              letterSpacing: '0.32em',
               textTransform: 'uppercase',
               color: C.ink,
             }}
           >
-            <span style={{width: 44, height: 2, background: C.ink, opacity: 0.55}} />
+            <span style={{width: 40, height: 3, background: C.orange}} />
             {t.label}
-            <span style={{width: 44, height: 2, background: C.ink, opacity: 0.55}} />
+            <span style={{width: 40, height: 3, background: C.orange}} />
           </div>
         );
       })}
