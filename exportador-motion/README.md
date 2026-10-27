@@ -6,8 +6,8 @@ Motion graphic vertical hecho con [Remotion](https://www.remotion.dev) como recu
 |---|---|
 | Formato | 9:16, 1080 × 1920 px, 30 fps |
 | Duración | 23,56 s (707 fotogramas), igual que el audio |
-| Audio | Locución incluida en el MP4 |
-| Salida | `out/exportador-habitual-ligero.mp4` (H.264 CRF 20, AAC) |
+| Audio | Solo efectos de sonido (sin música ni voz); variante con voz disponible |
+| Salida | `out/exportador-habitual-sfx.mp4` (principal, solo efectos) y `out/exportador-habitual-sfx-con-voz.mp4` (H.264 CRF 20, AAC) |
 
 ## Dirección de arte
 
@@ -23,6 +23,24 @@ Referencia: collage surrealista en blanco y negro sobre papel crema, viñeta, gr
 ## Transiciones y tiempos de lectura
 
 Las escenas son secuenciales y nunca se superponen: al final de cada una sale primero el texto, luego el gráfico, queda un instante limpio y entra la siguiente (gráfico primero, texto después). Los cortes caen en pausas naturales de la voz (`START` en `src/theme.ts`), los objetos terminan de entrar con tiempo de sobra y el texto aparece 0,12 s antes de la palabra para que cada escena se mantenga completa antes de salir. La duración total sigue siendo la del audio.
+
+## Diseño de sonido
+
+Sin música. Los efectos se sintetizan (`sfx/build_sfx.py` → `public/sfx.wav`, 48 kHz estéreo) y se colocan con precisión de fotograma. Criterios de motion graphics de gama alta: contención (sonidos secos y táctiles, no cartoon), whooshes ajustados a la dirección y velocidad del movimiento con el pico en el fotograma más rápido, impactos en el fotograma exacto del aterrizaje, una sola escala tonal (re mayor pentatónica) y variación de tono/volumen en cada evento.
+
+| Elemento | Sonido |
+|---|---|
+| Transiciones de escena | Whoosh de aire filtrado: barrido ascendente al salir, descendente al entrar, cada uno con ligera variación |
+| Aparición de texto | Tick de cristal suave en frases cortas; en palabras grandes, golpe grave suave + nota + soplo de aire |
+| Peones | «Tok» de madera seca; el de «tú» lleva además el golpe del pin |
+| Monedas | Clink metálico que sube de tono con la pila; la última añade un chime. La torre es una ráfaga ascendente con remate |
+| Tarjeta / fichas | Deslizamiento de papel y toques suaves |
+| Pins | «Thock» seco con un ping tonal |
+| Globo / arcos | Trazo ascendente por arco y nota al llegar |
+| Pastel | Barrido de aire, chasquido y desplazamiento de la porción |
+| Cierre | Dos chimes graves-agudos sobre «fiscal» |
+
+Mezcla: -16,5 LUFS integrados, pico -1,5 dBFS. `sfx/sfx_events.json` lista cada evento con su tiempo. `npm run render` produce la versión solo con efectos; la composición `ExportadorHabitualVoz` añade la locución.
 
 ## Escenas
 
@@ -43,7 +61,7 @@ Las escenas son secuenciales y nunca se superponen: al final de cada una sale pr
 ```bash
 npm install
 npm run studio   # previsualización con línea de tiempo
-npm run render   # exporta out/exportador-habitual.mp4 (CRF 16, máster)
+npm run render   # exporta out/exportador-habitual.mp4 (CRF 16, solo efectos)
 ```
 
 Si Remotion no puede descargar su navegador, añade `--browser-executable=/ruta/a/chrome-headless-shell`.

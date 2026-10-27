@@ -18,9 +18,11 @@ import {BODY, C, DURATION, START as S} from './theme';
 
 export {DURATION};
 
-export const Main: React.FC = () => (
+export const Main: React.FC<{voz?: boolean}> = ({voz = false}) => (
   <AbsoluteFill style={{background: C.paper, fontFamily: BODY}}>
-    <Audio src={staticFile('narracion.mp3')} />
+    {/* Solo efectos de sonido (sin música). `voz` añade la locución original por debajo */}
+    <Audio src={staticFile('sfx.wav')} volume={voz ? 0.7 : 1} />
+    {voz && <Audio src={staticFile('narracion.mp3')} />}
     <Frame />
     <SceneMicro start={S.micro} end={S.ventas100} />
     <SceneSales100 start={S.ventas100} end={S.pequena} />

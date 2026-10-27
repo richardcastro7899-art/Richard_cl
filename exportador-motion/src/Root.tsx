@@ -5,5 +5,26 @@ import {Main} from './Main';
 import {DURATION, FPS, H, W} from './theme';
 
 export const RemotionRoot: React.FC = () => (
-  <Composition id="ExportadorHabitual" component={Main} durationInFrames={DURATION} fps={FPS} width={W} height={H} />
+  <>
+    {/* Versión principal: solo efectos de sonido */}
+    <Composition
+      id="ExportadorHabitual"
+      component={Main}
+      durationInFrames={DURATION}
+      fps={FPS}
+      width={W}
+      height={H}
+      defaultProps={{voz: false}}
+    />
+    {/* Variante con la locución original + efectos */}
+    <Composition
+      id="ExportadorHabitualVoz"
+      component={Main}
+      durationInFrames={DURATION}
+      fps={FPS}
+      width={W}
+      height={H}
+      defaultProps={{voz: true}}
+    />
+  </>
 );
