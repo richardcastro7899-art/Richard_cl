@@ -357,6 +357,17 @@ export const Pie: React.FC<{cx: number; cy: number; r: number; sweep: number; pu
   pull,
 }) => {
   const a0 = -Math.PI / 2;
+  if (sweep < 0.03) {
+    return (
+      <g>
+        <ellipse cx={cx + 20} cy={cy + 76} rx={r * 0.95} ry={r * 0.95} fill="rgba(0,0,0,.28)" filter="url(#fBlur16)" />
+        {Array.from({length: 13}, (_, i) => (
+          <circle key={i} cx={cx} cy={cy + 26 - i * 2} r={r} fill="#a9a69e" />
+        ))}
+        <circle cx={cx} cy={cy} r={r} fill="url(#gPieLight)" stroke="rgba(0,0,0,.18)" strokeWidth={2} />
+      </g>
+    );
+  }
   const a1 = a0 + sweep;
   const mid = (a0 + a1) / 2;
   const ox = Math.cos(mid) * pull;

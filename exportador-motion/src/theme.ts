@@ -39,3 +39,21 @@ export const rnd = (n: number) => {
   const x = Math.sin(n * 127.1 + 311.7) * 43758.5453;
   return x - Math.floor(x);
 };
+
+/*
+ * Calendario de escenas (frames). Cada escena sale ENTERA (texto, luego gráfico)
+ * en los EXIT fotogramas previos al inicio de la siguiente, y la siguiente entra
+ * después: nunca se superponen. Los cortes caen en pausas/limites de frase de la voz.
+ */
+export const EXIT = 7;
+export const START = {
+  micro: 0,
+  ventas100: sec(2.8),
+  pequena: sec(5.05),
+  ventas1m: sec(7.35),
+  barco: sec(8.8),
+  globo: sec(10.55),
+  pastel: sec(13.1),
+  calendario: sec(16.25),
+  ciclo: sec(20.65),
+};

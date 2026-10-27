@@ -19,6 +19,10 @@ Referencia: collage surrealista en blanco y negro sobre papel crema, viñeta, gr
 - **Movimiento:** cada palabra entra en el instante exacto en que se pronuncia (tiempos sacados de la transcripción); las escenas cambian con un barrido de desenfoque; el anillo final reacciona a la energía del audio.
 - **Marco:** etiqueta superior que cambia con el tema (Microempresa → Pequeña empresa → Exportador habitual), guías punteadas y marcas de esquina corporativas y barra de progreso.
 
+## Transiciones y tiempos de lectura
+
+Las escenas son secuenciales y nunca se superponen: al final de cada una sale primero el texto, luego el gráfico, queda un instante limpio y entra la siguiente (gráfico primero, texto después). Los cortes caen en pausas naturales de la voz (`START` en `src/theme.ts`), los objetos terminan de entrar con tiempo de sobra y el texto aparece 0,12 s antes de la palabra para que cada escena se mantenga completa antes de salir. La duración total sigue siendo la del audio.
+
 ## Escenas
 
 | Tiempo | Voz | Visual |

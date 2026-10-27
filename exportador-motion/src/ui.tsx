@@ -1,11 +1,20 @@
 import React, {createContext, useContext} from 'react';
 import {AbsoluteFill, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import energyData from './energy.json';
-import {C, DURATION, easeIn, easeOut, FONT, H, prog, SAFE, sec, W} from './theme';
+import {C, DURATION, easeIn, EXIT, FONT, H, prog, SAFE, START, W} from './theme';
 
 /* ───────── tiempo global ───────── */
-const SceneCtx = createContext(0);
-export const useG = () => useCurrentFrame() + useContext(SceneCtx);
+const SceneCtx = createContext({start: 0, end: DURATION});
+export const useScene = () => useContext(SceneCtx);
+export const useG = () => useCurrentFrame() + useContext(SceneCtx).start;
+// progreso de salida: primero el texto, 2 fotogramas después el gráfico
+export const useExit = () => {
+  const g = useG();
+  const {end} = useScene();
+  if (end >= DURATION) return {text: 0, art: 0};
+  const s = end - EXIT;
+  return {text: prog(g, s, 5, easeIn), art: prog(g, s + 2, 5, easeIn)};
+};
 export const useEnergy = () => {
   const g = useG();
   return (energyData as number[])[Math.min(g, energyData.length - 1)];
@@ -14,14 +23,17 @@ export const useEnergy = () => {
 /* ───────── revelado con blur ───────── */
 export const Reveal: React.FC<{
   at: number;
+  ord?: number;
   dur?: number;
   y?: number;
   blur?: number;
   style?: React.CSSProperties;
   children: React.ReactNode;
-}> = ({at, dur = 16, y = 36, blur = 20, style, children}) => {
+}> = ({at, ord = 0, dur = 14, y = 34, blur = 18, style, children}) => {
   const g = useG();
-  const p = prog(g, at, dur);
+  const {start} = useScene();
+  // nada aparece antes de que la escena anterior haya salido
+  const p = prog(g, Math.max(at, start + 4 + ord * 3), dur);
   const o = Math.min(1, p * 2.4);
   return (
     <div
@@ -37,6 +49,9 @@ export const Reveal: React.FC<{
     </div>
   );
 };
+
+// el texto aparece un instante antes de la voz: más tiempo de lectura
+const LEAD = 0.12;
 
 export type Wd = {
   w: string;
@@ -66,7 +81,7 @@ export const Line: React.FC<{
     }}
   >
     {words.map((w, i) => (
-      <Reveal key={i} at={sec(w.t)}>
+      <Reveal key={i} at={Math.round((w.t - LEAD) * 30)} ord={i}>
         <span
           style={{
             fontSize: w.size ?? size,
@@ -84,22 +99,28 @@ export const Line: React.FC<{
   </div>
 );
 
-export const Stack: React.FC<{top: number; gap?: number; children: React.ReactNode}> = ({top, gap = 14, children}) => (
-  <div
-    style={{
-      position: 'absolute',
-      left: 0,
-      width: W,
-      top,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap,
-    }}
-  >
-    {children}
-  </div>
-);
+export const Stack: React.FC<{top: number; gap?: number; children: React.ReactNode}> = ({top, gap = 14, children}) => {
+  const q = useExit().text;
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left: 0,
+        width: W,
+        top,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap,
+        opacity: 1 - q,
+        filter: q > 0 ? `blur(${q * 14}px)` : undefined,
+        transform: q > 0 ? `translateY(${-q * 28}px)` : undefined,
+      }}
+    >
+      {children}
+    </div>
+  );
+};
 
 /* texto que se sustituye por otro (cambio de cifra) */
 export const Swap: React.FC<{at: number; a: React.ReactNode; b: React.ReactNode}> = ({at, a, b}) => {
@@ -133,44 +154,37 @@ export const Swap: React.FC<{at: number; a: React.ReactNode; b: React.ReactNode}
   );
 };
 
-/* ───────── escena con transición whip-blur ───────── */
-const IN = 11;
-export const OV = 9;
-
-const SceneInner: React.FC<{start: number; next: number; noEnter?: boolean; children: React.ReactNode}> = ({
-  start,
-  next,
-  noEnter,
-  children,
-}) => {
-  const g = useG();
-  const p = noEnter ? 1 : prog(g, start, IN);
-  const q = next >= DURATION ? 0 : prog(g, next, OV, easeIn);
-  const blur = (1 - p) * 30 + q * 26;
-  const ty = (1 - p) * 90 - q * 80;
-  const sc = 1 + (1 - p) * 0.05 - q * 0.04;
-  const op = Math.min(1, p * 2.4) * (1 - q);
-  return (
-    <AbsoluteFill style={{opacity: op, filter: `blur(${blur}px)`, transform: `translateY(${ty}px) scale(${sc})`}}>
-      {children}
-    </AbsoluteFill>
-  );
-};
-
-export const Scene: React.FC<{start: number; next: number; noEnter?: boolean; children: React.ReactNode}> = ({
-  start,
-  next,
-  noEnter,
-  children,
-}) => (
-  <Sequence from={start} durationInFrames={next - start + OV} layout="none">
-    <SceneCtx.Provider value={start}>
-      <SceneInner start={start} next={next} noEnter={noEnter}>
-        {children}
-      </SceneInner>
-    </SceneCtx.Provider>
+/* ───────── escena: secuencial, sin solaparse con la siguiente ───────── */
+export const Scene: React.FC<{start: number; end: number; children: React.ReactNode}> = ({start, end, children}) => (
+  <Sequence from={start} durationInFrames={end - start} layout="none">
+    <SceneCtx.Provider value={{start, end}}>{children}</SceneCtx.Provider>
   </Sequence>
 );
+
+/* gráfico de la escena: entra primero, sale después del texto */
+export const Art: React.FC<{noEnter?: boolean; children: React.ReactNode}> = ({noEnter, children}) => {
+  const g = useG();
+  const {start} = useScene();
+  const q = useExit().art;
+  const p = noEnter ? 1 : prog(g, start, 11);
+  const blur = (1 - p) * 20 + q * 18;
+  return (
+    <svg
+      width={W}
+      height={H}
+      style={{
+        position: 'absolute',
+        inset: 0,
+        opacity: Math.min(1, p * 2.5) * (1 - q),
+        filter: blur > 0.2 ? `blur(${blur}px)` : undefined,
+        transform: `scale(${1 + (1 - p) * 0.04 - q * 0.03})`,
+        transformOrigin: '50% 55%',
+      }}
+    >
+      {children}
+    </svg>
+  );
+};
 
 /* ───────── fondo y marco ───────── */
 export const Frame: React.FC = () => {
@@ -210,7 +224,7 @@ export const Overlay: React.FC = () => {
   // iris de apertura (negro → papel) y cierre
   const open = prog(f, 0, 13);
   const R = open * 1500;
-  const close = prog(f, DURATION - 10, 9, (t) => t);
+  const close = prog(f, DURATION - 7, 6, (t) => t);
   const bw = SAFE.x1 - SAFE.x0;
   return (
     <>
@@ -243,9 +257,9 @@ export const Overlay: React.FC = () => {
 
 /* etiqueta superior (sustituye al logotipo de la referencia) */
 const TAGS = [
-  {label: 'Microempresa', from: 0, to: 148},
-  {label: 'Pequeña empresa', from: 148, to: 262},
-  {label: 'Exportador habitual', from: 262, to: DURATION},
+  {label: 'Microempresa', from: 0, to: START.pequena},
+  {label: 'Pequeña empresa', from: START.pequena, to: START.barco},
+  {label: 'Exportador habitual', from: START.barco, to: DURATION},
 ];
 
 export const TopTag: React.FC = () => {
@@ -253,8 +267,8 @@ export const TopTag: React.FC = () => {
   return (
     <>
       {TAGS.map((t) => {
-        const p = prog(f, t.from + (t.from === 0 ? 8 : 0), 12);
-        const q = t.to >= DURATION ? 0 : prog(f, t.to, 8, easeIn);
+        const p = prog(f, t.from + (t.from === 0 ? 8 : 3), 10);
+        const q = t.to >= DURATION ? 0 : prog(f, t.to - EXIT, 5, easeIn);
         const o = Math.min(1, p * 2) * (1 - q);
         if (o <= 0.001) return null;
         return (

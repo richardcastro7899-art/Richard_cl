@@ -1,17 +1,17 @@
 import React from 'react';
 import {Cam, Coin, CycleRing, Defs, Floor, Globe, PaperBoat, Pawn, Pie, Pin, proj} from './art';
 import {C, easeIO, easeOut, FONT, H, prog, rnd, sec, W} from './theme';
-import {Line, Scene, Stack, Swap, useEnergy, useG} from './ui';
+import {Art, Line, Scene, Stack, Swap, useEnergy, useG} from './ui';
 
 /*
  * Zonas seguras para redes: x 110–970, y 300–1480.
  * Etiqueta superior en y 306; contenido de 372 a 1480.
  */
-const Svg: React.FC<{children: React.ReactNode}> = ({children}) => (
-  <svg width={W} height={H} style={{position: 'absolute', inset: 0}}>
+const Svg: React.FC<{noEnter?: boolean; children: React.ReactNode}> = ({noEnter, children}) => (
+  <Art noEnter={noEnter}>
     <Defs />
     {children}
-  </svg>
+  </Art>
 );
 
 const SMALL = 46;
@@ -20,7 +20,7 @@ const TOP = 372;
 /* ═════════ 1 · Micro (0–2,5 s): 9 peones sobre tablero ═════════ */
 const camA: Cam = {yH: 600, span: 852, k: 400};
 
-export const SceneMicro: React.FC<{start: number; next: number}> = ({start, next}) => {
+export const SceneMicro: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
   const e = useEnergy();
   const rows = [1.55, 2.15, 2.95];
@@ -32,8 +32,8 @@ export const SceneMicro: React.FC<{start: number; next: number}> = ({start, next
   const order = [1, 0, 2, 4, 3, 5, 7, 6, 8];
   const S = 2.2;
   return (
-    <Scene start={start} next={next} noEnter>
-      <Svg>
+    <Scene start={start} end={end}>
+      <Svg noEnter>
         <Floor id="fl1" cam={camA} tile={0.5} zNear={1.0} zFar={9} fade={[650, 840, 1120, 1230]} />
         {[...pawns]
           .map((p) => ({...p, ord: order.indexOf(p.i)}))
@@ -66,7 +66,7 @@ export const SceneMicro: React.FC<{start: number; next: number}> = ({start, next
 };
 
 /* ═════════ 2 · Vendes hasta 100 mil (2,5–5 s) ═════════ */
-export const SceneSales100: React.FC<{start: number; next: number}> = ({start, next}) => {
+export const SceneSales100: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
   const e = useEnergy();
   const coins = [];
@@ -74,8 +74,8 @@ export const SceneSales100: React.FC<{start: number; next: number}> = ({start, n
   const baseY = 1140;
   const h = 28;
   for (let i = 0; i < n; i++) {
-    const t0 = sec(2.95 + i * 0.13);
-    const pr = prog(g, t0, 14);
+    const t0 = sec(2.9 + i * 0.1);
+    const pr = prog(g, t0, 12);
     const land = prog(g, t0 + 6, 12, easeOut);
     const bounce = Math.sin(land * Math.PI * 2.4) * (1 - land) * 6;
     coins.push(
@@ -92,17 +92,17 @@ export const SceneSales100: React.FC<{start: number; next: number}> = ({start, n
     );
   }
   return (
-    <Scene start={start} next={next}>
+    <Scene start={start} end={end}>
       <Svg>
-        <ellipse cx={556} cy={baseY + h + 16} rx={230} ry={40} fill="rgba(0,0,0,.34)" filter="url(#fBlur16)" />
+        <ellipse cx={556} cy={baseY + h + 16} rx={230} ry={40} fill="rgba(0,0,0,.34)" filter="url(#fBlur16)" opacity={prog(g, sec(2.95), 10)} />
         <g transform={`translate(540 ${baseY}) scale(${1 + e * 0.01}) translate(-540 ${-baseY})`}>{coins}</g>
       </Svg>
       <Stack top={TOP} gap={8}>
         <Line size={SMALL} words={[{w: 'y', t: 2.56}, {w: 'vendes', t: 2.82}, {w: 'hasta', t: 3.12}]} />
-        <Line size={156} weight={900} gap={0.16} words={[{w: '$100', t: 3.36}, {w: 'mil', t: 3.62, color: C.grey}]} />
+        <Line size={156} weight={900} gap={0.16} words={[{w: '$100', t: 3.3}, {w: 'mil', t: 3.55, color: C.grey}]} />
       </Stack>
       <Stack top={1330}>
-        <Line size={64} weight={800} words={[{w: 'dólares', t: 3.8}, {w: 'al', t: 4.16, weight: 500, size: SMALL}, {w: 'año', t: 4.36}]} />
+        <Line size={64} weight={800} words={[{w: 'dólares', t: 3.7}, {w: 'al', t: 3.95, weight: 500, size: SMALL}, {w: 'año', t: 4.1}]} />
       </Stack>
     </Scene>
   );
@@ -116,14 +116,14 @@ const Person: React.FC<{x: number; y: number; s: number; fill: string; op: numbe
   </g>
 );
 
-export const ScenePequena: React.FC<{start: number; next: number}> = ({start, next}) => {
+export const ScenePequena: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
   const e = useEnergy();
   const cardX = 130;
   const cardW = 820;
   const cardY = 600;
   const cardH = 570;
-  const cin = prog(g, start, 22);
+  const cin = prog(g, start, 14);
   const cols = 7;
   const rows = 7;
   const px = cardW / cols;
@@ -134,7 +134,7 @@ export const ScenePequena: React.FC<{start: number; next: number}> = ({start, ne
   for (let i = 0; i < cols * rows; i++) {
     const r = Math.floor(i / cols);
     const c = i % cols;
-    const t0 = i < 10 ? 5.3 + i * 0.05 : 6.16 + ((i - 10) / 39) * 0.9;
+    const t0 = i < 10 ? 5.25 + i * 0.04 : 5.75 + ((i - 10) / 39) * 0.6;
     const pr = prog(g, sec(t0), 12);
     people.push(
       <Person
@@ -149,7 +149,7 @@ export const ScenePequena: React.FC<{start: number; next: number}> = ({start, ne
     );
   }
   return (
-    <Scene start={start} next={next}>
+    <Scene start={start} end={end}>
       <Svg>
         <g transform={`translate(0 ${(1 - cin) * 90})`} opacity={Math.min(1, cin * 2)}>
           <rect x={cardX + 10} y={cardY + 26} width={cardW} height={cardH} rx={28} fill="rgba(0,0,0,.3)" filter="url(#fBlur16)" />
@@ -162,15 +162,15 @@ export const ScenePequena: React.FC<{start: number; next: number}> = ({start, ne
       </Stack>
       <Stack top={1215} gap={8}>
         <Line size={SMALL} words={[{w: 'y', t: 5.62}, {w: 'tienes', t: 5.76}, {w: 'de', t: 5.98}]} />
-        <Line size={160} weight={900} words={[{w: '10', t: 6.16}, {w: 'a', t: 6.38, size: SMALL, weight: 500}, {w: '49', t: 6.58, color: C.grey}]} gap={0.2} />
-        <Line size={SMALL} words={[{w: 'trabajadores', t: 6.8}]} />
+        <Line size={160} weight={900} words={[{w: '10', t: 6.0}, {w: 'a', t: 6.2, size: SMALL, weight: 500}, {w: '49', t: 6.35, color: C.grey}]} gap={0.2} />
+        <Line size={SMALL} words={[{w: 'trabajadores', t: 6.55}]} />
       </Stack>
     </Scene>
   );
 };
 
 /* ═════════ 3b · hasta un millón (7–8,7 s) ═════════ */
-export const SceneSales1M: React.FC<{start: number; next: number}> = ({start, next}) => {
+export const SceneSales1M: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
   const e = useEnergy();
   const baseY = 1420;
@@ -181,7 +181,7 @@ export const SceneSales1M: React.FC<{start: number; next: number}> = ({start, ne
   const smallX = 285;
   const tower = [];
   for (let i = 0; i < N; i++) {
-    const t0 = sec(7.35 + (i / N) * 1.15);
+    const t0 = sec(7.4 + (i / N) * 0.6);
     const pr = prog(g, t0, 8);
     tower.push(
       <Coin
@@ -198,15 +198,15 @@ export const SceneSales1M: React.FC<{start: number; next: number}> = ({start, ne
   }
   const small = [];
   for (let i = 0; i < 6; i++) {
-    const pr = prog(g, sec(7.1 + i * 0.03), 10);
+    const pr = prog(g, sec(7.4 + i * 0.03), 10);
     small.push(<Coin key={i} cx={smallX} cy={baseY - i * 12 + (1 - pr) * -80} r={r * 0.62} h={12} label={i === 5} op={Math.min(1, pr * 3)} />);
   }
-  const lab = prog(g, sec(7.5), 14);
+  const lab = prog(g, sec(7.7), 14);
   return (
-    <Scene start={start} next={next}>
+    <Scene start={start} end={end}>
       <Svg>
-        <ellipse cx={towerX + 10} cy={baseY + 26} rx={r * 1.3} ry={28} fill="rgba(0,0,0,.34)" filter="url(#fBlur16)" />
-        <ellipse cx={smallX + 8} cy={baseY + 20} rx={r * 0.85} ry={20} fill="rgba(0,0,0,.3)" filter="url(#fBlur16)" />
+        <ellipse cx={towerX + 10} cy={baseY + 26} rx={r * 1.3} ry={28} fill="rgba(0,0,0,.34)" filter="url(#fBlur16)" opacity={prog(g, sec(7.45), 10)} />
+        <ellipse cx={smallX + 8} cy={baseY + 20} rx={r * 0.85} ry={20} fill="rgba(0,0,0,.3)" filter="url(#fBlur16)" opacity={prog(g, sec(7.45), 10)} />
         <g transform={`translate(${towerX} ${baseY}) scale(${1 + e * 0.004}) translate(${-towerX} ${-baseY})`}>{tower}</g>
         {small}
         <text x={smallX} y={baseY - 120} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={32} fill={C.grey} opacity={lab}>
@@ -215,17 +215,17 @@ export const SceneSales1M: React.FC<{start: number; next: number}> = ({start, ne
       </Svg>
       <Stack top={TOP} gap={8}>
         <Line size={SMALL} words={[{w: 'y', t: 7.06}, {w: 'vendes', t: 7.4}, {w: 'hasta', t: 7.72}, {w: 'un', t: 7.96}]} />
-        <Line size={140} weight={900} gap={0.14} words={[{w: '$1', t: 8.0}, {w: 'millón', t: 8.18, color: C.grey}]} />
+        <Line size={140} weight={900} gap={0.14} words={[{w: '$1', t: 7.85}, {w: 'millón', t: 8.0, color: C.grey}]} />
       </Stack>
     </Scene>
   );
 };
 
 /* ═════════ 4a · Exportador habitual — barco de papel (8,7–10,4 s) ═════════ */
-export const SceneBoat: React.FC<{start: number; next: number}> = ({start, next}) => {
+export const SceneBoat: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
   const e = useEnergy();
-  const p = prog(g, sec(8.95), 40);
+  const p = prog(g, sec(8.8), 30);
   const bob = Math.sin(g * 0.09) * 9;
   const rock = Math.sin(g * 0.07) * 1.8;
   const waves = [0, 1, 2, 3].map((i) => {
@@ -238,7 +238,7 @@ export const SceneBoat: React.FC<{start: number; next: number}> = ({start, next}
     return <path key={i} d={d} fill="none" stroke={`rgba(23,30,39,${0.34 - i * 0.07})`} strokeWidth={4 - i * 0.6} strokeLinecap="round" />;
   });
   return (
-    <Scene start={start} next={next}>
+    <Scene start={start} end={end}>
       <Svg>
         <g opacity={Math.min(1, p * 2)}>
           <PaperBoat x={540 + (1 - p) * -520} y={1110 + bob} s={0.92 + e * 0.01} rot={rock - (1 - p) * 8} />
@@ -255,14 +255,14 @@ export const SceneBoat: React.FC<{start: number; next: number}> = ({start, next}
 };
 
 /* ═════════ 4b · Exportaciones netas — globo (10,4–12,9 s) ═════════ */
-export const SceneGlobe: React.FC<{start: number; next: number}> = ({start, next}) => {
+export const SceneGlobe: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
   const lf = g - start;
-  const arcP = prog(g, sec(11.4), 40, easeIO);
-  const pinP = prog(g, sec(10.9), 14);
+  const arcP = prog(g, sec(11.2), 36, easeIO);
+  const pinP = prog(g, sec(10.8), 14);
   const spin = prog(g, start, 90, (t) => t);
   return (
-    <Scene start={start} next={next}>
+    <Scene start={start} end={end}>
       <Svg>
         <Globe
           cx={540}
@@ -286,7 +286,7 @@ export const SceneGlobe: React.FC<{start: number; next: number}> = ({start, next
 };
 
 /* ═════════ 5 · 25 % (12,9–15,9 s) ═════════ */
-export const ScenePct: React.FC<{start: number; next: number}> = ({start, next}) => {
+export const ScenePct: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
   const sweep = prog(g, sec(13.7), 28, easeOut) * (Math.PI / 2);
   const pull = prog(g, sec(14.3), 24) * 36;
@@ -298,7 +298,7 @@ export const ScenePct: React.FC<{start: number; next: number}> = ({start, next})
   const px = cx + Math.cos(mid) * (r * 0.55 + pull);
   const py = cy + Math.sin(mid) * (r * 0.55 + pull) + 26;
   return (
-    <Scene start={start} next={next}>
+    <Scene start={start} end={end}>
       <Svg>
         <Pie cx={cx} cy={cy} r={r} sweep={Math.max(0.0001, sweep)} pull={pull} />
         <Pin x={px} y={py - (1 - pinP) * 120} s={0.9} op={pinP} navy />
@@ -308,8 +308,8 @@ export const ScenePct: React.FC<{start: number; next: number}> = ({start, next})
         <Line size={236} weight={900} gap={0.02} words={[{w: '25', t: 13.7}, {w: '%', t: 14.18, color: C.grey}]} />
       </Stack>
       <Stack top={1282} gap={4}>
-        <Line size={SMALL} words={[{w: 'en', t: 14.62}, {w: 'su', t: 15.04}, {w: 'total', t: 15.16}, {w: 'de', t: 15.5}]} />
-        <Line size={146} weight={900} words={[{w: 'ingreso', t: 15.64}]} />
+        <Line size={SMALL} words={[{w: 'en', t: 14.55}, {w: 'su', t: 14.9}, {w: 'total', t: 15.05}, {w: 'de', t: 15.3}]} />
+        <Line size={146} weight={900} words={[{w: 'ingreso', t: 15.42}]} />
       </Stack>
     </Scene>
   );
@@ -320,7 +320,7 @@ const MONTHS = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', '
 const SIX = [0, 2, 4, 6, 8, 10];
 const THREE = [4, 6, 8];
 
-export const SceneCalendar: React.FC<{start: number; next: number}> = ({start, next}) => {
+export const SceneCalendar: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
   const swapAt = sec(19.15);
   const tw = 196;
@@ -366,7 +366,7 @@ export const SceneCalendar: React.FC<{start: number; next: number}> = ({start, n
     );
   });
   return (
-    <Scene start={start} next={next}>
+    <Scene start={start} end={end}>
       <Svg>{tiles}</Svg>
       <Stack top={TOP} gap={0}>
         <Swap
@@ -384,7 +384,7 @@ export const SceneCalendar: React.FC<{start: number; next: number}> = ({start, n
       </Stack>
       <Stack top={1205} gap={6}>
         <Swap
-          at={sec(19.7)}
+          at={sec(19.55)}
           a={
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6}}>
               <Line size={SMALL} words={[{w: 'en', t: 17.38}]} />
@@ -394,8 +394,8 @@ export const SceneCalendar: React.FC<{start: number; next: number}> = ({start, n
           }
           b={
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6}}>
-              <Line size={SMALL} words={[{w: 'en', t: 19.72}]} />
-              <Line size={130} weight={900} words={[{w: '3', t: 19.94}, {w: 'meses', t: 20.12}]} gap={0.18} />
+              <Line size={SMALL} words={[{w: 'en', t: 19.6}]} />
+              <Line size={130} weight={900} words={[{w: '3', t: 19.8}, {w: 'meses', t: 19.98}]} gap={0.18} />
               <div style={{height: SMALL}} />
             </div>
           }
@@ -406,13 +406,13 @@ export const SceneCalendar: React.FC<{start: number; next: number}> = ({start, n
 };
 
 /* ═════════ 8 · Producción cíclica · ejercicio fiscal (20,4–23,56 s) ═════════ */
-export const SceneCycle: React.FC<{start: number; next: number}> = ({start, next}) => {
+export const SceneCycle: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
   const e = useEnergy();
   const p = prog(g, sec(20.6), 30);
   const cy = 910;
   return (
-    <Scene start={start} next={next}>
+    <Scene start={start} end={end}>
       <Svg>
         <g opacity={Math.min(1, p * 2)} transform={`translate(540 ${cy}) scale(${0.86 + p * 0.14}) translate(-540 ${-cy})`}>
           <CycleRing cx={540} cy={cy} R={212} g={g} e={e} />
