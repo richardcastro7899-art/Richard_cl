@@ -19,7 +19,9 @@ export const C = {
 // Zonas seguras para redes (Reels / TikTok / Shorts)
 export const SAFE = {x0: 110, x1: 970, top: 300, bottom: 1480};
 
-export const FONT = "'Montserrat MH', Montserrat, system-ui, sans-serif";
+export const HEAD = "'Jakarta MH', 'Plus Jakarta Sans', system-ui, sans-serif";
+export const BODY = "'Inter MH', Inter, system-ui, sans-serif";
+export const FONT = BODY;
 
 export const sec = (s: number) => Math.round(s * FPS);
 

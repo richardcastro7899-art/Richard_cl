@@ -1,17 +1,17 @@
 import {continueRender, delayRender, staticFile} from 'remotion';
 
-const WEIGHTS: Array<[string, number]> = [
-  ['montserrat-latin-500-normal.woff2', 500],
-  ['montserrat-latin-700-normal.woff2', 700],
-  ['montserrat-latin-800-normal.woff2', 800],
-  ['montserrat-latin-900-normal.woff2', 900],
+// Plus Jakarta Sans (títulos y cifras) + Inter (textos de apoyo). Locales: el render no depende de la red.
+const FACES: Array<[string, string, number]> = [
+  ['Jakarta MH', 'plus-jakarta-sans-latin-700-normal.woff2', 700],
+  ['Jakarta MH', 'plus-jakarta-sans-latin-800-normal.woff2', 800],
+  ['Inter MH', 'inter-latin-500-normal.woff2', 500],
+  ['Inter MH', 'inter-latin-600-normal.woff2', 600],
 ];
 
-// Fuentes locales: el render no depende de la red.
-const handle = delayRender('Cargando Montserrat');
+const handle = delayRender('Cargando tipografías');
 Promise.all(
-  WEIGHTS.map(([file, weight]) => {
-    const face = new FontFace('Montserrat MH', `url(${staticFile(`fonts/${file}`)})`, {weight: String(weight)});
+  FACES.map(([family, file, weight]) => {
+    const face = new FontFace(family, `url(${staticFile(`fonts/${file}`)})`, {weight: String(weight)});
     return face.load().then((f) => document.fonts.add(f));
   }),
 )

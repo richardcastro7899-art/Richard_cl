@@ -11,15 +11,15 @@ import {
   SceneSales100,
   SceneSales1M,
 } from './scenes';
-import {Frame, Overlay, TopTag} from './ui';
-import {C, DURATION, FONT, START as S} from './theme';
+import {Frame, Overlay} from './ui';
+import {BODY, C, DURATION, START as S} from './theme';
 
 // Frames de inicio de cada escena (voz sincronizada con la transcripción)
 
 export {DURATION};
 
 export const Main: React.FC = () => (
-  <AbsoluteFill style={{background: C.paper, fontFamily: FONT}}>
+  <AbsoluteFill style={{background: C.paper, fontFamily: BODY}}>
     <Audio src={staticFile('narracion.mp3')} />
     <Frame />
     <SceneMicro start={S.micro} end={S.ventas100} />
@@ -31,7 +31,6 @@ export const Main: React.FC = () => (
     <ScenePct start={S.pastel} end={S.calendario} />
     <SceneCalendar start={S.calendario} end={S.ciclo} />
     <SceneCycle start={S.ciclo} end={DURATION} />
-    <TopTag />
     <Overlay />
   </AbsoluteFill>
 );

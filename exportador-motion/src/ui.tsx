@@ -1,7 +1,7 @@
 import React, {createContext, useContext} from 'react';
 import {AbsoluteFill, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import energyData from './energy.json';
-import {C, DURATION, easeIn, EXIT, FONT, H, prog, SAFE, START, W} from './theme';
+import {BODY, C, DURATION, easeIn, EXIT, H, HEAD, prog, SAFE, W} from './theme';
 
 /* ───────── tiempo global ───────── */
 const SceneCtx = createContext({start: 0, end: DURATION});
@@ -75,7 +75,6 @@ export const Line: React.FC<{
       justifyContent: 'center',
       alignItems: 'baseline',
       lineHeight: 1,
-      fontFamily: FONT,
       gap: `${gap}em`,
       fontSize: size,
     }}
@@ -84,6 +83,7 @@ export const Line: React.FC<{
       <Reveal key={i} at={Math.round((w.t - LEAD) * 30)} ord={i}>
         <span
           style={{
+            fontFamily: (w.weight ?? weight) >= 700 ? HEAD : BODY,
             fontSize: w.size ?? size,
             fontWeight: w.weight ?? weight,
             color: w.color ?? color,
@@ -204,13 +204,6 @@ export const Frame: React.FC = () => {
         {[SAFE.x0 - 40, SAFE.x1 + 40].map((x) => (
           <line key={x} x1={x} x2={x} y1={SAFE.top} y2={SAFE.bottom} {...dash} />
         ))}
-        {/* marcas de esquina corporativas */}
-        <g fill="none" stroke={C.navy} strokeWidth={4} strokeLinecap="square">
-          <path d="M64 132 V64 H132" />
-          <path d={`M${W - 64} ${H - 132} V${H - 64} H${W - 132}`} />
-        </g>
-        <rect x={52} y={52} width={16} height={16} fill={C.orange} />
-        <rect x={W - 68} y={H - 68} width={16} height={16} fill={C.orange} />
       </svg>
     </AbsoluteFill>
   );
@@ -224,12 +217,8 @@ export const Overlay: React.FC = () => {
   // iris de apertura (negro → papel); el video termina sin fundido
   const open = prog(f, 0, 13);
   const R = open * 1500;
-  const bw = SAFE.x1 - SAFE.x0;
   return (
     <>
-      <div style={{position: 'absolute', left: SAFE.x0, top: 1852, width: bw, height: 4, background: 'rgba(23,30,39,.12)'}}>
-        <div style={{width: (f / (DURATION - 1)) * bw, height: 4, background: C.orange}} />
-      </div>
       <AbsoluteFill
         style={{
           backgroundImage: `url(${staticFile(`grain${grain}.png`)})`,
@@ -249,54 +238,6 @@ export const Overlay: React.FC = () => {
           style={{background: `radial-gradient(circle at 50% 46%, transparent ${R}px, #0c0c0b ${R + 3}px)`}}
         />
       )}
-    </>
-  );
-};
-
-/* etiqueta superior (sustituye al logotipo de la referencia) */
-const TAGS = [
-  {label: 'Microempresa', from: 0, to: START.pequena},
-  {label: 'Pequeña empresa', from: START.pequena, to: START.barco},
-  {label: 'Exportador habitual', from: START.barco, to: DURATION},
-];
-
-export const TopTag: React.FC = () => {
-  const f = useCurrentFrame();
-  return (
-    <>
-      {TAGS.map((t) => {
-        const p = prog(f, t.from + (t.from === 0 ? 8 : 3), 10);
-        const q = t.to >= DURATION ? 0 : prog(f, t.to - EXIT, 5, easeIn);
-        const o = Math.min(1, p * 2) * (1 - q);
-        if (o <= 0.001) return null;
-        return (
-          <div
-            key={t.label}
-            style={{
-              position: 'absolute',
-              top: SAFE.top + 6,
-              left: 0,
-              width: W,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: 22,
-              opacity: o,
-              filter: `blur(${(1 - p) * 10 + q * 10}px)`,
-              fontFamily: FONT,
-              fontWeight: 800,
-              fontSize: 24,
-              letterSpacing: '0.32em',
-              textTransform: 'uppercase',
-              color: C.ink,
-            }}
-          >
-            <span style={{width: 40, height: 3, background: C.orange}} />
-            {t.label}
-            <span style={{width: 40, height: 3, background: C.orange}} />
-          </div>
-        );
-      })}
     </>
   );
 };

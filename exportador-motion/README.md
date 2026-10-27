@@ -11,13 +11,14 @@ Motion graphic vertical hecho con [Remotion](https://www.remotion.dev) como recu
 
 ## Dirección de arte
 
-Referencia: collage surrealista en blanco y negro sobre papel crema, viñeta, grano, tipografía Montserrat Black y revelado palabra por palabra con blur.
+Referencia: collage surrealista en blanco y negro sobre papel crema, viñeta, grano y revelado palabra por palabra con blur.
+- **Tipografía:** Plus Jakarta Sans ExtraBold para títulos y cifras + Inter Medium para los textos de apoyo.
 
-- **Paleta de marca:** papel crema + azul marino `#171E27` como tinta (texto, peones, calendario) y naranja `#D4681C` solo como acento: pins, arcos del globo, porción del 25 %, bandera del barco, 10 primeras figuras de «Pequeña», símbolo de las monedas superiores, bola del anillo, barra de progreso y marcas de esquina.
+- **Paleta de marca:** papel crema + azul marino `#171E27` como tinta (texto, peones, calendario) y naranja `#D4681C` solo como acento: pins, arcos del globo, porción del 25 %, bandera del barco, 10 primeras figuras de «Pequeña», símbolo de las monedas superiores y bola del anillo.
 - **Zonas seguras (Reels/TikTok/Shorts):** todo el contenido importante queda entre x 110–970 e y 300–1480; solo fondo y decoración sangran.
 - **Metáfora:** peones de ajedrez = trabajadores; monedas = ventas; barco de papel = exportación; globo y arcos = exportaciones netas; pastel = 25 %; calendario con pins = 6 en 6 meses / 3 en 3; anillo cíclico = producción y ejercicio fiscal.
 - **Movimiento:** cada palabra entra en el instante exacto en que se pronuncia (tiempos sacados de la transcripción); las escenas cambian con un barrido de desenfoque; el anillo final reacciona a la energía del audio.
-- **Marco:** etiqueta superior que cambia con el tema (Microempresa → Pequeña empresa → Exportador habitual), guías punteadas y marcas de esquina corporativas y barra de progreso.
+- **Marco:** solo guías punteadas muy tenues; sin etiquetas, barra de progreso ni marcas de esquina.
 
 ## Transiciones y tiempos de lectura
 
@@ -47,6 +48,6 @@ npm run render   # exporta out/exportador-habitual.mp4 (CRF 16, máster)
 
 Si Remotion no puede descargar su navegador, añade `--browser-executable=/ruta/a/chrome-headless-shell`.
 
-`src/energy.json` es la energía del audio por fotograma; `public/grain*.png` es la textura de grano. Montserrat (SIL OFL 1.1) va en `public/fonts`.
+`src/energy.json` es la energía del audio por fotograma; `public/grain*.png` es la textura de grano. Plus Jakarta Sans e Inter (SIL OFL 1.1) van en `public/fonts`.
 
 > La transcripción se hizo automáticamente. Si alguna cifra o palabra del audio difiere de lo que aparece en pantalla, el texto se edita en `src/scenes.tsx`.

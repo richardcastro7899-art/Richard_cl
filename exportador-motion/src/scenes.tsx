@@ -1,11 +1,11 @@
 import React from 'react';
 import {Cam, Coin, CycleRing, Defs, Floor, Globe, PaperBoat, Pawn, Pie, Pin, proj} from './art';
-import {C, easeIO, easeOut, FONT, H, prog, rnd, sec, W} from './theme';
+import {C, easeIO, easeOut, H, HEAD, prog, rnd, sec, W} from './theme';
 import {Art, Line, Scene, Stack, Swap, useEnergy, useG} from './ui';
 
 /*
  * Zonas seguras para redes: x 110–970, y 300–1480.
- * Etiqueta superior en y 306; contenido de 372 a 1480.
+ * Contenido de 340 a 1480.
  */
 const Svg: React.FC<{noEnter?: boolean; children: React.ReactNode}> = ({noEnter, children}) => (
   <Art noEnter={noEnter}>
@@ -15,7 +15,7 @@ const Svg: React.FC<{noEnter?: boolean; children: React.ReactNode}> = ({noEnter,
 );
 
 const SMALL = 46;
-const TOP = 372;
+const TOP = 340;
 
 /* ═════════ 1 · Micro (0–2,5 s): 9 peones sobre tablero ═════════ */
 const camA: Cam = {yH: 600, span: 852, k: 400};
@@ -54,11 +54,11 @@ export const SceneMicro: React.FC<{start: number; end: number}> = ({start, end})
       </Svg>
       <Stack top={TOP} gap={4}>
         <Line size={SMALL} words={[{w: 'Eres', t: 0.0}]} />
-        <Line size={200} weight={900} words={[{w: 'Micro', t: 0.26}]} />
+        <Line size={200} weight={800} words={[{w: 'Micro', t: 0.26}]} />
       </Stack>
       <Stack top={1215} gap={8}>
         <Line size={SMALL} words={[{w: 'tienes', t: 0.78}, {w: 'de', t: 1.0}]} />
-        <Line size={160} weight={900} words={[{w: '1', t: 1.18}, {w: 'a', t: 1.5, size: SMALL, weight: 500}, {w: '9', t: 1.7, color: C.grey}]} gap={0.2} />
+        <Line size={160} weight={800} words={[{w: '1', t: 1.18}, {w: 'a', t: 1.5, size: SMALL, weight: 500}, {w: '9', t: 1.7, color: C.grey}]} gap={0.2} />
         <Line size={SMALL} words={[{w: 'trabajadores', t: 1.9}]} />
       </Stack>
     </Scene>
@@ -99,7 +99,7 @@ export const SceneSales100: React.FC<{start: number; end: number}> = ({start, en
       </Svg>
       <Stack top={TOP} gap={8}>
         <Line size={SMALL} words={[{w: 'y', t: 2.56}, {w: 'vendes', t: 2.82}, {w: 'hasta', t: 3.12}]} />
-        <Line size={156} weight={900} gap={0.16} words={[{w: '$100', t: 3.3}, {w: 'mil', t: 3.55, color: C.grey}]} />
+        <Line size={156} weight={800} gap={0.16} words={[{w: '$100', t: 3.3}, {w: 'mil', t: 3.55, color: C.grey}]} />
       </Stack>
       <Stack top={1330}>
         <Line size={64} weight={800} words={[{w: 'dólares', t: 3.7}, {w: 'al', t: 3.95, weight: 500, size: SMALL}, {w: 'año', t: 4.1}]} />
@@ -158,11 +158,11 @@ export const ScenePequena: React.FC<{start: number; end: number}> = ({start, end
         </g>
       </Svg>
       <Stack top={TOP} gap={4}>
-        <Line size={176} weight={900} words={[{w: 'Pequeña', t: 5.08}]} />
+        <Line size={176} weight={800} words={[{w: 'Pequeña', t: 5.08}]} />
       </Stack>
       <Stack top={1215} gap={8}>
         <Line size={SMALL} words={[{w: 'y', t: 5.62}, {w: 'tienes', t: 5.76}, {w: 'de', t: 5.98}]} />
-        <Line size={160} weight={900} words={[{w: '10', t: 6.0}, {w: 'a', t: 6.2, size: SMALL, weight: 500}, {w: '49', t: 6.35, color: C.grey}]} gap={0.2} />
+        <Line size={160} weight={800} words={[{w: '10', t: 6.0}, {w: 'a', t: 6.2, size: SMALL, weight: 500}, {w: '49', t: 6.35, color: C.grey}]} gap={0.2} />
         <Line size={SMALL} words={[{w: 'trabajadores', t: 6.55}]} />
       </Stack>
     </Scene>
@@ -209,13 +209,13 @@ export const SceneSales1M: React.FC<{start: number; end: number}> = ({start, end
         <ellipse cx={smallX + 8} cy={baseY + 20} rx={r * 0.85} ry={20} fill="rgba(0,0,0,.3)" filter="url(#fBlur16)" opacity={prog(g, sec(7.45), 10)} />
         <g transform={`translate(${towerX} ${baseY}) scale(${1 + e * 0.004}) translate(${-towerX} ${-baseY})`}>{tower}</g>
         {small}
-        <text x={smallX} y={baseY - 120} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={32} fill={C.grey} opacity={lab}>
+        <text x={smallX} y={baseY - 120} textAnchor="middle" fontFamily={HEAD} fontWeight={800} fontSize={32} fill={C.grey} opacity={lab}>
           $100 mil
         </text>
       </Svg>
       <Stack top={TOP} gap={8}>
         <Line size={SMALL} words={[{w: 'y', t: 7.06}, {w: 'vendes', t: 7.4}, {w: 'hasta', t: 7.72}, {w: 'un', t: 7.96}]} />
-        <Line size={140} weight={900} gap={0.14} words={[{w: '$1', t: 7.85}, {w: 'millón', t: 8.0, color: C.grey}]} />
+        <Line size={140} weight={800} gap={0.14} words={[{w: '$1', t: 7.85}, {w: 'millón', t: 8.0, color: C.grey}]} />
       </Stack>
     </Scene>
   );
@@ -247,8 +247,8 @@ export const SceneBoat: React.FC<{start: number; end: number}> = ({start, end}) 
       </Svg>
       <Stack top={TOP} gap={4}>
         <Line size={SMALL} words={[{w: 'Se', t: 8.8}, {w: 'considera', t: 8.82}]} />
-        <Line size={132} weight={900} words={[{w: 'Exportador', t: 9.38}]} />
-        <Line size={132} weight={900} color={C.grey} words={[{w: 'habitual', t: 9.92}]} />
+        <Line size={132} weight={800} words={[{w: 'Exportador', t: 9.38}]} />
+        <Line size={132} weight={800} color={C.grey} words={[{w: 'habitual', t: 9.92}]} />
       </Stack>
     </Scene>
   );
@@ -278,8 +278,8 @@ export const SceneGlobe: React.FC<{start: number; end: number}> = ({start, end})
       </Svg>
       <Stack top={TOP} gap={6}>
         <Line size={SMALL} words={[{w: 'al', t: 10.4}, {w: 'contribuyente', t: 10.62}, {w: 'cuyas', t: 11.28}]} />
-        <Line size={96} weight={900} words={[{w: 'Exportaciones', t: 11.66}]} />
-        <Line size={176} weight={900} color={C.grey} words={[{w: 'netas', t: 12.28}]} />
+        <Line size={96} weight={800} words={[{w: 'Exportaciones', t: 11.66}]} />
+        <Line size={176} weight={800} color={C.grey} words={[{w: 'netas', t: 12.28}]} />
       </Stack>
     </Scene>
   );
@@ -305,11 +305,11 @@ export const ScenePct: React.FC<{start: number; end: number}> = ({start, end}) =
       </Svg>
       <Stack top={TOP} gap={4}>
         <Line size={SMALL} words={[{w: 'son', t: 12.88}, {w: 'al', t: 13.08}, {w: 'menos', t: 13.24}, {w: 'del', t: 13.48}]} />
-        <Line size={236} weight={900} gap={0.02} words={[{w: '25', t: 13.7}, {w: '%', t: 14.18, color: C.grey}]} />
+        <Line size={236} weight={800} gap={0.02} words={[{w: '25', t: 13.7}, {w: '%', t: 14.18, color: C.grey}]} />
       </Stack>
       <Stack top={1282} gap={4}>
         <Line size={SMALL} words={[{w: 'en', t: 14.55}, {w: 'su', t: 14.9}, {w: 'total', t: 15.05}, {w: 'de', t: 15.3}]} />
-        <Line size={146} weight={900} words={[{w: 'ingreso', t: 15.42}]} />
+        <Line size={146} weight={800} words={[{w: 'ingreso', t: 15.42}]} />
       </Stack>
     </Scene>
   );
@@ -352,8 +352,8 @@ export const SceneCalendar: React.FC<{start: number; end: number}> = ({start, en
           y={8}
           textAnchor="middle"
           dominantBaseline="central"
-          fontFamily={FONT}
-          fontWeight={900}
+          fontFamily={HEAD}
+          fontWeight={800}
           fontSize={48}
           letterSpacing="-0.02em"
           fill={pinned > 0.5 ? '#f5f4ef' : C.ink}
@@ -377,10 +377,10 @@ export const SceneCalendar: React.FC<{start: number; end: number}> = ({start, en
         <div style={{height: 8}} />
         <Swap
           at={sec(19.2)}
-          a={<Line size={200} weight={900} words={[{w: '6', t: 16.46}]} />}
-          b={<Line size={200} weight={900} words={[{w: '3', t: 19.24}]} />}
+          a={<Line size={200} weight={800} words={[{w: '6', t: 16.46}]} />}
+          b={<Line size={200} weight={800} words={[{w: '3', t: 19.24}]} />}
         />
-        <Line size={90} weight={900} words={[{w: 'exportaciones', t: 16.66}]} />
+        <Line size={90} weight={800} words={[{w: 'exportaciones', t: 16.66}]} />
       </Stack>
       <Stack top={1205} gap={6}>
         <Swap
@@ -388,14 +388,14 @@ export const SceneCalendar: React.FC<{start: number; end: number}> = ({start, en
           a={
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6}}>
               <Line size={SMALL} words={[{w: 'en', t: 17.38}]} />
-              <Line size={130} weight={900} words={[{w: '6', t: 17.7}, {w: 'meses', t: 17.9}]} gap={0.18} />
+              <Line size={130} weight={800} words={[{w: '6', t: 17.7}, {w: 'meses', t: 17.9}]} gap={0.18} />
               <Line size={SMALL} color={C.grey} words={[{w: 'distintos', t: 18.14}]} />
             </div>
           }
           b={
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6}}>
               <Line size={SMALL} words={[{w: 'en', t: 19.6}]} />
-              <Line size={130} weight={900} words={[{w: '3', t: 19.8}, {w: 'meses', t: 19.98}]} gap={0.18} />
+              <Line size={130} weight={800} words={[{w: '3', t: 19.8}, {w: 'meses', t: 19.98}]} gap={0.18} />
               <div style={{height: SMALL}} />
             </div>
           }
@@ -420,16 +420,16 @@ export const SceneCycle: React.FC<{start: number; end: number}> = ({start, end})
       </Svg>
       <Stack top={TOP} gap={6}>
         <Line size={SMALL} words={[{w: 'si', t: 20.5}, {w: 'tu', t: 20.88}, {w: 'producción', t: 20.94}, {w: 'es', t: 21.28}]} />
-        <Line size={190} weight={900} words={[{w: 'cíclica', t: 21.58}]} />
+        <Line size={190} weight={800} words={[{w: 'cíclica', t: 21.58}]} />
       </Stack>
       <Stack top={cy - 88} gap={0}>
-        <Line size={140} weight={900} color={C.greyLt} words={[{w: '12', t: 20.8}]} />
+        <Line size={140} weight={800} color={C.greyLt} words={[{w: '12', t: 20.8}]} />
         <Line size={28} weight={800} color={C.grey} ls="0.4em" words={[{w: 'MESES', t: 20.95}]} />
       </Stack>
       <Stack top={1228} gap={2}>
         <Line size={SMALL} words={[{w: 'durante', t: 22.0}, {w: 'el', t: 22.38}]} />
-        <Line size={100} weight={900} words={[{w: 'ejercicio', t: 22.6}]} />
-        <Line size={100} weight={900} color={C.grey} words={[{w: 'fiscal', t: 23.04}]} />
+        <Line size={100} weight={800} words={[{w: 'ejercicio', t: 22.6}]} />
+        <Line size={100} weight={800} color={C.grey} words={[{w: 'fiscal', t: 23.04}]} />
       </Stack>
     </Scene>
   );

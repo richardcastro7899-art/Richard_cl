@@ -214,8 +214,8 @@ export const Coin: React.FC<{cx: number; cy: number; r: number; h: number; label
         <text
           transform={`translate(${cx} ${cy}) scale(1 .3)`}
           fontSize={r * 1.05}
-          fontWeight={900}
-          fontFamily="Montserrat MH, Montserrat, sans-serif"
+          fontWeight={800}
+          fontFamily="Jakarta MH, Plus Jakarta Sans, sans-serif"
           textAnchor="middle"
           dominantBaseline="central"
           fill={accent ? C.orange : 'rgba(0,0,0,.42)'}
@@ -426,7 +426,7 @@ export const CycleRing: React.FC<{cx: number; cy: number; R: number; g: number; 
               y={ty}
               fontSize={30}
               fontWeight={800}
-              fontFamily="Montserrat MH, Montserrat, sans-serif"
+              fontFamily="Jakarta MH, Plus Jakarta Sans, sans-serif"
               textAnchor="middle"
               dominantBaseline="central"
               fill={C.grey}
