@@ -221,10 +221,9 @@ export const Overlay: React.FC = () => {
   const grain = (Math.floor(f / 2) % 3) + 1;
   const gx = ((f * 37) % 90) - 45;
   const gy = ((f * 53) % 90) - 45;
-  // iris de apertura (negro → papel) y cierre
+  // iris de apertura (negro → papel); el video termina sin fundido
   const open = prog(f, 0, 13);
   const R = open * 1500;
-  const close = prog(f, DURATION - 7, 6, (t) => t);
   const bw = SAFE.x1 - SAFE.x0;
   return (
     <>
@@ -250,7 +249,6 @@ export const Overlay: React.FC = () => {
           style={{background: `radial-gradient(circle at 50% 46%, transparent ${R}px, #0c0c0b ${R + 3}px)`}}
         />
       )}
-      {close > 0 && <AbsoluteFill style={{background: '#0c0c0b', opacity: close}} />}
     </>
   );
 };
