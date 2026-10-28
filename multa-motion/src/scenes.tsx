@@ -1,5 +1,5 @@
 import React from 'react';
-import {Ceiling, Coin, Defs, DotGrid, Eye, Form, GlobePins, Note, HI_IDX} from './art';
+import {Ceiling, Coin, Defs, Doc, Eye, Forbid, Note, RulerLens, Tray, World} from './art';
 import {C, easeIn, easeIO, easeOut, HEAD, H, prog, rnd, sec, W} from './theme';
 import {Art, Line, Scene, Stack, useEnergy, useG, useScene} from './ui';
 
@@ -59,27 +59,39 @@ const Slot: React.FC<{h: number; items: Array<{t: number; node: React.ReactNode}
   );
 };
 
-/* ═════════ 1 · «Si no presentas la declaración» (0–2,2 s) ═════════ */
+/* ═════════ 1 · «Si no presentas la declaración» (0–2,2 s): documento en blanco que no entra en la bandeja ═════════ */
 export const SceneDeclaracion: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
   const e = useEnergy();
-  const rows = Array.from({length: 7}, (_, i) => prog(g, 12 + i * 7, 12));
   const enter = prog(g, 0, 18);
+  const trayP = prog(g, 10, 14);
+  const arrowP = prog(g, sec(0.7), 14);
+  const forbidT = sec(1.15);
+  const forbid = prog(g, forbidT, 12);
+  // el documento intenta bajar a la bandeja y rebota
+  const push = prog(g, sec(0.78), 12, easeIO) * (1 - prog(g, forbidT, 10));
+  const ghost = 0.5 + 0.5 * Math.sin(g * 0.18);
   return (
     <Scene start={start} end={end}>
       <Svg noEnter>
-        <Form
+        <Tray cx={540} cy={1380} op={trayP} ghost={ghost} />
+        <g opacity={arrowP}>
+          <line x1={540} y1={1236} x2={540} y2={1302} stroke="#55534f" strokeWidth={7} strokeLinecap="round" strokeDasharray="12 12" />
+          <polygon points="518,1298 562,1298 540,1326" fill="#55534f" />
+        </g>
+        <Doc
           cx={540}
-          cy={1050 + (1 - enter) * 60 + Math.sin(g * 0.08) * 4}
-          s={1 + e * 0.004}
+          cy={952 + (1 - enter) * 60 + push * 22 + Math.sin(g * 0.08) * 3}
+          s={0.75 + e * 0.003}
           rot={-2.5}
-          rows={rows}
-          bars={Array(7).fill(0)}
+          vals={Array(5).fill(0)}
+          bars={Array(5).fill(0)}
           hi={0}
           stamp={0}
           check={0}
           op={Math.min(1, enter * 2.5)}
         />
+        <Forbid cx={540} cy={1272} p={forbid} />
       </Svg>
       <Stack top={TOP} gap={8}>
         <Line size={SM} words={[{w: 'Si', t: 0.0}]} />
@@ -93,26 +105,17 @@ export const SceneDeclaracion: React.FC<{start: number; end: number}> = ({start,
 /* ═════════ 2 · «o si la presentas pero omites total o parcialmente esos activos» (2,45–7,85 s) ═════════ */
 export const SceneOmision: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
+  const sign = prog(g, start + 8, 18);
   const stamp = prog(g, sec(2.92), 8);
   const check = prog(g, sec(3.08), 12);
-  const barsIn = Array.from({length: 7}, (_, i) => prog(g, sec(3.85) + i * 3, 10));
-  // «parcialmente»: se destapan las filas impares
-  const bars = barsIn.map((p, i) => (i % 2 === 1 ? p * (1 - prog(g, sec(5.5) + (i >> 1) * 5, 10)) : p));
-  const hi = prog(g, sec(6.9), 12);
+  const barsIn = Array.from({length: 5}, (_, i) => prog(g, sec(3.85) + i * 4, 10));
+  // «parcialmente»: se destapan las filas 2.ª y 4.ª
+  const bars = barsIn.map((p, i) => (i % 2 === 1 ? p * (1 - prog(g, sec(5.5) + (i >> 1) * 6, 10)) : p));
+  const hi = prog(g, sec(6.65), 12);
   return (
     <Scene start={start} end={end}>
       <Svg>
-        <Form
-          cx={540}
-          cy={1050}
-          s={1}
-          rot={-2.5}
-          rows={Array(7).fill(1)}
-          bars={bars}
-          hi={hi}
-          stamp={stamp}
-          check={check}
-        />
+        <Doc cx={540} cy={1050} s={1} rot={-2.5} vals={Array(5).fill(1)} bars={bars} hi={hi} stamp={stamp} check={check} sign={sign} />
       </Svg>
       <Stack top={TOP} gap={14}>
         <Line size={SM} words={[{w: 'o', t: 2.24}, {w: 'si', t: 2.56}, {w: 'la', t: 2.68}, {w: 'presentas', t: 2.82}]} />
@@ -129,8 +132,8 @@ export const SceneOmision: React.FC<{start: number; end: number}> = ({start, end
               node: <Line size={M2} weight={800} words={[{w: 'o', t: 4.98, size: SM, weight: 500}, {w: 'parcialmente', t: 5.36}]} gap={0.2} />,
             },
             {
-              t: 6.76,
-              node: <Line size={L} weight={800} words={[{w: 'esos', t: 6.76, size: SM, weight: 500}, {w: 'activos', t: 7.04, color: C.blue}]} gap={0.2} />,
+              t: 6.6,
+              node: <Line size={L} weight={800} words={[{w: 'esos', t: 6.6, size: SM, weight: 500}, {w: 'activos', t: 6.84, color: C.blue}]} gap={0.2} />,
             },
           ]}
         />
@@ -139,56 +142,54 @@ export const SceneOmision: React.FC<{start: number; end: number}> = ({start, end
   );
 };
 
-/* ═════════ 3 · «la multa será del 0,5 %» (7,85–11,75 s) ═════════ */
+/* ═════════ 3 · «la multa será del 0,5 %»: la lupa revela lo pequeño que es (7,85–11,75 s) ═════════ */
 export const SceneMulta: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
-  const e = useEnergy();
-  const reveal = prog(g, sec(8.05), 34, easeIO);
+  const grow = prog(g, sec(8.0), 24);
+  const lens = prog(g, sec(8.65), 16);
+  const ticks = prog(g, sec(8.95), 12);
   const hiStart = sec(9.3);
-  const hiP = prog(g, hiStart, 10);
+  const fill = prog(g, hiStart, 10);
   const pulse = g >= hiStart + 4 ? ((g - hiStart - 4) % 42) / 42 : 0;
   return (
     <Scene start={start} end={end}>
       <Svg>
-        <DotGrid cx={540} cy={1000 + e * 0} reveal={reveal} hiP={hiP} pulse={pulse} />
+        <RulerLens cy={1060} grow={grow} lens={lens} ticks={ticks} fill={fill} pulse={pulse} />
       </Svg>
       <Stack top={TOP} gap={8}>
         <Line size={SM} words={[{w: 'la', t: 7.66}, {w: 'multa', t: 7.94}, {w: 'será', t: 8.34}, {w: 'del', t: 8.62}]} />
         <Line size={XXL} weight={800} gap={0.02} words={[{w: '0,5', t: 8.96}, {w: '%', t: 10.62, color: C.grey}]} />
       </Stack>
-      <Stack top={1300}>
-        <Line size={SM} words={[{w: '1', t: 9.9}, {w: 'de', t: 9.98}, {w: 'cada', t: 10.06}, {w: '200', t: 10.14}]} />
-      </Stack>
     </Scene>
   );
 };
 
-/* ═════════ 4 · «del valor total de los activos del exterior» (11,75–15,35 s) ═════════ */
+/* ═════════ 4 · «del valor total de los activos del exterior»: mapamundi con Ecuador y pines (11,75–14,95 s) ═════════ */
 const PINS: Array<[number, number, number]> = [
-  [-78, 20, 12.25],
-  [-48, -26, 12.6],
-  [-16, 42, 12.95],
-  [14, 6, 13.3],
-  [34, -32, 13.6],
-  [-62, 52, 13.95],
+  [-79.5, 8.9, 12.15],
+  [-80.2, 25.8, 12.45],
+  [-99.1, 19.4, 12.75],
+  [-74.0, 40.7, 13.05],
+  [-3.7, 40.4, 13.55],
+  [8.5, 47.4, 13.95],
 ];
 
 export const SceneExterior: React.FC<{start: number; end: number}> = ({start, end}) => {
   const g = useG();
-  const lf = g - start;
+  const sweep = prog(g, start, 100, easeIO);
   const pins = PINS.map(([lon, lat, t]) => [lon, lat, prog(g, sec(t), 12)] as [number, number, number]);
   return (
     <Scene start={start} end={end}>
       <Svg>
-        <GlobePins cx={540} cy={1120} r={270} rot={-36 + lf * 0.16} pins={pins} />
+        <World cx={540} cy={1110} r={280} lon={-92 + 50 * sweep} lat={14} pins={pins} home={prog(g, sec(12.0), 14)} />
       </Svg>
       <Stack top={TOP} gap={12}>
         <Line
           size={SM}
           words={[{w: 'del', t: 11.32}, {w: 'valor', t: 11.74}, {w: 'total', t: 12.22}, {w: 'de', t: 12.84}, {w: 'los', t: 13.42}]}
         />
-        <Line size={L} weight={800} words={[{w: 'activos', t: 13.58}]} />
-        <Line size={M2} weight={800} color={C.grey} words={[{w: 'del', t: 14.28, size: SM, weight: 500, color: C.ink}, {w: 'exterior', t: 14.42}]} gap={0.2} />
+        <Line size={L} weight={800} words={[{w: 'activos', t: 13.4}]} />
+        <Line size={M2} weight={800} color={C.grey} words={[{w: 'del', t: 14.06, size: SM, weight: 500, color: C.ink}, {w: 'exterior', t: 14.2}]} gap={0.2} />
       </Stack>
     </Scene>
   );
@@ -199,7 +200,7 @@ export const SceneNoReportado: React.FC<{start: number; end: number}> = ({start,
   const g = useG();
   const open = prog(g, start, 14);
   const look = Math.sin((g - start) * 0.11);
-  const slash = prog(g, sec(15.86), 11, easeOut);
+  const slash = prog(g, sec(15.8), 11, easeOut);
   return (
     <Scene start={start} end={end}>
       <Svg>
@@ -283,7 +284,7 @@ export const SceneSalarios: React.FC<{start: number; end: number}> = ({start, en
     <Scene start={start} end={end}>
       <Svg>
         <ellipse cx={556} cy={baseY + 130} rx={300} ry={30} fill="rgba(0,0,0,.3)" filter="url(#fBlur16)" opacity={prog(g, sec(18.75), 8)} />
-        <g transform={`translate(540 ${baseY}) scale(${1 + e * 0.006}) translate(-540 ${-baseY})`}>{notes}</g>
+        <g transform={`translate(540 ${baseY}) scale(${1.12 + e * 0.006}) translate(-540 ${-baseY})`}>{notes}</g>
       </Svg>
       <Stack top={TOP}>
         <div

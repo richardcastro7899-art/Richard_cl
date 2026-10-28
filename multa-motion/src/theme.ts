@@ -52,7 +52,7 @@ export const START = {
   omision: sec(2.45),
   multa: sec(7.85),
   exterior: sec(11.75),
-  noReportado: sec(15.35),
+  noReportado: sec(15.15),
   tope: sec(16.75),
   salarios: sec(18.65),
 };

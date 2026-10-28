@@ -244,7 +244,7 @@ def chime(t, f, gain, pan=0.0, dur=1.4, name='chime'):
 
 # ───────────────────────── calendario de escenas (replica src/theme.ts) ─────────────────────────
 START = dict(declaracion=0, omision=rf(2.45 * 30), multa=rf(7.85 * 30), exterior=rf(11.75 * 30),
-             noReportado=rf(15.35 * 30), tope=rf(16.75 * 30), salarios=rf(18.65 * 30))
+             noReportado=rf(15.15 * 30), tope=rf(16.75 * 30), salarios=rf(18.65 * 30))
 BOUNDS = [START[k] for k in ['omision', 'multa', 'exterior', 'noReportado', 'tope', 'salarios']]
 LEAD = 0.12
 _note = [0]
@@ -334,10 +334,10 @@ TEXT = [
     (S['declaracion'], 0.0, 0, 'tick'), (S['declaracion'], 0.3, 0, 'big'), (S['declaracion'], 0.58, 1, 'mid'),
     (S['declaracion'], 1.5, 1, 'big'),
     (S['omision'], 2.24, 0, 'tick'), (S['omision'], 3.88, 1, 'big'), (S['omision'], 4.46, 0, 'big'),
-    (S['omision'], 5.36, 1, 'big'), (S['omision'], 7.04, 1, 'big'),
+    (S['omision'], 5.36, 1, 'big'), (S['omision'], 6.84, 1, 'big'),
     (S['multa'], 7.66, 0, 'tick'), (S['multa'], 8.96, 0, 'big'), (S['multa'], 9.9, 0, 'tick'),
     (S['multa'], 10.62, 1, 'mid'),
-    (S['exterior'], 11.32, 0, 'tick'), (S['exterior'], 13.58, 0, 'big'), (S['exterior'], 14.42, 1, 'big'),
+    (S['exterior'], 11.32, 0, 'tick'), (S['exterior'], 13.4, 0, 'big'), (S['exterior'], 14.2, 1, 'big'),
     (S['noReportado'], 15.24, 0, 'big'), (S['noReportado'], 15.74, 0, 'big'),
     (S['tope'], 16.68, 0, 'tick'), (S['tope'], 17.48, 0, 'big'),
     (S['salarios'], 18.6, 0, 'big'), (S['salarios'], 19.82, 0, 'mid'), (S['salarios'], 21.2, 0, 'big'),
@@ -345,46 +345,59 @@ TEXT = [
 for sc, t, o, k in sorted(TEXT, key=lambda e: word_t(e[0], e[1], e[2])):
     text_cue(sc, t, o, k)
 
-# ───────────────────────── 1 · formulario: se «escribe» fila a fila ─────────────────────────
-paper_slide(0.05, 0.36, 0.20, -0.1, 0.1, 'form:slide')
-for i in range(7):
-    scribble(fr(12 + i * 7 + 3), 0.10, 'form:row')
+# ───────────────────────── 1 · documento en blanco que no entra en la bandeja ─────────────────────────
+paper_slide(0.05, 0.36, 0.20, -0.1, 0.1, 'doc:slide')
+thunk(fr(10 + 8), 0.14, 'tray:in')
+swish(fr(rf(0.7 * FPS)), 0.22, 0.09, True, 0.0, 'arrow:draw')
+whoosh(fr(rf(0.78 * FPS)), 0.28, 1500, 500, 0.4, 0.10, 0.0, 0.0, 'doc:push', 0.8, 0.2, 0.08)
+fb = rf(1.15 * FPS) + 4
+thunk(fr(fb), 0.26, 'forbid:hit')
+sub_hit(fr(fb), 70, 0.14, 'forbid:sub')
+pop_tone(fr(fb), PENT[3] * 0.5, 0.18, -0.1, 'forbid:tone1')
+pop_tone(fr(fb) + 0.09, PENT[0] * 0.5, 0.17, 0.1, 'forbid:tone2')
+wood_tok(fr(fb + 8), 190, 0.16, 0.0, 'doc:bounce')
 
 # ───────────────────────── 2 · sello, tachados que cubren y se destapan ─────────────────────────
+paper_slide(fr(S['omision'] - 1), 0.34, 0.20, -0.1, 0.1, 'doc2:slide')
+for k in range(3):
+    scribble(fr(S['omision'] + 8 + k * 6), 0.09, 'sign:pen')
 thunk(fr(rf(2.92 * FPS) + 4), 0.30, 'stamp')
 scribble(fr(rf(3.08 * FPS)) + 0.02, 0.12, 'check:pen')
 pop_tone(fr(rf(3.08 * FPS) + 12), PENT[5], 0.16, 0.0, 'check:done')
-for i in range(7):
-    b0 = rf(3.85 * FPS) + i * 3
+for i in range(5):
+    b0 = rf(3.85 * FPS) + i * 4
     swish(fr(b0), 0.14, 0.09, True, (i % 3 - 1) * 0.15, 'bar:swish')
     wood_tok(fr(b0 + 9), 120, 0.11, 0.0, 'bar:cover')
-for k in range(3):
-    swish(fr(rf(5.5 * FPS) + k * 5), 0.14, 0.08, False, 0.1, 'bar:reveal')
-whoosh(fr(rf(6.9 * FPS)), 0.3, 700, 2600, 0.5, 0.13, -0.2, 0.2, 'bars:blue')
-chime(fr(rf(6.9 * FPS) + 5), PENT[6], 0.12, 0.0, 1.1, 'bars:blue:chime')
+for k in range(2):
+    swish(fr(rf(5.5 * FPS) + k * 6), 0.14, 0.08, False, 0.1, 'bar:reveal')
+whoosh(fr(rf(6.65 * FPS)), 0.3, 700, 2600, 0.5, 0.13, -0.2, 0.2, 'bars:blue')
+chime(fr(rf(6.65 * FPS) + 5), PENT[6], 0.12, 0.0, 1.1, 'bars:blue:chime')
 
-# ───────────────────────── 3 · 200 puntos y el punto del 0,5 % ─────────────────────────
-reveal0 = rf(8.05 * FPS)
-for j in range(26):
-    f = reveal0 + int(round(easeIO(j / 25) * 34 * 0.9)) + 2
-    tick(fr(f), PENT[3 + (j % 6)] * 1.0, 0.045 + 0.003 * (j % 4), rng.uniform(-0.45, 0.45), 'dot:patter')
+# ───────────────────────── 3 · barra del valor total y lupa del 0,5 % ─────────────────────────
+swish(fr(rf(8.0 * FPS)), 0.5, 0.13, True, 0.0, 'bar:grow')
+whoosh(fr(rf(8.65 * FPS) - 1), 0.4, 600, 2200, 0.45, 0.15, -0.5, 0.0, 'lens:in', 0.9, 0.3, 0.2)
+chime(fr(rf(8.65 * FPS) + 8), PENT[7], 0.09, -0.2, 0.9, 'lens:glass')
+t0r = rf(8.95 * FPS)
+for k in range(11):
+    tick(fr(t0r + k), PENT[3 + (k // 3)] * (1.0 if k % 5 else 1.5), 0.04 + (0.03 if k % 5 == 0 else 0), (k / 10 - 0.5) * 0.4, 'lens:tick')
 hi0 = rf(9.3 * FPS)
-sub_hit(fr(hi0 + 2), 76, 0.2, 'dot:hi:sub')
-pop_tone(fr(hi0 + 3), PENT[6], 0.2, 0.0, 'dot:hi')
-chime(fr(hi0 + 5), PENT[5], 0.15, 0.0, 1.4, 'dot:hi:chime')
+sub_hit(fr(hi0 + 2), 76, 0.2, 'fill:sub')
+pop_tone(fr(hi0 + 3), PENT[6], 0.2, 0.0, 'fill:pop')
+chime(fr(hi0 + 5), PENT[5], 0.15, 0.0, 1.4, 'fill:chime')
 for j in range(2):
-    tick(fr(hi0 + 4 + 42 * j + 10), PENT[8], 0.06, 0.0, 'dot:sonar')
+    tick(fr(hi0 + 4 + 42 * j + 10), PENT[8], 0.06, 0.0, 'lens:sonar')
 
-# ───────────────────────── 4 · globo: seis pines (activos en el exterior) ─────────────────────────
+# ───────────────────────── 4 · mapamundi: Ecuador y seis pines fuera ─────────────────────────
 whoosh(fr(S['exterior'] + 2), 0.5, 900, 380, 0.3, 0.16, -0.4, 0.2, 'globe:in', 0.8, 0.2, 0.2)
-for j, t in enumerate([12.25, 12.6, 12.95, 13.3, 13.6, 13.95]):
+pop_tone(fr(rf(12.0 * FPS) + 6), PENT[1] * 0.5, 0.15, 0.0, 'home:ping')
+for j, t in enumerate([12.15, 12.45, 12.75, 13.05, 13.55, 13.95]):
     pin_thock(fr(rf(t * FPS) + 5), PENT[(j + 2) % 8], 0.24, (j % 3 - 1) * 0.25, 'globe:pin')
 
 # ───────────────────────── 5 · el ojo y el tachado ─────────────────────────
 o0 = S['noReportado']
 whoosh(fr(o0 + 1), 0.4, 500, 1800, 0.5, 0.16, -0.3, 0.3, 'eye:open', 0.9, 0.3, 0.2)
 pop_tone(fr(o0 + 9), PENT[2] * 0.5, 0.16, 0.0, 'eye:open:pop')
-s0 = rf(15.86 * FPS)
+s0 = rf(15.8 * FPS)
 swish(fr(s0 - 2), 0.18, 0.22, True, 0.0, 'slash:swish')
 thunk(fr(s0 + 8), 0.30, 'slash:hit')
 sub_hit(fr(s0 + 8), 62, 0.26, 'slash:sub')

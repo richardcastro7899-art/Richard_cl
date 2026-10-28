@@ -1,5 +1,7 @@
 import React from 'react';
+import {geoDistance, geoGraticule10, geoOrthographic, geoPath} from 'd3-geo';
 import {C} from './theme';
+import world from './world.json';
 
 /* ───────── definiciones compartidas (degradados, filtros) ───────── */
 export const Defs: React.FC = () => (
@@ -54,6 +56,29 @@ export const Defs: React.FC = () => (
       <stop offset="0" stopColor="#f6f4ee" />
       <stop offset="1" stopColor="#d3d0c7" />
     </linearGradient>
+    <linearGradient id="gTray" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stopColor="#3b3b39" />
+      <stop offset="1" stopColor="#0f0f0e" />
+    </linearGradient>
+    <linearGradient id="gHandle" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stopColor="#4a4a48" />
+      <stop offset=".5" stopColor="#161615" />
+      <stop offset="1" stopColor="#050505" />
+    </linearGradient>
+    <linearGradient id="gRing" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stopColor="#6c6c69" />
+      <stop offset=".4" stopColor="#151514" />
+      <stop offset="1" stopColor="#3a3a38" />
+    </linearGradient>
+    <radialGradient id="gOcean" cx=".36" cy=".3" r=".95">
+      <stop offset="0" stopColor="#ffffff" />
+      <stop offset=".55" stopColor="#e3e0d8" />
+      <stop offset="1" stopColor="#a6a39b" />
+    </radialGradient>
+    <radialGradient id="gLimb" cx=".5" cy=".5" r=".5">
+      <stop offset=".62" stopColor="rgba(0,0,0,0)" />
+      <stop offset="1" stopColor="rgba(0,0,0,.42)" />
+    </radialGradient>
     <radialGradient id="gEyeWhite" cx=".5" cy=".4" r=".75">
       <stop offset="0" stopColor="#ffffff" />
       <stop offset=".7" stopColor="#e6e4de" />
@@ -121,41 +146,52 @@ export const Coin: React.FC<{cx: number; cy: number; r: number; h: number; label
   );
 };
 
-/* ───────── formulario de declaración (hoja de papel) ─────────
- * rows[i]: 0..1 «escrito» · bars[i]: 0..1 tachado negro · hi: 0..1 tachados pasan a azul
+/* ───────── declaración (hoja con campos reales) ─────────
+ * vals[i]: 0..1 «escrito» · bars[i]: 0..1 tachado · hi: 0..1 tachados pasan a azul
  * stamp: 0 = casilla vacía (punteada), 1 = sellado · check: 0..1 trazo del visto
  */
-const ROW_Y = (i: number) => -196 + i * 76;
-const ROW_W = [210, 170, 240, 130, 200, 160, 230];
+const LABELS = ['Cuentas bancarias', 'Inversiones', 'Inmuebles', 'Sociedades', 'Otros activos'];
+const ROW_Y = (i: number) => -172 + i * 96;
+const VAL_W = [300, 220, 340, 180, 260];
+const F_HEAD = 'Jakarta MH, Plus Jakarta Sans, sans-serif';
+const F_BODY = 'Inter MH, Inter, sans-serif';
 
-export const Form: React.FC<{
+export const Doc: React.FC<{
   cx: number;
   cy: number;
   rot?: number;
   s?: number;
-  rows: number[];
+  vals: number[];
   bars: number[];
   hi: number;
   stamp: number;
   check: number;
+  sign?: number;
   op?: number;
-}> = ({cx, cy, rot = -2.5, s = 1, rows, bars, hi, stamp, check, op = 1}) => (
+}> = ({cx, cy, rot = -2.5, s = 1, vals, bars, hi, stamp, check, sign = 0, op = 1}) => (
   <g transform={`translate(${cx} ${cy}) rotate(${rot}) scale(${s})`} opacity={op}>
     <rect x={-262} y={-322} width={560} height={720} rx={24} fill="rgba(0,0,0,.3)" filter="url(#fBlur16)" />
     <rect x={-280} y={-340} width={560} height={720} rx={24} fill="url(#gSheet)" stroke="rgba(0,0,0,.14)" strokeWidth={2} />
     {/* encabezado */}
-    <circle cx={-224} cy={-290} r={24} fill={C.ink} />
-    <rect x={-176} y={-306} width={240} height={16} rx={8} fill={C.ink} />
-    <rect x={-176} y={-278} width={150} height={10} rx={5} fill={C.greyLt} />
-    <line x1={-240} x2={240} y1={-240} y2={-240} stroke="rgba(0,0,0,.18)" strokeWidth={2} />
+    <text x={-240} y={-286} fontFamily={F_HEAD} fontWeight={800} fontSize={40} letterSpacing="0.02em" fill={C.ink}>
+      DECLARACIÓN
+    </text>
+    <text x={-240} y={-252} fontFamily={F_BODY} fontWeight={500} fontSize={24} fill={C.grey}>
+      Activos en el exterior
+    </text>
+    <circle cx={226} cy={-292} r={22} fill={C.ink} />
+    <circle cx={226} cy={-292} r={9} fill="url(#gSheet)" />
+    <line x1={-240} x2={240} y1={-224} y2={-224} stroke="rgba(0,0,0,.18)" strokeWidth={2} />
     {/* filas */}
-    {rows.map((p, i) => {
+    {LABELS.map((label, i) => {
       const y = ROW_Y(i);
       return (
         <g key={i}>
-          <rect x={-240} y={y - 22} width={110} height={11} rx={5.5} fill={C.greyLt} />
-          <line x1={-240} x2={240} y1={y + 24} y2={y + 24} stroke="rgba(0,0,0,.14)" strokeWidth={2} />
-          <rect x={-100} y={y - 4} width={ROW_W[i] * p} height={14} rx={7} fill={C.ink} opacity={0.78} />
+          <text x={-240} y={y - 14} fontFamily={F_BODY} fontWeight={500} fontSize={25} fill="#77746e">
+            {label}
+          </text>
+          <line x1={-240} x2={240} y1={y + 26} y2={y + 26} stroke="rgba(0,0,0,.16)" strokeWidth={2} />
+          <rect x={-240} y={y + 2} width={VAL_W[i] * vals[i]} height={16} rx={8} fill={C.ink} opacity={0.8} />
         </g>
       );
     })}
@@ -165,13 +201,25 @@ export const Form: React.FC<{
       const y = ROW_Y(i);
       return (
         <g key={i}>
-          <rect x={-250} y={y - 30} width={500 * p} height={58} rx={8} fill={C.ink} />
-          <rect x={-250} y={y - 30} width={500 * p} height={58} rx={8} fill={C.blue} opacity={hi} />
+          <rect x={-252} y={y - 42} width={504 * p} height={78} rx={9} fill={C.ink} />
+          <rect x={-252} y={y - 42} width={504 * p} height={78} rx={9} fill={C.blue} opacity={hi} />
         </g>
       );
     })}
     {/* firma y sello */}
-    <line x1={-240} x2={-20} y1={318} y2={318} stroke="rgba(0,0,0,.3)" strokeWidth={2.5} />
+    <line x1={-240} x2={-30} y1={320} y2={320} stroke="rgba(0,0,0,.3)" strokeWidth={2.5} />
+    <text x={-240} y={348} fontFamily={F_BODY} fontWeight={500} fontSize={22} fill={C.grey}>
+      Firma
+    </text>
+    <path
+      d="M-236 288 C-210 262 -190 308 -160 280 C-140 262 -126 296 -100 284"
+      fill="none"
+      stroke={C.ink}
+      strokeWidth={4}
+      strokeLinecap="round"
+      strokeDasharray={170}
+      strokeDashoffset={170 * (1 - sign)}
+    />
     <g transform="translate(150 292) rotate(-10)">
       {stamp < 0.02 ? (
         <circle r={62} fill="none" stroke={C.greyLt} strokeWidth={4} strokeDasharray="9 9" />
@@ -195,108 +243,174 @@ export const Form: React.FC<{
   </g>
 );
 
-/* ───────── 200 puntos: 0,5 % = 1 de cada 200 ───────── */
-const COLS = 20;
-const ROWS = 10;
-const PITCH = 38;
-export const HI_IDX = 4 * COLS + 9;
+/* ───────── bandeja de entrada (vacía, con el hueco punteado de la declaración) ───────── */
+export const Tray: React.FC<{cx: number; cy: number; op: number; ghost: number}> = ({cx, cy, op, ghost}) => (
+  <g transform={`translate(${cx} ${cy})`} opacity={op}>
+    <ellipse cx={10} cy={86} rx={320} ry={26} fill="rgba(0,0,0,.34)" filter="url(#fBlur16)" />
+    {/* interior */}
+    <polygon points="-250,-64 250,-64 310,2 -310,2" fill="#1d1d1c" />
+    <polygon points="-250,-64 250,-64 262,-52 -262,-52" fill="#0d0d0c" />
+    {/* hueco punteado del documento */}
+    <polygon
+      points="-176,-54 176,-54 214,-8 -214,-8"
+      fill="rgba(255,255,255,.04)"
+      stroke={`rgba(200,198,191,${0.35 + 0.5 * ghost})`}
+      strokeWidth={4}
+      strokeDasharray="12 10"
+    />
+    {/* frente */}
+    <rect x={-310} y={0} width={620} height={84} rx={16} fill="url(#gTray)" />
+    <rect x={-310} y={0} width={620} height={10} rx={5} fill="rgba(255,255,255,.18)" />
+    <rect x={-60} y={36} width={120} height={14} rx={7} fill="rgba(255,255,255,.14)" />
+  </g>
+);
 
-export const DotGrid: React.FC<{cx: number; cy: number; reveal: number; hiP: number; pulse: number}> = ({
-  cx,
-  cy,
-  reveal,
-  hiP,
-  pulse,
-}) => {
-  const x0 = cx - ((COLS - 1) * PITCH) / 2;
-  const y0 = cy - ((ROWS - 1) * PITCH) / 2;
-  const dots = [];
-  for (let i = 0; i < COLS * ROWS; i++) {
-    const col = i % COLS;
-    const row = Math.floor(i / COLS);
-    const k = (row + col * 0.35) / (ROWS + COLS * 0.35);
-    const local = Math.max(0, Math.min(1, (reveal - k * 0.75) / 0.25));
-    if (local <= 0) continue;
-    const hi = i === HI_IDX;
-    const x = x0 + col * PITCH;
-    const y = y0 + row * PITCH;
-    if (hi) continue;
-    dots.push(
-      <circle key={i} cx={x} cy={y} r={13 * local} fill="#bdbab2" opacity={(1 - 0.5 * hiP) * Math.min(1, local * 2)} />,
-    );
-  }
-  const hx = x0 + (HI_IDX % COLS) * PITCH;
-  const hy = y0 + Math.floor(HI_IDX / COLS) * PITCH;
-  const hl = Math.max(0, Math.min(1, (reveal - 0.45) / 0.25));
-  const hr = hiP > 0 ? 13 + 12 * hiP : 13 * hl;
+/* ───────── prohibido (círculo con barra) ───────── */
+export const Forbid: React.FC<{cx: number; cy: number; p: number}> = ({cx, cy, p}) => {
+  if (p <= 0) return null;
+  const sc = 0.4 + 0.6 * p + 0.15 * Math.sin(p * Math.PI);
   return (
-    <g>
-      <rect x={cx - 438 + 10} y={cy - 250 + 22} width={876} height={500} rx={30} fill="rgba(0,0,0,.28)" filter="url(#fBlur16)" />
-      <rect x={cx - 438} y={cy - 250} width={876} height={500} rx={30} fill="url(#gTile)" stroke="rgba(0,0,0,.12)" strokeWidth={2} />
-      {dots}
-      {hiP > 0 && (
-        <circle cx={hx} cy={hy} r={hr + 70 * pulse} fill="none" stroke={C.blue} strokeWidth={4} opacity={(1 - pulse) * 0.9} />
-      )}
-      {hl > 0 && <circle cx={hx} cy={hy} r={hr} fill={hiP > 0 ? C.blue : '#bdbab2'} />}
+    <g transform={`translate(${cx} ${cy}) scale(${sc})`} opacity={Math.min(1, p * 3)}>
+      <circle r={52} fill="rgba(0,0,0,.25)" transform="translate(6 10)" filter="url(#fBlur6)" />
+      <circle r={50} fill="#f7f6f1" />
+      <circle r={42} fill="none" stroke={C.blue} strokeWidth={13} />
+      <line x1={-30} y1={-30} x2={30} y2={30} stroke={C.blue} strokeWidth={13} strokeLinecap="round" />
     </g>
   );
 };
 
-/* ───────── globo con pines (activos en el exterior) ───────── */
-const D2R = Math.PI / 180;
-const globePt = (cx: number, cy: number, r: number, lon: number, lat: number, rot: number) => {
-  const d = (lon - rot) * D2R;
-  const p = lat * D2R;
-  return {x: cx + r * Math.cos(p) * Math.sin(d), y: cy - r * Math.sin(p), vis: Math.cos(p) * Math.cos(d) > 0.12};
-};
+/* ───────── barra del valor total + lupa que revela el 0,5 % ───────── */
+const BAR_X0 = 140;
+const BAR_X1 = 940;
 
-export const GlobePins: React.FC<{
-  cx: number;
+export const RulerLens: React.FC<{
   cy: number;
-  r: number;
-  rot: number;
-  pins: Array<[number, number, number]>; // lon, lat, progreso 0..1
-}> = ({cx, cy, r, rot, pins}) => {
-  const meridians: React.ReactNode[] = [];
-  for (let k = 0; k < 8; k++) {
-    const lam = ((((rot + k * 22.5) % 180) + 180) % 180) - 90;
-    const rx = r * Math.sin(lam * D2R);
-    meridians.push(
-      <path
+  grow: number;
+  lens: number;
+  ticks: number;
+  fill: number;
+  pulse: number;
+}> = ({cy, grow, lens, ticks, fill, pulse}) => {
+  const lr = 190;
+  const lx = BAR_X0 + lr;
+  const ly = cy;
+  const barW = (BAR_X1 - BAR_X0) * grow;
+  const sc = 0.55 + 0.45 * lens;
+  const inner = [];
+  for (let k = 0; k <= 10; k++) {
+    const x = -135 + k * 27;
+    const major = k === 0 || k === 5 || k === 10;
+    inner.push(
+      <line
         key={k}
-        d={`M${cx} ${cy - r} A${Math.abs(rx)} ${r} 0 0 ${rx > 0 ? 1 : 0} ${cx} ${cy + r}`}
-        fill="none"
-        stroke="rgba(0,0,0,.26)"
-        strokeWidth={2}
+        x1={x}
+        x2={x}
+        y1={-58 - (major ? 26 : 12) * ticks}
+        y2={-58}
+        stroke={C.ink}
+        strokeWidth={major ? 4 : 2.5}
+        strokeLinecap="round"
+        opacity={0.8}
       />,
     );
   }
-  const parallels = [-60, -30, 0, 30, 60].map((lat) => {
-    const y = cy - r * Math.sin(lat * D2R);
-    const w = r * Math.cos(lat * D2R);
-    return <line key={lat} x1={cx - w} x2={cx + w} y1={y} y2={y} stroke="rgba(0,0,0,.26)" strokeWidth={2} />;
-  });
   return (
     <g>
-      <ellipse cx={cx + 24} cy={cy + r + 60} rx={r * 0.9} ry={36} fill="rgba(0,0,0,.32)" filter="url(#fBlur16)" />
-      <circle cx={cx} cy={cy} r={r} fill="url(#gGlobe)" />
-      <clipPath id="globeClip">
+      {/* barra del valor total */}
+      <ellipse cx={(BAR_X0 + BAR_X1) / 2 + 10} cy={cy + 56} rx={(BAR_X1 - BAR_X0) / 2} ry={14} fill="rgba(0,0,0,.25)" filter="url(#fBlur16)" opacity={grow} />
+      <rect x={BAR_X0} y={cy - 30} width={Math.max(0, barW)} height={60} rx={10} fill={C.ink} />
+      <rect x={BAR_X0} y={cy - 30} width={Math.min(Math.max(0, barW), 5)} height={60} rx={2} fill={C.blue} />
+      <text x={BAR_X1} y={cy + 98} textAnchor="end" fontFamily={F_HEAD} fontWeight={800} fontSize={34} fill={C.grey} opacity={grow}>
+        100 %
+      </text>
+      {/* lupa */}
+      <g transform={`translate(${lx} ${ly}) scale(${sc})`} opacity={Math.min(1, lens * 2.5)}>
+        <ellipse cx={22} cy={lr + 44} rx={150} ry={20} fill="rgba(0,0,0,.28)" filter="url(#fBlur16)" />
+        {/* mango */}
+        <g transform="rotate(48)">
+          <rect x={lr - 6} y={-26} width={190} height={52} rx={26} fill="url(#gHandle)" />
+          <rect x={lr + 22} y={-8} width={120} height={8} rx={4} fill="rgba(255,255,255,.18)" />
+        </g>
+        <circle r={lr + 14} fill="#0d0d0c" />
+        <clipPath id="lensClip">
+          <circle r={lr} />
+        </clipPath>
+        <g clipPath="url(#lensClip)">
+          <rect x={-lr} y={-lr} width={lr * 2} height={lr * 2} fill="url(#gSheet)" />
+          {/* zoom: de 0 a 1 % */}
+          <rect x={-135} y={-58} width={270} height={116} rx={4} fill={C.ink} />
+          <rect x={-135} y={-58} width={135 * fill} height={116} rx={4} fill={C.blue} />
+          {inner}
+          <text x={-135} y={96} textAnchor="middle" fontFamily={F_HEAD} fontWeight={800} fontSize={34} fill={C.ink} opacity={ticks}>
+            0
+          </text>
+          <text x={135} y={96} textAnchor="middle" fontFamily={F_HEAD} fontWeight={800} fontSize={34} fill={C.ink} opacity={ticks}>
+            1 %
+          </text>
+          <text x={-67} y={6} textAnchor="middle" dominantBaseline="central" fontFamily={F_HEAD} fontWeight={800} fontSize={36} fill="#fff" opacity={fill}>
+            0,5 %
+          </text>
+          <ellipse cx={-70} cy={-120} rx={110} ry={46} fill="rgba(255,255,255,.55)" transform="rotate(-24 -70 -120)" filter="url(#fBlur6)" />
+        </g>
+        <circle r={lr + 7} fill="none" stroke="url(#gRing)" strokeWidth={14} />
+        {fill > 0 && <circle r={lr + 14 + 70 * pulse} fill="none" stroke={C.blue} strokeWidth={4} opacity={(1 - pulse) * 0.85} />}
+      </g>
+    </g>
+  );
+};
+
+/* ───────── mapamundi real (Natural Earth 110m, dominio público) ───────── */
+const landGeo: any = {type: 'MultiPolygon', coordinates: (world as any).land};
+const ecuGeo: any = {type: 'MultiPolygon', coordinates: (world as any).ecu};
+const grat = geoGraticule10();
+
+export const World: React.FC<{
+  cx: number;
+  cy: number;
+  r: number;
+  lon: number;
+  lat: number;
+  pins: Array<[number, number, number]>; // lon, lat, progreso 0..1
+  home: number; // 0..1 Ecuador resaltado
+}> = ({cx, cy, r, lon, lat, pins, home}) => {
+  const proj = geoOrthographic().translate([cx, cy]).scale(r).clipAngle(90).rotate([-lon, -lat]).precision(0.6);
+  const path = geoPath(proj);
+  const center: [number, number] = [lon, lat];
+  const ecuC = proj([-78.3, -1.4]);
+  const ecuVis = geoDistance([-78.3, -1.4], center) < 1.35;
+  return (
+    <g>
+      <ellipse cx={cx + 26} cy={cy + r + 64} rx={r * 0.92} ry={38} fill="rgba(0,0,0,.32)" filter="url(#fBlur16)" />
+      <circle cx={cx} cy={cy} r={r + 10} fill="rgba(255,255,255,.55)" filter="url(#fBlur6)" />
+      <circle cx={cx} cy={cy} r={r} fill="url(#gOcean)" />
+      <clipPath id="worldClip">
         <circle cx={cx} cy={cy} r={r} />
       </clipPath>
-      <g clipPath="url(#globeClip)">
-        {meridians}
-        {parallels}
-        <ellipse cx={cx - r * 0.3} cy={cy - r * 0.45} rx={r * 0.5} ry={r * 0.3} fill="rgba(255,255,255,.35)" filter="url(#fBlur16)" />
+      <g clipPath="url(#worldClip)">
+        <path d={path(grat) || ''} fill="none" stroke="rgba(0,0,0,.13)" strokeWidth={1.6} />
+        <path d={path(landGeo) || ''} fill="#b4b1a8" stroke="#8e8b83" strokeWidth={1.1} strokeLinejoin="round" />
+        <path d={path(ecuGeo) || ''} fill={C.ink} stroke={C.ink} strokeWidth={1.4} opacity={0.4 + 0.6 * home} />
+        <circle cx={cx} cy={cy} r={r} fill="url(#gLimb)" />
+        <ellipse cx={cx - r * 0.32} cy={cy - r * 0.46} rx={r * 0.46} ry={r * 0.26} fill="rgba(255,255,255,.4)" filter="url(#fBlur16)" />
       </g>
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(0,0,0,.35)" strokeWidth={2.5} />
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(0,0,0,.4)" strokeWidth={2.5} />
+      {home > 0 && ecuVis && ecuC && (
+        <g>
+          <circle cx={ecuC[0]} cy={ecuC[1]} r={10 + 40 * (1 - home)} fill="none" stroke={C.ink} strokeWidth={3} opacity={(1 - home) * 0.8} />
+          <circle cx={ecuC[0]} cy={ecuC[1]} r={7 * home} fill="#f7f6f1" stroke={C.ink} strokeWidth={3} />
+        </g>
+      )}
       {pins
-        .map(([lon, lat, p]) => ({...globePt(cx, cy, r, lon, lat, rot), p}))
-        .filter((q) => q.vis && q.p > 0)
-        .sort((a, b) => a.y - b.y)
+        .map(([plon, plat, p]) => {
+          const xy = proj([plon, plat]);
+          return {xy, p, vis: geoDistance([plon, plat], center) < 1.32};
+        })
+        .filter((q) => q.xy && q.vis && q.p > 0)
+        .sort((a, b) => a.xy![1] - b.xy![1])
         .map((q, i) => (
           <g key={i}>
-            <circle cx={q.x} cy={q.y} r={10 + 34 * (1 - q.p)} fill="none" stroke={C.blue} strokeWidth={3} opacity={(1 - q.p) * 0.8} />
-            <Pin x={q.x} y={q.y - (1 - q.p) * 70} s={0.74} op={Math.min(1, q.p * 3)} />
+            <circle cx={q.xy![0]} cy={q.xy![1]} r={9 + 36 * (1 - q.p)} fill="none" stroke={C.blue} strokeWidth={3} opacity={(1 - q.p) * 0.8} />
+            <Pin x={q.xy![0]} y={q.xy![1] - (1 - q.p) * 80} s={0.62} op={Math.min(1, q.p * 3)} />
           </g>
         ))}
     </g>
