@@ -85,4 +85,4 @@ export const Label: React.FC<{x: number; y: number; text: string; size?: number;
 }) => <Txt x={x} y={y} text={text} size={size} color={color} weight={weight} track={track} p={p} align={align} out={out} z={z} />;
 
 /** Frase de apoyo en serif cursiva (estilo editorial), para acompañar palabras clave en negrita. */
-export const Lead: React.FC<Omit<TxtProps, 'serif' | 'weight' | 'track'>> = (props) => <Txt {...props} serif color={props.color ?? C.soft} />;
+export const Lead: React.FC<Omit<TxtProps, 'serif' | 'weight' | 'track'>> = (props) => <Txt {...props} serif color={props.color ?? '#1F2937'} size={Math.round(props.size * 1.1)} />;

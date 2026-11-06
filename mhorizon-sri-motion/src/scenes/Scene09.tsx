@@ -21,7 +21,7 @@ export const Scene09: React.FC = () => {
       <Txt x={540} y={950} text="TU EMPRESA" size={130} track={-0.04} align="center" p={P(f, q.tu, 18, E.outExpo)} stagger={0.5} />
       <Txt x={540} y={1090} text="AL DÍA" size={156} track={-0.04} color={C.orange} align="center" p={P(f, q.alDia, 18, E.outExpo)} stagger={0.5}
         scale={kf(f, [[q.alDia, 1.08], [q.alDia + 16, 1, E.outExpo]])} />
-      <Txt x={540} y={1330} text="CONSULTORÍA TRIBUTARIA Y EMPRESARIAL" size={24} weight={500} track={0.22} color={C.grey} align="center" p={P(f, q.tag, 20, E.outExpo)} />
+      <Txt x={540} y={1330} text="CONSULTORÍA TRIBUTARIA Y EMPRESARIAL" size={24} weight={500} track={0.22} color="#3A4555" weight={600} align="center" p={P(f, q.tag, 20, E.outExpo)} />
     </>
   );
 };

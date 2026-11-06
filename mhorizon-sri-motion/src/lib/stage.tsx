@@ -60,8 +60,8 @@ export const Background: React.FC = () => {
   const f = useCurrentFrame();
   const gy = (f * 0.25) % 90;
   return (
-    <AbsoluteFill style={{background: '#FFFFFF'}}>
-      <svg width={W} height={H} style={{position: 'absolute', inset: 0, opacity: 0.045}}>
+    <AbsoluteFill style={{background: 'linear-gradient(180deg, #E9EEF5 0%, #DEE5EE 100%)'}}>
+      <svg width={W} height={H} style={{position: 'absolute', inset: 0, opacity: 0.05}}>
         <defs>
           <pattern id="g" width="90" height="90" patternUnits="userSpaceOnUse" patternTransform={`translate(0 ${gy})`}>
             <path d="M90 0H0V90" fill="none" stroke="#171E27" strokeWidth="1" />
