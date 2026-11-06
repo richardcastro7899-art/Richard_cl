@@ -22,7 +22,6 @@ Producción hecha **íntegramente con [Remotion](https://www.remotion.dev)** (Re
 | `audio/MHORIZON_Sound_Design.wav` | Solo efectos · PCM 24-bit · 48 kHz · estéreo · empieza en 0 s |
 | `audio/stems/*.wav` | Una pista por categoría: Transitions, Text animations, UI interactions, Impacts, Graphic movements, Brand sound |
 | `audio/scenes/SceneNN_SFX.wav` | Efectos de cada escena (cada archivo empieza en 0) |
-| `scenes/MHORIZON_SceneNN_SFX.mp4` / `_Silent.mp4` | Las 9 escenas por separado, con y sin efectos |
 | `../analysis/voice_words.json` | Marcas de tiempo por palabra de la locución (análisis local) |
 | `../analysis/sfx_events.csv` | Tabla de los eventos sonoros (id, categoría, fotograma, duración, volumen, fades, elemento visual) |
 
