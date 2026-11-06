@@ -10,7 +10,7 @@ import {Q} from '../timing';
 const q = Q.s3;
 export const DOC_W = 250;
 export const DOC_H = 340;
-const DOCS = [{x: 90, y: 880, kind: 0}, {x: 405, y: 880, kind: 1}, {x: 720, y: 880, kind: 2}];
+const DOCS = [{x: 132, y: 900, kind: 0}, {x: 414, y: 900, kind: 1}, {x: 696, y: 900, kind: 2}];
 
 /** Ilustración de documento (sin cifras): líneas, campos y marca de verificación. */
 export const DocArt: React.FC<{kind: number; p: number; check: number}> = ({kind, p, check}) => {
@@ -47,8 +47,8 @@ export const Scene03: React.FC = () => {
   const bar = (i: number) => P(f, q.neq + i * 6, 14, E.outExpo);
   return (
     <>
-      <Lead x={540} y={250} text="Aunque una empresa registre" size={50} align="center" p={P(f, q.lead, 18, E.outExpo)} out={out} />
-      <Txt x={540} y={316} text="PÉRDIDAS" size={122} track={-0.035} align="center" p={P(f, q.perdidas, 16, E.outExpo)} stagger={0.5} out={out} />
+      <Lead x={540} y={262} text="Aunque una empresa registre" size={50} align="center" p={P(f, q.lead, 18, E.outExpo)} out={out} />
+      <Txt x={540} y={326} text="PÉRDIDAS" size={122} track={-0.035} align="center" p={P(f, q.perdidas, 16, E.outExpo)} stagger={0.5} out={out} />
       <Svg>
         <g opacity={1 - out}>
           <Draw d="M450 545H630" p={bar(0)} stroke={C.orange} w={14} />
@@ -58,7 +58,7 @@ export const Scene03: React.FC = () => {
       </Svg>
       <Txt x={540} y={702} text="SIN OBLIGACIONES" size={84} track={-0.03} align="center" p={P(f, q.sinOblig, 18, E.outExpo)} out={out} />
       {DOCS.map((d, i) => (
-        <FloatCard key={i} x={d.x} y={d.y} w={270} h={368} inAt={q.doc[i]} outAt={q.out} phase={i * 1.7}>
+        <FloatCard key={i} x={d.x} y={d.y} w={252} h={343} inAt={q.doc[i]} outAt={q.out} phase={i * 1.7}>
           <DocArt kind={d.kind} p={P(f, q.doc[i] + 6, 24, E.outC)} check={P(f, q.check[i], 12, E.outBack)} />
         </FloatCard>
       ))}

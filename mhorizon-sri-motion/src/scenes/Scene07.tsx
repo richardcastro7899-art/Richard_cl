@@ -18,7 +18,7 @@ export const Scene07: React.FC = () => {
   return (
     <>
       <Lead x={540} y={520} text="debe presentar las" size={66} align="center" p={P(f, q.lead, 18, E.outExpo)} out={out} />
-      <FloatCard x={66} y={680} w={456} h={590} inAt={q.doc1} outAt={q.out} phase={0.4}>
+      <FloatCard x={120} y={680} w={408} h={528} inner={456} inAt={q.doc1} outAt={q.out} phase={0.4}>
         <Txt x={30} y={30} text="DECLARACIONES" size={40} track={-0.03} p={P(f, q.decl, 16, E.outExpo)} stagger={0.4} />
         <div style={ART}>
           <svg width={520} height={600}>
@@ -45,7 +45,7 @@ export const Scene07: React.FC = () => {
           <Draw d="M401 50l6 7l12 -14" p={P(f, q.check1, 10, E.outBack)} stroke={C.orange} w={4} />
         </svg>
       </FloatCard>
-      <FloatCard x={558} y={680} w={456} h={590} inAt={q.doc2 - 4} outAt={q.out} phase={2.3}>
+      <FloatCard x={552} y={680} w={408} h={528} inner={456} inAt={q.doc2 - 4} outAt={q.out} phase={2.3}>
         <Txt x={30} y={30} text="ANEXOS" size={40} track={-0.03} p={P(f, q.anexos, 16, E.outExpo)} stagger={0.4} />
         <div style={ART}>
           <svg width={520} height={600}>
@@ -64,9 +64,9 @@ export const Scene07: React.FC = () => {
         </div>
       </FloatCard>
       {seg > 0.02 && (
-        <div style={{position: 'absolute', left: 540 - 320 * seg, top: 1366, width: 640 * seg, height: 80, borderRadius: 40, border: `2px solid ${C.orange}`, opacity: 1 - out, overflow: 'hidden'}} />
+        <div style={{position: 'absolute', left: 540 - 320 * seg, top: 1290, width: 640 * seg, height: 80, borderRadius: 40, border: `2px solid ${C.orange}`, opacity: 1 - out, overflow: 'hidden'}} />
       )}
-      <Txt x={540} y={1388} text="SEGÚN CORRESPONDA" size={38} weight={700} track={0.1} color={C.orange} align="center" p={P(f, q.segun + 4, 14, E.outExpo)} out={out} />
+      <Txt x={540} y={1312} text="SEGÚN CORRESPONDA" size={38} weight={700} track={0.1} color={C.orange} align="center" p={P(f, q.segun + 4, 14, E.outExpo)} out={out} />
     </>
   );
 };

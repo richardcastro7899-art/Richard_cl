@@ -34,7 +34,6 @@ s4_hay,Text animations,418,412,13.733,32,0.11,0.003,0.08,whoosh,"«Y hay algo» 
 s4_imp,Text animations,429,422,14.067,34,0.14,0.003,0.08,whoosh,"«IMPORTANTE» entra"
 s4_imp_tone,Text animations,431,431,14.367,86,0.12,0.003,0.08,tone,"Acento tonal sutil"
 s4_imp_hit,Impacts,433,432,14.400,67,0.34,0.003,0.08,impact,"Impacto suave en «IMPORTANTE»"
-s4_line,Graphic movements,446,446,14.867,39,0.08,0.003,0.08,trace,"Se subraya «IMPORTANTE»"
 s5_top_open,UI interactions,466,466,15.533,58,0.2,0.003,0.08,tone,"Tarjeta superior entra"
 s5_label1,Text animations,472,467,15.567,32,0.1,0.003,0.08,whoosh,"«PÉRDIDA CONTABLE» entra"
 s5_bars,Graphic movements,476,476,15.867,60,0.08,0.003,0.08,data,"Barras de resultado contable"

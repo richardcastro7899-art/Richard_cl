@@ -77,7 +77,6 @@ W('s4_hay', TXT, Q.s4.hay, 0.18, 0.32, 0.11, '«Y hay algo» entra');
 W('s4_imp', {f0: 700, f1: 3800, peak: 0.7}, Q.s4.importante, 0.22, 0.4, 0.14, '«IMPORTANTE» entra');
 add('s4_imp_tone', 'text', 'tone', chord([587.33, 739.99, 880], 1.4), Q.s4.importante + 2, 0, 1.6, 0.12, 'Acento tonal sutil');
 add('s4_imp_hit', 'impacts', 'impact', {f: 55, noise: 0.25, tau: 0.3}, Q.s4.importante + 4, 0.02, 1.2, 0.34, 'Impacto suave en «IMPORTANTE»');
-add('s4_line', 'graphics', 'trace', {f0: 500, f1: 1500}, Q.s4.line, 0, 0.5, 0.08, 'Se subraya «IMPORTANTE»');
 
 // ── ESCENA 05 ── pérdida contable · no necesariamente es cero · impuesto a la renta
 add('s5_top_open', 'ui', 'tone', ping([0, 880], [0.06, 1174.7]), Q.s5.top, 0, 0.9, 0.2, 'Tarjeta superior entra');

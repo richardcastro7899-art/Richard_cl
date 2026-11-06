@@ -2,8 +2,8 @@
 export const C = {
   navy: '#FFFFFF',
   navy2: '#FFFFFF',
-  navy3: '#F1F3F6',
-  line: '#E6E9EE',
+  navy3: '#E8ECF1',
+  line: '#DCE1E8',
   mid: '#C3C9D3',
   grey: '#8A94A3',
   soft: '#6A7584',

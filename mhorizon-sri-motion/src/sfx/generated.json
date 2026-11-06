@@ -420,18 +420,6 @@
   "visual": "Impacto suave en «IMPORTANTE»"
  },
  {
-  "id": "s4_line",
-  "file": "sfx/s4_line.wav",
-  "cat": "graphics",
-  "startFrame": 446,
-  "durationInFrames": 39,
-  "vol": 0.08,
-  "fadeIn": 0.003,
-  "fadeOut": 0.08,
-  "sync": 446,
-  "visual": "Se subraya «IMPORTANTE»"
- },
- {
   "id": "s5_top_open",
   "file": "sfx/s5_top_open.wav",
   "cat": "ui",

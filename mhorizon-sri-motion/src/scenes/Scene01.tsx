@@ -28,7 +28,7 @@ export const Scene01: React.FC = () => {
       <Lead x={540} y={300} text="crees que ya no tiene" size={54} align="center" p={P(f, q.sin, 16, E.outExpo)} out={out} />
       <Txt x={540} y={398} text="¿SIN" size={100} align="center" p={P(f, q.sin + 4, 16, E.outExpo)} out={out} split={[{from: 0, to: 1, color: C.orange}]} />
       <Txt x={540} y={508} text="OBLIGACIONES?" size={92} track={-0.03} align="center" p={P(f, q.oblig, 18, E.outExpo)} out={out} split={[{from: 12, to: 13, color: C.orange}]} />
-      <FloatCard x={90} y={860} w={900} h={540} inAt={q.card} outAt={q.out}>
+      <FloatCard x={120} y={880} w={840} h={504} inner={900} inAt={q.card} outAt={q.out}>
         <svg width={900} height={540} style={{position: 'absolute', left: 0, top: 0}}>
           <defs>
             <linearGradient id="s1a" x1="0" y1="0" x2="0" y2="1">

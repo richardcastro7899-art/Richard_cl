@@ -17,7 +17,7 @@ export const Scene06: React.FC = () => {
   const selX = kf(f, [[q.select - 6, 0], [q.select + 8, 1, E.snap], [q.select + 16, 2, E.snap], [q.settle, 1, E.outExpo]]);
   return (
     <>
-      <FloatCard x={90} y={300} w={900} h={470} inAt={q.cardA} outAt={q.out} phase={0.3}>
+      <FloatCard x={120} y={300} w={840} h={439} inner={900} inAt={q.cardA} outAt={q.out} phase={0.3}>
         <Txt x={40} y={32} text="RESULTADO TRIBUTARIO" size={44} track={-0.03} p={P(f, q.labelA, 16, E.outExpo)} stagger={0.4} />
         <svg width={900} height={470} style={{position: 'absolute', left: 0, top: 0}}>
           <rect x={30} y={124 + scan * 290 - 16} width={840} height={32} rx={10} fill={C.orange} opacity={0.12 * Math.sin(Math.PI * scan)} />
@@ -36,9 +36,9 @@ export const Scene06: React.FC = () => {
         </svg>
       </FloatCard>
       <Svg>
-        <g opacity={1 - out}><Draw d="M540 796V876" p={P(f, q.line, 18, E.outQuint)} stroke={C.orange} w={3} /></g>
+        <g opacity={1 - out}><Draw d="M540 758V862" p={P(f, q.line, 18, E.outQuint)} stroke={C.orange} w={3} /></g>
       </Svg>
-      <FloatCard x={90} y={900} w={900} h={470} inAt={q.cardB} outAt={q.out} phase={2.2}>
+      <FloatCard x={120} y={880} w={840} h={439} inner={900} inAt={q.cardB} outAt={q.out} phase={2.2}>
         <Txt x={40} y={32} text="RÉGIMEN APLICABLE" size={44} track={-0.03} color={C.orange} p={P(f, q.labelB, 16, E.outExpo)} stagger={0.4} />
         <svg width={900} height={470} style={{position: 'absolute', left: 0, top: 0}}>
           {[0, 1, 2].map((i) => {

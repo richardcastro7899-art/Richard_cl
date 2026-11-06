@@ -2,9 +2,7 @@ import React from 'react';
 import {useCurrentFrame} from 'remotion';
 import {C} from '../lib/theme';
 import {E, P} from '../lib/anim';
-import {Svg} from '../lib/stage';
 import {Lead, Txt} from '../lib/text';
-import {Draw} from '../lib/ui';
 import {Q} from '../timing';
 
 const q = Q.s4;
@@ -17,9 +15,6 @@ export const Scene04: React.FC = () => {
     <>
       <Lead x={540} y={770} text="Y hay algo" size={96} align="center" p={P(f, q.hay - 4, 18, E.outExpo)} out={out} />
       <Txt x={540} y={890} text="IMPORTANTE" size={124} track={-0.035} color={C.orange} align="center" p={P(f, q.importante, 16, E.outExpo)} stagger={0.5} out={out} />
-      <Svg>
-        <g opacity={1 - out}><Draw d="M300 1050H780" p={P(f, q.line, 22, E.outQuint)} stroke={C.orange} w={3} /></g>
-      </Svg>
     </>
   );
 };

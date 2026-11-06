@@ -75,8 +75,9 @@ export const Background: React.FC = () => {
 
 /** Tarjeta flotante: entra desde abajo con inclinación 3D, flota suavemente y sale hacia arriba. */
 export const FloatCard: React.FC<{
-  x: number; y: number; w: number; h: number; inAt: number; outAt: number; phase?: number; children?: React.ReactNode; fill?: string; border?: boolean;
-}> = ({x, y, w, h, inAt, outAt, phase = 0, children, fill = '#FFFFFF', border = true}) => {
+  x: number; y: number; w: number; h: number; inAt: number; outAt: number; phase?: number; children?: React.ReactNode; fill?: string; border?: boolean; inner?: number;
+}> = ({x, y, w, h, inAt, outAt, phase = 0, children, fill = '#FFFFFF', border = true, inner}) => {
+  const sc = inner ? w / inner : 1;
   const f = useCurrentFrame();
   const pin = E.outExpo(clamp((f - inAt) / 26));
   const pout = E.inC(clamp((f - outAt) / 16));
@@ -84,8 +85,8 @@ export const FloatCard: React.FC<{
   const bob = Math.sin(f * 0.055 + phase) * 6;
   return (
     <Plane x={x} y={y + (1 - pin) * 150 - pout * 100 + bob} w={w} h={h} z={0} rx={(1 - pin) * 24 - pout * 10} ry={Math.sin(f * 0.03 + phase) * 2} o={pin * (1 - pout)}>
-      <div style={{position: 'absolute', inset: 0, borderRadius: 28, background: fill, border: border ? `1.5px solid ${C.line}` : 'none', boxShadow: '0 30px 80px rgba(23,30,39,0.10)', overflow: 'hidden'}}>
-        {children}
+      <div style={{position: 'absolute', inset: 0, borderRadius: 28, background: fill, border: border ? '2px solid #D3D9E2' : 'none', boxShadow: '0 3px 8px rgba(23,30,39,0.07), 0 40px 90px rgba(23,30,39,0.22)', overflow: 'hidden'}}>
+        {inner ? <div style={{position: 'absolute', left: 0, top: 0, width: inner, height: h / sc, transform: `scale(${sc})`, transformOrigin: '0 0'}}>{children}</div> : children}
       </div>
     </Plane>
   );
