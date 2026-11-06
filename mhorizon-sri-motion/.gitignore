@@ -1,0 +1,9 @@
+node_modules/
+out/frames/
+out/tmp/
+public/sfx/
+*.log
+out/tmp/
+out/alpha/
+out/audio/stems/
+out/audio/scenes/

@@ -1,0 +1,21 @@
+{
+  "name": "mhorizon-sri-motion",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MHORIZON · Motion graphic 9:16 de 40,359 s con diseño sonoro sincronizado (Remotion)",
+  "scripts": {
+    "studio": "remotion studio",
+    "sfx": "tsx scripts/build-sfx.ts",
+    "render:all": "bash scripts/render-all.sh"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.537",
+    "@remotion/paths": "4.0.537",
+    "@types/react": "^18.3.12",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "4.0.537",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
