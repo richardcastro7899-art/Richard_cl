@@ -18,7 +18,7 @@ export const Scene07: React.FC = () => {
   const d2In = P(f, q.doc2 - 6, 24, E.outExpo);
   const seg = P(f, q.segun - 2, 20, E.outExpo);
   const seal = pulse(f, q.verify, 18);
-  const shell: React.CSSProperties = {position: 'absolute', inset: 0, borderRadius: 20, background: C.navy2, border: `1.5px solid ${C.line}`, boxShadow: '0 40px 110px rgba(4,7,11,0.55)', overflow: 'hidden'};
+  const shell: React.CSSProperties = {position: 'absolute', inset: 0, borderRadius: 20, background: C.navy2, border: `1.5px solid ${C.line}`, boxShadow: '0 30px 80px rgba(23,30,39,0.10)', overflow: 'hidden'};
   return (
     <>
       {/* Documento 1 — Declaraciones */}

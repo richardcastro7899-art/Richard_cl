@@ -1,6 +1,7 @@
 import {continueRender, delayRender, staticFile} from 'remotion';
 
 export const INTER = 'Inter MH, Inter, system-ui, sans-serif';
+export const SERIF = "'Instrument Serif MH', 'Instrument Serif', Georgia, serif";
 
 const WEIGHTS: Array<[string, number]> = [
   ['Inter-Regular.otf', 400],
@@ -12,12 +13,13 @@ const WEIGHTS: Array<[string, number]> = [
 
 // Fuentes locales: el render no depende de la red.
 const handle = delayRender('Cargando Inter');
-Promise.all(
-  WEIGHTS.map(([file, weight]) => {
+Promise.all([
+  new FontFace('Instrument Serif MH', `url(${staticFile('fonts/InstrumentSerif-Italic.woff2')})`, {style: 'italic'}).load().then((f) => document.fonts.add(f)),
+  ...WEIGHTS.map(([file, weight]) => {
     const face = new FontFace('Inter MH', `url(${staticFile(`fonts/${file}`)})`, {weight: String(weight)});
     return face.load().then((f) => document.fonts.add(f));
   }),
-)
+])
   .then(() => continueRender(handle))
   .catch((err) => {
     console.error(err);

@@ -67,18 +67,19 @@ export const Background: React.FC = () => {
   const glx = kf(f, [[0, 760], [238, 300], [463, 820], [809, 260], [1081, 540], [1211, 540]]);
   const gly = kf(f, [[0, 1500], [238, 1650], [463, 400], [809, 1500], [1081, 1650], [1211, 1500]]);
   return (
-    <AbsoluteFill style={{background: C.navy}}>
+    <AbsoluteFill style={{background: '#FBFBFA'}}>
       <div style={{position: 'absolute', left: glx - 700, top: gly - 700, width: 1400, height: 1400, borderRadius: 700, opacity: gl * 0.2,
-        background: `radial-gradient(closest-side, ${C.orange} 0%, rgba(212,104,28,0.25) 45%, rgba(212,104,28,0) 100%)`}} />
-      <svg width={W} height={H} style={{position: 'absolute', inset: 0, opacity: 0.075}}>
+        background: `radial-gradient(closest-side, rgba(212,104,28,0.55) 0%, rgba(212,104,28,0.16) 50%, rgba(212,104,28,0) 100%)`}} />
+      <div style={{position: 'absolute', left: 900 - glx * 0.3 - 600, top: 1500 - gly * 0.2 - 600, width: 1200, height: 1200, borderRadius: 600, opacity: 0.5,
+        background: 'radial-gradient(closest-side, rgba(120,132,150,0.16) 0%, rgba(120,132,150,0) 100%)'}} />
+      <svg width={W} height={H} style={{position: 'absolute', inset: 0, opacity: 0.07}}>
         <defs>
           <pattern id="g" width="90" height="90" patternUnits="userSpaceOnUse" patternTransform={`translate(${gx} ${gy})`}>
-            <path d="M90 0H0V90" fill="none" stroke={C.soft} strokeWidth="1" />
+            <path d="M90 0H0V90" fill="none" stroke="#171E27" strokeWidth="1" />
           </pattern>
         </defs>
         <rect width={W} height={H} fill="url(#g)" />
       </svg>
-      <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 45%, rgba(23,30,39,0) 35%, rgba(10,14,19,0.62) 100%)'}} />
     </AbsoluteFill>
   );
 };

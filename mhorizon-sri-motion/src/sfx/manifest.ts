@@ -17,7 +17,7 @@ export type SfxEvent = {
   sync: number; lead: number; dur: number; vol: number; fadeIn: number; fadeOut: number; visual: string;
 };
 
-export const MASTER_GAIN = 0.45;
+export const MASTER_GAIN = 0.4;
 export const FADE_OUT_FRAMES = 24; // fundido final: termina exactamente en el último fotograma
 export const masterFade = (frame: number) => {
   const t = (frame - (TOTAL - FADE_OUT_FRAMES)) / FADE_OUT_FRAMES;
@@ -176,16 +176,11 @@ add('s8_to_brand_sub', 'transitions', 'sub', {f0: 38, f1: 55}, 1086, 0.9, 1.4, 0
 // ── ESCENA 09 ── cierre de marca
 add('s9_brand', 'brand', 'brand', {root: 146.83, tau: 1.2}, Q.s9.brand, 0.5, 3.4, 0.36, 'Revelación de la marca MHORIZON (acento corporativo original)', 0.3);
 add('s9_brand_hit', 'impacts', 'impact', {f: 52, noise: 0.3, tau: 0.3}, Q.s9.brand, 0.02, 1.1, 0.4, 'Impacto suave de la marca');
-add('s9_arcs_air', 'graphics', 'air', {f0: 2400, f1: 10000}, Q.s9.brand + 7, 0.6, 1.5, 0.09, 'Arcos del horizonte se dibujan');
-add('s9_arcs_trace', 'graphics', 'trace', {f0: 800, f1: 2400}, Q.s9.brand + 6, 0, 1.0, 0.07, 'Trazado de arcos concéntricos');
-add('s9_rays', 'ui', 'tone', {timbre: 'bell', index: 1.0, notes: [[0, 2349.3, 0.4, 0.4], [0.1, 2793, 0.4, 0.35], [0.2, 3136, 0.4, 0.3]], verb: 0.25}, Q.s9.brand + 10, 0, 0.9, 0.07, 'Rayos lineales del horizonte');
-[0, 1, 2, 3].forEach((i) => T(`s9_corner${i + 1}`, {f: 2800 + i * 250, noiseHz: 4800}, Q.s9.brand + 14 + i * 3, 0, 0.3, 0.1, `Esquina editorial ${i + 1}`, 'ui'));
 add('s9_tu_whoosh', 'text', 'whoosh', {f0: 800, f1: 3600, peak: 0.6}, Q.s9.tu, 0.27, 0.48, 0.16, '«TU EMPRESA» entra');
 T('s9_tu_tick', {f: 2100}, Q.s9.tu + 2, 0, 0.3, 0.13, 'Acento «TU EMPRESA»');
 add('s9_aldia_whoosh', 'text', 'whoosh', {f0: 700, f1: 3600, peak: 0.65}, Q.s9.alDia, 0.22, 0.4, 0.16, '«AL DÍA» entra');
 add('s9_aldia_hit', 'impacts', 'impact', {f: 58, noise: 0.3, tau: 0.26}, Q.s9.alDia, 0.02, 1.0, 0.46, 'Impacto suave en «AL DÍA»');
 add('s9_corporate', 'brand', 'tone', chord([293.66, 369.99, 440, 659.25], 3.0), Q.s9.alDia + 1, 0, 3.4, 0.2, 'Acorde corporativo original (Re mayor add9) — fundido final', 0.5);
-add('s9_line', 'graphics', 'trace', {f0: 400, f1: 1000}, Q.s9.alDia + 10, 0, 0.6, 0.07, 'Línea inferior se dibuja');
 
 export const EVENTS: SfxEvent[] = EV.sort((a, b) => a.sync - b.sync);
 

@@ -7,7 +7,16 @@ import {FPS, SCENE_END, SCENE_START, TOTAL} from './timing';
 
 const size = {width: 1080, height: 1920, fps: FPS} as const;
 
-/** Visual + efectos de sonido (sin voz). */
+/** Versión final: visual claro + voz + efectos de sonido de fondo. */
+const FinalComp: React.FC = () => (
+  <>
+    <Main />
+    <Sound />
+    <Audio src={staticFile('reference/voz_referencia.mp3')} volume={1} />
+  </>
+);
+
+/** Visual + efectos (sin voz). */
 const MasterComp: React.FC = () => (
   <>
     <Main />
@@ -36,6 +45,7 @@ const VoiceSyncComp: React.FC = () => (
 
 export const Root: React.FC = () => (
   <>
+    <Composition id="Final" component={FinalComp} durationInFrames={TOTAL} {...size} />
     <Composition id="Master" component={MasterComp} durationInFrames={TOTAL} {...size} />
     <Composition id="Silent" component={Main} durationInFrames={TOTAL} {...size} />
     {SCENE_START.map((s, i) => {

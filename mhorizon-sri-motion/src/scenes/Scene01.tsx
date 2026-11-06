@@ -3,7 +3,7 @@ import {useCurrentFrame} from 'remotion';
 import {C} from '../lib/theme';
 import {E, P, clamp, kf, pulse} from '../lib/anim';
 import {Svg} from '../lib/stage';
-import {Txt} from '../lib/text';
+import {Lead, Txt} from '../lib/text';
 import {Card, Draw, RR} from '../lib/ui';
 import {chartLine, chartDraw} from '../Hero';
 import {pointAt, toPath, partial} from '../lib/geometry';
@@ -93,6 +93,8 @@ export const Scene01: React.FC = () => {
       </Svg>
       <Txt x={540} y={pY} text="PÉRDIDAS" size={pSize} weight={800} track={-0.035} align="center" p={pIn} stagger={0.5} out={out} outDir="up"
         scale={pScale} color={shrink > 0.5 ? C.orange : C.white} />
+      <Lead x={540} y={236} text="Tu empresa tuvo" size={60} align="center" p={P(f, 6, 18, E.outExpo)} out={P(f, q.perdidasLabel - 6, 12, E.inC)} />
+      <Lead x={540} y={392} text="crees que ya no tiene" size={52} align="center" p={P(f, 58, 16, E.outExpo)} out={out} />
       <Txt x={540} y={470} text="¿SIN" size={100} align="center" p={P(f, q.sin, 16, E.outExpo)} out={out} outDir="up" split={[{from: 0, to: 1, color: C.orange}]} />
       <Txt x={540} y={570} text="OBLIGACIONES?" size={91} align="center" p={P(f, q.oblig, 18, E.outExpo)} out={clamp(out * 1.1 - 0.05)} outDir="up" track={-0.03}
         split={[{from: 12, to: 13, color: C.orange}]} />

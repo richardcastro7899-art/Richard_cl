@@ -3,7 +3,7 @@ import {useCurrentFrame} from 'remotion';
 import {C} from '../lib/theme';
 import {E, P, lerp, kf} from '../lib/anim';
 import {Svg} from '../lib/stage';
-import {Txt} from '../lib/text';
+import {Lead, Txt} from '../lib/text';
 import {Q} from '../timing';
 import {D1, D2} from './layout';
 
@@ -40,17 +40,10 @@ export const Scene08: React.FC = () => {
       <Svg>
         <Band f={f} from={D1} to={BA} expand={q.sin1 + 2} reveal={q.utilidades} />
         <Band f={f} from={D2} to={BB} expand={q.sin2} reveal={q.oblig} />
-        {/* ráfaga de énfasis en ≠ */}
-        {f >= q.neq && burst < 1 && Array.from({length: 16}).map((_, i) => {
-          const a = (i / 16) * Math.PI * 2;
-          const r0 = 250 + burst * 120;
-          const r1 = r0 + 40 * (1 - burst);
-          return <line key={i} x1={540 + Math.cos(a) * r0} y1={890 + Math.sin(a) * r0} x2={540 + Math.cos(a) * r1} y2={890 + Math.sin(a) * r1} stroke={C.orange} strokeWidth={4} strokeLinecap="round" opacity={1 - burst} />;
-        })}
       </Svg>
-      <Txt x={540} y={392} text="SIN" size={64} weight={600} track={0.4} color={C.soft} align="center" p={P(f, q.sin1, 14, E.outExpo)} out={out} outDir="up" />
+      <Lead x={540} y={380} text="sin" size={84} align="center" p={P(f, q.sin1, 16, E.outExpo)} out={out} outDir="up" />
       <Txt x={BA.x + BA.w / 2} y={BA.y + 2} text="UTILIDADES" size={148} track={-0.045} align="center" p={P(f, q.utilidades, 18, E.outExpo)} out={out} outDir="left" />
-      <Txt x={540} y={1172} text="SIN" size={64} weight={600} track={0.4} color={C.soft} align="center" p={P(f, q.sin2, 14, E.outExpo)} out={out} outDir="down" />
+      <Lead x={540} y={1160} text="sin" size={84} align="center" p={P(f, q.sin2, 16, E.outExpo)} out={out} outDir="down" />
       <Txt x={BB.x + BB.w / 2} y={BB.y + 2} text="OBLIGACIONES" size={112} track={-0.045} color={C.white} align="center" p={P(f, q.oblig, 18, E.outExpo)} out={out} outDir="right"
         split={[{from: 0, to: 12, color: C.white}]} />
     </>

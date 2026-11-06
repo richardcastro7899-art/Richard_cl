@@ -1752,90 +1752,6 @@
   "visual": "Transición de baja frecuencia hacia la marca"
  },
  {
-  "id": "s9_arcs_trace",
-  "file": "sfx/s9_arcs_trace.wav",
-  "cat": "graphics",
-  "startFrame": 1091,
-  "durationInFrames": 54,
-  "vol": 0.07,
-  "fadeIn": 0.003,
-  "fadeOut": 0.08,
-  "sync": 1091,
-  "visual": "Trazado de arcos concéntricos"
- },
- {
-  "id": "s9_arcs_air",
-  "file": "sfx/s9_arcs_air.wav",
-  "cat": "graphics",
-  "startFrame": 1074,
-  "durationInFrames": 78,
-  "vol": 0.09,
-  "fadeIn": 0.003,
-  "fadeOut": 0.08,
-  "sync": 1092,
-  "visual": "Arcos del horizonte se dibujan"
- },
- {
-  "id": "s9_rays",
-  "file": "sfx/s9_rays.wav",
-  "cat": "ui",
-  "startFrame": 1095,
-  "durationInFrames": 60,
-  "vol": 0.07,
-  "fadeIn": 0.003,
-  "fadeOut": 0.08,
-  "sync": 1095,
-  "visual": "Rayos lineales del horizonte"
- },
- {
-  "id": "s9_corner1",
-  "file": "sfx/s9_corner1.wav",
-  "cat": "ui",
-  "startFrame": 1099,
-  "durationInFrames": 29,
-  "vol": 0.1,
-  "fadeIn": 0.003,
-  "fadeOut": 0.08,
-  "sync": 1099,
-  "visual": "Esquina editorial 1"
- },
- {
-  "id": "s9_corner2",
-  "file": "sfx/s9_corner2.wav",
-  "cat": "ui",
-  "startFrame": 1102,
-  "durationInFrames": 29,
-  "vol": 0.1,
-  "fadeIn": 0.003,
-  "fadeOut": 0.08,
-  "sync": 1102,
-  "visual": "Esquina editorial 2"
- },
- {
-  "id": "s9_corner3",
-  "file": "sfx/s9_corner3.wav",
-  "cat": "ui",
-  "startFrame": 1105,
-  "durationInFrames": 29,
-  "vol": 0.1,
-  "fadeIn": 0.003,
-  "fadeOut": 0.08,
-  "sync": 1105,
-  "visual": "Esquina editorial 3"
- },
- {
-  "id": "s9_corner4",
-  "file": "sfx/s9_corner4.wav",
-  "cat": "ui",
-  "startFrame": 1108,
-  "durationInFrames": 29,
-  "vol": 0.1,
-  "fadeIn": 0.003,
-  "fadeOut": 0.08,
-  "sync": 1108,
-  "visual": "Esquina editorial 4"
- },
- {
   "id": "s9_tu_whoosh",
   "file": "sfx/s9_tu_whoosh.wav",
   "cat": "text",
@@ -1894,17 +1810,5 @@
   "fadeOut": 0.5,
   "sync": 1148,
   "visual": "Acorde corporativo original (Re mayor add9) — fundido final"
- },
- {
-  "id": "s9_line",
-  "file": "sfx/s9_line.wav",
-  "cat": "graphics",
-  "startFrame": 1157,
-  "durationInFrames": 42,
-  "vol": 0.07,
-  "fadeIn": 0.003,
-  "fadeOut": 0.08,
-  "sync": 1157,
-  "visual": "Línea inferior se dibuja"
  }
 ]

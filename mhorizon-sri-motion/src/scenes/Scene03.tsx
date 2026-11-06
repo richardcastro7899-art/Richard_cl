@@ -3,7 +3,7 @@ import {useCurrentFrame} from 'remotion';
 import {C} from '../lib/theme';
 import {E, P, kf, lerp} from '../lib/anim';
 import {Plane, Svg} from '../lib/stage';
-import {Txt} from '../lib/text';
+import {Lead, Txt} from '../lib/text';
 import {Draw, RR} from '../lib/ui';
 import {roundedPoly} from '../lib/geometry';
 import {Q} from '../timing';
@@ -63,6 +63,7 @@ export const Scene03: React.FC = () => {
   };
   return (
     <>
+      <Lead x={540} y={216} text="Aunque una empresa registre" size={50} align="center" p={P(f, 244, 18, E.outExpo)} out={P(f, q.out, 12, E.inC)} />
       <Txt x={540} y={285} text="PÉRDIDAS" size={132} track={-0.035} align="center" p={P(f, q.perdidas, 16, E.outExpo)} stagger={0.5} out={P(f, q.out, 12, E.inC)} outDir="down" />
       <Txt x={540} y={725} text="SIN OBLIGACIONES" size={86} track={-0.03} align="center" p={P(f, q.sinOblig, 18, E.outExpo)} out={P(f, q.out, 12, E.inC)} outDir="up" />
       <Svg>

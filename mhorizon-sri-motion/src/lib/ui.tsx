@@ -26,7 +26,7 @@ export const Card: React.FC<{x: number; y: number; w: number; h: number; open?: 
       style={{
         position: 'absolute', left: x, top: y + (h - hh) / 2, width: w, height: hh, borderRadius: r, background: fill, opacity: o,
         border: `1.5px solid ${glow > 0 ? C.orange : C.line}`, overflow: 'hidden',
-        boxShadow: `0 40px 110px rgba(4,7,11,0.55), 0 0 ${60 * glow}px rgba(212,104,28,${0.35 * glow})`, ...style,
+        boxShadow: `0 30px 80px rgba(23,30,39,0.10), 0 0 ${60 * glow}px rgba(212,104,28,${0.35 * glow})`, ...style,
       }}
     >
       {children}

@@ -3,7 +3,7 @@ import {useCurrentFrame} from 'remotion';
 import {C} from '../lib/theme';
 import {E, P, kf} from '../lib/anim';
 import {Svg} from '../lib/stage';
-import {Txt} from '../lib/text';
+import {Lead, Txt} from '../lib/text';
 import {Draw} from '../lib/ui';
 import {heroXform} from '../Hero';
 import {Q} from '../timing';
@@ -37,7 +37,7 @@ export const Scene02: React.FC = () => {
           <circle cx={540} cy={h.y + 128} r={14 * P(f, q.hit + 12, 10, E.outBack)} fill={C.white} />
         </g>
       </Svg>
-      <Txt x={540} y={1010} text="ESTO" size={84} weight={600} track={0.34} color={C.soft} align="center" p={P(f, q.esto, 14, E.outExpo)} out={outT} outDir="left" />
+      <Lead x={540} y={1016} text="porque esto" size={70} align="center" p={P(f, q.esto - 4, 16, E.outExpo)} out={outT} outDir="left" />
       <Txt x={540} y={1100} text="NO" size={340} weight={800} track={-0.04} color={C.orange} align="center" p={P(f, q.no, 10, E.outExpo)} out={outT} outDir="right"
         scale={kf(f, [[q.no, 1.45], [q.no + 12, 1, E.outExpo]])} />
       <Txt x={540} y={1410} text="ES ASÍ" size={110} weight={800} track={0.02} color={C.white} align="center" p={P(f, q.esAsi, 12, E.outExpo)} stagger={0.4} out={outT} outDir="left" />

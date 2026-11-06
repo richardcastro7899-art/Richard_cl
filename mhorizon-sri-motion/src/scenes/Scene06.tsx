@@ -48,7 +48,7 @@ export const Scene06: React.FC = () => {
       </Svg>
 
       <Plane x={geoA.x} y={geoA.y + (1 - aIn) * -160} w={geoA.w} h={geoA.h} z={kf(f, [[q.cardA, -120], [q.cardA + 26, 30, E.outExpo]])} rx={(1 - aIn) * -35} ry={(1 - morph) * 5} o={aIn}>
-        <div style={{position: 'absolute', inset: 0, borderRadius: lerp(30, 20, morph), background: C.navy2, border: `1.5px solid ${C.line}`, boxShadow: '0 40px 110px rgba(4,7,11,0.55)', overflow: 'hidden'}}>
+        <div style={{position: 'absolute', inset: 0, borderRadius: lerp(30, 20, morph), background: C.navy2, border: `1.5px solid ${C.line}`, boxShadow: '0 30px 80px rgba(23,30,39,0.10)', overflow: 'hidden'}}>
           <div style={{opacity: content}}>
             <svg width={A.w} height={A.h} style={{position: 'absolute', left: 0, top: 0}}>
               <RR x={40} y={96} w={780} h={1.5} r={1} fill={C.line} />
@@ -74,7 +74,7 @@ export const Scene06: React.FC = () => {
       <Txt x={150} y={346} text="RESULTADO TRIBUTARIO" z={120} size={50} track={-0.03} p={P(f, q.labelA, 16, E.outExpo)} stagger={0.4} out={1 - content} />
 
       <Plane x={geoB.x} y={geoB.y + (1 - bIn) * 160} w={geoB.w} h={geoB.h} z={kf(f, [[q.cardB - 6, -120], [q.cardB + 20, 30, E.outExpo]])} rx={(1 - bIn) * 35} ry={(1 - morph) * -5} o={bIn}>
-        <div style={{position: 'absolute', inset: 0, borderRadius: lerp(30, 20, morph), background: C.navy2, border: `1.5px solid ${C.line}`, boxShadow: '0 40px 110px rgba(4,7,11,0.55)', overflow: 'hidden'}}>
+        <div style={{position: 'absolute', inset: 0, borderRadius: lerp(30, 20, morph), background: C.navy2, border: `1.5px solid ${C.line}`, boxShadow: '0 30px 80px rgba(23,30,39,0.10)', overflow: 'hidden'}}>
           <div style={{opacity: content}}>
             <svg width={B.w} height={B.h} style={{position: 'absolute', left: 0, top: 0}}>
               {[0, 1, 2].map((i) => {
