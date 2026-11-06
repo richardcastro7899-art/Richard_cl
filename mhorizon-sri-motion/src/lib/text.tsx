@@ -24,7 +24,7 @@ export const Txt: React.FC<TxtProps> = ({
   x, y, text, size, weight = 800, color = C.white, track = -0.02, align = 'left', p = 1, out = 0, stagger = 0,
   dir = 'up', outDir = 'up', o = 1, z = 0, split, style, scale = 1, rot = 0, serif = false,
 }) => {
-  const blur = Math.max(0, (1 - E.outQuint(clamp(p * 1.5))) * 14);
+  const blur = Math.max(0, (1 - E.outQuint(clamp(p * 1.5))) * 14, clamp(out) * 12);
   if (p <= 0 && out <= 0) return null;
   if (out >= 1) return null;
   const chars = Array.from(text);

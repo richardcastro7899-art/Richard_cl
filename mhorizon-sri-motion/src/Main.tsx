@@ -1,8 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {Background, Layer, RenderCtx, World} from './lib/stage';
-import {HorizonLine} from './lib/horizon';
-import {Hero} from './Hero';
 import {WINDOWS} from './timing';
 import {Scene01} from './scenes/Scene01';
 import {Scene02} from './scenes/Scene02';
@@ -24,11 +22,7 @@ export const Main: React.FC<{transparent?: boolean}> = ({transparent = false}) =
       <AbsoluteFill style={{background: transparent ? 'transparent' : undefined}}>
         {!transparent && <Background />}
         <World>
-          <Layer>
-            <HorizonLine />
-            {SCENES.map((S, i) => (f >= WINDOWS[i][0] && f <= WINDOWS[i][1] ? <S key={i} /> : null))}
-            <Hero />
-          </Layer>
+          <Layer>{SCENES.map((S, i) => (f >= WINDOWS[i][0] && f <= WINDOWS[i][1] ? <S key={i} /> : null))}</Layer>
         </World>
       </AbsoluteFill>
     </RenderCtx.Provider>

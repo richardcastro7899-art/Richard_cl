@@ -2,7 +2,7 @@ import React, {createContext, useContext} from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {C, H, W} from './theme';
 import {cam} from './camera';
-import {kf, E} from './anim';
+import {clamp, E} from './anim';
 
 export const RenderCtx = createContext<{transparent: boolean}>({transparent: false});
 export const useTransparent = () => useContext(RenderCtx).transparent;
@@ -55,31 +55,38 @@ export const Svg: React.FC<{children: React.ReactNode; z?: number; style?: React
   </svg>
 );
 
-/** Fondo: azul MHORIZON con rejilla en parallax y resplandor cálido que migra por escena. */
+/** Fondo: blanco liso con una rejilla casi imperceptible (sin manchas de color). */
 export const Background: React.FC = () => {
   const f = useCurrentFrame();
-  const c = cam(f);
-  const gx = (c.ry * 5 + f * 0.25) % 90;
-  const gy = (c.rx * -5 + f * 0.4) % 90;
-  const gl = kf(f, [
-    [0, 0.5, E.lin], [161, 0.78], [238, 0.45], [414, 0.7], [463, 0.4], [660, 0.5], [809, 0.45], [936, 0.55], [1081, 0.35], [1211, 0.8],
-  ]);
-  const glx = kf(f, [[0, 760], [238, 300], [463, 820], [809, 260], [1081, 540], [1211, 540]]);
-  const gly = kf(f, [[0, 1500], [238, 1650], [463, 400], [809, 1500], [1081, 1650], [1211, 1500]]);
+  const gy = (f * 0.25) % 90;
   return (
-    <AbsoluteFill style={{background: '#FBFBFA'}}>
-      <div style={{position: 'absolute', left: glx - 700, top: gly - 700, width: 1400, height: 1400, borderRadius: 700, opacity: gl * 0.2,
-        background: `radial-gradient(closest-side, rgba(212,104,28,0.55) 0%, rgba(212,104,28,0.16) 50%, rgba(212,104,28,0) 100%)`}} />
-      <div style={{position: 'absolute', left: 900 - glx * 0.3 - 600, top: 1500 - gly * 0.2 - 600, width: 1200, height: 1200, borderRadius: 600, opacity: 0.5,
-        background: 'radial-gradient(closest-side, rgba(120,132,150,0.16) 0%, rgba(120,132,150,0) 100%)'}} />
-      <svg width={W} height={H} style={{position: 'absolute', inset: 0, opacity: 0.07}}>
+    <AbsoluteFill style={{background: '#FFFFFF'}}>
+      <svg width={W} height={H} style={{position: 'absolute', inset: 0, opacity: 0.045}}>
         <defs>
-          <pattern id="g" width="90" height="90" patternUnits="userSpaceOnUse" patternTransform={`translate(${gx} ${gy})`}>
+          <pattern id="g" width="90" height="90" patternUnits="userSpaceOnUse" patternTransform={`translate(0 ${gy})`}>
             <path d="M90 0H0V90" fill="none" stroke="#171E27" strokeWidth="1" />
           </pattern>
         </defs>
         <rect width={W} height={H} fill="url(#g)" />
       </svg>
     </AbsoluteFill>
+  );
+};
+
+/** Tarjeta flotante: entra desde abajo con inclinación 3D, flota suavemente y sale hacia arriba. */
+export const FloatCard: React.FC<{
+  x: number; y: number; w: number; h: number; inAt: number; outAt: number; phase?: number; children?: React.ReactNode; fill?: string; border?: boolean;
+}> = ({x, y, w, h, inAt, outAt, phase = 0, children, fill = '#FFFFFF', border = true}) => {
+  const f = useCurrentFrame();
+  const pin = E.outExpo(clamp((f - inAt) / 26));
+  const pout = E.inC(clamp((f - outAt) / 16));
+  if (f < inAt - 1 || pout >= 1) return null;
+  const bob = Math.sin(f * 0.055 + phase) * 6;
+  return (
+    <Plane x={x} y={y + (1 - pin) * 150 - pout * 100 + bob} w={w} h={h} z={0} rx={(1 - pin) * 24 - pout * 10} ry={Math.sin(f * 0.03 + phase) * 2} o={pin * (1 - pout)}>
+      <div style={{position: 'absolute', inset: 0, borderRadius: 28, background: fill, border: border ? `1.5px solid ${C.line}` : 'none', boxShadow: '0 30px 80px rgba(23,30,39,0.10)', overflow: 'hidden'}}>
+        {children}
+      </div>
+    </Plane>
   );
 };

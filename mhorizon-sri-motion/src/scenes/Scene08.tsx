@@ -1,51 +1,33 @@
 import React from 'react';
 import {useCurrentFrame} from 'remotion';
 import {C} from '../lib/theme';
-import {E, P, lerp, kf} from '../lib/anim';
+import {E, P, kf} from '../lib/anim';
 import {Svg} from '../lib/stage';
 import {Lead, Txt} from '../lib/text';
+import {Draw} from '../lib/ui';
 import {Q} from '../timing';
-import {D1, D2} from './layout';
 
 const q = Q.s8;
-// Líneas-guía donde los documentos se convierten en tipografía
-const BA = {x: 145, y: 470, w: 790, h: 142};
-const BB = {x: 145, y: 1250, w: 790, h: 112};
-const RULE = 6;
 
-const Band: React.FC<{f: number; from: typeof D1; to: typeof BA; expand: number; reveal: number}> = ({f, from, to, expand, reveal}) => {
-  const m = P(f, q.bands, 30, E.ioQuart);
-  const ex = P(f, expand, 12, E.outExpo);
-  const re = P(f, reveal - 6, 20, E.ioQuart);
-  // rectángulo documento → línea fina → banda completa → se retira hacia arriba descubriendo la palabra
-  const h = f < expand ? lerp(from.h, RULE, m) : lerp(RULE, to.h, ex);
-  const x = lerp(from.x, to.x, m);
-  const w = lerp(from.w, to.w, m);
-  const cy = lerp(from.y + from.h / 2, to.y + to.h / 2, m);
-  const top = f < expand ? cy - h / 2 : lerp(to.y + to.h / 2 - h / 2, to.y + to.h, re) ;
-  const hh = f < expand ? h : lerp(h, 0, re);
-  const o = 1 - P(f, reveal + 18, 4, E.lin);
-  const col = f < q.bands + 18 ? C.navy2 : C.orange;
-  return <rect x={x} y={top} width={w} height={Math.max(0, hh)} rx={lerp(20, 3, m)} fill={m < 0.4 ? C.navy2 : C.orange} stroke={C.line} strokeWidth={m < 0.4 ? 1.5 : 0} opacity={o} />;
-};
-
-// Escena 08 — "SIN UTILIDADES ≠ SIN OBLIGACIONES": documentos que se transforman en tipografía editorial
+// Escena 08 — «SIN UTILIDADES ≠ SIN OBLIGACIONES»: composición tipográfica editorial
 export const Scene08: React.FC = () => {
   const f = useCurrentFrame();
-  if (f < 936) return null;
-  const out = P(f, q.out, 18, E.inC);
-  const burst = P(f, q.neq, 20, E.outQuint);
+  const out = P(f, q.out, 12, E.inC);
+  const pop = kf(f, [[q.neq, 1.3], [q.neq + 16, 1, E.outExpo]]);
+  const b = (i: number) => P(f, q.neq + i * 4, 12, E.outExpo);
   return (
     <>
+      <Lead x={540} y={430} text="sin" size={84} align="center" p={P(f, q.sin1, 16, E.outExpo)} out={out} />
+      <Txt x={540} y={510} text="UTILIDADES" size={148} track={-0.045} align="center" p={P(f, q.utilidades, 18, E.outExpo)} out={out} />
       <Svg>
-        <Band f={f} from={D1} to={BA} expand={q.sin1 + 2} reveal={q.utilidades} />
-        <Band f={f} from={D2} to={BB} expand={q.sin2} reveal={q.oblig} />
+        <g opacity={1 - out} transform={`translate(540 850) scale(${pop}) translate(-540 -850)`}>
+          <Draw d="M430 825H650" p={b(0)} stroke={C.orange} w={16} />
+          <Draw d="M430 885H650" p={b(1)} stroke={C.orange} w={16} />
+          <Draw d="M505 945L575 765" p={b(2)} stroke={C.orange} w={16} />
+        </g>
       </Svg>
-      <Lead x={540} y={380} text="sin" size={84} align="center" p={P(f, q.sin1, 16, E.outExpo)} out={out} outDir="up" />
-      <Txt x={BA.x + BA.w / 2} y={BA.y + 2} text="UTILIDADES" size={148} track={-0.045} align="center" p={P(f, q.utilidades, 18, E.outExpo)} out={out} outDir="left" />
-      <Lead x={540} y={1160} text="sin" size={84} align="center" p={P(f, q.sin2, 16, E.outExpo)} out={out} outDir="down" />
-      <Txt x={BB.x + BB.w / 2} y={BB.y + 2} text="OBLIGACIONES" size={112} track={-0.045} color={C.white} align="center" p={P(f, q.oblig, 18, E.outExpo)} out={out} outDir="right"
-        split={[{from: 0, to: 12, color: C.white}]} />
+      <Lead x={540} y={1010} text="sin" size={84} align="center" p={P(f, q.sin2, 16, E.outExpo)} out={out} />
+      <Txt x={540} y={1090} text="OBLIGACIONES" size={112} track={-0.045} align="center" p={P(f, q.oblig, 18, E.outExpo)} out={out} />
     </>
   );
 };

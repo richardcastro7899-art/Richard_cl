@@ -1,16 +1,16 @@
 // Identidad MHORIZON — paleta y constantes de lienzo
 export const C = {
-  navy: '#FFFFFF', // fondo (versión clara)
-  navy2: '#FFFFFF', // superficie de tarjetas
-  navy3: '#EFF1F4',
-  line: '#E0E4EA',
-  mid: '#B3BAC6',
-  grey: '#7D8898',
-  soft: '#5B6676',
-  white: '#171E27', // tinta principal = azul oscuro MHORIZON
-  orange: '#D4681C', // naranja institucional
-  orangeHi: '#EE8A3F',
-  orangeLo: '#8A4313',
+  navy: '#FFFFFF',
+  navy2: '#FFFFFF',
+  navy3: '#F1F3F6',
+  line: '#E6E9EE',
+  mid: '#C3C9D3',
+  grey: '#8A94A3',
+  soft: '#6A7584',
+  white: '#171E27', // tinta principal (azul oscuro MHORIZON)
+  orange: '#D4681C',
+  orangeHi: '#D4681C',
+  orangeLo: '#D4681C',
 } as const;
 
 export const W = 1080;

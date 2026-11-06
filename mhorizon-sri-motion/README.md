@@ -1,4 +1,8 @@
-# MHORIZON · «Pérdidas ≠ sin obligaciones» — motion graphic 9:16 con diseño sonoro
+# MHORIZON · «Pérdidas ≠ sin obligaciones» — motion graphic 9:16 (versión final minimalista, fondo blanco, con voz)
+
+> **Entregable vigente:** `out/final/MHORIZON_Final.mp4` (1080×1920, MP4, con voz + efectos de fondo). Se renderiza con `npx remotion render Final out/final/MHORIZON_Final.mp4`. Las secciones siguientes describen la primera versión (oscura, sin voz); el sistema de timing y sonido es el mismo.
+
+## Versión anterior
 
 Producción hecha **íntegramente con [Remotion](https://www.remotion.dev)** (React + TypeScript + SVG animado + interpolaciones y curvas propias), con síntesis de audio original y FFmpeg para mezcla/exportación.
 
