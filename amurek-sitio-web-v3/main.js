@@ -19,7 +19,14 @@
 
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
-  const still = /[?&]still/.test(location.search); // ?still = captura estática
+  const still = /[?&]still/.test(location.search);
+  /* ---------- cada página abre siempre en su inicio (v38): sin restauración de posición del navegador, y se fuerza el inicio
+     también cuando la página va dentro de un visor que hace el scroll por fuera (scrollIntoView sube todos los contenedores) ---------- */
+  try { history.scrollRestoration = "manual"; } catch (_) { /* sin historial */ }
+  if (!location.hash && !still) {
+    const toTop = () => { const h = document.documentElement; h.style.scrollBehavior = "auto"; scrollTo(0, 0); try { document.body.scrollIntoView({ block: "start", behavior: "instant" }); } catch (_) { /* navegador antiguo */ } h.style.scrollBehavior = ""; };
+    toTop(); addEventListener("load", toTop); addEventListener("pageshow", toTop);
+  } // ?still = captura estática
   if (still) { const y = +(new URLSearchParams(location.search).get("y") || 0); if (y) addEventListener("load", () => { document.documentElement.style.scrollBehavior = "auto"; scrollTo(0, y); }); }
   const store = { get: (k) => { try { return localStorage.getItem(k); } catch (_) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (_) { /* sin almacenamiento */ } } };
   const reduce = still; // las animaciones están siempre activas: no dependen del dispositivo ni se pueden pausar (solo ?still, para capturas)
