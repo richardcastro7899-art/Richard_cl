@@ -139,7 +139,7 @@ const HEAD = (m) => `<!doctype html>
 <meta property="og:locale" content="es_EC">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-14 -14 129 144'%3E%3Crect x='-14' y='-14' width='129' height='144' rx='30' fill='%23541D35'/%3E%3Cpath fill='%23F5F3EE' d='M47.11 0A47.11 47.11 0 0 0 47.11 94.22Z'/%3E%3Cpath fill='%23F5F3EE' d='M53.83 21.84A47.11 47.11 0 0 1 100.94 68.95V116.06H53.83Z'/%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<script>(function(){var d=document.documentElement,still=/[?&]still/.test(location.search),pref=null,sys=false;try{pref=localStorage.getItem("amurek-motion")}catch(e){}try{sys=matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}var on=!still&&(pref==="on"||(pref!=="off"&&!sys));if(!still)d.classList.add("js");if(!on)d.classList.add("motion-off");try{if(on&&!sessionStorage.getItem("amurek-pre"))d.classList.add("pre-on")}catch(e){}if(on&&"${m.page}"==="inicio")d.classList.add("nav-morph")})();</script>
+<script>(function(){var d=document.documentElement;if(/[?&]still/.test(location.search))return;d.classList.add("js");try{if(!sessionStorage.getItem("amurek-pre"))d.classList.add("pre-on")}catch(e){}if("${m.page}"==="inicio")d.classList.add("nav-morph")})();</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="${m.page}">
@@ -218,7 +218,7 @@ const FOOT = `<footer class="foot7" id="foot">
       </nav>
     </div>
     <div class="foot7__bar">
-      <div class="foot7__l"><ul class="foot7__soc" data-social-icons hidden></ul><p class="foot7__loc">Ecuador · <span data-clock>--:--</span></p><button type="button" class="foot7__motion" id="motionToggle" aria-pressed="false">Pausar animaciones</button></div>
+      <div class="foot7__l"><ul class="foot7__soc" data-social-icons hidden></ul><p class="foot7__loc">Ecuador · <span data-clock>--:--</span></p></div>
       <p class="foot7__c">©<span data-year>2026</span> AMUREK. Todos los derechos reservados.</p>
     </div>
     <div class="foot7__wm" aria-hidden="true">${WORDMARK}</div>
@@ -486,42 +486,22 @@ const REELS = `<section class="sec" id="reels">
 
 // TESTIMONIOS — TEXTOS DE REFERENCIA: reemplazar por opiniones reales de clientes antes de publicar
 const TQ = [
-  ["Trabajar con AMUREK fue menos como contratar una agencia y más como ganar un socio estratégico.", R + "t-retrato.jpg", "Nombre Apellido", "Fundador · Marca", "50% 12%"],
-  ["Rápidos, atentos y muy colaborativos. Se sintió como parte de nuestro equipo desde el primer día.", R + "c-2.jpg", "Nombre Apellido", "Directora creativa · Empresa", "50% 20%"],
-  ["Su trabajo es sobrio en la forma pero rico en intención. Nos ayudaron a expresar nuestra marca con claridad.", R + "c-4.jpg", "Nombre Apellido", "Jefa de marca · Empresa", "50% 20%"],
-  ["Entendieron lo que queríamos decir antes de que supiéramos explicarlo. El resultado se ve y se siente nuestro.", R + "c-1.jpg", "Nombre Apellido", "Gerente · Negocio", "50% 20%"],
-  ["Pasamos de publicar sin rumbo a tener una línea gráfica y un calendario que podemos sostener.", R + "c-5.jpg", "Nombre Apellido", "Emprendedor · Marca", "50% 20%"],
-  ["Cada entrega llegó clara, a tiempo y con las razones detrás de cada decisión.", R + "c-3.jpg", "Nombre Apellido", "Director · Empresa", "50% 20%"],
+  ["Trabajar con AMUREK fue menos como contratar una agencia y más como ganar un socio estratégico.", "woman-2", "Nombre Apellido", "Fundadora · Marca"],
+  ["Rápidos, atentos y muy colaborativos. Se sintió como parte de nuestro equipo desde el primer día.", "man-3", "Nombre Apellido", "Directora creativa · Empresa"],
+  ["Su trabajo es sobrio en la forma pero rico en intención. Nos ayudaron a expresar nuestra marca con claridad.", "woman-4", "Nombre Apellido", "Jefa de marca · Empresa"],
+  ["Entendieron lo que queríamos decir antes de que supiéramos explicarlo. El resultado se ve y se siente nuestro.", "man-2", "Nombre Apellido", "Gerente · Negocio"],
+  ["Pasamos de publicar sin rumbo a tener una línea gráfica y un calendario que podemos sostener.", "woman-3", "Nombre Apellido", "Emprendedora · Marca"],
+  ["Cada entrega llegó clara, a tiempo y con las razones detrás de cada decisión.", "man-1", "Nombre Apellido", "Director · Empresa"],
 ];
-const AR_L = `<svg class="ar" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>`;
-const tstFeat = ([q, img, n, r, pos], i) => `<figure class="tst__f${i === 0 ? " is-on" : ""}"><img src="${img}" alt="" loading="lazy" style="object-position:${pos}"><blockquote>«${q}»</blockquote><figcaption><b>${n}</b><span>${r}</span></figcaption></figure>`;
-const tstCard = (on) => ([q, img, n, r, pos], i) => `<figure class="tst__c${i === on ? " is-on" : ""}"><blockquote>«${q}»</blockquote><figcaption><img src="${img}" alt="" loading="lazy" style="object-position:${pos}"><span><b>${n}</b>${r}</span></figcaption></figure>`;
 const tcard2 = ([q, av, n, r]) => `<li class="tcard2" data-spot><blockquote>«${q}»</blockquote><figcaption><img src="${ref(av)}" alt=""><span><b>${n}</b>${r}</span></figcaption></li>`;
 // CIFRAS DE REFERENCIA: reemplazar por los números reales de la agencia antes de publicar
 const STATS = [["+", 120, "", "Proyectos entregados"], ["+", 45, "", "Marcas acompañadas"], ["", 92, "%", "Clientes que repiten"], ["+", 300, "", "Piezas de contenido al mes"]];
 const tq5Card = ([q, av, n, r]) => `<li class="tq5__c"><blockquote>«${q}»</blockquote><figcaption><img src="${ref(av)}" alt=""><span><b>${n}</b>${r}</span></figcaption></li>`;
-const TESTI = `<section class="pad" id="testimonios" data-placeholder="testimonios de referencia">
-  <div class="panel tq5 tst" id="tst">
-    <div class="tst__side">
-      <h2 class="h1 rv">Lo que dicen nuestros clientes</h2>
-      <p class="tst__lead">Opiniones de referencia. Aquí irán las de tus clientes reales.</p>
-      <div class="tst__nav" role="group" aria-label="Cambiar de testimonio">
-        <button type="button" data-tst="-1" aria-label="Testimonio anterior">${AR_L}</button>
-        <span class="tst__count" aria-live="polite"><b id="tstN">01</b> / ${pad2(TQ.length)}</span>
-        <button type="button" data-tst="1" aria-label="Testimonio siguiente">${AR}</button>
-      </div>
-    </div>
-    <div class="tst__feat">${TQ.map(tstFeat).join("")}</div>
-    <div class="tst__col" aria-hidden="true">
-      <div class="tst__slot" data-off="1">${TQ.map(tstCard(1)).join("")}</div>
-      <div class="tst__slot" data-off="2">${TQ.map(tstCard(2)).join("")}</div>
-    </div>
-  </div>
-</section>
-<section class="nums" id="cifras" data-placeholder="cifras de referencia">
-  <div class="wrap">
-    <ul class="nums__row" aria-label="Cifras de referencia">${STATS.map(([pre, n, suf, l]) => `<li><b class="nums__n">${pre ? `<i>${pre}</i>` : ""}<span data-count="${n}">${n}</span>${suf ? `<i>${suf}</i>` : ""}</b><p>${l}</p></li>`).join("")}</ul>
-    <p class="nums__note">Cifras de referencia. Aquí irán los números reales de la agencia.</p>
+const TESTI = `<section class="pad" id="testimonios" data-placeholder="testimonios y cifras de referencia">
+  <div class="panel tq5">
+    <div class="tq5__head"><h2 class="h1 rv">Lo que dicen nuestros clientes</h2><p>Opiniones y cifras de referencia. Aquí irán las de tus clientes reales.</p></div>
+    <div class="tq5__view" role="group" aria-label="Testimonios"><ul class="tq5__row">${TQ.map(tq5Card).join("")}${TQ.map(tq5Card).join("")}</ul></div>
+    <ul class="tq5__stats" aria-label="Cifras de referencia">${STATS.map(([pre, n, suf, l]) => `<li><b class="tq5__n">${pre}<span data-count="${n}">${n}</span>${suf}</b><p>${l}</p></li>`).join("")}</ul>
   </div>
 </section>`;
 
@@ -545,7 +525,7 @@ const TEAM_HOME = TEAMW("Un equipo pequeño que trabaja contigo.", "Las decision
 const wordLetters = (w, base = 0) => w.split("").map((c, i) => `<i style="--i:${base + i}">${c}</i>`).join("");
 const STUDIO_HEAD = `<section class="studio wrap" id="top">
   <h1 class="sr">Nosotros: el estudio de AMUREK, agencia creativa en Ecuador.</h1>
-  <div class="studio__row" aria-hidden="true"><span class="studio__w">${wordLetters("Nuestro")}</span><figure class="studio__img"><img src="${R}n-studio.jpg" alt=""></figure><span class="studio__w">${wordLetters("Estudio", 7)}</span></div>
+  <div class="studio__row" aria-hidden="true"><span class="studio__w">Nuestro</span><figure class="studio__img"><img src="${R}n-studio.jpg" alt=""></figure><span class="studio__w">Estudio</span></div>
   <div class="studio__meta"><span>Agencia creativa</span><span>Ecuador</span><span>Cinco servicios, un equipo</span></div>
 </section>`;
 const ABOUT_GLASS = `<section class="pad aboutg">
@@ -558,40 +538,24 @@ const ABOUT_GLASS = `<section class="pad aboutg">
   </div>
 </section>`;
 const tmCard = (m) => `<figure class="tm__c"><img src="${m.img}" alt="${m.n === "Nombre Apellido" ? "" : "Retrato de " + m.n}" loading="lazy" style="object-position:${m.pos}"><figcaption><b>${m.n}</b><span>${m.r}</span></figcaption></figure>`;
-const TEAM_PIN = `<section class="tm" id="equipo" data-placeholder="equipo: salvo Richard Castro, personas de referencia">
+const TEAMPIN = (more) => `<section class="tm" id="equipo" data-placeholder="equipo: salvo Richard Castro, personas de referencia">
   <div class="tm__sticky">
     <div class="tm__a"><p class="tm__k">El equipo</p><h2 class="h1 tm__h">Un equipo<br>de expertos</h2></div>
     <div class="tm__b">
-      <div class="tm__txt"><h3 class="tm__name">Cuatro personas, una sola visión.</h3><p class="tm__bio">Quienes dirigen AMUREK lo hacen en conjunto: cada decisión se toma entre las cuatro, con el mismo peso.</p></div>
+      <div class="tm__txt"><h3 class="tm__name">Cuatro personas, una sola visión.</h3><div class="tm__side"><p class="tm__bio">Quienes dirigen AMUREK lo hacen en conjunto: cada decisión se toma entre las cuatro, con el mismo peso.</p>${more ? `<a class="btn btn--dark" href="nosotros.html"><span>Conoce al equipo</span><i class="dot"></i></a>` : ""}</div></div>
       <div class="tm__row">${TEAM.map(tmCard).join("")}</div>
     </div>
   </div>
 </section>`;
+const TEAM_PIN = TEAMPIN(false), TEAM_PIN_HOME = TEAMPIN(true);
 const MEMBERS = "";
 const APPROACH = `<section class="sec" id="enfoque">
   <div class="wrap appr">
     <div class="rhead appr__head"><h2 class="h2 rv">Así trabajamos.</h2><p>Cuatro etapas, un mismo equipo: de la primera conversación al lanzamiento.</p></div>
+    <figure class="appr__vid"><video muted loop playsinline preload="none" data-autoplay poster="assets/identidad-poster.jpg" aria-hidden="true"><source src="assets/amurek-identidad.mp4" type="video/mp4"></video></figure>
     <ol class="appr__steps">
       ${proc.map(([t, d], i) => `<li><span class="appr__n">${pad2(i + 1)}</span><b>${t}</b><p>${d}</p></li>`).join("\n      ")}
     </ol>
-  </div>
-</section>`;
-
-// NOSOTROS — la marca: a la izquierda, una tarjeta con la animación del logotipo; a la derecha, qué significa y la paleta real
-const SWATCH = [["Vino profundo", "#541D35"], ["Blanco cálido", "#F5F3EE"], ["Negro de apoyo", "#181818"]];
-const BRAND = `<section class="sec" id="marca">
-  <div class="wrap brand">
-    <figure class="brand__card">
-      <video muted loop playsinline preload="none" data-autoplay poster="assets/identidad-poster.jpg" aria-label="Animación del logotipo de AMUREK"><source src="assets/amurek-identidad.mp4" type="video/mp4"></video>
-      <button type="button" class="brand__play" data-vplay aria-label="Reproducir o pausar la animación del logotipo"><span>Ver animación</span><i>${PLAY}</i></button>
-      <figcaption><span>Logotipo en movimiento</span><span>Identidad AMUREK</span></figcaption>
-    </figure>
-    <div class="brand__txt">
-      <p class="phero__k"><i></i>Nuestra marca</p>
-      <h2 class="h2 rv">Dos piezas que se encuentran.</h2>
-      <p class="brand__p">Nuestro logotipo nace de dos formas que se unen: la idea y su forma. Así trabajamos también con tu marca: primero entendemos qué quiere decir y después le damos forma en cada pieza.</p>
-      <ul class="brand__sw" aria-label="Paleta de AMUREK">${SWATCH.map(([n, c]) => `<li><i style="background:${c}"></i><b>${n}</b><span>${c}</span></li>`).join("")}</ul>
-    </div>
   </div>
 </section>`;
 
@@ -680,7 +644,7 @@ const FILTER_BTNS = [["todo", "Todo"], ...SERVICES.map((s) => [s.id, s.short])].
    COMPILAR PÁGINAS
    ============================================================ */
 const blocks = {
-  HERO, STATEMENT, WORK, SERVICES_PANEL, PROCESS, PROCESS_OLD, SHOWREEL, REELS, TESTI, TEAM_HOME, STUDIO_HEAD, ABOUT_GLASS, TEAM_PIN, MEMBERS, APPROACH, BRAND, BRAND_BAND, PLANS, FAQ, CTA, FORM,
+  HERO, STATEMENT, WORK, SERVICES_PANEL, PROCESS, PROCESS_OLD, SHOWREEL, REELS, TESTI, TEAM_HOME, STUDIO_HEAD, ABOUT_GLASS, TEAM_PIN, TEAM_PIN_HOME, MEMBERS, APPROACH, BRAND_BAND, PLANS, FAQ, CTA, FORM,
   SVC_DETAIL, SVC_INDEX, GRID, FILTER_BTNS, CHECK, AR, AR_UR, PLAY, AVATAR, WORDMARK, ISO,
   PHERO_SERVICIOS: PHERO({ a: "Servicios", k: `${pad2(SERVICES.length)} servicios · un equipo`, p: "Cinco servicios que trabajan juntos. Contrata uno solo o arma el equipo completo para tu proyecto." }),
   PHERO_PROYECTOS: PHERO({ a: "Proyectos", b: "seleccionados", k: `${pad2(PROJECTS.length)} proyectos · ${PROJECTS[0].year}`, p: "Cada proyecto empieza como una idea suelta. Aquí está lo que pasa cuando encuentra su forma." }),
@@ -694,7 +658,7 @@ for (const file of fs.readdirSync(srcDir).filter((f) => f.endsWith(".html"))) {
   const m = JSON.parse(src.match(/<!--meta\s*([\s\S]*?)-->/)[1]);
   src = src.replace(/<!--meta[\s\S]*?-->\s*/, "");
   for (let pass = 0; pass < 2; pass++) for (const [k, v] of Object.entries(blocks)) src = src.split(`{{${k}}}`).join(v);
-  const html = HEAD(m) + NAV(m.page) + src + FOOT;
+  const html = (HEAD(m) + NAV(m.page) + src + FOOT).replace(/<img /g, '<img decoding="async" ');
   fs.writeFileSync(path.join(here, file), html);
   console.log(file, html.length, "bytes");
 }

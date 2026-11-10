@@ -22,9 +22,7 @@
   const still = /[?&]still/.test(location.search); // ?still = captura estática
   if (still) { const y = +(new URLSearchParams(location.search).get("y") || 0); if (y) addEventListener("load", () => { document.documentElement.style.scrollBehavior = "auto"; scrollTo(0, y); }); }
   const store = { get: (k) => { try { return localStorage.getItem(k); } catch (_) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (_) { /* sin almacenamiento */ } } };
-  const systemReduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const motionPref = store.get("amurek-motion");   // "on" | "off" | null: la elección de la persona manda sobre el ajuste del sistema
-  let reduce = still || (motionPref === "on" ? false : motionPref === "off" || systemReduce); // se puede cambiar con el botón «Pausar animaciones»
+  const reduce = still; // las animaciones están siempre activas: no dependen del dispositivo ni se pueden pausar (solo ?still, para capturas)
   const fine = matchMedia("(hover:hover) and (pointer:fine)").matches;
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const onVisible = (el, cb, margin = "10% 0px") => new IntersectionObserver((es) => es.forEach((e) => cb(e.isIntersecting)), { rootMargin: margin }).observe(el);
@@ -79,30 +77,10 @@
   const mBtn = $("#motionToggle");
   const applyMotion = () => {
     document.documentElement.classList.toggle("motion-off", reduce);
-    if (mBtn) { mBtn.setAttribute("aria-pressed", String(reduce)); mBtn.textContent = reduce ? "Activar animaciones" : "Pausar animaciones"; }
+    if (mBtn) { mBtn.setAttribute("aria-pressed", String(reduce)); mBtn.textContent = reduce ? "Reanudar animaciones" : "Pausar animaciones"; }
     $$("video[data-autoplay]").forEach((v) => { if (reduce) v.pause(); });
     document.dispatchEvent(new Event("motionchange"));
   };
-  // Cambiar el movimiento: se guarda la elección y la página se vuelve a cargar, así todas las piezas (barra, portada, escenas con scroll)
-  // arrancan en el modo correcto. Si el navegador no deja guardar, se cambia en caliente lo que se puede.
-  const setMotion = (on) => {
-    store.set("amurek-motion", on ? "on" : "off");
-    if (store.get("amurek-motion") === (on ? "on" : "off")) { location.reload(); return; }
-    reduce = !on; applyMotion();
-    if (on) $$("video[data-autoplay]").forEach((v) => { const r = v.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) v.play().catch(() => {}); });
-  };
-  if (mBtn) mBtn.addEventListener("click", () => setMotion(reduce));
-  // Aviso discreto cuando las animaciones están en pausa solo por el ajuste del dispositivo (y la persona aún no eligió)
-  if (systemReduce && !motionPref && !still) {
-    let seen = false; try { seen = sessionStorage.getItem("amurek-mnote") === "1"; } catch (_) { /* sin almacenamiento */ }
-    if (!seen) {
-      const note = document.createElement("div"); note.className = "mnote"; note.setAttribute("role", "status");
-      note.innerHTML = '<p>Las animaciones están en pausa por el ajuste de tu dispositivo.</p><button type="button" class="mnote__on">Activar</button><button type="button" class="mnote__x" aria-label="Cerrar aviso">×</button>';
-      document.body.appendChild(note);
-      $(".mnote__on", note).addEventListener("click", () => { note.remove(); setMotion(true); });
-      $(".mnote__x", note).addEventListener("click", () => { note.remove(); try { sessionStorage.setItem("amurek-mnote", "1"); } catch (_) { /* sin almacenamiento */ } });
-    }
-  }
   applyMotion();
 
   /* ---------- pantalla de carga: las letras de AMUREK suben y, al estar todo listo, cinco paneles (una por letra) se levantan como una cortina ---------- */
@@ -156,10 +134,13 @@
       // la transición dura exactamente lo que tarda el panel del hero en llegar a la barra: así el logo nunca queda encima del panel
       const hp = $("#heroPanel") || $(".hero4__panel"), navh = navEl.getBoundingClientRect().height || 64;
       D = Math.max(48, (hp ? hp.getBoundingClientRect().top + scrollY : 200) - navh);
+      lastNP = -1;
     };
+    let lastNP = -1;
     const apply = () => {
       // avance lineal con el scroll (sin aceleración): el borde inferior del logo baja al mismo ritmo que sube el panel, nunca se cruzan
       const p = clamp(scrollY / D), e = p;
+      if (p === lastNP) return; lastNP = p;
       const lw = pw + (nw - pw) * e, lx = pl + (nl - pl) * e, ly = pt + (nt - pt) * e;
       fly.style.width = lw.toFixed(1) + "px";
       fly.style.transform = `translate3d(${lx.toFixed(1)}px,${ly.toFixed(1)}px,0)`;
@@ -171,6 +152,7 @@
       reg.style.opacity = (1 - clamp(p * 5)).toFixed(2);
     };
     measure(); apply();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measure(); apply(); });
     addEventListener("load", () => { measure(); apply(); });
     addEventListener("resize", () => { measure(); apply(); });
     onScroll(apply);
@@ -197,31 +179,14 @@
   const revealIO = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); revealIO.unobserve(e.target); } }), { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
   $$(".rv").forEach((el) => revealIO.observe(el));
 
+  /* ---------- fluidez (v37): las animaciones en bucle de una sección solo corren mientras esa sección está a la vista ---------- */
+  if (!still) {
+    const offIO = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle("is-off", !e.isIntersecting)), { rootMargin: "25% 0px" });
+    $$("main>section,footer").forEach((s) => offIO.observe(s));
+  }
+
   /* ---------- videos que se reproducen solos al verse ---------- */
   $$("video[data-autoplay]").forEach((v) => onVisible(v, (on) => { if (on && !reduce) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); }, "0px"));
-
-  $$("[data-vplay]").forEach((btn) => {
-    const box = btn.parentElement, v = $("video", box);
-    if (!v) return;
-    btn.addEventListener("click", () => { if (v.paused) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); });
-    v.addEventListener("play", () => box.classList.add("is-playing"));
-    v.addEventListener("pause", () => box.classList.remove("is-playing"));
-  });
-
-  /* ---------- bloques que suben al entrar en pantalla (v36): solo los que están por debajo de la primera pantalla, para que nada parpadee al cargar.
-     Es una animación (no una transición), así no pisa las transiciones propias de cada pieza; al terminar se retira la clase ---------- */
-  if (!reduce) {
-    const RISE = ".rhead>p,.statement__p,.work__lead,.svc4__head>p,.tk__head>p,.tst__lead,.tst__feat,.tst__col,.sdet,.grid>.gcard,.more,.vcard,.appr__steps>li,.nums__row>li,.nums__note,.brand__card,.brand__txt>:not(.rv),.connect__side,.connect .form,.faq3__list>.qa3,.faq3__card,.plans6__grid>.pl6,.plans6__meet,.sv,.cta3__in>p,.cta3__act,.cta3__list";
-    const riseIO = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); riseIO.unobserve(e.target); } }), { threshold: 0.08, rootMargin: "0px 0px -7% 0px" });
-    $$(RISE).forEach((el) => {
-      if (el.getBoundingClientRect().top < innerHeight * 0.92) return;
-      const sib = Array.from(el.parentElement.children).filter((c) => c.matches(RISE));
-      el.style.setProperty("--rd", (Math.min(sib.indexOf(el), 5) * 0.07).toFixed(2) + "s");
-      el.classList.add("rise");
-      el.addEventListener("animationend", (ev) => { if (ev.target === el) el.classList.remove("rise", "in"); });
-      riseIO.observe(el);
-    });
-  }
 
   /* ---------- PORTADA: la última palabra cambia; al formarse el isotipo se queda en «forma» ---------- */
   const heroPanel = $("#heroPanel");
@@ -336,7 +301,8 @@ void main(){
     const stickyTop = () => parseFloat(getComputedStyle(sticky).top) || 0;
     const layout = () => { range = Math.max(1, (n - 1) * innerHeight * 0.85); pwh.style.height = Math.round(sticky.offsetHeight + range + innerHeight * 0.12) + "px"; };
     const frame = () => {
-      const p = clamp((stickyTop() - pwh.getBoundingClientRect().top) / range), pos = p * (n - 1);
+      const pr = pwh.getBoundingClientRect(); if (pr.bottom < -innerHeight || pr.top > innerHeight * 2) return;
+      const p = clamp((stickyTop() - pr.top) / range), pos = p * (n - 1);
       cards.forEach((c, i) => {
         const d = i - pos;
         let ty = 0, rx = 0, tz = 0, sc = 1, op = 1;
@@ -529,6 +495,7 @@ void main(){
     const ORB = [[0.15, 0.3], [0.85, 0.25], [0.2, 0.76], [0.81, 0.74]];   // centros de la órbita (fracción del cuadro)
     onScroll(() => {
       if (innerWidth <= 900) { tm.style.setProperty("--tp", "1"); cards.forEach((c) => (c.style.transform = "")); return; }
+      const tr = tm.getBoundingClientRect(); if (tr.bottom < -innerHeight || tr.top > innerHeight * 2) return;
       const total = tm.offsetHeight - innerHeight;
       const raw = reduce ? 1 : clamp(-tm.getBoundingClientRect().top / total);
       const tp = ease(clamp((raw - 0.12) / 0.5));
@@ -582,6 +549,7 @@ void main(){
     const sticky = $(".reel__sticky", reel);
     onScroll(() => {
       const r = reel.getBoundingClientRect();
+      if (r.bottom < -innerHeight || r.top > innerHeight * 2) return;
       const raw = reduce ? 0 : clamp(-r.top / (r.height - innerHeight));
       const t = clamp((raw - 0.06) / 0.74);
       const e = ease(t);

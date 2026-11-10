@@ -1,3 +1,27 @@
+# AMUREK · Sitio web — versión 3 (v37)
+
+Base: la primera entrega de v3 (la que gustó). Los cambios de v36 (botón para pausar animaciones, sección «Nuestra marca», bloques que suben) se retiraron; siguen en el historial de git.
+
+## v37 — qué cambió sobre la primera entrega
+- **Animaciones siempre activas**: el sitio ya no lee el ajuste «reducir movimiento» del dispositivo ni guarda una preferencia para pausarlas. No hay botón ni regla que las apague. (Solo queda `?still` en la dirección, para tomar capturas.)
+- **Fluidez**: sin desenfoques de fondo (`backdrop-filter`); los títulos aparecen sin desenfoque por palabra; los carruseles difuminan sus bordes con una franja de color en vez de una máscara; las animaciones en bucle de una sección se detienen cuando la sección sale de pantalla (`.is-off`); las escenas con scroll (proyectos, equipo, showreel) solo calculan cuando están cerca de la pantalla; la barra no recalcula si no cambia; imágenes con `decoding="async"`.
+- **Nosotros**: «Nuestro Estudio» en texto oscuro normal (sin letras animadas). La animación del logotipo ocupa todo el ancho de su sección, se reproduce sola al pasar por ahí, en bucle y sin controles.
+- **Proyectos**: se quitó el enlace al portafolio personal.
+- **Inicio → testimonios**: vuelve el carrusel (con sus cifras dentro del panel), con las medidas y colores del sistema.
+- **Inicio → equipo**: la misma animación de Nosotros (los retratos flotan alrededor del título y se acomodan en fila), con el botón «Conoce al equipo».
+- **Barra del inicio**: vuelve a medir cuando terminan de cargar las tipografías, para que el logotipo llegue a su lugar sin cruzarse con la portada.
+- **Se conservan** las correcciones de tablet y celular: pestaña activa de Servicios legible, tarjetas de Proyectos que no tapan el texto, «©2026 / Showreel» sin cortarse, sin scroll lateral.
+
+## Material de referencia (`assets/ref/`)
+Ahora **sí está en el repositorio**, por pedido expreso. Son imágenes y videos de las plantillas Alture y Nordic (Webflow): sirven para visualizar y no son de AMUREK. Hay que reemplazarlos por material propio antes de publicar la web.
+
+## Uso
+- Editar: `build.mjs` y `src/*.html`; luego `node build.mjs`.
+- Ver: `node serve.mjs 5190` → http://localhost:5190
+
+---
+Historial anterior:
+
 # AMUREK · Sitio web — versión 3 (la versión anterior, mejorada)
 
 Copia de `../amurek-sitio-web/` (esa carpeta no se toca) con el material de referencia y tres bloques del inicio rediseñados.
@@ -12,19 +36,6 @@ Imágenes y videos tomados de las plantillas Alture y Nordic, con los mismos nom
 - **Portada**: en lugar de «Sigue bajando», una tarjeta «Habla con Richard · Director creativo» que lleva a Contacto (`.hcard`). Solo en escritorio.
 - **Testimonios** (`TESTI` en `build.mjs`, `.tst`): un testimonio destacado sobre su retrato y dos más al lado. Flechas para pasar y contador 01 / 06; avanza solo mientras está a la vista y se detiene con el puntero encima. Antes: una fila de tarjetas pequeñas en movimiento.
 - **Cifras** (`.nums`): bloque propio después de los testimonios, con numerales grandes sobre la página y una nota al pie. Antes: una fila pequeña dentro del panel de testimonios.
-
-## v36 — animaciones que funcionan en cualquier dispositivo, logotipo animado en Nosotros
-Causa encontrada: con el ajuste «reducir movimiento» del dispositivo (en Windows: «Efectos de animación» desactivado), el sitio apagaba las animaciones y varias secciones quedaban rotas: el showreel no crecía (un video pequeño en una sección vacía de 2250 px), el video del logotipo en Nosotros quedaba como imagen fija y el equipo ocupaba tres pantallas fijas sin que nada cambiara. Tampoco había forma de volver a activarlas.
-- **Una sola regla de movimiento**: la clase `.motion-off` en `<html>` (arranque en `HEAD` de `build.mjs`; `reduce` en `main.js`). La elección de la persona (`localStorage: amurek-motion = on | off`) manda sobre el ajuste del sistema. Ya no hay reglas `@media (prefers-reduced-motion)` sueltas en `styles.css`: todas pasaron a `.motion-off`.
-- **Botón «Pausar / Activar animaciones»** en el pie (`#motionToggle`) y **aviso** discreto (`.mnote`) cuando están en pausa solo por el ajuste del dispositivo. Al cambiar, la página se recarga en el modo elegido.
-- **Modo sin animaciones completo**: showreel como título + video grande (sin escena fija); equipo de Nosotros como fila normal; títulos y bloques visibles.
-- **Nosotros → «Nuestra marca»** (`BRAND` en `build.mjs`, `.brand`): la animación del logotipo va en una tarjeta, con el texto y la paleta real al lado. Botón «Ver animación» cuando el video está detenido. «Así trabajamos» queda con el título y las cuatro etapas.
-- **Bloques que suben al entrar en pantalla** (`.rise`, lista `RISE` en `main.js`): antes solo se revelaban los títulos. Solo se aplica a lo que está por debajo de la primera pantalla.
-- **Showreel en celular**: «©2026» y «Showreel» ya caben a los lados del video (antes se cortaban).
-- **Proceso**: las escenas (chat y brief) terminan de aparecer antes de que el scroll pase a la siguiente etapa.
-- **Tablet**: sin scroll lateral (el ® del título sobresalía 6 px).
-- **Tablet y celular (≤900 px)**: en Servicios el texto de la pestaña activa se leía crema sobre crema; en Proyectos la tarjeta que sube desde abajo pasaba por encima del texto del proyecto. Ambos corregidos al final de `styles.css` («v36.1»).
-- Verificado en navegador: recorrido en vivo de las cinco páginas en 1440 y 390 px, con y sin «reducir movimiento»; ocho páginas × siete anchos sin desbordes ni errores de script.
 
 ## Uso
 - Editar: `build.mjs` y `src/index.html`; luego `node build.mjs`.
