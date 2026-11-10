@@ -1,0 +1,11 @@
+# Archivos temporales y de trabajo
+_*.txt
+styles.pruned.css
+*.backup.*
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Repositorio público: el material de referencia (fotos y videos de otros autores) y la fuente Switzer no se publican
+assets/ref/
+assets/fonts/switzer-*
