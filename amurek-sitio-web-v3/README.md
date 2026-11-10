@@ -5,8 +5,8 @@ Guía visual: Alture y Nordic (Webflow). Una sola tipografía, mismo color y mis
 
 ## Material de referencia (`assets/ref/`)
 Imágenes y videos tomados de las plantillas Alture y Nordic, con los mismos nombres de archivo que el sitio ya usaba. Son **solo para visualizar**: no son de AMUREK y hay que reemplazarlos por material propio antes de publicar la web.
+- **No están en el repositorio** (es público y `.gitignore` excluye `assets/ref/`). Para verlos en tu equipo, copia dentro de esta carpeta el `assets/ref/` que ya tienes y añade los seis archivos nuevos de los testimonios: `t-retrato.jpg` y `c-1.jpg` … `c-5.jpg` (van en el .zip entregado junto con esta versión).
 - Imágenes reducidas a 1600 px como máximo; `trailer-a.mp4` recortado a 14 s.
-- Nuevos para los testimonios: `t-retrato.jpg` y `c-1.jpg` … `c-5.jpg`.
 
 ## Cambios en el inicio (capa «v35» al final de `styles.css`)
 - **Portada**: en lugar de «Sigue bajando», una tarjeta «Habla con Richard · Director creativo» que lleva a Contacto (`.hcard`). Solo en escritorio.
