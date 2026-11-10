@@ -522,7 +522,7 @@ const wordLetters = (w, base = 0) => w.split("").map((c, i) => `<i style="--i:${
 const STUDIO_HEAD = `<section class="studio wrap" id="top">
   <h1 class="sr">Nosotros: el estudio de AMUREK, agencia creativa en Ecuador.</h1>
   <div class="studio__row" aria-hidden="true"><span class="studio__w">${wordLetters("Nuestro")}</span><figure class="studio__img"><img src="${R}n-studio.jpg" alt=""></figure><span class="studio__w">${wordLetters("Estudio", 7)}</span></div>
-  <div class="studio__meta"><span>Agencia creativa</span><span>Ecuador</span><span>Sistema: AMUREK.estudio</span></div>
+  <div class="studio__meta"><span>Agencia creativa</span><span>Ecuador</span><span>Cinco servicios, un equipo</span></div>
 </section>`;
 const ABOUT_GLASS = `<section class="pad aboutg">
   <div class="panel aboutg__panel">
@@ -536,7 +536,7 @@ const ABOUT_GLASS = `<section class="pad aboutg">
 const tmCard = (m) => `<figure class="tm__c"><img src="${m.img}" alt="${m.n === "Nombre Apellido" ? "" : "Retrato de " + m.n}" loading="lazy" style="object-position:${m.pos}"><figcaption><b>${m.n}</b><span>${m.r}</span></figcaption></figure>`;
 const TEAM_PIN = `<section class="tm" id="equipo" data-placeholder="equipo: salvo Richard Castro, personas de referencia">
   <div class="tm__sticky">
-    <div class="tm__a"><p class="tm__k">Quiénes somos</p><h2 class="h1 tm__h">Un equipo<br>de expertos</h2></div>
+    <div class="tm__a"><p class="tm__k">El equipo</p><h2 class="h1 tm__h">Un equipo<br>de expertos</h2></div>
     <div class="tm__b">
       <div class="tm__txt"><h3 class="tm__name">Cuatro personas, una sola visión.</h3><p class="tm__bio">Quienes dirigen AMUREK lo hacen en conjunto: cada decisión se toma entre las cuatro, con el mismo peso.</p></div>
       <div class="tm__row">${TEAM.map(tmCard).join("")}</div>
@@ -546,12 +546,10 @@ const TEAM_PIN = `<section class="tm" id="equipo" data-placeholder="equipo: salv
 const MEMBERS = "";
 const APPROACH = `<section class="sec" id="enfoque">
   <div class="wrap appr">
-    <div class="appr__head"><p class="tm__k">Enfoque</p><h2 class="h1 rv">Así trabajamos.</h2></div>
+    <div class="rhead appr__head"><h2 class="h2 rv">Así trabajamos.</h2><p>Cuatro etapas, un mismo equipo: de la primera conversación al lanzamiento.</p></div>
     <figure class="appr__vid"><video muted loop playsinline preload="none" data-autoplay poster="assets/identidad-poster.jpg" aria-hidden="true"><source src="assets/amurek-identidad.mp4" type="video/mp4"></video></figure>
     <ol class="appr__steps">
-      <li><b>Briefing</b><p>Nos cuentas qué quieres lograr. Escuchamos, hacemos preguntas y dejamos por escrito el objetivo, el público y el mensaje.</p></li>
-      <li><b>Acción</b><p>Diseñamos, producimos y desarrollamos por etapas. Ves avances y ajustamos contigo antes de seguir.</p></li>
-      <li><b>Resultados</b><p>Entregamos todo listo para usar, medimos lo que funciona y definimos juntos los siguientes pasos.</p></li>
+      ${proc.map(([t, d], i) => `<li><span class="appr__n">${pad2(i + 1)}</span><b>${t}</b><p>${d}</p></li>`).join("\n      ")}
     </ol>
   </div>
 </section>`;
@@ -608,10 +606,12 @@ const FAQ = `<section class="sec" id="faq">
 </section>`;
 
 // ENCABEZADO DE PÁGINAS INTERNAS
-const PHERO = ({ a, b = "", p }) => `<section class="phero wrap" id="top">
+const PHERO = ({ a, b = "", p, k = "" }) => `<section class="phero wrap" id="top">
   <div class="phero__row"><h1 class="giant">${a}${b ? " " + b : ""}</h1></div>
-  <div class="phero__sub"><p class="h3">${p}</p></div>
+  <div class="phero__sub">${k ? `<p class="phero__k"><i></i>${k}</p>` : ""}<p class="h3">${p}</p></div>
 </section>`;
+// índice de servicios: mismas pastillas que los filtros de Proyectos
+const SVC_INDEX = SERVICES.map((s) => `<a href="#${s.id}">${s.short}</a>`).join("");
 
 // SERVICIOS — detalle
 const SVC_DETAIL = SERVICES.map((s) => `<article class="sdet" id="${s.id}">
@@ -640,9 +640,9 @@ const FILTER_BTNS = [["todo", "Todo"], ...SERVICES.map((s) => [s.id, s.short])].
    ============================================================ */
 const blocks = {
   HERO, STATEMENT, WORK, SERVICES_PANEL, PROCESS, PROCESS_OLD, SHOWREEL, REELS, TESTI, TEAM_HOME, STUDIO_HEAD, ABOUT_GLASS, TEAM_PIN, MEMBERS, APPROACH, BRAND_BAND, PLANS, FAQ, CTA, FORM,
-  SVC_DETAIL, GRID, FILTER_BTNS, AR, AR_UR, PLAY, AVATAR, WORDMARK, ISO,
-  PHERO_SERVICIOS: PHERO({ a: "Servicios", p: "Cinco servicios que trabajan juntos. Contrata uno solo o arma el equipo completo para tu proyecto." }),
-  PHERO_PROYECTOS: PHERO({ a: "Proyectos", b: "seleccionados", p: "Cada proyecto empieza como una idea suelta. Aquí está lo que pasa cuando encuentra su forma." }),
+  SVC_DETAIL, SVC_INDEX, GRID, FILTER_BTNS, CHECK, AR, AR_UR, PLAY, AVATAR, WORDMARK, ISO,
+  PHERO_SERVICIOS: PHERO({ a: "Servicios", k: `${pad2(SERVICES.length)} servicios · un equipo`, p: "Cinco servicios que trabajan juntos. Contrata uno solo o arma el equipo completo para tu proyecto." }),
+  PHERO_PROYECTOS: PHERO({ a: "Proyectos", b: "seleccionados", k: `${pad2(PROJECTS.length)} proyectos · ${PROJECTS[0].year}`, p: "Cada proyecto empieza como una idea suelta. Aquí está lo que pasa cuando encuentra su forma." }),
   PHERO_CONTACTO: PHERO({ a: "Contacto", p: "¿Tienes una idea? Cuéntanos qué quieres lograr y te respondemos con una propuesta clara." }),
 };
 const srcDir = path.join(here, "src");

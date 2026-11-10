@@ -1821,7 +1821,7 @@ main:has(.cta3)+.foot7{margin-top:0}
    v31 — SISTEMA DE COHERENCIA DEL INICIO (auditoría medida con script, nov 2026)
    Un solo valor por decisión: radios (panel / tarjeta / tarjeta grande), aire entre secciones, borde de contenido,
    relleno de paneles, separaciones, escala tipográfica de 9 niveles, un solo negro y tres niveles de crema sobre oscuro.
-   Todo va acotado a [data-page=inicio], salvo el pie (componente compartido).
+   Todo va acotado a [data-page], salvo el pie (componente compartido).
    ============================================================ */
 :root{
   --edge-pad:clamp(16px,3vw,44px);            /* relleno lateral de los paneles */
@@ -1846,63 +1846,63 @@ main:has(.cta3)+.foot7{margin-top:0}
 }
 
 /* ---------- aire entre secciones y borde de contenido ---------- */
-[data-page=inicio] main>section{margin-block:var(--sec-gap)}
-[data-page=inicio] main>section.hero4{margin-top:0}
-[data-page=inicio] main>section.sec,[data-page=inicio] main>section.pwork{padding-block:0}
-[data-page=inicio] main .wrap{max-width:none;padding-inline:var(--edge)}
-[data-page=inicio] .pwh__sticky{max-width:none;padding-inline:var(--edge)}
-[data-page=inicio] .pros{padding-inline:0}
-[data-page=inicio] .pros__pin{padding-inline:8px}
+[data-page] main>section{margin-block:var(--sec-gap)}
+[data-page] main>section.hero4{margin-top:0}
+[data-page] main>section.sec,[data-page] main>section.pwork{padding-block:0}
+[data-page] main .wrap{max-width:none;padding-inline:var(--edge)}
+[data-page] .pwh__sticky{max-width:none;padding-inline:var(--edge)}
+[data-page] .pros{padding-inline:0}
+[data-page] .pros__pin{padding-inline:8px}
 
 /* ---------- paneles: mismo relleno ---------- */
-[data-page=inicio] .statement__panel,[data-page=inicio] .svc4,[data-page=inicio] .tq5,[data-page=inicio] .tk,[data-page=inicio] .plans6,[data-page=inicio] .cta3__panel{padding-block:var(--panel-py)}
-[data-page=inicio] .svc4,[data-page=inicio] .tk,[data-page=inicio] .plans6,[data-page=inicio] .cta3__panel{padding-inline:var(--edge-pad)}
-[data-page=inicio] .statement__head,[data-page=inicio] .tq5__head{padding-inline:var(--edge-pad)}
-[data-page=inicio] .tq5__view,[data-page=inicio] .tq5__stats{margin-inline:var(--edge-pad)}
+[data-page] .statement__panel,[data-page] .svc4,[data-page] .tq5,[data-page] .tk,[data-page] .plans6,[data-page] .cta3__panel{padding-block:var(--panel-py)}
+[data-page] .svc4,[data-page] .tk,[data-page] .plans6,[data-page] .cta3__panel{padding-inline:var(--edge-pad)}
+[data-page] .statement__head,[data-page] .tq5__head{padding-inline:var(--edge-pad)}
+[data-page] .tq5__view,[data-page] .tq5__stats{margin-inline:var(--edge-pad)}
 
 /* ---------- separaciones ---------- */
-[data-page=inicio] .pros__row{--g:var(--card-gap)}
-[data-page=inicio] .reels4,[data-page=inicio] .tq5__row,[data-page=inicio] .plans6__grid,[data-page=inicio] .tk__grid{gap:var(--card-gap)}
-[data-page=inicio] .rhead,[data-page=inicio] .svc4__head{margin-bottom:var(--head-gap)}
-[data-page=inicio] .tk__grid,[data-page=inicio] .plans6__grid,[data-page=inicio] .tq5__view,[data-page=inicio] .statement__panel .strip{margin-top:var(--head-gap)}
+[data-page] .pros__row{--g:var(--card-gap)}
+[data-page] .reels4,[data-page] .tq5__row,[data-page] .plans6__grid,[data-page] .tk__grid{gap:var(--card-gap)}
+[data-page] .rhead,[data-page] .svc4__head{margin-bottom:var(--head-gap)}
+[data-page] .tk__grid,[data-page] .plans6__grid,[data-page] .tq5__view,[data-page] .statement__panel .strip{margin-top:var(--head-gap)}
 
 /* ---------- radios: panel (--sello), tarjeta y tarjeta grande ---------- */
-[data-page=inicio] .pwh__c,[data-page=inicio] .sv__p,[data-page=inicio] .reel__box{border-radius:var(--r-card-l)}
-[data-page=inicio] .pl6,[data-page=inicio] .plans6__meet,[data-page=inicio] .tk__c figure,[data-page=inicio] .rcard,[data-page=inicio] .tq5__c,[data-page=inicio] .scard figure,[data-page=inicio] .qa3,[data-page=inicio] .faq3__card,[data-page=inicio] .mos figure,[data-page=inicio] .brief__sheet{border-radius:var(--r-card)}
-[data-page=inicio] .brief__idea{border-radius:8px}
-[data-page=inicio] .reel__box{background:var(--noche)}
-[data-page=inicio] .reel__box video{transform:scale(1.06)}
+[data-page] .pwh__c,[data-page] .sv__p,[data-page] .reel__box{border-radius:var(--r-card-l)}
+[data-page] .pl6,[data-page] .plans6__meet,[data-page] .tk__c figure,[data-page] .rcard,[data-page] .tq5__c,[data-page] .scard figure,[data-page] .qa3,[data-page] .faq3__card,[data-page] .mos figure,[data-page] .brief__sheet{border-radius:var(--r-card)}
+[data-page] .brief__idea{border-radius:8px}
+[data-page] .reel__box{background:var(--noche)}
+[data-page] .reel__box video{transform:scale(1.06)}
 
 /* ---------- superficies claras sobre la página: contorno fino para que el borde se lea ---------- */
-[data-page=inicio] .statement__panel,[data-page=inicio] .tk,[data-page=inicio] .qa3,[data-page=inicio] .faq3__card{outline:1px solid var(--line-l);outline-offset:-1px}
+[data-page] .statement__panel,[data-page] .tk,[data-page] .qa3,[data-page] .faq3__card{outline:1px solid var(--line-l);outline-offset:-1px}
 
 /* ---------- color: un solo negro de base y tarjetas de cristal dentro de paneles oscuros ---------- */
-[data-page=inicio] .svc4,[data-page=inicio] .tq5,[data-page=inicio] .plans6,[data-page=inicio] .cta3__panel,[data-page=inicio] .pros__t[data-step="1"],[data-page=inicio] .pros__t[data-step="3"]{background-color:var(--noche)}
-[data-page=inicio] .sv__p{background:rgba(245,243,238,.06);border:1px solid rgba(245,243,238,.14)}
-[data-page=inicio] :is(.hero4__p,.svc4__head p,.sv__d,.sv__i li,.plans6__meet p,.cta3__in>p,.cta3__list li,.pros__txt p,.tq5__head p,.tq5__stats p,.mos figcaption span){color:var(--on-2)}
-[data-page=inicio] :is(.hero4__k,.hero4__hint,.sv__t,.pl6__v em,.pl6__f p,.pl6__sep,.tq5__c figcaption span,.sv__t span){color:var(--on-3)}
-[data-page=inicio] :is(.sv__t.is-on,.sv__t:hover,.sv__t[aria-selected=true]){color:var(--on-1)}
+[data-page] .svc4,[data-page] .tq5,[data-page] .plans6,[data-page] .cta3__panel,[data-page] .pros__t[data-step="1"],[data-page] .pros__t[data-step="3"]{background-color:var(--noche)}
+[data-page] .sv__p{background:rgba(245,243,238,.06);border:1px solid rgba(245,243,238,.14)}
+[data-page] :is(.hero4__p,.svc4__head p,.sv__d,.sv__i li,.plans6__meet p,.cta3__in>p,.cta3__list li,.pros__txt p,.tq5__head p,.tq5__stats p,.mos figcaption span){color:var(--on-2)}
+[data-page] :is(.hero4__k,.hero4__hint,.sv__t,.pl6__v em,.pl6__f p,.pl6__sep,.tq5__c figcaption span,.sv__t span){color:var(--on-3)}
+[data-page] :is(.sv__t.is-on,.sv__t:hover,.sv__t[aria-selected=true]){color:var(--on-1)}
 
 /* ---------- escala tipográfica ---------- */
-[data-page=inicio] .cta3 .h1{font-size:var(--t-display);line-height:.96;letter-spacing:-.045em}
-[data-page=inicio] :is(.work__head .h1,.svc4__head .h1,.tq5__head .h1,.tk__head .h1,.faq3 .h1,.rhead .h2,.statement__h){font-size:var(--t-h2);line-height:.97;letter-spacing:-.04em}
-[data-page=inicio] :is(.pwh__t,.pros__txt h3,.sv__t b,.tq5__n,.reel__lead){font-size:var(--t-h3);line-height:1;letter-spacing:-.04em}
-[data-page=inicio] :is(.sv__x h3,.plans6__meet h3){font-size:var(--t-h4);line-height:1.1;letter-spacing:-.035em}
-[data-page=inicio] :is(.pl6__n,.tk__n b,.rcard__cap b,.scard__t b){font-size:var(--t-card);font-weight:600;line-height:1.15;letter-spacing:-.02em}
-[data-page=inicio] :is(.hero4__p,.cta3__in>p,.statement__p,.pwh__s,.work__lead,.rhead>p,.sv__d,.pros__txt p,.svc4__head p,.tq5__head p,.tk__head p){font-size:var(--t-lead);line-height:1.55}
-[data-page=inicio] :is(.qa3 summary,.qa3 p,.sv__i li,.tq5__c blockquote,.tq5__stats p,.pl6__f b){font-size:var(--t-body)}
-[data-page=inicio] .tq5__c blockquote{line-height:1.45}
-[data-page=inicio] :is(.tk__c figcaption p,.rcard__cap span,.tq5__c figcaption span,.pl6__f p,.pl6__v em,.faq3__sub){font-size:var(--t-small);line-height:1.5}
-[data-page=inicio] .faq3__sub{font-family:var(--f-body);font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink-2)}
-[data-page=inicio] :is(.faq3__card b,.rcard__top b){font-weight:600}
+[data-page] .cta3 .h1{font-size:var(--t-display);line-height:.96;letter-spacing:-.045em}
+[data-page] :is(.work__head .h1,.svc4__head .h1,.tq5__head .h1,.tk__head .h1,.faq3 .h1,.rhead .h2,.statement__h){font-size:var(--t-h2);line-height:.97;letter-spacing:-.04em}
+[data-page] :is(.pwh__t,.pros__txt h3,.sv__t b,.tq5__n,.reel__lead){font-size:var(--t-h3);line-height:1;letter-spacing:-.04em}
+[data-page] :is(.sv__x h3,.plans6__meet h3){font-size:var(--t-h4);line-height:1.1;letter-spacing:-.035em}
+[data-page] :is(.pl6__n,.tk__n b,.rcard__cap b,.scard__t b){font-size:var(--t-card);font-weight:600;line-height:1.15;letter-spacing:-.02em}
+[data-page] :is(.hero4__p,.cta3__in>p,.statement__p,.pwh__s,.work__lead,.rhead>p,.sv__d,.pros__txt p,.svc4__head p,.tq5__head p,.tk__head p){font-size:var(--t-lead);line-height:1.55}
+[data-page] :is(.qa3 summary,.qa3 p,.sv__i li,.tq5__c blockquote,.tq5__stats p,.pl6__f b){font-size:var(--t-body)}
+[data-page] .tq5__c blockquote{line-height:1.45}
+[data-page] :is(.tk__c figcaption p,.rcard__cap span,.tq5__c figcaption span,.pl6__f p,.pl6__v em,.faq3__sub){font-size:var(--t-small);line-height:1.5}
+[data-page] .faq3__sub{font-family:var(--f-body);font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink-2)}
+[data-page] :is(.faq3__card b,.rcard__top b){font-weight:600}
 /* etiquetas en mono: un solo estilo, y solo donde dan un dato */
-[data-page=inicio] :is(.hero4__k,.hero4__hint,.pwh__k,.sv__t span,.tk__n span){font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
-[data-page=inicio] .plans6__k{display:none}
+[data-page] :is(.hero4__k,.hero4__hint,.pwh__k,.sv__t span,.tk__n span){font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+[data-page] .plans6__k{display:none}
 
 /* ---------- detalles ---------- */
-[data-page=inicio] .qa3 .num{display:none}
-[data-page=inicio] .qa3 p{padding-left:1.4rem}
-[data-page=inicio] .faq3__card .btn{align-self:start}
+[data-page] .qa3 .num{display:none}
+[data-page] .qa3 p{padding-left:1.4rem}
+[data-page] .faq3__card .btn{align-self:start}
 
 /* ---------- pie (compartido por todas las páginas): borde de contenido, radio de panel y campo de correo que ya no se sale en celular ---------- */
 .foot7{border-radius:var(--r-xl) var(--r-xl) 0 0}
@@ -1915,15 +1915,15 @@ main:has(.cta3)+.foot7{margin-top:0}
 :is(.foot7__note,.foot7__loc,.foot7__c){color:var(--on-3)}
 
 /* v31 ajustes tras revisión visual: titular de cada plan en el nivel de título de panel; beneficios con un solo tamaño por línea; formulario del pie que se encoge en celular */
-[data-page=inicio] .pl6__v span{font-size:var(--t-h3);line-height:1;letter-spacing:-.04em}
-[data-page=inicio] .pl6__f p{font-size:var(--t-body)}
-[data-page=inicio] .pl6__f b{font-size:inherit}
+[data-page] .pl6__v span{font-size:var(--t-h3);line-height:1;letter-spacing:-.04em}
+[data-page] .pl6__f p{font-size:var(--t-body)}
+[data-page] .pl6__f b{font-size:inherit}
 .foot7__form{grid-template-columns:minmax(0,1fr)}
 .foot7__form>*,.foot7__fld{min-width:0}
 .foot7__fld input{flex:1 1 0;width:0}
-[data-page=inicio] main>section.hero4{margin-bottom:calc(var(--sec-gap) - 8px)}
+[data-page] main>section.hero4{margin-bottom:calc(var(--sec-gap) - 8px)}
 /* los videos de referencia traen franjas negras: se recortan con una ampliación mínima para que ninguna tarjeta muestre un borde oscuro */
-[data-page=inicio] :is(.rcard video,.mos video){scale:1.06}
+[data-page] :is(.rcard video,.mos video){scale:1.06}
 
 /* hero: la palabra que cambia se alinea con la línea base del resto del titular (antes quedaba 8 px más arriba) */
 .hs__word{vertical-align:baseline}
@@ -1934,7 +1934,7 @@ main:has(.cta3)+.foot7{margin-top:0}
    · Esquinas simétricas en paneles y tarjetas de texto; la esquina del isotipo queda solo en fotos y videos
    ============================================================ */
 :root{--inset:clamp(8px,.85vw,16px);--maxc:1440px;--r-text:14px}
-[data-page=inicio]{
+[data-page]{
   --edge:max(calc(var(--inset) + var(--edge-pad)),calc((100vw - var(--maxc)) / 2));  /* borde de contenido */
   --pad-x:calc(var(--edge) - var(--inset));                                         /* relleno lateral dentro de los paneles */
   --sello:var(--r-xl);                                                               /* paneles: las cuatro esquinas iguales */
@@ -1942,30 +1942,188 @@ main:has(.cta3)+.foot7{margin-top:0}
 }
 
 /* ---------- margen exterior de paneles y fondos ---------- */
-[data-page=inicio] .pad{padding-inline:var(--inset)}
-[data-page=inicio] main>section.hero4{padding-inline:var(--inset);padding-bottom:var(--inset);margin-bottom:calc(var(--sec-gap) - var(--inset))}
-[data-page=inicio] .pros__pin{padding-inline:var(--inset)}
-[data-page=inicio] .foot7{margin-inline:var(--inset)}
+[data-page] .pad{padding-inline:var(--inset)}
+[data-page] main>section.hero4{padding-inline:var(--inset);padding-bottom:var(--inset);margin-bottom:calc(var(--sec-gap) - var(--inset))}
+[data-page] .pros__pin{padding-inline:var(--inset)}
+[data-page] .foot7{margin-inline:var(--inset)}
 
 /* ---------- relleno lateral de los paneles = borde de contenido ---------- */
-[data-page=inicio] :is(.svc4,.tk,.plans6,.cta3__panel){padding-inline:var(--pad-x)}
-[data-page=inicio] :is(.statement__head,.tq5__head){padding-inline:var(--pad-x)}
-[data-page=inicio] :is(.tq5__view,.tq5__stats){margin-inline:var(--pad-x)}
-[data-page=inicio] .foot7__in{max-width:none;padding-inline:var(--pad-x)}
+[data-page] :is(.svc4,.tk,.plans6,.cta3__panel){padding-inline:var(--pad-x)}
+[data-page] :is(.statement__head,.tq5__head){padding-inline:var(--pad-x)}
+[data-page] :is(.tq5__view,.tq5__stats){margin-inline:var(--pad-x)}
+[data-page] .foot7__in{max-width:none;padding-inline:var(--pad-x)}
 
 /* ---------- esquinas: texto simétrico, imagen con la esquina del isotipo ---------- */
-[data-page=inicio] :is(.tq5__c,.pl6,.plans6__meet,.qa3,.faq3__card,.brief__sheet,.wa){border-radius:var(--r-text)}
-[data-page=inicio] :is(.rcard,.tk__c figure,.scard figure,.mos figure){border-radius:var(--r-card)}
-[data-page=inicio] :is(.pwh__c,.sv__p,.reel__box){border-radius:var(--r-card-l)}
+[data-page] :is(.tq5__c,.pl6,.plans6__meet,.qa3,.faq3__card,.brief__sheet,.wa){border-radius:var(--r-text)}
+[data-page] :is(.rcard,.tk__c figure,.scard figure,.mos figure){border-radius:var(--r-card)}
+[data-page] :is(.pwh__c,.sv__p,.reel__box){border-radius:var(--r-card-l)}
 
 /* ---------- «Ideas con forma»: todas las tarjetas del mismo tamaño ---------- */
-[data-page=inicio] .scard figure{aspect-ratio:4/5}
-[data-page=inicio] .strip__set{align-items:flex-start}
+[data-page] .scard figure{aspect-ratio:4/5}
+[data-page] .strip__set{align-items:flex-start}
 
 /* ---------- barra: el fondo y su línea aparecen solo cuando el logo ya llegó ---------- */
 .nav-morph .nav::before{opacity:clamp(0,calc((var(--np,0) - .85) * 6.67),1)}
 /* un solo borde izquierdo en todo el inicio: barra, título gigante y texto del hero se alinean con el contenido */
-[data-page=inicio] .nav__in{max-width:none;padding-inline:var(--edge)}
-[data-page=inicio] .ht{max-width:none;padding-inline:var(--pad-x)}
-[data-page=inicio] .hero4__in{padding-inline:var(--pad-x)}
-[data-page=inicio] .hero4__hint{left:auto;right:var(--pad-x)}
+[data-page] .nav__in{max-width:none;padding-inline:var(--edge)}
+[data-page] .ht{max-width:none;padding-inline:var(--pad-x)}
+[data-page] .hero4__in{padding-inline:var(--pad-x)}
+[data-page] .hero4__hint{left:auto;right:var(--pad-x)}
+
+/* ============================================================
+   v34 — UN SOLO SISTEMA EN TODO EL SITIO
+   El sistema de coherencia del inicio (v31–v33) ahora rige todas las páginas: los selectores [data-page=inicio] pasaron a [data-page].
+   Esta capa lleva a ese sistema los componentes propios de las páginas internas (encabezados, servicios, proyectos, nosotros,
+   contacto y legales): mismo borde de contenido, misma escala tipográfica, mismas esquinas, mismo aire y un solo negro.
+   ============================================================ */
+:root{--t-page:clamp(3rem,8.2vw,7.4rem)}   /* título de página interna: 118 px a 1440 */
+
+/* ---------- encabezado de página: título, línea y debajo etiqueta (izquierda) + frase (derecha), como los encabezados del inicio ---------- */
+[data-page] main>:first-child{margin-top:0}
+[data-page] :is(.phero,.studio,.connect){padding-top:calc(var(--navh) + clamp(28px,4.4vw,64px));padding-bottom:0}
+[data-page] .phero .giant{font-size:var(--t-page);line-height:.92;letter-spacing:-.045em;text-wrap:balance}
+[data-page] .phero__sub{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem 3rem;align-items:start;margin-top:clamp(24px,3vw,40px);padding-top:1.25rem;border-top:1px solid var(--line)}
+.phero__k{display:flex;align-items:center;gap:.6rem;margin:0;padding-top:.5rem;font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.phero__k i{flex:none;width:.5rem;height:.5rem;border-radius:50% 50% 1px 50%;background:var(--vino)}
+[data-page] .phero__sub .h3{grid-column:2;justify-self:end;width:100%;max-width:27ch;font:500 var(--t-h4)/1.15 var(--f-display);letter-spacing:-.035em;color:var(--ink)}
+@media (max-width:900px){
+  [data-page] .phero__sub{grid-template-columns:1fr}
+  [data-page] .phero__sub .h3{grid-column:1;justify-self:start}
+  .phero__k{padding-top:0}
+}
+
+/* ---------- encabezados de sección (título a la izquierda, frase a la derecha) ---------- */
+[data-page] .rhead>p{font-size:var(--t-lead);line-height:1.55;color:var(--ink-2)}
+[data-page] :is(.values__head,.appr__head) .h2{max-width:none}
+[data-page] .values__head{grid-template-columns:1fr 1fr;margin-bottom:var(--head-gap)}
+@media (max-width:900px){[data-page] .values__head{grid-template-columns:1fr}}
+
+/* ---------- pastillas: filtros de Proyectos, índice de Servicios y opciones del formulario ---------- */
+[data-page] .filters{gap:.5rem;margin-bottom:var(--head-gap)}
+.filters a{display:inline-flex;align-items:center;min-height:36px;padding:.6rem 1rem;border-radius:999px;border:1px solid var(--line);font-weight:500;transition:background-color .25s,color .25s,border-color .25s}
+.filters a:hover{border-color:var(--ink)}
+[data-page] :is(.filters button,.filters a,.chips span){font-size:.875rem;line-height:1}
+
+/* ---------- SERVICIOS: ficha (texto) + imagen, mitades iguales ---------- */
+[data-page] .sdets{gap:var(--card-gap)}
+[data-page] .sdet{gap:var(--card-gap)}
+@media (min-width:901px){[data-page] :is(.sdet,.sdet:nth-child(even)){grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+[data-page] .sdet__card{padding:clamp(24px,3.4vw,48px);border-radius:var(--r-xl);outline:1px solid var(--line-l);outline-offset:-1px}
+[data-page] .sdet__img{border-radius:var(--r-card-l);background-color:var(--noche)}
+@media (min-width:901px){[data-page] .sdet__img{min-height:clamp(420px,40vw,580px)}}
+[data-page] .sdet .h2{margin:0 0 1rem;font-size:var(--t-h3);line-height:1;letter-spacing:-.04em}
+[data-page] .sdet__pitch{max-width:44ch;font-size:var(--t-lead);line-height:1.55}
+[data-page] .sdet__cols{margin-top:clamp(24px,2.6vw,36px)}
+[data-page] .sdet__cols li{padding:.7rem 0;font-size:var(--t-small);line-height:1.35}
+[data-page] :is(.sdet__h,.sdet__foot p span){font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+[data-page] .sdet__h{margin-bottom:.4rem}
+[data-page] .sdet__foot{padding-top:clamp(24px,2.6vw,36px)}
+[data-page] .sdet__foot p{gap:.5rem;font-size:var(--t-body);line-height:1.4}
+[data-page] .sdet__img .tags{inset:auto 1rem 1rem}
+[data-page] .tags li{font-size:.8rem}
+
+/* ---------- PROYECTOS: rejilla ---------- */
+[data-page] .grid{gap:var(--head-gap) var(--card-gap)}
+[data-page] .gcard__media{border-radius:var(--r-card-l)}
+[data-page] .gcard__cap{padding:1rem 0 0}
+[data-page] .gcard__cap b{font-size:var(--t-h4);font-weight:600;line-height:1.1;letter-spacing:-.035em}
+[data-page] .gcard__cap>span:nth-child(2){font-size:var(--t-body);color:var(--ink-2)}
+[data-page] .gcard__m{padding-top:.6rem;font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+/* la tarjeta «Próximo proyecto» había perdido su fondo (texto crema sobre crema): vuelve a ser un panel oscuro de marca */
+[data-page] .gcard--cta .gcard__media{background:radial-gradient(70% 90% at 100% 0%,rgba(122,51,80,.55),transparent 62%),radial-gradient(60% 70% at 0% 100%,rgba(84,29,53,.6),transparent 60%),var(--noche);gap:1.4rem}
+[data-page] .gcard--cta .gcard__k{font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--on-3)}
+[data-page] .gcard--cta b{font-size:var(--t-h3);line-height:1;letter-spacing:-.04em;color:var(--on-1)}
+[data-page] .more{margin-top:var(--head-gap);padding-top:1.25rem;font-size:var(--t-body)}
+
+/* ---------- NOSOTROS ---------- */
+@media (min-width:901px){[data-page] .studio__w{font-size:var(--t-page);line-height:.92;letter-spacing:-.045em}}
+[data-page] .studio__img{border-radius:var(--r-card)}
+[data-page] .studio__meta{margin-top:clamp(24px,3vw,40px);padding-top:1.25rem;font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+[data-page] .aboutg__panel{background-color:var(--noche)}
+[data-page] .aboutg__card{border-radius:var(--r-text);background:rgba(13,5,9,.5);border-color:rgba(245,243,238,.14)}
+[data-page] :is(.aboutg__k,.tm__k){font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+[data-page] .aboutg__k{color:var(--on-3)}
+[data-page] .aboutg__t{font-size:clamp(1.12rem,1.7vw,1.5rem);line-height:1.42;color:var(--on-1)}
+[data-page] .tm__h{font-size:var(--t-display);line-height:.96;letter-spacing:-.045em}
+[data-page] .tm__name{font-size:var(--t-h2);line-height:.97;letter-spacing:-.04em}
+[data-page] .tm__bio{font-size:var(--t-lead);line-height:1.55;max-width:40ch}
+[data-page] .tm__row{gap:var(--card-gap)}
+[data-page] .tm__c img{border-radius:var(--r-card)}
+[data-page] .tm__c b{font-size:var(--t-card);font-weight:600;line-height:1.15;letter-spacing:-.02em}
+[data-page] .tm__c span{font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+@media (min-width:901px){
+  [data-page] .tm__b{padding-inline:var(--edge)}
+  [data-page] .tm__bio{justify-self:end}
+}
+@media (max-width:900px){[data-page] :is(.tm__a,.tm__b){padding-inline:var(--edge)}}
+[data-page] .appr{gap:var(--head-gap)}
+[data-page] .appr__head{margin-bottom:0}
+[data-page] .appr__vid{border-radius:var(--r-card-l)}
+[data-page] .appr__steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(24px,3vw,40px) clamp(16px,2.4vw,40px)}
+[data-page] .appr__steps li{padding-top:1.25rem}
+.appr__n{display:block;margin-bottom:1rem;font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;color:var(--vino)}
+[data-page] .appr__steps b{margin-bottom:.7rem;font-size:var(--t-h4);line-height:1.1;letter-spacing:-.035em}
+[data-page] .appr__steps p{font-size:var(--t-body);line-height:1.55}
+@media (max-width:1100px){[data-page] .appr__steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){[data-page] .appr__steps{grid-template-columns:1fr}}
+[data-page] .values__grid{gap:var(--card-gap)}
+[data-page] .vcard{min-height:clamp(200px,17vw,250px);padding:clamp(20px,1.8vw,26px);border-radius:var(--r-text);outline:1px solid var(--line-l);outline-offset:-1px}
+[data-page] .vcard h3{font:600 var(--t-card)/1.15 var(--f-display);letter-spacing:-.02em}
+[data-page] .vcard p{font-size:var(--t-small);line-height:1.5}
+
+/* ---------- CONTACTO: a la izquierda qué pasa cuando escribes; a la derecha el formulario (misma partición que Preguntas) ---------- */
+[data-page] .bigmarq{margin-bottom:var(--head-gap);-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+[data-page] .bigmarq__track span{font-size:var(--t-page);line-height:1.02;letter-spacing:-.045em}
+[data-page] .connect__wrap{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,5vw,80px);align-items:start;padding-top:var(--head-gap);border-top:0;position:relative}
+[data-page] .connect__wrap::before{content:"";position:absolute;inset:0 var(--edge) auto;border-top:1px solid var(--line)}
+.connect__side{display:grid;gap:clamp(20px,2.2vw,28px);align-content:start}
+.connect__side .phero__k{padding-top:0}
+.connect__lead{margin:0;max-width:19ch;font:500 var(--t-h4)/1.15 var(--f-display);letter-spacing:-.035em}
+.connect__list{display:grid;gap:.7rem;margin:0;padding:0;list-style:none}
+.connect__list li{display:flex;align-items:center;gap:.7rem;font-size:var(--t-body);color:var(--ink-2)}
+.connect__list i{display:grid;place-items:center;flex:none;width:1.4rem;height:1.4rem;border-radius:50%;background:rgba(84,29,53,.1);color:var(--vino)}
+.connect__list svg{width:70%;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+[data-page] .connect__info{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--card-gap);margin-top:.5rem}
+[data-page] .connect__info li{gap:.45rem;padding:1rem 1.2rem;border-radius:var(--r-text);outline:1px solid var(--line-l);outline-offset:-1px;font-size:var(--t-body);font-weight:500}
+[data-page] .connect__info .mono{font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+[data-page] .connect .form{border-radius:var(--r-text);outline:1px solid var(--line-l);outline-offset:-1px}
+[data-page] .field{gap:.4rem;padding:1.1rem 1.4rem}
+[data-page] :is(.field label,.field legend){font-size:var(--t-small);font-weight:600}
+[data-page] :is(.field input,.field textarea){font-size:var(--t-body)}
+[data-page] .field legend{margin-bottom:.7rem}
+[data-page] .form__foot{padding:1.1rem 1.4rem}
+@media (max-width:900px){
+  [data-page] .connect__wrap{grid-template-columns:1fr}
+  .connect__lead{max-width:24ch}
+}
+
+/* ---------- LEGALES ---------- */
+[data-page] main>.legal{margin-block:var(--sec-gap);padding-bottom:0}
+[data-page] .legal h2{margin:clamp(32px,3.4vw,48px) 0 .8rem;font-size:var(--t-h4);line-height:1.1;letter-spacing:-.035em}
+[data-page] .legal>h2:first-child{margin-top:0}
+[data-page] :is(.legal p,.legal li){font-size:var(--t-body);line-height:1.65}
+
+/* v34 · ajustes tras revisión visual */
+/* servicios: «Ideal para» y el botón siempre en la misma fila (antes el botón saltaba de línea solo en algunas fichas) */
+@media (min-width:621px){
+  [data-page] .sdet__foot{flex-wrap:nowrap;align-items:flex-end}
+  [data-page] .sdet__foot p{flex:1 1 auto;min-width:0;max-width:36ch}
+  [data-page] .sdet__foot .btn{flex:none}
+}
+/* proyectos: «Próximo proyecto» cierra la rejilla a todo el ancho (ya no queda una tarjeta suelta con un hueco al lado) */
+[data-page] .gcard--cta{grid-column:1/-1}
+[data-page] .gcard--cta .gcard__media{aspect-ratio:auto;min-height:clamp(260px,27vw,400px);border-radius:var(--r-xl)}
+/* nosotros: la frase del encabezado se apoya abajo, como en el inicio; los textos de las cuatro ideas ocupan el mismo alto */
+[data-page] .values__head{align-items:end}
+[data-page] .vcard p{min-height:4.5em}
+/* legales (sin etiqueta): la frase va a la izquierda, sobre el mismo eje que el texto */
+[data-page] .phero__sub:not(:has(.phero__k)) .h3{grid-column:1;justify-self:start;max-width:30ch}
+/* celular */
+@media (max-width:520px){[data-page] .sdet__cols{grid-template-columns:1fr;gap:1.5rem}}
+@media (max-width:900px){
+  [data-page] .tm__row{align-items:start}
+  [data-page] .tm__a .tm__h{display:none}          /* en celular basta un titular para el equipo */
+  [data-page] .tm__a{display:block}
+  [data-page] .tm__b{padding-top:.9rem}
+  [data-page] .studio__meta{justify-content:flex-start;gap:.5rem 1.5rem}
+}

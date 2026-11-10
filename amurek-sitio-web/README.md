@@ -212,3 +212,16 @@ Richard pidió **terminar primero el inicio y no tocar el contenido de Servicios
 - Márgenes: los fondos van de borde a borde con `--inset` (8 px en celular → 16 px en pantallas grandes) y el contenido nunca pasa de 1440 px (`--maxc`), centrado: `--edge = max(inset + edge-pad, (100vw − 1440px)/2)`; `--pad-x` es el relleno lateral de los paneles. Barra, título gigante, texto del hero y todas las secciones empiezan en el mismo borde.
 - Esquinas: paneles con las cuatro esquinas iguales (`--sello: var(--r-xl)`); tarjetas de texto (testimonios, planes, preguntas, brief, chat) 14 px simétricas; la esquina del isotipo queda solo en fotos y videos (`--r-card` / `--r-card-l`).
 - «Ideas con forma»: todas las tarjetas del mismo tamaño (4:5).
+
+## v34 — un solo sistema en todo el sitio (coherencia de las páginas internas)
+El sistema de coherencia del inicio (v31–v33) ahora rige **todas** las páginas: en `styles.css` los selectores `[data-page=inicio]` pasaron a `[data-page]` y se añadió la capa v34 al final para los componentes propios de Servicios, Proyectos, Nosotros, Contacto y legales. El inicio no cambia (verificado midiendo tipografías, radios, bordes y aire antes y después, en 1440 y 390 px).
+- **Medidas compartidas** (antes cada página tenía las suyas): borde de contenido 55 px (antes 32 px en las internas y la barra a 130 px), 86 px entre secciones (antes 0–86, y el cierre pegado al pie), paneles con el mismo margen exterior y las cuatro esquinas iguales, tarjetas de texto a 14 px, esquina del isotipo solo en fotos y videos, un solo negro (`--noche`).
+- **Tipografía**: misma escala de 9 niveles. Título de página `--t-page` (118 px) en Servicios, Proyectos, legales, «Nuestro Estudio» y la marquesina de Contacto. Etiquetas en mono con un solo estilo.
+- **Encabezado de páginas internas** (`PHERO` en `build.mjs`): título, línea y debajo etiqueta a la izquierda («05 servicios · un equipo») + frase a la derecha, como los encabezados del inicio.
+- **Servicios**: índice de servicios con las mismas pastillas que los filtros de Proyectos; fichas en mitades iguales; «Ideal para» y su botón siempre en la misma fila; el proceso rosado antiguo (`PROCESS_OLD`) se reemplaza por el acordeón del inicio (`PROCESS`); Planes y Preguntas iguales al inicio (sin etiqueta «Elige cómo trabajamos», sin números).
+- **Proyectos**: la tarjeta «Próximo proyecto» había perdido su fondo (texto crema sobre crema, no se leía): vuelve a ser un panel oscuro de marca y cierra la rejilla a todo el ancho.
+- **Nosotros**: «Así trabajamos» usa las mismas cuatro etapas del inicio (Escuchamos, Conectamos, Damos forma, Lanzamos) en lugar de Briefing/Acción/Resultados; encabezados con título + frase; equipo y valores con las medidas del sistema; se cambió la línea «Sistema: AMUREK.estudio» por «Cinco servicios, un equipo».
+- **Contacto**: dos columnas con la misma partición que Preguntas: a la izquierda qué pasa cuando escribes (frase, tres garantías, correo y base) y a la derecha el formulario. La marquesina se difumina en los bordes.
+- **Legales**: frase y texto sobre el mismo eje izquierdo; títulos en el nivel `--t-h4`.
+- **Celular**: listas de Servicios en una columna, un solo titular para el equipo en Nosotros.
+- Sin uso tras este cambio (poda opcional): estilos de `.proc`/`.proc2` (proceso antiguo). Para volver atrás: `git revert` de este commit.
