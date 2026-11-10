@@ -23,6 +23,7 @@ Causa encontrada: con el ajuste «reducir movimiento» del dispositivo (en Windo
 - **Showreel en celular**: «©2026» y «Showreel» ya caben a los lados del video (antes se cortaban).
 - **Proceso**: las escenas (chat y brief) terminan de aparecer antes de que el scroll pase a la siguiente etapa.
 - **Tablet**: sin scroll lateral (el ® del título sobresalía 6 px).
+- **Tablet y celular (≤900 px)**: en Servicios el texto de la pestaña activa se leía crema sobre crema; en Proyectos la tarjeta que sube desde abajo pasaba por encima del texto del proyecto. Ambos corregidos al final de `styles.css` («v36.1»).
 - Verificado en navegador: recorrido en vivo de las cinco páginas en 1440 y 390 px, con y sin «reducir movimiento»; ocho páginas × siete anchos sin desbordes ni errores de script.
 
 ## Uso

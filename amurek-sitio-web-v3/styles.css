@@ -2279,3 +2279,12 @@ html.motion-off{scroll-behavior:auto}
 .brand__play{left:clamp(14px,1.6vw,22px);top:clamp(14px,1.6vw,22px);translate:none}
 /* v36 · en tablet el símbolo ® del título sobresalía 6 px y dejaba un scroll lateral mínimo */
 html{overflow-x:clip}
+
+/* v36.1 · correcciones de tablet y celular (≤900 px), vistas en la vista previa */
+@media (max-width:900px){
+  /* servicios: la pestaña activa es un botón crema; su texto volvía a ser crema y no se leía */
+  [data-page] .sv__t.is-on{color:var(--vino)}
+  [data-page] .sv__t.is-on b{color:inherit}
+  /* proyectos: la tarjeta que sube desde abajo ya no pasa por encima del texto del proyecto (queda dentro de su zona) */
+  .pwh__row{overflow-x:visible;overflow-y:clip}
+}
