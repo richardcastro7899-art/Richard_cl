@@ -12,6 +12,12 @@ Base: la primera entrega de v3 (la que gustó). Los cambios de v36 (botón para 
 - **Barra del inicio**: vuelve a medir cuando terminan de cargar las tipografías, para que el logotipo llegue a su lugar sin cruzarse con la portada.
 - **Se conservan** las correcciones de tablet y celular: pestaña activa de Servicios legible, tarjetas de Proyectos que no tapan el texto, «©2026 / Showreel» sin cortarse, sin scroll lateral.
 
+## v38 — cada página abre en su inicio
+Al cambiar de página, la nueva se quedaba en la posición de scroll de la anterior (pasaba cuando el scroll lo hace el visor que contiene la página, como una vista previa en un iframe). Ahora el navegador no restaura la posición (`history.scrollRestoration = "manual"` en el arranque de `build.mjs` y en `main.js`) y cada página se lleva a su inicio al cargar (`scrollTo(0, 0)` + `scrollIntoView`, que también sube los contenedores). Si la dirección trae un `#ancla`, se respeta el ancla.
+
+## Publicar en Cloudflare Pages
+Subida directa del .zip: `index.html` en la raíz, sin carpeta contenedora. Incluye todo el sitio, `assets/ref` completo y un `_headers` con caché (tipografías 1 año, medios 7 días, páginas/CSS/JS siempre revalidados). El código fuente de trabajo (`build.mjs`, `src/`, etc.) no va en el .zip porque no hace falta para publicar.
+
 ## Material de referencia (`assets/ref/`)
 Ahora **sí está en el repositorio**, por pedido expreso. Son imágenes y videos de las plantillas Alture y Nordic (Webflow): sirven para visualizar y no son de AMUREK. Hay que reemplazarlos por material propio antes de publicar la web.
 
