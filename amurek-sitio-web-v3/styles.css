@@ -2251,3 +2251,37 @@ html{overflow-x:clip}
 .is-off,.is-off *,.is-off *::before,.is-off *::after{animation-play-state:paused!important}
 /* proceso: cada etapa calcula su diseño por separado mientras el acordeón se abre */
 .pros__t{contain:layout paint}
+
+/* ============================================================
+   v39 — BARRA DEL INICIO: animación por transform, sin pintar ni medir en cada cuadro
+   · El logotipo y las palabras vuelan con transform (translate + scale). Con líneas de tiempo de scroll (Chrome, Edge) las anima el
+     compositor con el scroll, sin JavaScript; en los demás navegadores, un transform por cuadro.
+   · Las apariciones de la barra (enlaces, botón, fondo, separador) son transiciones de tiempo sobre opacity/translate, activadas al
+     llegar el logotipo a su lugar (clases .is-on y .is-bg), en vez de recalcular estilos en cada cuadro del scroll.
+   ============================================================ */
+.nav__fly,.nav__fly2{transform-origin:0 0;will-change:transform}
+.nav__fly2{margin:0}
+.nav-morph .nav__links a{transition:opacity .4s var(--ease) calc(var(--i,0) * 45ms),translate .5s var(--ease) calc(var(--i,0) * 45ms)}
+.nav-morph .nav.is-on .nav__links a{opacity:1;translate:0 0}
+.nav-morph .nav__cta,.nav-morph .nav__menu{transition:opacity .4s var(--ease) .12s}
+.nav-morph .nav.is-on :is(.nav__cta,.nav__menu){opacity:1}
+.nav-morph .nav__tag::before{transition:opacity .4s var(--ease)}
+.nav-morph .nav.is-on .nav__tag::before{opacity:1}
+.nav-morph .nav::before{transition:opacity .3s var(--ease)}
+.nav-morph .nav.is-bg::before{opacity:1}
+
+@keyframes flyL{from{transform:translate3d(var(--x0),var(--y0),0) scale(1)}to{transform:translate3d(var(--x1),var(--y1),0) scale(var(--sc))}}
+@keyframes flyWn{0%{opacity:1;transform:translate3d(var(--x0),var(--y0),0) scale(1)}25%{opacity:0}100%{opacity:0;transform:translate3d(var(--x1),var(--y1),0) scale(var(--sc))}}
+@keyframes regOut{from{opacity:1}to{opacity:0}}
+@supports (animation-timeline: scroll()){
+  .nav-sd .nav__fly,.nav-sd .nav__fly2{animation:flyL linear both;animation-timeline:scroll(root block);animation-range:0px var(--nav-d)}
+  .nav-sd.nav-n .nav__fly2{animation-name:flyWn}
+  .nav-sd .ht__reg{animation:regOut linear both;animation-timeline:scroll(root block);animation-range:0px calc(var(--nav-d) * .2)}
+}
+
+/* ---------- fluidez (v39): las luces decorativas ya son degradados suaves; el desenfoque (blur) de 30 a 90 px sobre capas enormes
+   era lo que más costaba pintar mientras se hace scroll (en la portada, 61 ms → 21 ms por fotograma con la CPU 6× más lenta) ---------- */
+.hs__glow,.cta3__g,.svc4__glow,.aboutg__grad,.proc2::before,.proc2__bg i{filter:none!important}
+
+/* tablet y celular: al llegar el logotipo, las palabras de la barra aparecen con un fundido (el vuelo ya no las muestra) */
+.nav-morph .nav__tag>span{transition:opacity .4s var(--ease) .05s}

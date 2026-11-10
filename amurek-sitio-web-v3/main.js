@@ -131,31 +131,47 @@
     fly.className = "nav__fly"; fly.setAttribute("aria-hidden", "true"); fly.appendChild(pwm.cloneNode(true)); navEl.appendChild(fly);
     const words = [0, 1].map((k) => { const w = document.createElement("div"); w.className = "nav__fly2"; w.setAttribute("aria-hidden", "true"); w.textContent = htr.children[k].textContent; navEl.appendChild(w); return w; });
     document.documentElement.classList.add("nav-morph");
-    let nl = 0, nt = 0, nw = 1, pl = 0, pt = 0, pw = 1, LR = .25, fs0 = 80, fs1 = 12, D = 300, A = [], B = [];
+    let nl = 0, nt = 0, nw = 1, pl = 0, pt = 0, pw = 1, fs0 = 80, fs1 = 12, D = 300, A = [], B = [], narrowNav = false, lastP = -1;
+    const root = document.documentElement;
+    // v39: el logotipo y las palabras se mueven SOLO con transform (sin layout ni repintado de texto).
+    // Si el navegador tiene líneas de tiempo de scroll en CSS (Chrome, Edge), las anima el compositor directamente con el scroll,
+    // sin pasar por JavaScript: no se atrasa aunque la página esté ocupada. En los demás, se calcula un transform por cuadro.
+    const sd = !!(window.CSS && CSS.supports && CSS.supports("animation-timeline", "scroll()"));
+    const px = (v) => v.toFixed(1) + "px";
     const measure = () => {
       const g = nwm.getBoundingClientRect(), r = pwm.getBoundingClientRect();
-      nl = g.left; nt = g.top; nw = g.width || 1; pl = r.left; pt = r.top + scrollY; pw = r.width || 1; LR = r.height / pw;
+      nl = g.left; nt = g.top; nw = g.width || 1; pl = r.left; pt = r.top + scrollY; pw = r.width || 1;
       A = [0, 1].map((k) => { const q = htr.children[k].getBoundingClientRect(); return [q.left, q.top + scrollY]; });
       B = [0, 1].map((k) => { const q = tag.children[k].getBoundingClientRect(); return [q.left, q.top]; });
       fs0 = parseFloat(getComputedStyle(htr).fontSize) || 80; fs1 = parseFloat(getComputedStyle(tag.firstElementChild).fontSize) || 12;
       // la transición dura exactamente lo que tarda el panel del hero en llegar a la barra: así el logo nunca queda encima del panel
       const hp = $("#heroPanel") || $(".hero4__panel"), navh = navEl.getBoundingClientRect().height || 64;
       D = Math.max(48, (hp ? hp.getBoundingClientRect().top + scrollY : 200) - navh);
-      lastNP = -1;
+      narrowNav = innerWidth <= 900;
+      fly.style.width = px(pw);
+      words.forEach((w) => { w.style.fontSize = fs0.toFixed(2) + "px"; });
+      root.classList.toggle("nav-n", narrowNav);
+      if (sd) {
+        root.style.setProperty("--nav-d", px(D));
+        const put = (el, x0, y0, x1, y1, sc) => { el.style.setProperty("--x0", px(x0)); el.style.setProperty("--y0", px(y0)); el.style.setProperty("--x1", px(x1)); el.style.setProperty("--y1", px(y1)); el.style.setProperty("--sc", sc.toFixed(4)); };
+        put(fly, pl, pt, nl, nt, nw / pw);
+        words.forEach((w, k) => put(w, A[k][0], A[k][1], B[k][0], B[k][1], fs1 / fs0));
+        root.classList.add("nav-sd");
+      }
+      lastP = -1;
     };
-    let lastNP = -1;
+    const st = { on: false, bg: false, live: false, done: false };
+    const flip = (k, cls, v) => { if (st[k] !== v) { st[k] = v; navEl.classList.toggle(cls, v); } };
     const apply = () => {
       // avance lineal con el scroll (sin aceleración): el borde inferior del logo baja al mismo ritmo que sube el panel, nunca se cruzan
-      const p = clamp(scrollY / D), e = p;
-      if (p === lastNP) return; lastNP = p;
-      const lw = pw + (nw - pw) * e, lx = pl + (nl - pl) * e, ly = pt + (nt - pt) * e;
-      fly.style.width = lw.toFixed(1) + "px";
-      fly.style.transform = `translate3d(${lx.toFixed(1)}px,${ly.toFixed(1)}px,0)`;
-      const fs = fs0 + (fs1 - fs0) * e;
-      const narrowNav = innerWidth <= 900, wo = narrowNav ? (p < 0.25 ? 1 - p / 0.25 : p > 0.8 ? (p - 0.8) / 0.2 : 0) : 1; // en celular las palabras van bajo el logo: se desvanecen y reaparecen en la barra para no cruzarse con él
-      words.forEach((w, k) => { w.style.fontSize = fs.toFixed(2) + "px"; w.style.opacity = wo.toFixed(2); w.style.transform = `translate3d(${(A[k][0] + (B[k][0] - A[k][0]) * e).toFixed(1)}px,${(A[k][1] + (B[k][1] - A[k][1]) * e).toFixed(1)}px,0)`; });
-      navEl.style.setProperty("--np", p.toFixed(3));
-      navEl.classList.toggle("is-live", p > 0.5); navEl.classList.toggle("is-done", p >= 0.999);
+      const p = clamp(scrollY / D);
+      flip("on", "is-on", p >= 0.78); flip("bg", "is-bg", p >= 0.85); flip("live", "is-live", p > 0.5); flip("done", "is-done", p >= 0.999);
+      if (sd || p === lastP) return;
+      lastP = p;
+      const lx = pl + (nl - pl) * p, ly = pt + (nt - pt) * p, s = 1 + (nw / pw - 1) * p;
+      fly.style.transform = `translate3d(${lx.toFixed(1)}px,${ly.toFixed(1)}px,0) scale(${s.toFixed(4)})`;
+      const ws = 1 + (fs1 / fs0 - 1) * p, wo = narrowNav ? (p < 0.25 ? 1 - p / 0.25 : 0) : 1; // en tablet y celular las palabras van bajo el logo: se desvanecen y el texto de la barra aparece con un fundido al llegar el logo (nunca se tocan)
+      words.forEach((w, k) => { w.style.opacity = wo.toFixed(2); w.style.transform = `translate3d(${(A[k][0] + (B[k][0] - A[k][0]) * p).toFixed(1)}px,${(A[k][1] + (B[k][1] - A[k][1]) * p).toFixed(1)}px,0) scale(${ws.toFixed(4)})`; });
       reg.style.opacity = (1 - clamp(p * 5)).toFixed(2);
     };
     measure(); apply();
@@ -264,13 +280,18 @@ void main(){
       const frame = (now) => {
         raf = 0;
         if (now - last >= 30) {                                       // unos 33 cuadros por segundo: el humo es lento y así gasta la mitad
-          const dtv = last ? Math.min(0.1, (now - last) / 1000) : 0.033; last = now;
-          t += dtv; sx += (mx - sx) * Math.min(1, dtv * 3); sy += (my - sy) * Math.min(1, dtv * 3);
-          draw();
-          if (dtv > 0.06) { if (++slow > 12 && q > 0.45) { q *= 0.8; slow = 0; size(); } } else if (slow > 0) slow -= 0.25;   // si el equipo va justo, baja la resolución
+          if (now - lastScroll < 140) last = now;                     // v39: mientras se hace scroll el humo se detiene un instante y la GPU queda libre para la animación de la barra; se reanuda solo al parar
+          else {
+            const dtv = last ? Math.min(0.1, (now - last) / 1000) : 0.033; last = now;
+            t += dtv; sx += (mx - sx) * Math.min(1, dtv * 3); sy += (my - sy) * Math.min(1, dtv * 3);
+            draw();
+            if (dtv > 0.06) { if (++slow > 12 && q > 0.45) { q *= 0.8; slow = 0; size(); } } else if (slow > 0) slow -= 0.25;   // si el equipo va justo, baja la resolución
+          }
         }
         if (vis && !document.hidden && !reduce) raf = requestAnimationFrame(frame);
       };
+      let lastScroll = -1e9;
+      addEventListener("scroll", () => { lastScroll = performance.now(); }, { passive: true });
       const kick = () => { if (!raf && vis && !reduce) raf = requestAnimationFrame(frame); };
       size(); draw();
       addEventListener("resize", () => { size(); draw(); kick(); });

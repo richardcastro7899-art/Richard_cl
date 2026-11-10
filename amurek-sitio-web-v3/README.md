@@ -12,6 +12,14 @@ Base: la primera entrega de v3 (la que gustó). Los cambios de v36 (botón para 
 - **Barra del inicio**: vuelve a medir cuando terminan de cargar las tipografías, para que el logotipo llegue a su lugar sin cruzarse con la portada.
 - **Se conservan** las correcciones de tablet y celular: pestaña activa de Servicios legible, tarjetas de Proyectos que no tapan el texto, «©2026 / Showreel» sin cortarse, sin scroll lateral.
 
+## v39 — barra del inicio fluida
+Medido con la CPU 6× más lenta (recorrido de la barra, 1366×768): **68,6 ms → 18,3 ms por fotograma**; fotogramas lentos (>33 ms) 17 de 17 → 1 de 17; trabajo del hilo principal 559 → 213 ms.
+- **Causa principal**: las luces del fondo de la portada (`.hs__glow`) tenían `filter: blur(90px)` sobre capas enormes; era lo más caro de pintar al hacer scroll. Ya son degradados suaves, así que se quitó el filtro (también en `.cta3__g`, `.svc4__glow`, `.aboutg__grad` y el proceso antiguo) sin cambiar el aspecto.
+- **Animación por transform**: el logotipo y las palabras vuelan con `translate` + `scale` (antes cambiaban ancho y tamaño de letra en cada cuadro, lo que obligaba a medir y repintar). En Chrome y Edge la anima el compositor con una línea de tiempo de scroll en CSS (`animation-timeline: scroll()`): sigue el scroll al instante aunque la página esté ocupada. En los demás navegadores se calcula un transform por cuadro (misma animación).
+- **Apariciones de la barra** (enlaces, botón, fondo, separador): transiciones de tiempo disparadas por clases (`.is-on`, `.is-bg`) en vez de recalcular estilos en cada cuadro del scroll.
+- **El humo de la portada (WebGL)** se detiene mientras se hace scroll y se reanuda al parar; así la GPU queda libre para la barra.
+- **Sin choques**: en 1920, 1440, 1280, 1024, 768 y 390 px el logotipo y las palabras quedan siempre ≥19 px por encima del panel de la portada y no se cruzan entre sí. En tablet y celular las palabras no vuelan: el texto de la barra aparece con un fundido cuando el logotipo ya llegó.
+
 ## v38 — cada página abre en su inicio
 Al cambiar de página, la nueva se quedaba en la posición de scroll de la anterior (pasaba cuando el scroll lo hace el visor que contiene la página, como una vista previa en un iframe). Ahora el navegador no restaura la posición (`history.scrollRestoration = "manual"` en el arranque de `build.mjs` y en `main.js`) y cada página se lleva a su inicio al cargar (`scrollTo(0, 0)` + `scrollIntoView`, que también sube los contenedores). Si la dirección trae un `#ancla`, se respeta el ancla.
 
