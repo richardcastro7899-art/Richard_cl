@@ -23,7 +23,8 @@
   if (still) { const y = +(new URLSearchParams(location.search).get("y") || 0); if (y) addEventListener("load", () => { document.documentElement.style.scrollBehavior = "auto"; scrollTo(0, y); }); }
   const store = { get: (k) => { try { return localStorage.getItem(k); } catch (_) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (_) { /* sin almacenamiento */ } } };
   const systemReduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let reduce = still || systemReduce || store.get("amurek-motion") === "off"; // se puede cambiar con el botón «Pausar animaciones»
+  const motionPref = store.get("amurek-motion");   // "on" | "off" | null: la elección de la persona manda sobre el ajuste del sistema
+  let reduce = still || (motionPref === "on" ? false : motionPref === "off" || systemReduce); // se puede cambiar con el botón «Pausar animaciones»
   const fine = matchMedia("(hover:hover) and (pointer:fine)").matches;
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const onVisible = (el, cb, margin = "10% 0px") => new IntersectionObserver((es) => es.forEach((e) => cb(e.isIntersecting)), { rootMargin: margin }).observe(el);
@@ -78,11 +79,30 @@
   const mBtn = $("#motionToggle");
   const applyMotion = () => {
     document.documentElement.classList.toggle("motion-off", reduce);
-    if (mBtn) { mBtn.setAttribute("aria-pressed", String(reduce)); mBtn.textContent = reduce ? "Reanudar animaciones" : "Pausar animaciones"; }
+    if (mBtn) { mBtn.setAttribute("aria-pressed", String(reduce)); mBtn.textContent = reduce ? "Activar animaciones" : "Pausar animaciones"; }
     $$("video[data-autoplay]").forEach((v) => { if (reduce) v.pause(); });
     document.dispatchEvent(new Event("motionchange"));
   };
-  if (mBtn) mBtn.addEventListener("click", () => { reduce = !reduce; store.set("amurek-motion", reduce ? "off" : "on"); applyMotion(); if (!reduce) $$("video[data-autoplay]").forEach((v) => { const r = v.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) v.play().catch(() => {}); }); });
+  // Cambiar el movimiento: se guarda la elección y la página se vuelve a cargar, así todas las piezas (barra, portada, escenas con scroll)
+  // arrancan en el modo correcto. Si el navegador no deja guardar, se cambia en caliente lo que se puede.
+  const setMotion = (on) => {
+    store.set("amurek-motion", on ? "on" : "off");
+    if (store.get("amurek-motion") === (on ? "on" : "off")) { location.reload(); return; }
+    reduce = !on; applyMotion();
+    if (on) $$("video[data-autoplay]").forEach((v) => { const r = v.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) v.play().catch(() => {}); });
+  };
+  if (mBtn) mBtn.addEventListener("click", () => setMotion(reduce));
+  // Aviso discreto cuando las animaciones están en pausa solo por el ajuste del dispositivo (y la persona aún no eligió)
+  if (systemReduce && !motionPref && !still) {
+    let seen = false; try { seen = sessionStorage.getItem("amurek-mnote") === "1"; } catch (_) { /* sin almacenamiento */ }
+    if (!seen) {
+      const note = document.createElement("div"); note.className = "mnote"; note.setAttribute("role", "status");
+      note.innerHTML = '<p>Las animaciones están en pausa por el ajuste de tu dispositivo.</p><button type="button" class="mnote__on">Activar</button><button type="button" class="mnote__x" aria-label="Cerrar aviso">×</button>';
+      document.body.appendChild(note);
+      $(".mnote__on", note).addEventListener("click", () => { note.remove(); setMotion(true); });
+      $(".mnote__x", note).addEventListener("click", () => { note.remove(); try { sessionStorage.setItem("amurek-mnote", "1"); } catch (_) { /* sin almacenamiento */ } });
+    }
+  }
   applyMotion();
 
   /* ---------- pantalla de carga: las letras de AMUREK suben y, al estar todo listo, cinco paneles (una por letra) se levantan como una cortina ---------- */
@@ -179,6 +199,29 @@
 
   /* ---------- videos que se reproducen solos al verse ---------- */
   $$("video[data-autoplay]").forEach((v) => onVisible(v, (on) => { if (on && !reduce) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); }, "0px"));
+
+  $$("[data-vplay]").forEach((btn) => {
+    const box = btn.parentElement, v = $("video", box);
+    if (!v) return;
+    btn.addEventListener("click", () => { if (v.paused) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); });
+    v.addEventListener("play", () => box.classList.add("is-playing"));
+    v.addEventListener("pause", () => box.classList.remove("is-playing"));
+  });
+
+  /* ---------- bloques que suben al entrar en pantalla (v36): solo los que están por debajo de la primera pantalla, para que nada parpadee al cargar.
+     Es una animación (no una transición), así no pisa las transiciones propias de cada pieza; al terminar se retira la clase ---------- */
+  if (!reduce) {
+    const RISE = ".rhead>p,.statement__p,.work__lead,.svc4__head>p,.tk__head>p,.tst__lead,.tst__feat,.tst__col,.sdet,.grid>.gcard,.more,.vcard,.appr__steps>li,.nums__row>li,.nums__note,.brand__card,.brand__txt>:not(.rv),.connect__side,.connect .form,.faq3__list>.qa3,.faq3__card,.plans6__grid>.pl6,.plans6__meet,.sv,.cta3__in>p,.cta3__act,.cta3__list";
+    const riseIO = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); riseIO.unobserve(e.target); } }), { threshold: 0.08, rootMargin: "0px 0px -7% 0px" });
+    $$(RISE).forEach((el) => {
+      if (el.getBoundingClientRect().top < innerHeight * 0.92) return;
+      const sib = Array.from(el.parentElement.children).filter((c) => c.matches(RISE));
+      el.style.setProperty("--rd", (Math.min(sib.indexOf(el), 5) * 0.07).toFixed(2) + "s");
+      el.classList.add("rise");
+      el.addEventListener("animationend", (ev) => { if (ev.target === el) el.classList.remove("rise", "in"); });
+      riseIO.observe(el);
+    });
+  }
 
   /* ---------- PORTADA: la última palabra cambia; al formarse el isotipo se queda en «forma» ---------- */
   const heroPanel = $("#heroPanel");

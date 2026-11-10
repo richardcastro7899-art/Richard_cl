@@ -139,7 +139,7 @@ const HEAD = (m) => `<!doctype html>
 <meta property="og:locale" content="es_EC">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-14 -14 129 144'%3E%3Crect x='-14' y='-14' width='129' height='144' rx='30' fill='%23541D35'/%3E%3Cpath fill='%23F5F3EE' d='M47.11 0A47.11 47.11 0 0 0 47.11 94.22Z'/%3E%3Cpath fill='%23F5F3EE' d='M53.83 21.84A47.11 47.11 0 0 1 100.94 68.95V116.06H53.83Z'/%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<script>if(!/[?&]still/.test(location.search))document.documentElement.classList.add("js");try{if(!/[?&]still/.test(location.search)&&!sessionStorage.getItem("amurek-pre")&&!matchMedia("(prefers-reduced-motion: reduce)").matches&&localStorage.getItem("amurek-motion")!=="off")document.documentElement.classList.add("pre-on")}catch(e){}try{if("${m.page}"==="inicio"&&!/[?&]still/.test(location.search)&&!matchMedia("(prefers-reduced-motion: reduce)").matches&&localStorage.getItem("amurek-motion")!=="off")document.documentElement.classList.add("nav-morph")}catch(e){}</script>
+<script>(function(){var d=document.documentElement,still=/[?&]still/.test(location.search),pref=null,sys=false;try{pref=localStorage.getItem("amurek-motion")}catch(e){}try{sys=matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}var on=!still&&(pref==="on"||(pref!=="off"&&!sys));if(!still)d.classList.add("js");if(!on)d.classList.add("motion-off");try{if(on&&!sessionStorage.getItem("amurek-pre"))d.classList.add("pre-on")}catch(e){}if(on&&"${m.page}"==="inicio")d.classList.add("nav-morph")})();</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="${m.page}">
@@ -218,7 +218,7 @@ const FOOT = `<footer class="foot7" id="foot">
       </nav>
     </div>
     <div class="foot7__bar">
-      <div class="foot7__l"><ul class="foot7__soc" data-social-icons hidden></ul><p class="foot7__loc">Ecuador · <span data-clock>--:--</span></p></div>
+      <div class="foot7__l"><ul class="foot7__soc" data-social-icons hidden></ul><p class="foot7__loc">Ecuador · <span data-clock>--:--</span></p><button type="button" class="foot7__motion" id="motionToggle" aria-pressed="false">Pausar animaciones</button></div>
       <p class="foot7__c">©<span data-year>2026</span> AMUREK. Todos los derechos reservados.</p>
     </div>
     <div class="foot7__wm" aria-hidden="true">${WORDMARK}</div>
@@ -571,10 +571,27 @@ const MEMBERS = "";
 const APPROACH = `<section class="sec" id="enfoque">
   <div class="wrap appr">
     <div class="rhead appr__head"><h2 class="h2 rv">Así trabajamos.</h2><p>Cuatro etapas, un mismo equipo: de la primera conversación al lanzamiento.</p></div>
-    <figure class="appr__vid"><video muted loop playsinline preload="none" data-autoplay poster="assets/identidad-poster.jpg" aria-hidden="true"><source src="assets/amurek-identidad.mp4" type="video/mp4"></video></figure>
     <ol class="appr__steps">
       ${proc.map(([t, d], i) => `<li><span class="appr__n">${pad2(i + 1)}</span><b>${t}</b><p>${d}</p></li>`).join("\n      ")}
     </ol>
+  </div>
+</section>`;
+
+// NOSOTROS — la marca: a la izquierda, una tarjeta con la animación del logotipo; a la derecha, qué significa y la paleta real
+const SWATCH = [["Vino profundo", "#541D35"], ["Blanco cálido", "#F5F3EE"], ["Negro de apoyo", "#181818"]];
+const BRAND = `<section class="sec" id="marca">
+  <div class="wrap brand">
+    <figure class="brand__card">
+      <video muted loop playsinline preload="none" data-autoplay poster="assets/identidad-poster.jpg" aria-label="Animación del logotipo de AMUREK"><source src="assets/amurek-identidad.mp4" type="video/mp4"></video>
+      <button type="button" class="brand__play" data-vplay aria-label="Reproducir o pausar la animación del logotipo"><span>Ver animación</span><i>${PLAY}</i></button>
+      <figcaption><span>Logotipo en movimiento</span><span>Identidad AMUREK</span></figcaption>
+    </figure>
+    <div class="brand__txt">
+      <p class="phero__k"><i></i>Nuestra marca</p>
+      <h2 class="h2 rv">Dos piezas que se encuentran.</h2>
+      <p class="brand__p">Nuestro logotipo nace de dos formas que se unen: la idea y su forma. Así trabajamos también con tu marca: primero entendemos qué quiere decir y después le damos forma en cada pieza.</p>
+      <ul class="brand__sw" aria-label="Paleta de AMUREK">${SWATCH.map(([n, c]) => `<li><i style="background:${c}"></i><b>${n}</b><span>${c}</span></li>`).join("")}</ul>
+    </div>
   </div>
 </section>`;
 
@@ -663,7 +680,7 @@ const FILTER_BTNS = [["todo", "Todo"], ...SERVICES.map((s) => [s.id, s.short])].
    COMPILAR PÁGINAS
    ============================================================ */
 const blocks = {
-  HERO, STATEMENT, WORK, SERVICES_PANEL, PROCESS, PROCESS_OLD, SHOWREEL, REELS, TESTI, TEAM_HOME, STUDIO_HEAD, ABOUT_GLASS, TEAM_PIN, MEMBERS, APPROACH, BRAND_BAND, PLANS, FAQ, CTA, FORM,
+  HERO, STATEMENT, WORK, SERVICES_PANEL, PROCESS, PROCESS_OLD, SHOWREEL, REELS, TESTI, TEAM_HOME, STUDIO_HEAD, ABOUT_GLASS, TEAM_PIN, MEMBERS, APPROACH, BRAND, BRAND_BAND, PLANS, FAQ, CTA, FORM,
   SVC_DETAIL, SVC_INDEX, GRID, FILTER_BTNS, CHECK, AR, AR_UR, PLAY, AVATAR, WORDMARK, ISO,
   PHERO_SERVICIOS: PHERO({ a: "Servicios", k: `${pad2(SERVICES.length)} servicios · un equipo`, p: "Cinco servicios que trabajan juntos. Contrata uno solo o arma el equipo completo para tu proyecto." }),
   PHERO_PROYECTOS: PHERO({ a: "Proyectos", b: "seleccionados", k: `${pad2(PROJECTS.length)} proyectos · ${PROJECTS[0].year}`, p: "Cada proyecto empieza como una idea suelta. Aquí está lo que pasa cuando encuentra su forma." }),

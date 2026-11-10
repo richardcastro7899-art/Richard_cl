@@ -390,11 +390,7 @@ sup{font-size:.42em;vertical-align:top;position:relative;top:.35em;margin-left:.
 .js .rv{opacity:0;transform:translateY(22px);filter:blur(6px);transition:opacity .9s var(--ease) var(--rd,0s),transform .9s var(--ease) var(--rd,0s),filter .9s var(--ease) var(--rd,0s)}
 .js .rv.in{opacity:1;transform:none;filter:none}
 
-@media (prefers-reduced-motion:reduce){
-  
-  .js .rv{opacity:1;transform:none;filter:none;clip-path:none;transition:none}
-  
-}
+.js.motion-off .rv{opacity:1;transform:none;filter:none;clip-path:none;transition:none}
 
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
@@ -493,9 +489,7 @@ sup{font-size:.42em;vertical-align:top;position:relative;top:.35em;margin-left:.
 
 /* ---------- v9 responsive ---------- */
 
-@media (prefers-reduced-motion:reduce){
-  .meteors i{animation:none}
-}
+.motion-off .meteors i{animation:none}
 
 /* accesibilidad v9.2: contraste AA medido y objetivos táctiles */
 :root{--ink-3:#6B6661}
@@ -731,9 +725,7 @@ body{font-size:17px}
   .studio__w{font-size:clamp(2.2rem,11vw,3.6rem)}
   .studio__img{width:clamp(70px,22vw,110px)}
 }
-@media (prefers-reduced-motion:reduce){
-  .hs__glow,.aboutg__grad{animation:none}
-}
+.motion-off .hs__glow,.motion-off .aboutg__grad{animation:none}
 
 @font-face{font-family:"Inter";src:url(assets/fonts/inter-latin-ext.woff2) format("woff2");font-weight:100 900;font-display:swap;unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 @font-face{font-family:"Inter";src:url(assets/fonts/inter-latin.woff2) format("woff2");font-weight:100 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -884,10 +876,7 @@ body{font-size:17px}
   
 }
 
-@media (prefers-reduced-motion:reduce){
-  .pre{display:none!important}
-  .studio__w i{animation:none}
-}
+.motion-off .pre{display:none!important}.motion-off .studio__w i{animation:none}
 
 .wm--l{fill:currentColor}
 
@@ -957,7 +946,7 @@ body{font-size:17px}
   .statement__head{grid-template-columns:1fr;align-items:start}
   .strip{--cw:62vw}
 }
-@media (prefers-reduced-motion:reduce){.pre{display:none!important}}
+.motion-off .pre{display:none!important}
 @media (max-width:900px){.hs__bg::before{background:radial-gradient(60% 34% at 50% 32%,rgba(150,55,95,.42),transparent 72%)}}
 
 /* ============================================================
@@ -1516,7 +1505,7 @@ main:has(.cta3)+.foot7{margin-top:0}
 .tk__n span{font:500 .68rem/1.25 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
 .tk__more{display:flex;justify-content:center;margin-top:clamp(12px,2vw,24px)}
 .motion-off .tk__c{opacity:1;transform:none;transition:none}
-@media (prefers-reduced-motion:reduce){.tk__c{opacity:1;transform:none}}
+.motion-off .tk__c{opacity:1;transform:none}
 @media (max-width:900px){.tk__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px}}
 
 /* ============================================================
@@ -1584,7 +1573,7 @@ main:has(.cta3)+.foot7{margin-top:0}
 .reels4:has(.is-hot) .rcard:not(.is-hot){opacity:.62;scale:.975}
 .reels4 .rcard.is-hot .rcard__play{background:var(--crema);color:var(--vino)}
 .motion-off .reels4 .rcard{transition:none;transform:none}
-@media (prefers-reduced-motion:reduce){.reels4 .rcard{transform:none!important}}
+.motion-off .reels4 .rcard{transform:none!important}
 
 /* ============================================================
    v24 — logotipo monocromático, «Agencia Creativa» en una línea al llegar a la barra, sin líneas de avance,
@@ -1650,7 +1639,7 @@ main:has(.cta3)+.foot7{margin-top:0}
 .tq5__stats p{margin:.4rem 0 0;color:var(--ink-2);font-size:1rem}
 .motion-off .tq5__row{animation:none}
 .motion-off .tq5__view{overflow-x:auto}
-@media (prefers-reduced-motion:reduce){.tq5__row{animation:none}.tq5__view{overflow-x:auto}}
+.motion-off .tq5__row{animation:none}.motion-off .tq5__view{overflow-x:auto}
 @media (max-width:900px){.tq5__stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .proc2.ps{border:1px solid rgba(245,243,238,.09);box-shadow:0 -24px 50px -34px rgba(0,0,0,.7)}
 
@@ -1703,7 +1692,7 @@ main:has(.cta3)+.foot7{margin-top:0}
 .tq5__c figcaption span{color:rgba(245,243,238,.62)}
 .tq5__c figcaption b{color:var(--crema)}
 .motion-off .tq5__view{-webkit-mask-image:none;mask-image:none}
-@media (prefers-reduced-motion:reduce){.tq5__view{-webkit-mask-image:none;mask-image:none}}
+.motion-off .tq5__view{-webkit-mask-image:none;mask-image:none}
 
 /* ---------- proceso: la sombra del chat y de las tarjetas ya no se corta contra el borde de su caja ---------- */
 .proc2__r .pcard{overflow:visible}
@@ -1779,7 +1768,7 @@ main:has(.cta3)+.foot7{margin-top:0}
 .motion-off .pros__t,.motion-off .pros__b,.motion-off .pros__v{transition:none}
 .motion-off .pros__t{opacity:1;translate:none}
 .motion-off .pros__t .wa__m,.motion-off .pros__t .wa__typing,.motion-off .pros__t .brief li,.motion-off .pros__t .brief__idea,.motion-off .pros__t .mos figure{opacity:1!important;transform:none!important;animation:none!important}
-@media (prefers-reduced-motion:reduce){.pros__t,.pros__b,.pros__v{transition:none}.js .pros__t{opacity:1;translate:none}.pros__sc>*{transform:none}}
+.motion-off .pros__t,.motion-off .pros__b,.motion-off .pros__v{transition:none}.js.motion-off .pros__t{opacity:1;translate:none}.motion-off .pros__sc>*{transform:none}
 /* pantallas estrechas: acordeón vertical */
 @media (max-width:1000px){
   .pros__row{container-type:normal;display:grid;gap:8px;height:auto}
@@ -2180,7 +2169,7 @@ main:has(.cta3)+.foot7{margin-top:0}
 .tst__c figcaption span{display:grid;gap:.1rem;font-size:.85rem;color:var(--on-3)}
 .tst__c figcaption b{font:600 var(--t-small)/1.2 var(--f-display);color:var(--on-1)}
 .motion-off :is(.tst__f,.tst__f>img,.tst__c){transition:none}
-@media (prefers-reduced-motion:reduce){.tst__f,.tst__f>img,.tst__c{transition:none}}
+.motion-off .tst__f,.motion-off .tst__f>img,.motion-off .tst__c{transition:none}
 @media (max-width:1100px){
   [data-page] .tst{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .tst__side{grid-column:1/-1;flex-direction:row;align-items:flex-end;padding-right:0}
@@ -2203,3 +2192,90 @@ main:has(.cta3)+.foot7{margin-top:0}
 .tst__side{justify-content:flex-start;gap:0}
 .tst__nav{margin-top:auto;padding-top:clamp(24px,3vw,40px)}
 @media (max-width:1100px){.tst__nav{margin-top:0;padding-top:0}.tst__side{gap:clamp(20px,3vw,32px);justify-content:space-between}}
+
+
+/* ============================================================
+   v36 — MOVIMIENTO CON UNA SOLA REGLA + LOGOTIPO ANIMADO EN NOSOTROS
+   · El sitio decide el movimiento una sola vez (clase .motion-off en <html>): la elección de la persona manda sobre el ajuste
+     «reducir movimiento» del dispositivo. Ya no quedan reglas sueltas de @media (prefers-reduced-motion).
+   · El modo sin animaciones se ve completo: el showreel deja de ser una escena fija con un video pequeño y pasa a ser un video grande.
+   · Botón en el pie y aviso discreto para activar las animaciones.
+   · Nosotros: la animación del logotipo va en su propia sección, dentro de una tarjeta.
+   · Los bloques suben suavemente al entrar en pantalla (antes solo se revelaban los títulos).
+   ============================================================ */
+html.motion-off{scroll-behavior:auto}
+
+/* ---------- bloques que suben al entrar ---------- */
+.rise{opacity:0}
+.rise.in{animation:rise .85s var(--ease) var(--rd,0s) both}
+@keyframes rise{from{opacity:0;translate:0 22px}to{opacity:1;translate:none}}
+.motion-off .rise{opacity:1;animation:none}
+
+/* ---------- SHOWREEL sin animaciones: título y video grande, sin escena fija ---------- */
+.motion-off .reel{height:auto}
+.motion-off .reel__sticky{position:static;height:auto;overflow:visible;display:grid;gap:var(--head-gap);padding-inline:var(--edge)}
+.motion-off .reel__lead{position:static;opacity:1;text-align:left;font-size:var(--t-h2);line-height:.97}
+.motion-off .reel__row{position:static}
+.motion-off .reel__w{display:none}
+.motion-off .reel__box{position:relative;left:auto;top:auto;transform:none;display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:82vh}
+.motion-off .reel__play{opacity:1}
+
+/* ---------- pie: pausar o activar las animaciones ---------- */
+.foot7__l{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.6rem}
+.foot7__motion{font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--on-3);text-decoration:underline;text-decoration-color:rgba(245,243,238,.25);text-underline-offset:.3em;transition:color .3s,text-decoration-color .3s}
+.foot7__motion:hover{color:var(--on-1);text-decoration-color:currentColor}
+
+/* ---------- aviso: animaciones en pausa por el ajuste del dispositivo ---------- */
+.mnote{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:120;display:flex;align-items:center;gap:.9rem;max-width:min(460px,calc(100vw - 32px));padding:.7rem .7rem .7rem 1.1rem;border-radius:var(--r-text);background:var(--noche);color:var(--on-1);box-shadow:0 18px 44px -18px rgba(13,5,9,.55)}
+.mnote p{margin:0;font-size:.9rem;line-height:1.35;color:var(--on-2)}
+.mnote__on{flex:none;padding:.6rem 1rem;border-radius:999px;background:var(--crema);color:var(--ink);font:600 .86rem/1 var(--f-body)}
+.mnote__on:hover{background:#fff}
+.mnote__x{flex:none;width:2rem;height:2rem;border-radius:50%;font-size:1.2rem;line-height:1;color:var(--on-3)}
+.mnote__x:hover{color:var(--on-1)}
+@media (max-width:900px){.mnote{bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 60px)}}
+
+/* ---------- NOSOTROS: la marca (tarjeta con la animación del logotipo + texto y paleta) ---------- */
+.brand{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:clamp(24px,5vw,80px);align-items:center}
+.brand__card{position:relative;margin:0;aspect-ratio:4/3;overflow:hidden;isolation:isolate;border-radius:var(--r-card-l);background:#4F1432}
+.brand__card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.brand__card figcaption{position:absolute;inset:auto 0 0;display:flex;justify-content:space-between;gap:1rem;padding:clamp(14px,1.6vw,22px) clamp(16px,1.8vw,26px);font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--on-2)}
+.brand__play{position:absolute;left:50%;top:50%;z-index:2;translate:-50% -50%;display:inline-flex;align-items:center;gap:.8rem;padding:.4rem .4rem .4rem 1.1rem;border-radius:999px;background:rgba(13,5,9,.42);border:1px solid rgba(245,243,238,.18);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--on-1);font:600 .9rem/1 var(--f-body);transition:opacity .35s,background-color .3s}
+.brand__play:hover{background:rgba(13,5,9,.62)}
+.brand__play i{display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--crema);color:var(--vino)}
+.brand__play svg{width:38%;fill:currentColor;margin-left:8%}
+.brand__card.is-playing .brand__play{opacity:0;pointer-events:none}
+.brand__card.is-playing:hover .brand__play,.brand__card.is-playing .brand__play:focus-visible{opacity:0}
+.brand__txt{display:grid;gap:clamp(16px,1.8vw,24px);justify-items:start}
+.brand__txt .phero__k{padding-top:0}
+[data-page] .brand__txt .h2{font-size:var(--t-h2);line-height:.97;letter-spacing:-.04em}
+.brand__p{margin:0;max-width:44ch;font-size:var(--t-lead);line-height:1.55;color:var(--ink-2)}
+.brand__sw{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--card-gap);width:100%;margin:clamp(8px,1vw,16px) 0 0;padding:clamp(16px,1.8vw,24px) 0 0;list-style:none;border-top:1px solid var(--line)}
+.brand__sw li{display:grid;gap:.3rem}
+.brand__sw i{display:block;width:2.4rem;height:2.4rem;margin-bottom:.5rem;border-radius:50% 50% 3px 50%;outline:1px solid var(--line);outline-offset:-1px}
+.brand__sw b{font:600 var(--t-small)/1.2 var(--f-display);letter-spacing:-.01em}
+.brand__sw span{font:500 var(--t-mono)/1.2 var(--f-mono);letter-spacing:.06em;color:var(--ink-3)}
+@media (max-width:900px){.brand{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- PROCESO: las escenas terminan de aparecer antes de que el scroll pase a la siguiente etapa ---------- */
+.pros__t.is-play .wa__m,.pros__t.is-play .wa__typing{animation-delay:calc(var(--i) * .3s + .35s)}
+.pros__t.is-play .brief__rows li,.pros__t.is-play .brief__idea,.pros__t.is-play .brief__out li{animation-delay:calc(var(--i) * .15s + .3s)}
+.pros__t.is-play .brief__rows::before{animation-duration:1.1s;animation-delay:.3s}
+
+/* v36 · showreel en celular: «©2026» y «Showreel» caben a los lados del video (antes se cortaban) */
+@media (max-width:700px){[data-page] .reel__w{font-size:5vw}.reel__w--l{right:calc(50% + var(--w,320px) / 2 + .7rem)}.reel__w--r{left:calc(50% + var(--w,320px) / 2 + .7rem)}}
+
+/* v36 · equipo (Nosotros) sin animaciones: fila normal, sin escena fija de tres pantallas */
+@media (min-width:901px){
+  .motion-off .tm{height:auto}
+  .motion-off .tm__sticky{position:static;height:auto;min-height:0;overflow:visible}
+  .motion-off .tm__a{display:none}
+  .motion-off .tm__b{position:static;padding-block:0}
+  .motion-off .tm__txt{opacity:1;translate:none}
+  .motion-off .tm__c{transform:none!important}
+  .motion-off .tm__c figcaption{opacity:1}
+  .motion-off .tm__c img{max-height:none}
+}
+/* el botón de la animación va en la esquina: no tapa el logotipo */
+.brand__play{left:clamp(14px,1.6vw,22px);top:clamp(14px,1.6vw,22px);translate:none}
+/* v36 · en tablet el símbolo ® del título sobresalía 6 px y dejaba un scroll lateral mínimo */
+html{overflow-x:clip}
