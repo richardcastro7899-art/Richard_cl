@@ -481,7 +481,7 @@ void main(){
     const cur = () => { const x = reelsUl.scrollLeft, w = rcs[0].offsetWidth + parseFloat(getComputedStyle(reelsUl).columnGap || 0); return Math.round(x / (w || 1)); };
     reelsUl.addEventListener("scroll", () => { ri = cur(); dots.forEach((d, i) => d.classList.toggle("is-on", i === ri)); }, { passive: true });
     const goR = (i) => { const c = rcs[(i + rcs.length) % rcs.length]; reelsUl.scrollTo({ left: c.offsetLeft - rcs[0].offsetLeft, behavior: "smooth" }); };
-    const runR = () => { clearInterval(rTimer); if (narrowQ.matches && rVis) rTimer = setInterval(() => { if (Date.now() - rHold > 6000) goR(ri + 1); }, 4500); };
+    const runR = () => { clearInterval(rTimer); if (narrowQ.matches && rVis) rTimer = setInterval(() => { if (Date.now() - rHold > 3500) goR(ri + 1); }, 2600); };
     reelsUl.addEventListener("touchstart", () => { rHold = Date.now(); }, { passive: true });
     onVisible(reelsUl, (v) => { rVis = v; runR(); }, "0px");
     narrowQ.addEventListener("change", runR);

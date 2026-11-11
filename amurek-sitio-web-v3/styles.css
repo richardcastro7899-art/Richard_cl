@@ -2402,3 +2402,8 @@ html{overflow-x:clip}
   .menu__links img{width:44px}
   .menu__d{display:none}
 }
+/* v42 · con el menú abierto la barra es transparente sobre el panel oscuro (en el inicio el fondo claro de .is-bg tapaba el logotipo crema) */
+.menu-open .nav::before,.menu-open .nav-morph .nav::before,.nav-morph.menu-open .nav.is-bg::before,.menu-open .nav.is-bg::before{opacity:0!important;transition:none}
+.menu-open :is(.nav__logo,.nav__tag,.nav__menu){opacity:1!important}
+.menu-open .nav__tag,.menu-open .nav__tag>span{color:var(--on-2)!important;opacity:1!important}
+.menu-open .nav__tag{border-left-color:rgba(245,243,238,.22)}

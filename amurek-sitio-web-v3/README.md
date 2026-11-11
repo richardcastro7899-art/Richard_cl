@@ -12,6 +12,10 @@ Base: la primera entrega de v3 (la que gustó). Los cambios de v36 (botón para 
 - **Barra del inicio**: vuelve a medir cuando terminan de cargar las tipografías, para que el logotipo llegue a su lugar sin cruzarse con la portada.
 - **Se conservan** las correcciones de tablet y celular: pestaña activa de Servicios legible, tarjetas de Proyectos que no tapan el texto, «©2026 / Showreel» sin cortarse, sin scroll lateral.
 
+## v42 — logo visible con el menú abierto y reels más ágiles
+- Con el menú abierto la barra queda transparente sobre el panel oscuro. En el inicio, el fondo claro de la barra (`.is-bg`) se quedaba encima y el logotipo crema no se veía; «Agencia Creativa» también se aclaró.
+- Reels en celular: cambian cada 2,6 s (antes 4,5 s); tras deslizar con el dedo, el avance automático espera 3,5 s.
+
 ## v41 — celular: reels, menú y servicios
 - **Reels**: carrusel de un reel a la vez, entero a la vista, con puntos de posición; avanza solo cada 4,5 s mientras está en pantalla y se puede deslizar con el dedo.
 - **Menú**: panel de marca con número, nombre grande, una línea de descripción y una foto por sección; la página actual en rosa; botón «Cotiza tu proyecto» y correo al pie; entrada escalonada. En pantallas bajas se compacta y se puede desplazar. Textos y fotos: `MENU_DESC` y `MENU_IMG` en `build.mjs`.
