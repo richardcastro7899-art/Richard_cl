@@ -1,4 +1,11 @@
-# AMUREK · Sitio web — versión 4 (propuesta v44)
+# AMUREK · Sitio web — versión 4 (propuesta v45)
+
+## v45 — servicios guiados por el scroll y testimonios sin fotos
+- **Servicios**: el panel queda fijo mientras se baja y los servicios cambian uno a uno; la imagen nueva sube cubriendo la anterior y el texto cambia con un fundido. A la izquierda, titular, lista de servicios (sin números; marca el activo y se puede tocar) y barra de avance. El último servicio se sostiene un tramo antes de soltar el panel. Alto de la sección: una pantalla + 62svh por servicio (55svh en celular). Reemplaza las tarjetas de v44.
+- **Testimonios**: sin fotos. Comillas grandes de marca como elemento gráfico, cita en grande, nombre y cargo · empresa, controles y cifras.
+- Proceso y menú de celular: como en v44.
+
+
 
 ## v44 — segunda propuesta de servicios y testimonios; proceso refinado
 - **Servicios**: etiqueta + titular de marca («Todo lo que tu marca necesita, en un solo equipo.») + texto y botón; debajo, cinco tarjetas con imagen: dos grandes (Branding, Audiovisual) y tres pequeñas, con número, nombre, descripción y etiquetas siempre bajo la imagen. En celular, lista compacta con miniatura. Reemplaza el índice con imagen flotante de v43.

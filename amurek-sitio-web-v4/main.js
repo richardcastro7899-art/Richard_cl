@@ -459,6 +459,35 @@ void main(){
     if ("IntersectionObserver" in window) { const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { io.disconnect(); start(); } }, { threshold: 0.25 }); io.observe(prosRow); } else start();
   }
 
+  /* ---------- v45 · SERVICIOS guiados por el scroll: el panel queda fijo y los servicios cambian uno a uno.
+     La imagen nueva sube cubriendo la anterior; al final el último servicio se sostiene un momento y el panel sigue su camino ---------- */
+  const svs = $(".svs");
+  if (svs && !still) {
+    const pin = $(".svs__pin", svs), ss = $$(".svs__s", svs), bs = $$(".svs__list button", svs), bar = $(".svs__bar", svs), N = ss.length;
+    let cur = -1;
+    const kOf = (p) => Math.min(N - 1, Math.floor(p * (N - 0.4) + 0.4));          // el último tramo (≈20 %) sostiene el último servicio
+    const set = (k) => {
+      if (k === cur) return; cur = k;
+      ss.forEach((s, j) => { s.classList.toggle("is-in", j <= k); s.classList.toggle("is-on", j === k); });
+      bs.forEach((b, j) => { b.classList.toggle("is-on", j === k); b.toggleAttribute("aria-current", j === k); });
+    };
+    // todas las imágenes miden lo mismo: el bloque de texto toma el alto del más largo (si no, la imagen anterior asoma por debajo)
+    const stage = $(".svs__stage", svs), xs = $$(".svs__x", svs);
+    const fitText = () => { stage.style.removeProperty("--xh"); stage.style.setProperty("--xh", Math.ceil(Math.max(...xs.map((x) => x.offsetHeight))) + "px"); };
+    fitText(); addEventListener("resize", fitText); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitText);
+    const range = () => Math.max(1, svs.offsetHeight - pin.offsetHeight);
+    const pinTop = () => parseFloat(getComputedStyle(pin).top) || 0;
+    onScroll(() => {
+      const r = svs.getBoundingClientRect(); if (r.bottom < -innerHeight || r.top > innerHeight * 2) return;
+      const p = clamp((pinTop() - r.top) / range());
+      set(kOf(p)); if (bar) bar.style.setProperty("--pp", p.toFixed(3));
+    });
+    bs.forEach((b, i) => b.addEventListener("click", () => {
+      const top = svs.getBoundingClientRect().top + scrollY - pinTop(), p = (i + 0.2) / (N - 0.4);
+      scrollTo({ top: top + Math.min(1, p) * range(), behavior: "smooth" });
+    }));
+  }
+
   /* ---------- v43 · PROCESO: etapas fijas a la izquierda; cada escena se anima al llegar y la etapa activa se marca con la barra ---------- */
   const pst = $(".pst");
   if (pst) {
