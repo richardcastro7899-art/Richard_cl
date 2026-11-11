@@ -60,6 +60,18 @@
   }));
   $$("[data-year]").forEach((y) => (y.textContent = new Date().getFullYear()));
 
+  /* ---------- v54: las páginas internas se descargan al acercar el puntero o tocar el enlace, así abren al instante.
+     Chrome y Edge ya lo hacen con las reglas de especulación de la cabecera; esto cubre Safari y Firefox ---------- */
+  if (!(HTMLScriptElement.supports && HTMLScriptElement.supports("speculationrules"))) {
+    const done = new Set([location.pathname]);
+    const warm = (e) => {
+      const a = e.target.closest && e.target.closest("a[href]"); if (!a || a.target === "_blank" || a.origin !== location.origin) return;
+      const u = a.pathname; if (done.has(u)) return; done.add(u);
+      const l = document.createElement("link"); l.rel = "prefetch"; l.href = a.href.split("#")[0]; document.head.appendChild(l);
+    };
+    addEventListener("pointerover", warm, { passive: true }); addEventListener("touchstart", warm, { passive: true });
+  }
+
   /* ---------- v49: consentimiento de cookies (LOPDP Ecuador). Elegir es tan fácil como aceptar; la elección se guarda y se puede cambiar
      desde el pie. Las herramientas de análisis o marketing que se agreguen deben cargarse solo así:
        addEventListener("amurek:consent", (e) => { if (e.detail.analytics) { ...cargar analítica... } });   (o leer window.amurekConsent) ---------- */
@@ -302,7 +314,7 @@ void main(){
       const U = (n) => gl.getUniformLocation(prog, n), uRes = U("uRes"), uT = U("uT"), uMouse = U("uMouse"), uNarrow = U("uNarrow");
       let t = 8, last = 0, raf = 0, vis = true, mx = 0.6, my = 0.5, sx = 0.6, sy = 0.5, narrow = 0, q = 1, slow = 0;
       const size = () => {
-        const r = heroPanel.getBoundingClientRect(), s = (innerWidth < 700 ? 0.5 : 0.65) * Math.min(devicePixelRatio || 1, 1.25) * q;
+        const r = heroPanel.getBoundingClientRect(), s = (innerWidth < 700 ? 0.4 : 0.42) * q;   // v54: el humo es difuso: a menos resolución se ve igual y cuesta menos de la mitad
         heroCv.width = Math.max(2, Math.round(r.width * s)); heroCv.height = Math.max(2, Math.round(r.height * s)); gl.viewport(0, 0, heroCv.width, heroCv.height);
         narrow = heroCv.width < heroCv.height * 0.9 ? 1 : 0;
       };

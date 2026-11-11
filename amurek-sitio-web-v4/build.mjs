@@ -175,6 +175,7 @@ ${m.page === "inicio" ? `<script type="application/ld+json">${JSON.stringify(LD)
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>(function(){var d=document.documentElement;try{history.scrollRestoration="manual"}catch(e){}if(/[?&]still/.test(location.search))return;d.classList.add("js");try{if(!sessionStorage.getItem("amurek-pre"))d.classList.add("pre-on")}catch(e){}if("${m.page}"==="inicio")d.classList.add("nav-morph")})();</script>
 <link rel="stylesheet" href="styles.css">
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head>
 <body data-page="${m.page}">
 ${SYMBOLS}

@@ -41,3 +41,20 @@ Medida en el navegador sobre los valores calculados de 6 páginas (Inicio, Servi
 
 ## Pendiente (no se cambió)
 - **Contenido de referencia**: testimonios, cifras, tres miembros del equipo e imágenes de `assets/ref` son de referencia.
+
+## v54 — Rendimiento y fluidez
+Medido con Chromium en 5 páginas: computadora (CPU ×2) y celular simulado lento (Pixel 7, CPU ×4, red móvil). Scroll continuo de arriba abajo contando cada fotograma.
+
+| Medida | Antes | Después |
+|---|---|---|
+| Tirones al hacer scroll en el inicio (computadora) | 18 de 566 fotogramas | 1 de 567 |
+| Primer contenido visible del inicio (celular lento) | 1,27 s | 0,94 s |
+| `styles.css` en el zip | 188 KB | 150 KB (≈30 KB comprimido por Cloudflare) |
+| `main.js` en el zip | 60 KB | 37 KB (≈13 KB comprimido) |
+| Imagen más pesada (Carmín) | 314 KB | 201 KB |
+| Saltos de diseño al cargar (CLS) | 0 | 0 |
+| Recursos que no cargan / errores de script | 0 / 0 | 0 / 0 |
+
+- **Causa de los tirones**: el humo del inicio (WebGL) calculaba demasiados píxeles. Ahora se dibuja a menor resolución; al ser difuso se ve igual (comparado en captura) y cuesta menos de la mitad. La animación sigue siempre activa.
+- **Navegación instantánea**: las páginas internas se descargan cuando el puntero se acerca al enlace (Chrome y Edge con reglas de especulación; Safari y Firefox con un respaldo propio).
+- **Zip de producción**: CSS y JS comprimidos con esbuild; el repositorio conserva las versiones legibles. Verificado con 131 capturas: sin diferencias visibles.
