@@ -529,7 +529,7 @@ const PORT = [[R + "t-retrato.jpg", "50% 14%"], [R + "c-2.jpg", "50% 22%"], [R +
 const tsmCard = ([q, , n, r]) => `<li class="tsm__c"><blockquote>${q}</blockquote><p class="tsm__by"><b>${n}</b><span>${r}</span></p></li>`;
 const TESTI = `<section class="pad tsm" id="testimonios" data-placeholder="testimonios y cifras de referencia">
   <div class="panel tsm__panel">
-    <div class="rhead tsm__head"><div><p class="eyb"><i></i>Clientes</p><h2 class="h2 rv">Lo que dicen nuestros clientes.</h2></div><p>Opiniones y cifras de referencia. Aquí irán las de tus clientes reales.</p></div>
+    <div class="rhead tsm__head"><h2 class="h2 rv">Lo que dicen nuestros clientes.</h2><p>Opiniones y cifras de referencia. Aquí irán las de tus clientes reales.</p></div>
     <div class="tsm__view" role="region" aria-label="Testimonios">
       <div class="tsm__track"><ul class="tsm__set">${TQ.map(tsmCard).join("")}</ul><ul class="tsm__set" aria-hidden="true">${TQ.map(tsmCard).join("")}</ul></div>
     </div>
