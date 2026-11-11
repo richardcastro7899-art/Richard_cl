@@ -339,18 +339,23 @@ const svPanel = (s, i) => `<article class="sv__p${i === 0 ? " is-on" : ""}" role
           </div>
         </article>`;
 const SERVICES_PANEL = `<section class="pad" id="servicios">
-  <div class="panel svx">
-    <div class="svx__head"><h2 class="h1 rv">Servicios</h2><p>Cinco servicios, un solo equipo. Contrata uno o súmalos cuando los necesites.</p></div>
-    <ol class="svx__list">
-      ${SERVICES.map((s, i) => `<li><a class="svx__a" href="servicios.html#${s.id}" data-img="${s.img}">
-        <span class="svx__n">${pad2(i + 1)}</span>
-        <span class="svx__t">${s.short}</span>
-        <span class="svx__d">${s.d}</span>
-        <span class="svx__m" aria-hidden="true"><img src="${s.img}" alt="" loading="lazy"></span>
-        <i class="svx__go" aria-hidden="true">${AR_UR}</i>
+  <div class="panel svb">
+    <div class="svb__head">
+      <div class="svb__title"><p class="eyb"><i></i>Servicios</p><h2 class="h1 rv">Todo lo que tu marca necesita, en un solo equipo.</h2></div>
+      <div class="svb__aside"><p>Cinco servicios que trabajan juntos. Contrata uno solo o arma el equipo completo para tu proyecto.</p><a class="btn btn--light" href="servicios.html"><span>Ver todos los servicios</span><i class="dot"></i></a></div>
+    </div>
+    <ul class="svb__grid">
+      ${SERVICES.map((s, i) => `<li class="svb__c${i < 2 ? " svb__c--l" : ""}"><a href="servicios.html#${s.id}">
+        <figure class="svb__m"><img src="${s.img}" alt="" loading="lazy"></figure>
+        <div class="svb__x">
+          <p class="svb__n">${pad2(i + 1)}</p>
+          <h3>${s.t}</h3>
+          <p class="svb__d">${s.d}</p>
+          <p class="svb__tags">${s.tags.slice(0, 3).join(" · ")}</p>
+        </div>
+        <i class="svb__go" aria-hidden="true">${AR_UR}</i>
       </a></li>`).join("\n      ")}
-    </ol>
-    <div class="svx__cta"><a class="btn btn--light" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a class="btn btn--glass" href="servicios.html"><span>Ver todos los servicios</span><i class="dot"></i></a></div>
+    </ul>
   </div>
 </section>`;
 
@@ -445,7 +450,7 @@ const PROCESS = `<section class="sec pst" id="proceso">
   </div>
   <div class="wrap pst__grid">
     <div class="pst__side">
-      <ol class="pst__nav">${proc.map(([t], i) => `<li><button type="button" data-k="${i}"${i === 0 ? ' class="is-on"' : ""}><span>${pad2(i + 1)}</span><b>${t}</b></button></li>`).join("")}</ol>
+      <ol class="pst__nav">${proc.map(([t], i) => `<li><button type="button" data-k="${i}"${i === 0 ? ' class="is-on"' : ""}><span>${pad2(i + 1)}</span><b>${t}</b><em class="pst__d">${proc[i][1]}</em></button></li>`).join("")}</ol>
       <div class="pst__bar" aria-hidden="true"><i></i></div>
       <a class="btn btn--dark" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a>
     </div>
@@ -510,20 +515,25 @@ const tcard2 = ([q, av, n, r]) => `<li class="tcard2" data-spot><blockquote>«${
 // CIFRAS DE REFERENCIA: reemplazar por los números reales de la agencia antes de publicar
 const STATS = [["+", 120, "", "Proyectos entregados"], ["+", 45, "", "Marcas acompañadas"], ["", 92, "%", "Clientes que repiten"], ["+", 300, "", "Piezas de contenido al mes"]];
 const tq5Card = ([q, av, n, r]) => `<li class="tq5__c"><blockquote>«${q}»</blockquote><figcaption><img src="${ref(av)}" alt=""><span><b>${n}</b>${r}</span></figcaption></li>`;
+const PORT = [[R + "t-retrato.jpg", "50% 14%"], [R + "c-2.jpg", "50% 22%"], [R + "c-4.jpg", "50% 22%"], [R + "c-1.jpg", "50% 22%"], [R + "c-5.jpg", "50% 22%"], [R + "c-3.jpg", "50% 22%"]];
 const TESTI = `<section class="pad" id="testimonios" data-placeholder="testimonios y cifras de referencia">
-  <div class="panel tsx" id="tsx">
-    <div class="tsx__head"><h2 class="h1 rv">Lo que dicen nuestros clientes</h2><p>Opiniones y cifras de referencia. Aquí irán las de tus clientes reales.</p></div>
-    <div class="tsx__body">
+  <div class="panel tsx tsp" id="tsx">
+    <div class="tsp__head"><p class="eyb"><i></i>Clientes</p><h2 class="h1 rv">Lo que dicen quienes ya trabajaron con nosotros.</h2></div>
+    <div class="tsp__media">
+      ${TQ.map(([, , n, r], i) => `<figure class="tsp__ph${i === 0 ? " is-on" : ""}"><img src="${PORT[i][0]}" alt="" loading="lazy" style="object-position:${PORT[i][1]}"><figcaption><b>${n}</b><span>${r}</span></figcaption></figure>`).join("\n      ")}
+    </div>
+    <div class="tsp__main">
       <div class="tsx__stage" aria-live="polite">
-        ${TQ.map(([q, av, n, r], i) => `<figure class="tsx__q${i === 0 ? " is-on" : ""}"><blockquote>«${q}»</blockquote><figcaption><img src="${ref(av)}" alt="" loading="lazy"><span><b>${n}</b>${r}</span></figcaption></figure>`).join("\n        ")}
+        ${TQ.map(([q], i) => `<figure class="tsx__q${i === 0 ? " is-on" : ""}"><blockquote>«${q}»</blockquote></figure>`).join("\n        ")}
       </div>
       <div class="tsx__ctrl">
         <span class="tsx__count"><b>01</b> / ${pad2(TQ.length)}</span>
         <div class="tsx__dots" role="group" aria-label="Elegir testimonio">${TQ.map((_, i) => `<button type="button" class="tsx__d${i === 0 ? " is-on" : ""}" aria-label="Testimonio ${i + 1}"><i></i></button>`).join("")}</div>
         <div class="tsx__nav"><button type="button" data-tsx="-1" aria-label="Testimonio anterior"><svg class="ar" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" data-tsx="1" aria-label="Testimonio siguiente">${AR}</button></div>
       </div>
+      <ul class="tsx__stats" aria-label="Cifras de referencia">${STATS.map(([pre, n, suf, l]) => `<li><b class="tsx__n">${pre}<span data-count="${n}">${n}</span>${suf}</b><p>${l}</p></li>`).join("")}</ul>
+      <p class="tsp__note">Opiniones y cifras de referencia: aquí irán las de tus clientes reales.</p>
     </div>
-    <ul class="tsx__stats" aria-label="Cifras de referencia">${STATS.map(([pre, n, suf, l]) => `<li><b class="tsx__n">${pre}<span data-count="${n}">${n}</span>${suf}</b><p>${l}</p></li>`).join("")}</ul>
   </div>
 </section>`;
 

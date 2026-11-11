@@ -459,21 +459,6 @@ void main(){
     if ("IntersectionObserver" in window) { const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { io.disconnect(); start(); } }, { threshold: 0.25 }); io.observe(prosRow); } else start();
   }
 
-  /* ---------- v43 · SERVICIOS: índice editorial; con puntero fino, la imagen del servicio sigue al cursor ---------- */
-  const svx = $(".svx");
-  if (svx && fine) {
-    const items = $$(".svx__a", svx), list = $(".svx__list", svx);
-    const fl = document.createElement("figure"); fl.className = "svx__float"; fl.setAttribute("aria-hidden", "true");
-    fl.innerHTML = items.map((a) => `<img src="${a.dataset.img}" alt="">`).join(""); document.body.appendChild(fl);
-    const imgs = $$("img", fl); let tx = 0, ty = 0, x = 0, y = 0, raf = 0, on = false;
-    const loop = () => { x += (tx - x) * 0.16; y += (ty - y) * 0.16; fl.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${Math.max(-6, Math.min(6, (tx - x) * 0.05)).toFixed(2)}deg)`; raf = on || Math.abs(tx - x) + Math.abs(ty - y) > 0.5 ? requestAnimationFrame(loop) : 0; };
-    const aim = (e) => { const w = fl.offsetWidth, h = fl.offsetHeight; tx = e.clientX + 28 + w > innerWidth - 12 ? e.clientX - 28 - w : e.clientX + 28; ty = Math.min(innerHeight - h - 12, Math.max(12, e.clientY - h / 2)); };
-    items.forEach((a, i) => a.addEventListener("pointerenter", () => imgs.forEach((m, j) => m.classList.toggle("is-on", i === j))));
-    list.addEventListener("pointerenter", (e) => { on = true; aim(e); x = tx; y = ty; fl.classList.add("is-on"); if (!raf) raf = requestAnimationFrame(loop); });
-    list.addEventListener("pointermove", (e) => { aim(e); if (!raf) raf = requestAnimationFrame(loop); });
-    list.addEventListener("pointerleave", () => { on = false; fl.classList.remove("is-on"); });
-  }
-
   /* ---------- v43 · PROCESO: etapas fijas a la izquierda; cada escena se anima al llegar y la etapa activa se marca con la barra ---------- */
   const pst = $(".pst");
   if (pst) {
@@ -499,6 +484,7 @@ void main(){
       qs.forEach((q, j) => q.classList.toggle("is-on", j === k));
       ds.forEach((d, j) => { d.classList.toggle("is-on", j === k); d.classList.toggle("is-done", j < k); d.setAttribute("aria-pressed", String(j === k)); const f = $("i", d); f.style.animation = "none"; void f.offsetWidth; f.style.animation = ""; });
       if (num) num.textContent = String(k + 1).padStart(2, "0");
+      $$(".tsp__ph", tsx).forEach((ph, j) => ph.classList.toggle("is-on", j === k));   // v44: el retrato acompaña al testimonio
     };
     ds.forEach((d, j) => { d.addEventListener("click", () => set(j)); $("i", d).addEventListener("animationend", () => { if (d.classList.contains("is-on")) set(k + 1); }); });
     $$("[data-tsx]", tsx).forEach((bt) => bt.addEventListener("click", () => set(k + +bt.dataset.tsx)));

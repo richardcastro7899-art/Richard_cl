@@ -1,4 +1,11 @@
-# AMUREK · Sitio web — versión 4 (propuesta v43)
+# AMUREK · Sitio web — versión 4 (propuesta v44)
+
+## v44 — segunda propuesta de servicios y testimonios; proceso refinado
+- **Servicios**: etiqueta + titular de marca («Todo lo que tu marca necesita, en un solo equipo.») + texto y botón; debajo, cinco tarjetas con imagen: dos grandes (Branding, Audiovisual) y tres pequeñas, con número, nombre, descripción y etiquetas siempre bajo la imagen. En celular, lista compacta con miniatura. Reemplaza el índice con imagen flotante de v43.
+- **Testimonios**: retrato grande del cliente a la izquierda (cambia con cada testimonio) y, a la derecha, titular, cita destacada, controles y cifras. Retratos: `PORT` en `build.mjs`.
+- **Proceso**: en la columna fija, la etapa activa muestra su descripción; las tarjetas quedan con una etiqueta y la escena, sin repetir el título, y son más bajas.
+
+
 
 Copia de `../amurek-sitio-web-v3/` con cuatro piezas rediseñadas; v3 no se toca. Estilos: bloque «v43» al final de `styles.css`; interacciones: bloques «v43» en `main.js`; marcado: `SERVICES_PANEL`, `PROCESS`, `TESTI` y el menú en `build.mjs`.
 - **Ritmo del inicio**: oscuro y claro alternados. Proceso pasa a claro para no quedar pegado a Servicios (oscuro).
