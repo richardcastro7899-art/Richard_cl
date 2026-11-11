@@ -2704,3 +2704,10 @@ html{overflow-x:clip}
 .tsm__stats b{color:var(--on-1)}
 .tsm__stats p{color:var(--on-2)}
 .svh__end>p.svh__all{font:500 .72rem/1.5 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--on-3);max-width:none}
+/* v48 · testimonios con el mismo fondo que los demás paneles oscuros (Planes, Servicios, cierre) */
+[data-page] .tsm__panel{background:radial-gradient(70% 60% at 50% 0,rgba(160,60,100,.32),transparent 62%),radial-gradient(60% 50% at 0 100%,rgba(84,29,53,.6),transparent 66%),var(--noche)}
+.tsm__head .eyb{color:var(--on-3)}
+.tsm__head .eyb i{background:var(--rosa)}
+.tsm__view::before{background:linear-gradient(90deg,var(--noche),rgba(13,5,9,0))}
+.tsm__view::after{background:linear-gradient(270deg,var(--noche),rgba(13,5,9,0))}
+.tsm__c{box-shadow:none}

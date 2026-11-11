@@ -3,7 +3,7 @@
 ## v47 — servicios en pantallas bajas y cierre presente; testimonios en panel vino
 - **Servicios en portátiles de 768 px o menos de alto**: encabezado compacto (titular en dos líneas, menos relleno) para que cada servicio quepa entero con sus botones. Probado en 1350×640 (MacBook Air 11").
 - **Foco que acompaña el avance**: el resaltado va del primer servicio (al entrar) a la tarjeta de cierre (al salir), así el cierre se ve iluminado. El cierre es más ancho, recuerda los cinco servicios y se sostiene más tiempo (38 % de una pantalla).
-- **Testimonios**: panel vino de marca con tarjetas crema; se distingue de reels y equipo (claros) y de servicios y planes (oscuros).
+- **Testimonios**: panel con el mismo fondo oscuro que Planes y Servicios (negro de marca con luces suaves en vino) y tarjetas crema; se distingue de reels y equipo, que son claros.
 
 
 
