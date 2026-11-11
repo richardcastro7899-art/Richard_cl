@@ -254,7 +254,7 @@ const FOOT = `<footer class="foot7" id="foot">
       </nav>
     </div>
     <div class="foot7__bar">
-      <div class="foot7__l"><ul class="foot7__soc" data-social-icons hidden></ul><p class="foot7__loc">Ecuador · <span data-clock>--:--</span></p></div>
+      <div class="foot7__l"><ul class="foot7__soc" data-social-icons hidden></ul></div>
       <p class="foot7__c">©<span data-year>2026</span> AMUREK. Todos los derechos reservados.</p>
     </div>
     <div class="foot7__wm" aria-hidden="true">${WORDMARK}</div>
@@ -315,9 +315,9 @@ const HERO = `<section class="hero4" id="top">
           <div class="hero4__cta"><a class="btn btn--light" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a class="btn btn--glass" href="proyectos.html"><span>Ver proyectos</span><i class="dot"></i></a></div>
         </div>
       </div>
-      <a class="hcard" href="contacto.html" aria-label="Habla con Richard Castro, director creativo de AMUREK">
-        <img src="assets/team/richard.jpg" alt="" width="56" height="56">
-        <span class="hcard__t"><b>Habla con Richard</b><span>Director creativo</span></span>
+      <a class="hcard" href="contacto.html" aria-label="Habla con un asesor de AMUREK">
+        <span class="hcard__iso" aria-hidden="true">${ISO}</span>
+        <span class="hcard__t"><b>Habla con un asesor</b><span>Equipo de proyectos</span></span>
         <i class="hcard__go" aria-hidden="true">${AR_UR}</i>
       </a>
     </div>

@@ -2604,3 +2604,11 @@ html.ck-open .stickycta{opacity:0;pointer-events:none}
 /* 404 */
 .e404 .giant{max-width:12ch}
 .e404__act{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.75rem}
+
+/* ============================================================
+   v50 — pie más corto (redes en una fila) · tarjeta del inicio con el isotipo
+   ============================================================ */
+.foot7 .foot7__soc:not([hidden]){display:flex;flex-direction:row;flex-wrap:wrap;gap:.6rem}
+.foot7__soc li{margin:0}
+.hcard__iso{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:10px;background:var(--vino);color:var(--crema)}
+.hcard__iso svg{width:46%;height:auto}
