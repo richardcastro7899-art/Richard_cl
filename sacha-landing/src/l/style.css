@@ -1,0 +1,136 @@
+/* =====================  PROPUESTA «INSTITUCIONAL SOBRIA»  =====================
+   Capa final sobre e/ g/ h/ i/ j/ k/. Cabecera fija de ancho completo (franja de servicio + barra blanca con el logo
+   completo), portada dividida texto/foto sin marcos redondeados, franja de cifras, títulos en un solo peso, esquinas
+   de 8 px, botones rectangulares suaves y tarjetas con foto arriba y texto abajo. Paleta del manual sin cambios:
+   blanco y crema de base, bosque/selva para contraste, dorado como acento y terracota solo para reportar. */
+:root{--r-xl:10px;--r-l:8px;--r-m:6px;--hdr:84px}
+body{background:#FFFFFF}
+.lt{font-weight:inherit}
+.btn{border-radius:8px}
+.btn.don{background:#24362E;color:#F4EFE6}
+.btn.don:hover{background:#3F5A4F}
+.btn.line{border-color:rgba(36,54,46,.35);color:#24362E}
+.eye{letter-spacing:.14em}
+.eye::before{width:18px;height:2px;border-radius:0}
+
+/* franja de servicio */
+.ubar{background:#24362E;color:#DCE8E0;font-size:13px}
+.ub-in{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:38px;flex-wrap:wrap;padding-block:6px}
+.ub-r{display:flex;align-items:center;gap:14px}
+.ub-rep{display:inline-flex;align-items:center;gap:8px;background:none;border:0;padding:0;color:#F4EFE6;font-weight:700;font-size:13px}
+.ub-rep i{width:8px;height:8px;border-radius:50%;background:#D17A5B}
+.ub-rep:hover{text-decoration:underline}
+.ub-sep{width:1px;height:14px;background:rgba(244,239,230,.25)}
+.ub-num{background:none;border:0;padding:0;color:#D9B97A;font-weight:700;font-size:13px}
+@media (max-width:760px){.ubar .ub-in>span:first-child{display:none}.ub-sep,.ub-r>span:last-child{display:none}}
+
+/* cabecera fija, no flotante */
+html:not(.rig-on) .hd,html:not(.rig-on) .hd.solid{position:sticky;top:0;left:0;right:0;z-index:80;display:block;padding:0;border-radius:0;border:0;border-bottom:1px solid rgba(36,54,46,.12);background:#FFFFFF;color:#24362E;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;transition:box-shadow .3s}
+html:not(.rig-on) .hd.solid{box-shadow:0 8px 24px -18px rgba(36,54,46,.5)}
+.hd-in{display:flex;align-items:center;gap:28px;height:var(--hdr)}
+.hd .brand{width:132px;color:#AF7409}
+.hd .brand .logo{color:#AF7409}
+.hnav{justify-content:flex-end}
+.hnav button{font-size:15px;padding:8px 12px;opacity:.85}
+.hnav button::after{background:#AF7409;bottom:-2px}
+.hd .btn.don{padding:11px 20px}
+.menubtn{border-radius:8px;border-color:rgba(36,54,46,.25);color:#24362E}
+.hd .prog{display:block;bottom:-1px}.hd .prog i{background:#AF7409}
+@media (max-width:1180px){.hd .brand{width:110px}}
+section[id]{scroll-margin-top:var(--hdr)}
+
+/* portada dividida */
+.lh{background:#FFFFFF}
+.lh-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);min-height:min(680px,calc(100svh - 122px - 120px))}
+.lh-copy{display:grid;gap:22px;align-content:center;padding:clamp(40px,6vw,88px) clamp(24px,4vw,64px) clamp(40px,6vw,88px) max(24px,calc((100vw - 1240px) / 2 + 20px))}
+.lh-copy>*{animation:rise .8s var(--ease) both}.lh-copy>.lead{animation-delay:.1s}.lh-copy>.cta{animation-delay:.18s}.lh-copy>.lh-rep{animation-delay:.26s}
+.lh h1{font-size:clamp(38px,4.4vw,66px);line-height:1.02;letter-spacing:-.04em;font-weight:800;color:#24362E;max-width:15ch}
+.lh h1 em{font-style:normal;color:#AF7409}
+.lh .lead{font-size:clamp(17px,1.35vw,20px);max-width:46ch;color:#3F5A4F}
+.lh .cta{display:flex;gap:12px;flex-wrap:wrap}
+.lh-rep{display:grid;grid-template-columns:44px 1fr 20px;gap:14px;align-items:center;max-width:460px;text-align:left;background:#F4EFE6;border:0;border-left:3px solid #D17A5B;border-radius:8px;padding:14px 16px;color:#24362E}
+.lh-rep>span:first-child{width:44px;height:44px;border-radius:50%;background:#FFFFFF;color:#D17A5B;display:grid;place-items:center;font-size:20px}
+.lh-rep b{display:block;font-family:var(--font-display);font-size:16px}
+.lh-rep small{font-size:13.5px;color:#526459}
+.lh-rep:hover{background:#EDE6D9}
+.lh-ph{position:relative;margin:0;background:#0F1814;min-height:420px}
+.lh-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lh-ph .credit{right:12px;bottom:12px;left:auto;top:auto}
+.lh-facts{background:#24362E;color:#F4EFE6}
+.lh-facts .counters{gap:0;padding-block:8px}
+.lh-facts .counters li,.lh-facts .counters li:nth-child(4){background:none;border-radius:0;padding:26px 24px;border-left:1px solid rgba(244,239,230,.14);color:#F4EFE6}
+.lh-facts .counters li:first-child{border-left:0;padding-left:0}
+.lh-facts .counters .ci{display:none}
+.lh-facts .counters b{color:#D9B97A;font-size:clamp(30px,3.2vw,46px)}
+.lh-facts .counters span{color:#DCE8E0;font-size:14px}
+.lh-facts .counters cite{color:#9FB5A9}
+@media (max-width:900px){.lh-grid{grid-template-columns:1fr;min-height:0}.lh-ph{order:-1;min-height:0;aspect-ratio:16/10}.lh-copy{padding:32px 20px 40px}.lh-facts .counters li:nth-child(3){border-left:0;padding-left:0}.lh-facts .counters li{padding:18px 14px}}
+
+/* títulos de sección */
+.ks h2,.kh2 h2{font-size:clamp(30px,3.6vw,50px);line-height:1.05;letter-spacing:-.035em}
+.kh2{border-bottom:1px solid rgba(36,54,46,.14);padding-bottom:24px}
+.ks.dark .kh2{border-bottom-color:rgba(244,239,230,.14)}
+.ks{padding-block:clamp(64px,8vw,112px)}
+
+/* quiénes somos */
+.ms{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:clamp(28px,5vw,80px);align-items:start}
+.ms-l{display:grid;gap:14px;position:sticky;top:calc(var(--hdr) + 32px)}
+.ms-r{display:grid;gap:32px}
+.ms .statement{font-size:clamp(22px,2.4vw,34px);max-width:none;color:#3F5A4F}
+.mvv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid #24362E}
+.mvv>div{display:grid;gap:8px;align-content:start;padding:20px 20px 0 0}
+.mvv>div+div{padding-left:20px;border-left:1px solid rgba(36,54,46,.14)}
+.mvv b{font-family:var(--font-display);font-size:18px;color:#24362E}
+.mvv p{font-size:15.5px;color:#526459;line-height:1.5}
+.allies2 li{border-radius:6px}
+@media (max-width:900px){.ms{grid-template-columns:1fr}.ms-l{position:static}.mvv{grid-template-columns:1fr}.mvv>div+div{padding-left:0;border-left:0;border-top:1px solid rgba(36,54,46,.14);padding-top:16px}}
+
+/* videos y bloques heredados: esquinas sobrias */
+#video .player,#podcast .yt,.cfc,.hx-ph,.mosaic .wt,.case,.act,#ubicaciones .mapbox,.sa-ph img,.askcard,.kcta-in,.give2,.vrail .hrow,.cf-nav{border-radius:8px}
+.cf-nav{border-radius:50%}
+
+/* qué hacemos sobre bosque */
+#hacemos{background:#1B2B24}
+
+/* casos */
+.case{border-radius:8px}
+.cph .tag{border-radius:4px}
+
+/* cómo ayudar: foto arriba, texto abajo */
+.acts{gap:20px}
+.act{aspect-ratio:auto;display:grid;grid-template-rows:auto 1fr;background:#FFFFFF;color:#24362E;border:1px solid rgba(36,54,46,.12);transition:box-shadow .3s,transform .3s var(--ease)}
+.act:hover{transform:translateY(-3px);box-shadow:0 20px 36px -26px rgba(36,54,46,.6)}
+.act::after{display:none}
+.act img{position:static;height:200px;z-index:0}
+.at{position:static;padding:20px 20px 22px}
+.at>span{color:#526459}
+.at em{background:none;color:#24362E;padding:0;border-bottom:2px solid #AF7409;border-radius:0}
+@media (max-width:520px){.act{aspect-ratio:auto}}
+
+/* donar */
+.ld{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:clamp(28px,5vw,80px);align-items:start}
+.ld-copy{display:grid;gap:14px;align-content:start}
+.ld .big350 b{color:#24362E}
+.ld .big350 small{color:#526459}
+.ld-p{color:#3F5A4F}
+.ld .uses2{color:#24362E;max-width:460px}
+.ld .uses2 .ic{color:#AF7409}
+.trans{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(36,54,46,.14);margin-top:6px}
+.trans div{padding:12px 16px 0 0}
+.trans dt{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#526459}
+.trans dd{margin:2px 0 0;font-family:var(--font-display);font-weight:700;font-size:16px}
+.ld .dtop{display:flex;gap:12px;align-items:flex-end;margin-top:8px}
+.ld .dtop .sx{--h:96px;flex:none}
+.ld .dtop .bubble{margin-bottom:38px;font-size:13.5px;max-width:24ch;box-shadow:none;border:1px solid rgba(36,54,46,.12);background:#FFFFFF}
+.ld-card .give2{background:#FFFFFF;border:1px solid rgba(36,54,46,.14);box-shadow:0 30px 60px -44px rgba(36,54,46,.6);max-width:none}
+.ld-card .give2 .hill{display:none}
+@media (max-width:900px){.ld{grid-template-columns:1fr}}
+
+/* llamado final y pie */
+.kcta-in{background:#24362E}
+.kcta-in::before{opacity:.07}
+.news2{border-radius:8px}
+.news2 form{border-radius:8px}
+.news2 .btn{border-radius:6px}
+.sc-h>small::before{width:18px;height:2px;border-radius:0}
+html:not(.rig-on) .scene .sc-in{width:min(1200px,calc(100% - 2 * max(20px,env(safe-area-inset-left,0px))))}
