@@ -12,6 +12,16 @@ Base: la primera entrega de v3 (la que gustó). Los cambios de v36 (botón para 
 - **Barra del inicio**: vuelve a medir cuando terminan de cargar las tipografías, para que el logotipo llegue a su lugar sin cruzarse con la portada.
 - **Se conservan** las correcciones de tablet y celular: pestaña activa de Servicios legible, tarjetas de Proyectos que no tapan el texto, «©2026 / Showreel» sin cortarse, sin scroll lateral.
 
+## v40 — celular y tablet con el mismo impacto que el escritorio
+Todo va dentro de `@media (max-width:900px)` al final de `styles.css`: el escritorio no cambia.
+- Escala tipográfica propia del celular: titulares grandes y apretados (antes se encogían a la mitad).
+- Portada: titular más grande y los dos botones («Cotiza tu proyecto» y «Ver proyectos»).
+- Servicios (inicio): pestañas de tamaño de botón (antes, pastillas de 30 px que se salían de la pantalla).
+- Testimonios: tarjetas más anchas que se leen enteras; cifras con numerales grandes.
+- Nosotros: «Nuestro / Estudio» en grande, en dos líneas, con la foto debajo a todo el ancho; la animación del logotipo de borde a borde y completa.
+- Botón flotante «Cotiza tu proyecto»: se esconde al bajar y aparece al subir, para no tapar lo que se lee.
+- Escritorio: el humo de la portada ya no se pausa al hacer scroll (se quitó la pausa de v39).
+
 ## v39 — barra del inicio fluida
 Medido con la CPU 6× más lenta (recorrido de la barra, 1366×768): **68,6 ms → 18,3 ms por fotograma**; fotogramas lentos (>33 ms) 17 de 17 → 1 de 17; trabajo del hilo principal 559 → 213 ms.
 - **Causa principal**: las luces del fondo de la portada (`.hs__glow`) tenían `filter: blur(90px)` sobre capas enormes; era lo más caro de pintar al hacer scroll. Ya son degradados suaves, así que se quitó el filtro (también en `.cta3__g`, `.svc4__glow`, `.aboutg__grad` y el proceso antiguo) sin cambiar el aspecto.

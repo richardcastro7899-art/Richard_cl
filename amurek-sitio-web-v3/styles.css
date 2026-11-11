@@ -2285,3 +2285,56 @@ html{overflow-x:clip}
 
 /* tablet y celular: al llegar el logotipo, las palabras de la barra aparecen con un fundido (el vuelo ya no las muestra) */
 .nav-morph .nav__tag>span{transition:opacity .4s var(--ease) .05s}
+
+/* ============================================================
+   v40 — CELULAR Y TABLET CON EL MISMO IMPACTO QUE EL ESCRITORIO
+   Todo va dentro de @media (max-width:900px): el escritorio no cambia.
+   · Escala tipográfica propia del celular: titulares grandes y apretados, como en el escritorio (antes se encogían a la mitad)
+   · Portada: titular más grande y los dos botones
+   · Servicios (inicio): pestañas de tamaño normal (antes eran pastillas gigantes de 30 px)
+   · Testimonios y cifras: tarjetas que se leen enteras y numerales grandes
+   · Nosotros: «Nuestro / Estudio» en grande y la foto debajo a todo el ancho; la animación del logotipo de borde a borde,
+     completa (antes se recortaban los lados)
+   · Botón flotante «Cotiza tu proyecto»: se esconde al bajar y aparece al subir, así no tapa el contenido
+   ============================================================ */
+@media (max-width:900px){
+  :root{
+    --t-h2:clamp(2.5rem,10.4vw,3.6rem);
+    --t-h3:clamp(2.05rem,8.6vw,2.9rem);
+    --t-display:clamp(2.8rem,12vw,4.4rem);
+    --t-lead:1.06rem;
+  }
+  /* titulares de sección y de cierre */
+  [data-page] :is(.work__head .h1,.svc4__head .h1,.tq5__head .h1,.tk__head .h1,.faq3 .h1,.rhead .h2,.statement__h,.values__head .h2,.appr__head .h2){text-wrap:balance}
+  [data-page] .cta3 .h1{font-size:var(--t-display);line-height:.95}
+
+  /* portada */
+  [data-page] .hero4__t{font-size:clamp(2.6rem,11.2vw,4.2rem);line-height:.95;letter-spacing:-.045em}
+  .hero4__cta .btn--glass{display:inline-flex}
+
+  /* servicios del inicio: pestañas en tamaño de botón */
+  [data-page] .sv__t b{font-size:1.02rem;line-height:1;letter-spacing:-.01em}
+  [data-page] .sv__t{padding:.7rem 1.05rem}
+
+  /* testimonios: cada tarjeta se lee entera; cifras grandes */
+  [data-page] .tq5__c{width:min(80vw,360px)}
+  [data-page] .tq5__n{font-size:clamp(2.9rem,12.4vw,3.8rem);line-height:.95;letter-spacing:-.05em}
+  [data-page] .tq5__stats{gap:1.6rem 1rem}
+
+  /* nosotros: título grande en dos líneas y la foto debajo a todo el ancho */
+  [data-page] .studio__row{display:flex;flex-direction:column;align-items:flex-start;gap:0}
+  [data-page] .studio__w{font-size:clamp(3.6rem,18vw,6.4rem);line-height:.9;letter-spacing:-.05em}
+  [data-page] .studio__img{order:1;width:100%;aspect-ratio:4/3;margin-top:clamp(18px,4vw,28px)}
+  [data-page] .studio__meta{margin-top:clamp(18px,4vw,28px)}
+
+  /* nosotros: la animación del logotipo de borde a borde, completa */
+  [data-page] .appr__vid{width:auto;height:auto;aspect-ratio:16/9;margin-inline:calc(var(--edge) * -1);border-radius:0}
+  [data-page] .appr__vid video{object-fit:cover}
+
+  /* botón flotante: más compacto, con margen de las zonas seguras del teléfono */
+  .stickycta{right:max(1rem,env(safe-area-inset-right,0px));bottom:max(1rem,env(safe-area-inset-bottom,0px));padding:.8rem 1.1rem;transition:transform .45s var(--ease)}
+}
+@media (max-width:420px){
+  [data-page] .hero4__cta{gap:.5rem}
+  [data-page] .hero4__cta .btn{padding:.85rem 1rem .85rem 1.15rem;font-size:.86rem}
+}

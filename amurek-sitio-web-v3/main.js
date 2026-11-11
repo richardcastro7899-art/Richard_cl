@@ -280,18 +280,13 @@ void main(){
       const frame = (now) => {
         raf = 0;
         if (now - last >= 30) {                                       // unos 33 cuadros por segundo: el humo es lento y así gasta la mitad
-          if (now - lastScroll < 140) last = now;                     // v39: mientras se hace scroll el humo se detiene un instante y la GPU queda libre para la animación de la barra; se reanuda solo al parar
-          else {
-            const dtv = last ? Math.min(0.1, (now - last) / 1000) : 0.033; last = now;
-            t += dtv; sx += (mx - sx) * Math.min(1, dtv * 3); sy += (my - sy) * Math.min(1, dtv * 3);
-            draw();
-            if (dtv > 0.06) { if (++slow > 12 && q > 0.45) { q *= 0.8; slow = 0; size(); } } else if (slow > 0) slow -= 0.25;   // si el equipo va justo, baja la resolución
-          }
+          const dtv = last ? Math.min(0.1, (now - last) / 1000) : 0.033; last = now;   // v40: el humo sigue animándose también mientras se hace scroll
+          t += dtv; sx += (mx - sx) * Math.min(1, dtv * 3); sy += (my - sy) * Math.min(1, dtv * 3);
+          draw();
+          if (dtv > 0.06) { if (++slow > 12 && q > 0.45) { q *= 0.8; slow = 0; size(); } } else if (slow > 0) slow -= 0.25;   // si el equipo va justo, baja la resolución
         }
         if (vis && !document.hidden && !reduce) raf = requestAnimationFrame(frame);
       };
-      let lastScroll = -1e9;
-      addEventListener("scroll", () => { lastScroll = performance.now(); }, { passive: true });
       const kick = () => { if (!raf && vis && !reduce) raf = requestAnimationFrame(frame); };
       size(); draw();
       addEventListener("resize", () => { size(); draw(); kick(); });
@@ -717,8 +712,12 @@ void main(){
   const sticky = $("#stickyCta");
   const isContact = document.body.dataset.page === "contacto";
   const avoid = $$(".hero, .hero4, #cta, #foot, .cta");
+  // v40: el botón flotante ya no tapa lo que se está leyendo: se esconde al bajar y aparece al subir (cuando la persona busca algo)
+  let lastY = scrollY, goingUp = false;
   onScroll(() => {
+    const y = scrollY;
+    if (Math.abs(y - lastY) > 8) { goingUp = y < lastY; lastY = y; }
     const blocked = avoid.some((el) => { const r = el.getBoundingClientRect(); return r.top < innerHeight * 0.9 && r.bottom > innerHeight * 0.1; });
-    sticky.classList.toggle("show", !isContact && scrollY > innerHeight * 0.6 && !blocked && !menu.classList.contains("is-open"));
+    sticky.classList.toggle("show", !isContact && y > innerHeight * 0.6 && goingUp && !blocked && !menu.classList.contains("is-open"));
   });
 })();
