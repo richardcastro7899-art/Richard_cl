@@ -12,6 +12,12 @@ Base: la primera entrega de v3 (la que gustó). Los cambios de v36 (botón para 
 - **Barra del inicio**: vuelve a medir cuando terminan de cargar las tipografías, para que el logotipo llegue a su lugar sin cruzarse con la portada.
 - **Se conservan** las correcciones de tablet y celular: pestaña activa de Servicios legible, tarjetas de Proyectos que no tapan el texto, «©2026 / Showreel» sin cortarse, sin scroll lateral.
 
+## v41 — celular: reels, menú y servicios
+- **Reels**: carrusel de un reel a la vez, entero a la vista, con puntos de posición; avanza solo cada 4,5 s mientras está en pantalla y se puede deslizar con el dedo.
+- **Menú**: panel de marca con número, nombre grande, una línea de descripción y una foto por sección; la página actual en rosa; botón «Cotiza tu proyecto» y correo al pie; entrada escalonada. En pantallas bajas se compacta y se puede desplazar. Textos y fotos: `MENU_DESC` y `MENU_IMG` en `build.mjs`.
+- **Servicios (inicio)**: los cinco servicios visibles a la vez (en dos filas, sin barra que recorrer) y la descripción debajo de la imagen, ya no encima.
+- El escritorio no cambia: todo va en `@media (max-width:900px)`, salvo el menú, que solo se usa en pantallas pequeñas.
+
 ## v40 — celular y tablet con el mismo impacto que el escritorio
 Todo va dentro de `@media (max-width:900px)` al final de `styles.css`: el escritorio no cambia.
 - Escala tipográfica propia del celular: titulares grandes y apretados (antes se encogían a la mitad).

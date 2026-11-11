@@ -119,6 +119,9 @@ const esc = (o) => JSON.stringify(o).replace(/&/g, "&amp;").replace(/"/g, "&quot
 /* ============================================================
    PARTES COMPARTIDAS
    ============================================================ */
+const pad2 = (n) => String(n).padStart(2, "0");
+const MENU_DESC = { inicio: "Lo que hacemos", servicios: "Cinco servicios, un equipo", proyectos: "Trabajo seleccionado", nosotros: "El estudio y el equipo", contacto: "Cuéntanos tu idea" };
+const MENU_IMG = { inicio: "assets/identidad-poster.jpg", servicios: "assets/ref/n-cards.jpg", proyectos: "assets/ref/w-golden.webp", nosotros: "assets/ref/n-studio.jpg", contacto: "assets/team/richard.jpg" };
 const NAV_ITEMS = [["inicio", "index.html", "Inicio"], ["servicios", "servicios.html", "Servicios"], ["proyectos", "proyectos.html", "Proyectos"], ["nosotros", "nosotros.html", "Nosotros"], ["contacto", "contacto.html", "Contacto"]];
 
 const PRE = `<div class="pre" id="pre" aria-hidden="true">
@@ -160,10 +163,15 @@ const NAV = (page) => `<header class="nav" id="nav">
   </div>
 </header>
 <div class="menu" id="menu" aria-hidden="true">
+  <i class="menu__glow" aria-hidden="true"></i>
+  <p class="menu__k"><i></i>Agencia creativa en Ecuador</p>
   <nav class="menu__links" aria-label="Menú">
-    ${NAV_ITEMS.map(([, h, t]) => `<a href="${h}">${t}</a>`).join("\n    ")}
+    ${NAV_ITEMS.map(([id, h, t], i) => `<a href="${h}" data-page-link="${id}" style="--i:${i}"><span class="menu__n">${pad2(i + 1)}</span><span class="menu__t">${t}</span><span class="menu__d">${MENU_DESC[id]}</span><img src="${MENU_IMG[id]}" alt="" loading="lazy" decoding="async"></a>`).join("\n    ")}
   </nav>
-  <div class="menu__foot"><a class="btn btn--light" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a href="contacto.html" data-mail>—</a></div>
+  <div class="menu__foot">
+    <a class="btn btn--light" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a>
+    <p class="menu__c"><span>Escríbenos</span><a href="contacto.html" data-mail>—</a></p>
+  </div>
 </div>
 `;
 
@@ -299,7 +307,6 @@ const pmedia = (p) => p.kind === "video"
 const cue = (p) => ({ gallery: "Ver galería", video: "Ver video", web: "Ver sitio" }[p.kind]);
 // PROYECTOS: una escena fija; el siguiente proyecto aparece como un cuarto de disco que crece desde la esquina recta
 const PW = [PROJECTS[0], PROJECTS[1], PROJECTS[3], PROJECTS[4]];
-const pad2 = (n) => String(n).padStart(2, "0");
 const WORK = `<section class="pwork" id="proyectos">
   <div class="wrap work__head">
     <h2 class="h1 rv">Proyectos seleccionados.</h2>
@@ -481,6 +488,7 @@ const REELS = `<section class="sec" id="reels">
         <span class="rcard__cap"><span>${r.k}</span><b>${r.t}</b></span>
       </li>`).join("\n      ")}
     </ul>
+    <div class="rdots" aria-hidden="true">${REEL_ITEMS.map((_, i) => `<i${i === 0 ? ' class="is-on"' : ""}></i>`).join("")}</div>
   </div>
 </section>`;
 

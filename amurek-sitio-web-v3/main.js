@@ -475,6 +475,16 @@ void main(){
       }
     });
     onVisible(reelsUl, (v) => { if (v) reelsUl.classList.add("is-in"); }, "-10% 0px");
+    // v41 · celular: carrusel de un reel a la vez. Avanza solo cada 4,5 s mientras está a la vista; se puede deslizar con el dedo
+    const dots = $$(".rdots i"), narrowQ = matchMedia("(max-width:900px)");
+    let ri = 0, rTimer = 0, rVis = false, rHold = 0;
+    const cur = () => { const x = reelsUl.scrollLeft, w = rcs[0].offsetWidth + parseFloat(getComputedStyle(reelsUl).columnGap || 0); return Math.round(x / (w || 1)); };
+    reelsUl.addEventListener("scroll", () => { ri = cur(); dots.forEach((d, i) => d.classList.toggle("is-on", i === ri)); }, { passive: true });
+    const goR = (i) => { const c = rcs[(i + rcs.length) % rcs.length]; reelsUl.scrollTo({ left: c.offsetLeft - rcs[0].offsetLeft, behavior: "smooth" }); };
+    const runR = () => { clearInterval(rTimer); if (narrowQ.matches && rVis) rTimer = setInterval(() => { if (Date.now() - rHold > 6000) goR(ri + 1); }, 4500); };
+    reelsUl.addEventListener("touchstart", () => { rHold = Date.now(); }, { passive: true });
+    onVisible(reelsUl, (v) => { rVis = v; runR(); }, "0px");
+    narrowQ.addEventListener("change", runR);
   }
 
   /* ---------- EQUIPO: las cuatro tarjetas entran juntas; en pantallas táctiles se abre una a la vez al tocar ---------- */
