@@ -196,7 +196,7 @@ const NAV = (page) => `<header class="nav" id="nav">
 <div class="menu" id="menu" aria-hidden="true">
   <div class="menu__sheet">
     <nav class="menu__links" aria-label="Menú">
-      ${NAV_ITEMS.map(([id, h, t], i) => `<a href="${h}" data-page-link="${id}" style="--i:${i}"><span class="menu__n">${pad2(i + 1)}</span><span class="menu__t">${t}</span>${AR}</a>`).join("\n      ")}
+      ${NAV_ITEMS.map(([id, h, t], i) => `<a href="${h}" data-page-link="${id}" style="--i:${i}"><span class="menu__t">${t}</span>${AR}</a>`).join("\n      ")}
     </nav>
     <div class="menu__foot"><a class="btn btn--dark" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a class="menu__mail" href="contacto.html" data-mail>—</a><a class="menu__mail" href="#" data-wa data-wa-row hidden>WhatsApp</a></div>
   </div>
@@ -358,7 +358,7 @@ const WORK = `<section class="pwork" id="proyectos">
     <div class="pwh__sticky">
       <div class="pwh__txt">
         ${PW.map((p, i) => `<div class="pwh__i${i === 0 ? " is-on" : ""}">
-          <p class="pwh__k">${S[p.s].short} · ${p.year}</p>
+          <p class="pwh__k">${S[p.s].short}</p>
           <h3 class="pwh__t">${p.t}</h3>
           <p class="pwh__s">${p.sub}</p>
           <button type="button" class="btn btn--dark" data-project="${esc(pdata(p))}" aria-label="${cue(p)}: ${p.t}"><span>${cue(p)}</span><i class="dot"></i></button>
@@ -397,7 +397,7 @@ const SERVICES_PANEL = `<section class="pad svh" id="servicios">
             <div class="svh__x">
               <h3>${s.t}</h3>
               <p>${s.pitch}</p>
-              <p class="svh__tags">${s.tags.slice(0, 4).join(" · ")}</p>
+              <ul class="svh__tags">${s.tags.slice(0, 4).map((x) => `<li>${x}</li>`).join("")}</ul>
               <div class="svh__act"><a class="btn btn--light btn--sm" href="contacto.html?servicio=${encodeURIComponent(s.t)}#form"><span>Cotizar ${s.short.toLowerCase()}</span><i class="dot"></i></a><a class="svh__more" href="servicios.html#${s.id}"><span>Qué incluye</span>${AR}</a></div>
             </div>
           </li>`).join("\n          ")}
@@ -405,7 +405,7 @@ const SERVICES_PANEL = `<section class="pad svh" id="servicios">
             <p class="eyb"><i></i>Todo junto</p>
             <h3>¿Necesitas más de uno?</h3>
             <p>Arma el equipo completo para tu proyecto: una sola conversación, una sola propuesta.</p>
-            <p class="svh__all">${SERVICES.map((s) => s.short).join(" · ")}</p>
+            <ul class="svh__all">${SERVICES.map((s) => `<li>${s.short}</li>`).join("")}</ul>
             <div class="svh__act"><a class="btn btn--light" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a class="svh__more" href="servicios.html"><span>Ver todos los servicios</span>${AR}</a></div>
           </li>
         </ul>
@@ -505,13 +505,13 @@ const PROCESS = `<section class="sec pst" id="proceso">
   </div>
   <div class="wrap pst__grid">
     <div class="pst__side">
-      <ol class="pst__nav">${proc.map(([t], i) => `<li><button type="button" data-k="${i}"${i === 0 ? ' class="is-on"' : ""}><span>${pad2(i + 1)}</span><b>${t}</b><em class="pst__d">${proc[i][1]}</em></button></li>`).join("")}</ol>
+      <ol class="pst__nav">${proc.map(([t], i) => `<li><button type="button" data-k="${i}"${i === 0 ? ' class="is-on"' : ""}><b>${t}</b><em class="pst__d">${proc[i][1]}</em></button></li>`).join("")}</ol>
       <div class="pst__bar" aria-hidden="true"><i></i></div>
       <a class="btn btn--dark" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a>
     </div>
     <div class="pst__steps">
       ${proc.map(([t, d], i) => `<article class="pst__s" data-k="${i}">
-        <div class="pst__txt"><h3>${t}</h3><span class="pst__n">${pad2(i + 1)} / ${pad2(proc.length)}</span><p>${d}</p></div>
+        <div class="pst__txt"><h3>${t}</h3><p>${d}</p></div>
         <div class="pst__sc">${procScenes[i]}</div>
       </article>`).join("\n      ")}
     </div>
@@ -631,7 +631,7 @@ const APPROACH = `<section class="sec" id="enfoque">
     <div class="rhead appr__head"><h2 class="h2 rv">Así trabajamos.</h2><p>Cuatro etapas, un mismo equipo: de la primera conversación al lanzamiento.</p></div>
     <figure class="appr__vid"><video muted loop playsinline preload="none" data-autoplay poster="assets/identidad-poster.jpg" aria-hidden="true">${vsrc("assets/amurek-identidad.mp4")}</video></figure>
     <ol class="appr__steps">
-      ${proc.map(([t, d], i) => `<li><span class="appr__n">${pad2(i + 1)}</span><b>${t}</b><p>${d}</p></li>`).join("\n      ")}
+      ${proc.map(([t, d], i) => `<li><b>${t}</b><p>${d}</p></li>`).join("\n      ")}
     </ol>
   </div>
 </section>`;
@@ -682,7 +682,7 @@ const FAQ = `<section class="sec" id="faq">
       </div>
     </div>
     <div class="faq3__list">
-      ${FAQS.map(([q, a], i) => `<details class="qa3" data-spot${i === 0 ? " open" : ""}><summary><span class="num">${i + 1}</span>${q}<i>${PLUS}</i></summary><p>${a}</p></details>`).join("\n      ")}
+      ${FAQS.map(([q, a], i) => `<details class="qa3" data-spot${i === 0 ? " open" : ""}><summary>${q}<i>${PLUS}</i></summary><p>${a}</p></details>`).join("\n      ")}
     </div>
   </div>
 </section>`;
@@ -712,7 +712,7 @@ const SVC_DETAIL = SERVICES.map((s) => `<article class="sdet" id="${s.id}">
 // PROYECTOS — rejilla con filtros (cada tarjeta abre el visor)
 const gcard = (p) => `<button type="button" class="gcard" data-cats="${p.s}" data-project="${esc(pdata(p))}" aria-label="Abrir proyecto ${p.t}">
         <span class="gcard__media" data-tilt>${pmedia(p)}<span class="pill pill--glass"><span>${cue(p)}</span></span></span>
-        <span class="gcard__cap"><b>${p.t}</b><span>${p.sub}</span><span class="gcard__m">${S[p.s].short} · ${p.year}</span></span>
+        <span class="gcard__cap"><b>${p.t}</b><span>${p.sub}</span><span class="gcard__m">${S[p.s].short}</span></span>
       </button>`;
 const GRID = PROJECTS.map(gcard).join("\n      ");
 const FILTER_BTNS = [["todo", "Todo"], ...SERVICES.map((s) => [s.id, s.short])].map(([k, t], i) => `<button type="button" data-filter="${k}" aria-pressed="${i === 0}">${t}</button>`).join("");
@@ -723,8 +723,8 @@ const FILTER_BTNS = [["todo", "Todo"], ...SERVICES.map((s) => [s.id, s.short])].
 const blocks = {
   HERO, STATEMENT, WORK, SERVICES_PANEL, PROCESS, PROCESS_OLD, SHOWREEL, REELS, TESTI, TEAM_HOME, STUDIO_HEAD, ABOUT_GLASS, TEAM_PIN, TEAM_PIN_HOME, MEMBERS, APPROACH, BRAND_BAND, PLANS, FAQ, CTA, FORM,
   SVC_DETAIL, SVC_INDEX, GRID, FILTER_BTNS, CHECK, AR, AR_UR, PLAY, AVATAR, WORDMARK, ISO,
-  PHERO_SERVICIOS: PHERO({ a: "Servicios", k: `${pad2(SERVICES.length)} servicios · un equipo`, p: "Cinco servicios que trabajan juntos. Contrata uno solo o arma el equipo completo para tu proyecto." }),
-  PHERO_PROYECTOS: PHERO({ a: "Proyectos", b: "seleccionados", k: `${pad2(PROJECTS.length)} proyectos · ${PROJECTS[0].year}`, p: "Cada proyecto empieza como una idea suelta. Aquí está lo que pasa cuando encuentra su forma." }),
+  PHERO_SERVICIOS: PHERO({ a: "Servicios", k: "Un solo equipo", p: "Cinco servicios que trabajan juntos. Contrata uno solo o arma el equipo completo para tu proyecto." }),
+  PHERO_PROYECTOS: PHERO({ a: "Proyectos", b: "seleccionados", k: "Trabajo reciente", p: "Cada proyecto empieza como una idea suelta. Aquí está lo que pasa cuando encuentra su forma." }),
   PHERO_CONTACTO: PHERO({ a: "Contacto", p: "¿Tienes una idea? Cuéntanos qué quieres lograr y te respondemos con una propuesta clara." }),
 };
 const srcDir = path.join(here, "src");

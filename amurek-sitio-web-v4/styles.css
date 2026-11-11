@@ -2612,3 +2612,35 @@ html.ck-open .stickycta{opacity:0;pointer-events:none}
 .foot7__soc li{margin:0}
 .hcard__iso{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:10px;background:var(--vino);color:var(--crema)}
 .hcard__iso svg{width:46%;height:auto}
+
+/* ============================================================
+   v52 — UNA SOLA ETIQUETA: la píldora
+   Toda etiqueta (sección, categoría, servicio, estado) es una píldora redondeada en Inter, en minúscula de frase.
+   El borde toma el color del texto, así sirve igual sobre crema, sobre los paneles oscuros y sobre imagen.
+   Los títulos de columna y de campo (pie, «Qué incluye», «Correo») dejan de ser etiquetas: texto pequeño atenuado.
+   Sin numeración (01, 02…) en ninguna parte.
+   ============================================================ */
+:root{--t-tag:.82rem}
+html [data-page] :is(.eyb,.phero__k,.hero4__k,.tm__k,.aboutg__k,.gcard__k,.pwh__k,.gcard__m,.svh__now,.pst__txt h3,.svh__tags li,.svh__all li,.tags li,.chips span,.mos__live){
+  display:inline-flex;align-items:center;gap:.5rem;width:fit-content;max-width:100%;align-self:flex-start;
+  padding:.42rem .8rem;border-radius:999px;border:1px solid color-mix(in srgb,currentColor 30%,transparent);
+  font:500 var(--t-tag)/1.15 var(--f-body);letter-spacing:0;text-transform:none;white-space:nowrap}
+html [data-page] :is(.eyb,.phero__k,.hero4__k) i{width:.42rem;height:.42rem}
+html [data-page] .mos__live{border-color:transparent}
+html [data-page] .tags li{border-color:rgba(255,255,255,.16)}
+html [data-page] .svh__now{min-width:0}
+:is(.svh__tags,.svh__all){display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none}
+.svh__end>.svh__all{margin:.2rem 0 .4rem}
+/* títulos de columna y de campo: texto, no etiqueta */
+html [data-page] :is(.foot7__k,.sdet__h,.connect .mono,.phero__sub .mono,li>.mono){font:500 var(--t-small)/1.3 var(--f-body);letter-spacing:0;text-transform:none}
+/* proceso sin números: el título ocupa toda la fila */
+html [data-page] .pst__nav button{grid-template-columns:minmax(0,1fr)}
+html [data-page] .pst__nav :is(b,.pst__d){grid-column:1}
+html [data-page] .pst__nav button.is-on b{translate:0}
+html [data-page] .sdet__foot p>span{font:500 var(--t-small)/1.3 var(--f-body);letter-spacing:0;text-transform:none}
+/* menú sin números: nombre a la izquierda, flecha a la derecha */
+html [data-page] .menu__links a{grid-template-columns:minmax(0,1fr) auto}
+/* tarjetas de valores sin número: sin el hueco que este dejaba arriba */
+html [data-page] .vcard{min-height:0;padding-top:clamp(22px,2.4vw,34px)}
+/* título del campo del pie: texto, no etiqueta */
+html [data-page] .foot7__form label{font:500 var(--t-small)/1.3 var(--f-body);letter-spacing:0;text-transform:none}
