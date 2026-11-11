@@ -1,4 +1,11 @@
-# AMUREK · Sitio web — versión 4 (propuesta v45)
+# AMUREK · Sitio web — versión 4 (propuesta v46)
+
+## v46 — servicios en pista horizontal y testimonios minimalistas
+- **Servicios**: el panel queda fijo y la pista de servicios avanza en horizontal, de forma continua, con el scroll (`SERVICES_PANEL` en `build.mjs`, bloque «v46 · SERVICIOS» en `main.js`). El servicio en foco se ilumina; los vecinos se atenúan y su imagen se desplaza en sentido contrario. Cada servicio lleva dentro su botón «Cotizar …» y el enlace «Qué incluye». Al final, una tarjeta «¿Necesitas más de uno?» se sostiene antes de soltar el panel. Arriba a la derecha, el nombre del servicio activo y una barra de avance. El alto de la sección lo calcula `main.js` según el largo de la pista.
+- **Testimonios**: sin panel oscuro. Carrusel lento de tarjetas claras sobre el fondo de la página (cita, nombre, cargo · empresa), con pausa al pasar el puntero; cifras debajo en una línea sobria.
+- Reemplaza servicios y testimonios de v45. Proceso y menú de celular: como antes.
+
+
 
 ## v45 — servicios guiados por el scroll y testimonios sin fotos
 - **Servicios**: el panel queda fijo mientras se baja y los servicios cambian uno a uno; la imagen nueva sube cubriendo la anterior y el texto cambia con un fundido. A la izquierda, titular, lista de servicios (sin números; marca el activo y se puede tocar) y barra de avance. El último servicio se sostiene un tramo antes de soltar el panel. Alto de la sección: una pantalla + 62svh por servicio (55svh en celular). Reemplaza las tarjetas de v44.

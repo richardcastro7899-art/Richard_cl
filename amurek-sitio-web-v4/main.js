@@ -488,6 +488,44 @@ void main(){
     }));
   }
 
+  /* ---------- v46 · SERVICIOS: el panel queda fijo y la pista de servicios avanza en horizontal, de forma continua, con el scroll.
+     El servicio que pasa por el foco se ilumina y su imagen se desplaza un poco en sentido contrario (profundidad) ---------- */
+  const svh = $(".svh");
+  if (svh && !still) {
+    const pin = $(".svh__pin", svh), view = $(".svh__view", svh), track = $(".svh__track", svh), items = $$(".svh__track>li", svh);
+    const imgs = items.map((s) => $(".svh__m img", s)), names = items.map((s) => ($("h3", s) || {}).textContent || ""), now = $(".svh__now", svh), bar = $(".svh__bar", svh);
+    let dist = 0, hold = 0, vw = 1, pos = [], lastX = -1, lastName = "";
+    const pinTop = () => parseFloat(getComputedStyle(pin).top) || 0;
+    const layout = () => {
+      vw = view.clientWidth || 1;
+      pos = items.map((s) => [s.offsetLeft, s.offsetWidth]);
+      dist = Math.max(0, track.scrollWidth - vw);
+      hold = innerHeight * 0.22;                                           // al final, la tarjeta de cierre se sostiene un momento antes de soltar
+      svh.style.height = Math.round(pin.offsetHeight + dist + hold) + "px";
+      lastX = -1;
+    };
+    const frame = () => {
+      const r = svh.getBoundingClientRect(); if (r.bottom < -innerHeight || r.top > innerHeight * 2) return;
+      const x = Math.min(dist, Math.max(0, pinTop() - r.top));
+      if (x === lastX) return; lastX = x;
+      track.style.transform = `translate3d(${(-x).toFixed(1)}px,0,0)`;
+      const focus = vw * 0.4; let best = 0, bd = 1e9;
+      items.forEach((s, i) => {
+        const d = (pos[i][0] + pos[i][1] / 2 - x - focus) / vw, a = Math.min(1, Math.abs(d) * 1.5);
+        s.style.opacity = (1 - a * 0.78).toFixed(3); s.style.transform = `scale(${(1 - a * 0.05).toFixed(4)})`;
+        if (imgs[i]) imgs[i].style.transform = `translate3d(${(d * -70).toFixed(1)}px,0,0) scale(1.14)`;
+        if (Math.abs(d) < bd) { bd = Math.abs(d); best = i; }
+      });
+      const nm = names[best]; if (now && nm && nm !== lastName) { lastName = nm; now.textContent = nm; }
+      if (bar) bar.style.setProperty("--pp", (dist ? x / dist : 0).toFixed(3));
+    };
+    layout(); frame();
+    addEventListener("resize", () => { layout(); frame(); });
+    addEventListener("load", () => { layout(); frame(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { layout(); frame(); });
+    onScroll(frame);
+  }
+
   /* ---------- v43 · PROCESO: etapas fijas a la izquierda; cada escena se anima al llegar y la etapa activa se marca con la barra ---------- */
   const pst = $(".pst");
   if (pst) {

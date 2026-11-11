@@ -338,26 +338,31 @@ const svPanel = (s, i) => `<article class="sv__p${i === 0 ? " is-on" : ""}" role
             <a class="btn btn--light btn--sm" href="servicios.html#${s.id}"><span>Ver ${s.short.toLowerCase()}</span><i class="dot"></i></a>
           </div>
         </article>`;
-const SERVICES_PANEL = `<section class="pad svs" id="servicios" style="--n:${SERVICES.length}">
-  <div class="svs__pin">
-    <div class="panel svs__panel">
-      <div class="svs__side">
-        <p class="eyb"><i></i>Servicios</p>
-        <h2 class="h1 rv">Todo lo que tu marca necesita, en un solo equipo.</h2>
-        <ul class="svs__list">${SERVICES.map((s, i) => `<li><button type="button" data-k="${i}"${i === 0 ? ' class="is-on" aria-current="true"' : ""}>${s.t}</button></li>`).join("")}</ul>
-        <div class="svs__bar" aria-hidden="true"><i></i></div>
-        <a class="btn btn--light svs__cta" href="servicios.html"><span>Ver todos los servicios</span><i class="dot"></i></a>
+const SERVICES_PANEL = `<section class="pad svh" id="servicios">
+  <div class="svh__pin">
+    <div class="panel svh__panel">
+      <div class="svh__head">
+        <div><p class="eyb"><i></i>Servicios</p><h2 class="h1 rv">Todo lo que tu marca necesita, en un solo equipo.</h2></div>
+        <div class="svh__meta"><span class="svh__now" aria-hidden="true">${SERVICES[0].t}</span><div class="svh__bar" aria-hidden="true"><i></i></div></div>
       </div>
-      <div class="svs__stage">
-        ${SERVICES.map((s, i) => `<article class="svs__s${i === 0 ? " is-in is-on" : ""}" data-k="${i}" style="--z:${i + 1}">
-          <figure class="svs__m"><img src="${s.img}" alt="" loading="${i === 0 ? "eager" : "lazy"}"></figure>
-          <div class="svs__x">
-            <h3>${s.t}</h3>
-            <p>${s.pitch}</p>
-            <p class="svs__tags">${s.tags.slice(0, 4).join(" · ")}</p>
-            <a class="svs__more" href="servicios.html#${s.id}"><span>Qué incluye</span>${AR}</a>
-          </div>
-        </article>`).join("\n        ")}
+      <div class="svh__view">
+        <ul class="svh__track">
+          ${SERVICES.map((s) => `<li class="svh__s">
+            <figure class="svh__m"><img src="${s.img}" alt="" loading="lazy"></figure>
+            <div class="svh__x">
+              <h3>${s.t}</h3>
+              <p>${s.pitch}</p>
+              <p class="svh__tags">${s.tags.slice(0, 4).join(" · ")}</p>
+              <div class="svh__act"><a class="btn btn--light btn--sm" href="contacto.html?servicio=${encodeURIComponent(s.t)}#form"><span>Cotizar ${s.short.toLowerCase()}</span><i class="dot"></i></a><a class="svh__more" href="servicios.html#${s.id}"><span>Qué incluye</span>${AR}</a></div>
+            </div>
+          </li>`).join("\n          ")}
+          <li class="svh__end">
+            <p class="eyb"><i></i>Todo junto</p>
+            <h3>¿Necesitas más de uno?</h3>
+            <p>Arma el equipo completo para tu proyecto: una sola conversación, una sola propuesta.</p>
+            <div class="svh__act"><a class="btn btn--light" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a class="svh__more" href="servicios.html"><span>Ver todos los servicios</span>${AR}</a></div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -520,22 +525,13 @@ const tcard2 = ([q, av, n, r]) => `<li class="tcard2" data-spot><blockquote>«${
 const STATS = [["+", 120, "", "Proyectos entregados"], ["+", 45, "", "Marcas acompañadas"], ["", 92, "%", "Clientes que repiten"], ["+", 300, "", "Piezas de contenido al mes"]];
 const tq5Card = ([q, av, n, r]) => `<li class="tq5__c"><blockquote>«${q}»</blockquote><figcaption><img src="${ref(av)}" alt=""><span><b>${n}</b>${r}</span></figcaption></li>`;
 const PORT = [[R + "t-retrato.jpg", "50% 14%"], [R + "c-2.jpg", "50% 22%"], [R + "c-4.jpg", "50% 22%"], [R + "c-1.jpg", "50% 22%"], [R + "c-5.jpg", "50% 22%"], [R + "c-3.jpg", "50% 22%"]];
-const TESTI = `<section class="pad" id="testimonios" data-placeholder="testimonios y cifras de referencia">
-  <div class="panel tsx tsq" id="tsx">
-    <div class="tsq__head"><div><p class="eyb"><i></i>Clientes</p><h2 class="h1 rv">Lo que dicen quienes ya trabajaron con nosotros.</h2></div><p>Opiniones y cifras de referencia. Aquí irán las de tus clientes reales.</p></div>
-    <div class="tsq__body">
-      <span class="tsq__mark" aria-hidden="true">“</span>
-      <div class="tsx__stage" aria-live="polite">
-        ${TQ.map(([q, , n, r], i) => `<figure class="tsx__q${i === 0 ? " is-on" : ""}"><blockquote>${q}</blockquote><figcaption><b>${n}</b><span>${r}</span></figcaption></figure>`).join("\n        ")}
-      </div>
-    </div>
-    <div class="tsx__ctrl">
-      <span class="tsx__count"><b>01</b> / ${pad2(TQ.length)}</span>
-      <div class="tsx__dots" role="group" aria-label="Elegir testimonio">${TQ.map((_, i) => `<button type="button" class="tsx__d${i === 0 ? " is-on" : ""}" aria-label="Testimonio ${i + 1}"><i></i></button>`).join("")}</div>
-      <div class="tsx__nav"><button type="button" data-tsx="-1" aria-label="Testimonio anterior"><svg class="ar" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" data-tsx="1" aria-label="Testimonio siguiente">${AR}</button></div>
-    </div>
-    <ul class="tsx__stats" aria-label="Cifras de referencia">${STATS.map(([pre, n, suf, l]) => `<li><b class="tsx__n">${pre}<span data-count="${n}">${n}</span>${suf}</b><p>${l}</p></li>`).join("")}</ul>
+const tsmCard = ([q, , n, r]) => `<li class="tsm__c"><blockquote>${q}</blockquote><p class="tsm__by"><b>${n}</b><span>${r}</span></p></li>`;
+const TESTI = `<section class="sec tsm" id="testimonios" data-placeholder="testimonios y cifras de referencia">
+  <div class="wrap rhead"><h2 class="h2 rv">Lo que dicen nuestros clientes.</h2><p>Opiniones y cifras de referencia. Aquí irán las de tus clientes reales.</p></div>
+  <div class="tsm__view" role="region" aria-label="Testimonios">
+    <div class="tsm__track"><ul class="tsm__set">${TQ.map(tsmCard).join("")}</ul><ul class="tsm__set" aria-hidden="true">${TQ.map(tsmCard).join("")}</ul></div>
   </div>
+  <div class="wrap"><ul class="tsm__stats" aria-label="Cifras de referencia">${STATS.map(([pre, n, suf, l]) => `<li><b>${pre}<span data-count="${n}">${n}</span>${suf}</b><p>${l}</p></li>`).join("")}</ul></div>
 </section>`;
 
 // EQUIPO: las cuatro personas a la vez, con el mismo tamaño, en zigzag y con un leve vaivén; al pasar el puntero (o tocar) se endereza y cuenta qué hace
