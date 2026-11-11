@@ -7,7 +7,7 @@
      ============================================================ */
   const CONFIG = {
     email: "hola@amurek.com",     // correo general (crear la casilla en el dominio). Para nuevos clientes conviene también proyectos@amurek.com
-    whatsapp: "",                 // ← número con código de país, solo dígitos (ej. "5939XXXXXXXX"). Vacío = se oculta
+    whatsapp: "593983776066",     // número con código de país, solo dígitos (provisional). Vacío = se oculta
     formEndpoint: "",             // ← opcional: URL de Formspree/Getform para recibir el formulario sin abrir el correo
     social: [                     // ← URL reales; las vacías no se muestran
       // un solo nombre en todas las redes: «amurek.estudio» (Behance no admite puntos). Crear o verificar las cuentas antes de publicar
@@ -41,7 +41,7 @@
   $$("[data-mail]").forEach((a) => { a.textContent = CONFIG.email; a.href = "mailto:" + CONFIG.email; });
   if (CONFIG.whatsapp) {
     $$("[data-wa-row]").forEach((r) => (r.hidden = false));
-    $$("[data-wa]").forEach((a) => { a.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent("Hola AMUREK, tengo una idea que quiero darle forma."); a.textContent = a.dataset.wa === "num" ? "+" + CONFIG.whatsapp : "WhatsApp"; });
+    $$("[data-wa]").forEach((a) => { a.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent("Hola AMUREK, tengo una idea que quiero darle forma."); a.target = "_blank"; a.rel = "noopener"; a.textContent = a.dataset.wa === "num" ? "+" + CONFIG.whatsapp.replace(/^(593)(\d{2})(\d{3})(\d+)$/, "$1 $2 $3 $4") : "WhatsApp"; });
   }
   $$("[data-social]").forEach((ul) => CONFIG.social.filter((s) => s.url).forEach((s) => { const li = document.createElement("li"); li.innerHTML = `<a href="${s.url}" target="_blank" rel="noopener">${s.name}</a>`; ul.appendChild(li); }));
   $$("[data-social-col]").forEach((c) => { if ($("li", c)) c.hidden = false; });
