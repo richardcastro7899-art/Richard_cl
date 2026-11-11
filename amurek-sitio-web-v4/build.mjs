@@ -16,9 +16,17 @@ const G = ctx.window.AMUREK_GEO;
    Cada proyecto abre un visor: galería, video o enlace a la web.
    ============================================================ */
 const R = "assets/ref/";
+// v49: cada video ofrece WebM (VP9, más liviano) y MP4 de respaldo; el WebM se incluye solo si existe y pesa menos
+const vsrc = (v) => {
+  const [base, frag] = v.split("#"), t = frag ? "#" + frag : "", webm = base.replace(/\.mp4$/, ".webm");
+  const ok = fs.existsSync(path.join(here, webm)) && fs.statSync(path.join(here, webm)).size < fs.statSync(path.join(here, base)).size;
+  return (ok ? `<source src="${webm}${t}" type="video/webm">` : "") + `<source src="${v}" type="video/mp4">`;
+};
+// v49: dirección pública del sitio (cámbiala si el dominio final es otro); se usa en canonical, Open Graph, sitemap y datos estructurados
+const SITE = "https://amurek.com";
 const SERVICES = [
   {
-    id: "branding", t: "Branding", short: "Branding", img: R + "n-cards.jpg", label: "Identidad de marca",
+    id: "branding", t: "Branding", short: "Branding", img: R + "n-cards.webp", label: "Identidad de marca",
     d: "Identidades con una idea clara detrás, que se reconocen en todas partes.",
     tags: ["Estrategia de marca", "Naming", "Logotipo", "Manual de marca", "Papelería"],
     pitch: "Construimos marcas con una idea clara: identidad, voz y sistema visual que se reconocen y se recuerdan.",
@@ -27,7 +35,7 @@ const SERVICES = [
     ideal: "Marcas nuevas o que crecieron y ya no se ven como lo que son.",
   },
   {
-    id: "audiovisual", t: "Producción audiovisual", short: "Audiovisual", img: R + "trailer-a.jpg", video: R + "trailer-a.mp4#t=3", label: "Video y fotografía",
+    id: "audiovisual", t: "Producción audiovisual", short: "Audiovisual", img: R + "trailer-a.webp", video: R + "trailer-a.mp4#t=3", label: "Video y fotografía",
     d: "Video, fotografía y motion que cuentan tu historia con ritmo.",
     tags: ["Spots", "Reels", "Fotografía", "Motion graphics", "Animación de logo"],
     pitch: "Producimos video, fotografía y animación para que tu marca se vea, se escuche y se sienta.",
@@ -36,7 +44,7 @@ const SERVICES = [
     ideal: "Lanzamientos, campañas y marcas que necesitan contenido con producción.",
   },
   {
-    id: "redes", t: "Redes y contenido", short: "Redes", img: R + "knit.jpg", label: "Contenido para redes",
+    id: "redes", t: "Redes y contenido", short: "Redes", img: R + "knit.webp", label: "Contenido para redes",
     d: "Tu marca presente todos los días, con una sola voz y una sola línea gráfica.",
     tags: ["Estrategia de contenido", "Línea gráfica", "Calendario", "Community management", "Reportes"],
     pitch: "Cuidamos tu marca en el día a día: contenido, diseño y comunidad con una misma voz.",
@@ -45,7 +53,7 @@ const SERVICES = [
     ideal: "Marcas que quieren estar presentes sin improvisar.",
   },
   {
-    id: "marketing", t: "Marketing digital", short: "Marketing", img: R + "n-poster.jpg", label: "Campañas",
+    id: "marketing", t: "Marketing digital", short: "Marketing", img: R + "n-poster.webp", label: "Campañas",
     d: "Campañas que llegan a las personas correctas y se pueden medir.",
     tags: ["Meta Ads", "Google Ads", "Embudos", "Landing pages", "Analítica"],
     pitch: "Diseñamos campañas que conectan con tu público y medimos lo que funciona para invertir mejor.",
@@ -54,7 +62,7 @@ const SERVICES = [
     ideal: "Negocios que quieren vender más con una inversión clara.",
   },
   {
-    id: "web", t: "Web y software", short: "Web y software", img: R + "n-laptop.jpg", label: "Sitios y herramientas",
+    id: "web", t: "Web y software", short: "Web y software", img: R + "n-laptop.webp", label: "Sitios y herramientas",
     d: "Sitios, tiendas y herramientas digitales hechas a la medida.",
     tags: ["Sitios web", "E-commerce", "Apps web", "Automatización", "Integraciones"],
     pitch: "Diseñamos y desarrollamos sitios, tiendas y software a la medida: rápidos, claros y fáciles de usar.",
@@ -67,18 +75,18 @@ const S = Object.fromEntries(SERVICES.map((s) => [s.id, s]));
 
 // kind: gallery = galería de imágenes · video = reproductor · web = enlace a un sitio
 const PROJECTS = [
-  { t: "Nómada", sub: "Identidad y papelería", s: "branding", year: "2026", img: R + "w-golden.webp", kind: "gallery", items: [R + "w-golden.webp", R + "n-cards.jpg", R + "s20.jpg", R + "n-bag.jpg"] },
-  { t: "Aurora", sub: "Spot de lanzamiento", s: "audiovisual", year: "2026", img: R + "trailer-a.jpg", kind: "video", video: R + "trailer-a.mp4", poster: R + "trailer-a.jpg" },
-  { t: "Silvestre", sub: "Línea gráfica para redes", s: "redes", year: "2026", img: R + "w-wild.webp", kind: "gallery", items: [R + "w-wild.webp", R + "w-dsadas.webp", R + "n-ice.jpg", R + "n-sport.jpg"] },
-  { t: "Carmín", sub: "Campaña de producto", s: "marketing", year: "2026", img: R + "w-saddas.webp", kind: "gallery", items: [R + "w-saddas.webp", R + "n-radio.jpg", R + "n-poster.jpg"] },
-  { t: "Flora", sub: "Sitio web y comercio", s: "web", year: "2026", img: R + "n-laptop.jpg", kind: "web", url: "https://nordic-template-supply.webflow.io/", note: "Sitio de referencia", poster: R + "n-laptop.jpg" },
-  { t: "Brisa", sub: "Película de marca", s: "audiovisual", year: "2026", img: R + "showreel.jpg", kind: "video", video: R + "showreel.mp4", poster: R + "showreel.jpg" },
+  { t: "Nómada", sub: "Identidad y papelería", s: "branding", year: "2026", img: R + "w-golden.webp", kind: "gallery", items: [R + "w-golden.webp", R + "n-cards.webp", R + "s20.webp", R + "n-bag.webp"] },
+  { t: "Aurora", sub: "Spot de lanzamiento", s: "audiovisual", year: "2026", img: R + "trailer-a.webp", kind: "video", video: R + "trailer-a.mp4", poster: R + "trailer-a.webp" },
+  { t: "Silvestre", sub: "Línea gráfica para redes", s: "redes", year: "2026", img: R + "w-wild.webp", kind: "gallery", items: [R + "w-wild.webp", R + "w-dsadas.webp", R + "n-ice.webp", R + "n-sport.webp"] },
+  { t: "Carmín", sub: "Campaña de producto", s: "marketing", year: "2026", img: R + "w-saddas.webp", kind: "gallery", items: [R + "w-saddas.webp", R + "n-radio.webp", R + "n-poster.webp"] },
+  { t: "Flora", sub: "Sitio web y comercio", s: "web", year: "2026", img: R + "n-laptop.webp", kind: "web", url: "https://nordic-template-supply.webflow.io/", note: "Sitio de referencia", poster: R + "n-laptop.webp" },
+  { t: "Brisa", sub: "Película de marca", s: "audiovisual", year: "2026", img: R + "showreel.webp", kind: "video", video: R + "showreel.mp4", poster: R + "showreel.webp" },
 ];
 
 const TEAM = [
   { n: "Richard Castro", r: "Director creativo", b: "Productor audiovisual y estratega de marca. Dirige la visión creativa de cada proyecto.", img: "assets/team/richard.jpg", pos: "50% 20%" },
-  { n: "Nombre Apellido", r: "Directora de estrategia", b: "Convierte lo que quiere lograr tu negocio en un plan claro de marca y contenido.", img: R + "woman-final.jpg", pos: "50% 25%" },
-  { n: "Nombre Apellido", r: "Director de arte", b: "Cuida que la identidad se vea y se sienta igual en cada pieza.", img: R + "n-elegant.jpg", pos: "50% 25%" },
+  { n: "Nombre Apellido", r: "Directora de estrategia", b: "Convierte lo que quiere lograr tu negocio en un plan claro de marca y contenido.", img: R + "woman-final.webp", pos: "50% 25%" },
+  { n: "Nombre Apellido", r: "Director de arte", b: "Cuida que la identidad se vea y se sienta igual en cada pieza.", img: R + "n-elegant.webp", pos: "50% 25%" },
   { n: "Nombre Apellido", r: "Líder de web y software", b: "Construye sitios y herramientas rápidas, claras y fáciles de usar.", img: R + "puffer.webp", pos: "50% 25%" },
 ];
 
@@ -91,8 +99,8 @@ const FAQS = [
 ];
 
 // tira visual de «lo que hacemos» (todo material de referencia)
-const STRIP_A = [["Identidad", R + "n-cards.jpg"], ["Reels y video", R + "reel-1.jpg"], ["Campañas", R + "w-man1.webp"], ["Redes", R + "n-sport.jpg"], ["Empaque", R + "w-saddas.webp"]];
-const STRIP_B = [["Sitios web", R + "n-laptop.jpg"], ["Fotografía", R + "n-foot.jpg"], ["Producto", R + "n-bag.jpg"], ["Branding", R + "s20.jpg"], ["Contenido", R + "knit.jpg"]];
+const STRIP_A = [["Identidad", R + "n-cards.webp"], ["Reels y video", R + "reel-1.webp"], ["Campañas", R + "w-man1.webp"], ["Redes", R + "n-sport.webp"], ["Empaque", R + "w-saddas.webp"]];
+const STRIP_B = [["Sitios web", R + "n-laptop.webp"], ["Fotografía", R + "n-foot.webp"], ["Producto", R + "n-bag.webp"], ["Branding", R + "s20.webp"], ["Contenido", R + "knit.webp"]];
 
 /* ============================================================
    PIEZAS
@@ -121,13 +129,23 @@ const esc = (o) => JSON.stringify(o).replace(/&/g, "&amp;").replace(/"/g, "&quot
    ============================================================ */
 const pad2 = (n) => String(n).padStart(2, "0");
 const MENU_DESC = { inicio: "Lo que hacemos", servicios: "Cinco servicios, un equipo", proyectos: "Trabajo seleccionado", nosotros: "El estudio y el equipo", contacto: "Cuéntanos tu idea" };
-const MENU_IMG = { inicio: "assets/identidad-poster.jpg", servicios: "assets/ref/n-cards.jpg", proyectos: "assets/ref/w-golden.webp", nosotros: "assets/ref/n-studio.jpg", contacto: "assets/team/richard.jpg" };
+const MENU_IMG = { inicio: "assets/identidad-poster.jpg", servicios: "assets/ref/n-cards.webp", proyectos: "assets/ref/w-golden.webp", nosotros: "assets/ref/n-studio.webp", contacto: "assets/team/richard.jpg" };
 const NAV_ITEMS = [["inicio", "index.html", "Inicio"], ["servicios", "servicios.html", "Servicios"], ["proyectos", "proyectos.html", "Proyectos"], ["nosotros", "nosotros.html", "Nosotros"], ["contacto", "contacto.html", "Contacto"]];
 
 const PRE = `<div class="pre" id="pre" aria-hidden="true">
   <div class="pre__panels">${[0, 1, 2, 3, 4].map((i) => `<i class="pre__p" style="--i:${i}"></i>`).join("")}</div>
   <div class="pre__logo">${WORDMARK_L}</div>
 </div>`;
+// Cloudflare Pages sirve /servicios.html como /servicios: las direcciones públicas van sin .html
+const pageUrl = (m) => SITE + "/" + (m.file === "index.html" ? "" : m.file.replace(/\.html$/, ""));
+const SOCIAL = ["https://www.instagram.com/amurek.estudio", "https://www.tiktok.com/@amurek.estudio", "https://www.linkedin.com/company/amurek-estudio", "https://www.behance.net/amurekestudio"];
+const LD = {
+  "@context": "https://schema.org", "@type": "ProfessionalService", "@id": SITE + "/#org",
+  name: "AMUREK", alternateName: "AMUREK Agencia Creativa", url: SITE + "/", logo: SITE + "/assets/icon-512.png", image: SITE + "/assets/og-amurek.jpg",
+  description: "Agencia creativa en Ecuador: branding, producción audiovisual, redes y contenido, marketing digital y web y software.",
+  email: "hola@amurek.com", areaServed: { "@type": "Country", name: "Ecuador" }, address: { "@type": "PostalAddress", addressCountry: "EC" },
+  knowsAbout: ["Branding", "Producción audiovisual", "Redes sociales", "Marketing digital", "Diseño web"], sameAs: SOCIAL,
+};
 const HEAD = (m) => `<!doctype html>
 <html lang="es">
 <head>
@@ -140,6 +158,19 @@ const HEAD = (m) => `<!doctype html>
 <meta property="og:title" content="${m.title}">
 <meta property="og:description" content="${m.desc}">
 <meta property="og:locale" content="es_EC">
+<meta property="og:site_name" content="AMUREK">
+<meta property="og:url" content="${pageUrl(m)}">
+<meta property="og:image" content="${SITE}/assets/og-amurek.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AMUREK, agencia creativa en Ecuador">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${m.title}">
+<meta name="twitter:description" content="${m.desc}">
+<meta name="twitter:image" content="${SITE}/assets/og-amurek.jpg">
+${m.noindex ? '<meta name="robots" content="noindex">\n<base href="/">' : `<link rel="canonical" href="${pageUrl(m)}">`}
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+${m.page === "inicio" ? `<script type="application/ld+json">${JSON.stringify(LD)}</script>` : ""}
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-14 -14 129 144'%3E%3Crect x='-14' y='-14' width='129' height='144' rx='30' fill='%23541D35'/%3E%3Cpath fill='%23F5F3EE' d='M47.11 0A47.11 47.11 0 0 0 47.11 94.22Z'/%3E%3Cpath fill='%23F5F3EE' d='M53.83 21.84A47.11 47.11 0 0 1 100.94 68.95V116.06H53.83Z'/%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>(function(){var d=document.documentElement;try{history.scrollRestoration="manual"}catch(e){}if(/[?&]still/.test(location.search))return;d.classList.add("js");try{if(!sessionStorage.getItem("amurek-pre"))d.classList.add("pre-on")}catch(e){}if("${m.page}"==="inicio")d.classList.add("nav-morph")})();</script>
@@ -167,7 +198,7 @@ const NAV = (page) => `<header class="nav" id="nav">
     <nav class="menu__links" aria-label="Menú">
       ${NAV_ITEMS.map(([id, h, t], i) => `<a href="${h}" data-page-link="${id}" style="--i:${i}"><span class="menu__n">${pad2(i + 1)}</span><span class="menu__t">${t}</span>${AR}</a>`).join("\n      ")}
     </nav>
-    <div class="menu__foot"><a class="btn btn--dark" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a class="menu__mail" href="contacto.html" data-mail>—</a></div>
+    <div class="menu__foot"><a class="btn btn--dark" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a class="menu__mail" href="contacto.html" data-mail>—</a><a class="menu__mail" href="#" data-wa data-wa-row hidden>WhatsApp</a></div>
   </div>
 </div>
 `;
@@ -218,7 +249,7 @@ const FOOT = `<footer class="foot7" id="foot">
       <nav class="foot7__cols" aria-label="Pie de página">
         <div><p class="foot7__k">Páginas</p><ul>${NAV_ITEMS.map(([, h, t]) => `<li><a href="${h}">${t}</a></li>`).join("")}</ul></div>
         <div><p class="foot7__k">Servicios</p><ul>${SERVICES.map((s) => `<li><a href="servicios.html#${s.id}">${s.short}</a></li>`).join("")}</ul></div>
-        <div><p class="foot7__k">Legal</p><ul><li><a href="privacidad.html">Política de privacidad</a></li><li><a href="terminos.html">Términos de uso</a></li><li><a href="cookies.html">Política de cookies</a></li></ul></div>
+        <div><p class="foot7__k">Legal</p><ul><li><a href="privacidad.html">Política de privacidad</a></li><li><a href="terminos.html">Términos de uso</a></li><li><a href="cookies.html">Política de cookies</a></li><li><button type="button" class="foot7__btn" data-consent-open>Preferencias de cookies</button></li></ul></div>
         <div><p class="foot7__k">Contacto</p><ul><li><a href="contacto.html" data-mail>—</a></li><li data-wa-row hidden><a href="#" data-wa>WhatsApp</a></li><li>Ecuador</li></ul></div>
       </nav>
     </div>
@@ -229,6 +260,20 @@ const FOOT = `<footer class="foot7" id="foot">
     <div class="foot7__wm" aria-hidden="true">${WORDMARK}</div>
   </div>
 </footer>
+<div class="ck" id="ck" role="region" aria-labelledby="ck-t" hidden>
+  <p class="ck__t" id="ck-t">Tu privacidad</p>
+  <p class="ck__d">Usamos almacenamiento técnico para que el sitio funcione. Con tu permiso, también usaremos cookies de análisis y de marketing para saber cómo se usa el sitio y medir nuestras campañas. <a href="cookies.html">Política de cookies</a></p>
+  <form class="ck__prefs" id="ckPrefs" hidden>
+    <label class="ck__o"><span><b>Necesarias</b><small>Hacen que el sitio funcione. Siempre activas.</small></span><input type="checkbox" checked disabled><i></i></label>
+    <label class="ck__o"><span><b>Análisis</b><small>Cuentan visitas de forma anónima para mejorar el sitio.</small></span><input type="checkbox" name="analytics"><i></i></label>
+    <label class="ck__o"><span><b>Marketing</b><small>Miden campañas y muestran anuncios en otras plataformas.</small></span><input type="checkbox" name="marketing"><i></i></label>
+  </form>
+  <div class="ck__act">
+    <button type="button" class="btn btn--dark btn--sm" data-ck="all"><span>Aceptar todas</span><i class="dot"></i></button>
+    <button type="button" class="btn btn--line btn--sm" data-ck="none"><span>Solo necesarias</span></button>
+    <button type="button" class="ck__cfg" data-ck="cfg" aria-expanded="false" aria-controls="ckPrefs">Configurar</button>
+  </div>
+</div>
 <a class="stickycta" href="contacto.html" id="stickyCta"><span>Cotiza tu proyecto</span><i class="dot"></i></a>
 <dialog class="lightbox" id="lightbox"><button class="x" aria-label="Cerrar">×</button><img alt=""></dialog>
 <dialog class="player" id="player"><button class="x" aria-label="Cerrar">×</button><video controls playsinline preload="none"></video></dialog>
@@ -281,8 +326,8 @@ const HERO = `<section class="hero4" id="top">
 
 // FRASE + CARRUSEL de lo que hacemos (material de referencia): solo la imagen y el título. Tres copias del grupo: el recorrido nunca deja huecos
 const STRIP = [
-  ["Identidad", R + "n-cards.jpg"], ["Reels y video", R + "reel-1.jpg"], ["Campañas", R + "w-man1.webp"], ["Redes", R + "n-sport.jpg"], ["Empaque", R + "w-saddas.webp"],
-  ["Sitios web", R + "n-laptop.jpg"], ["Fotografía", R + "n-foot.jpg"], ["Producto", R + "n-bag.jpg"], ["Papelería", R + "s20.jpg"], ["Contenido", R + "knit.jpg"],
+  ["Identidad", R + "n-cards.webp"], ["Reels y video", R + "reel-1.webp"], ["Campañas", R + "w-man1.webp"], ["Redes", R + "n-sport.webp"], ["Empaque", R + "w-saddas.webp"],
+  ["Sitios web", R + "n-laptop.webp"], ["Fotografía", R + "n-foot.webp"], ["Producto", R + "n-bag.webp"], ["Papelería", R + "s20.webp"], ["Contenido", R + "knit.webp"],
 ];
 const AR_CYCLE = ["4/5", "1/1", "3/4"];
 const sCard = ([t, img], i) => `<li class="scard" style="--ar:${AR_CYCLE[i % 3]}"><figure><img src="${img}" alt="" loading="lazy"></figure><p class="scard__t"><b>${t}</b></p></li>`;
@@ -299,7 +344,7 @@ const STATEMENT = `<section class="pad statement" id="hacemos">
 
 const pdata = (p) => ({ t: p.t, sub: p.sub, s: S[p.s].short, kind: p.kind, items: p.items, video: p.video, poster: p.poster, url: p.url, note: p.note });
 const pmedia = (p) => p.kind === "video"
-  ? `<video muted loop playsinline preload="none" data-autoplay poster="${p.img}" aria-hidden="true"><source src="${p.video}" type="video/mp4"></video>`
+  ? `<video muted loop playsinline preload="none" data-autoplay poster="${p.img}" aria-hidden="true">${vsrc(p.video)}</video>`
   : `<img src="${p.img}" alt="" loading="lazy">`;
 const cue = (p) => ({ gallery: "Ver galería", video: "Ver video", web: "Ver sitio" }[p.kind]);
 // PROYECTOS: una escena fija; el siguiente proyecto aparece como un cuarto de disco que crece desde la esquina recta
@@ -403,17 +448,17 @@ const BRIEF = `<div class="brief" aria-hidden="true">
         </div>`;
 // Escenas 3 y 4 del proceso: fotografías y video reales (de referencia), sin maquetas dibujadas
 const mosTile = (cls, media, t, d, extra = "") => `<figure class="mos__${cls}">${media}<figcaption><b>${t}</b><span>${d}</span></figcaption>${extra}</figure>`;
-const mosVid = (v, poster) => `<video muted loop playsinline preload="none" data-autoplay poster="${poster}"><source src="${v}" type="video/mp4"></video>`;
+const mosVid = (v, poster) => `<video muted loop playsinline preload="none" data-autoplay poster="${poster}">${vsrc(v)}</video>`;
 const mosImg = (src) => `<img src="${src}" alt="" loading="lazy">`;
 const MOS3 = `<div class="mos" aria-hidden="true">
-          ${mosTile("a", mosImg(R + "s20.jpg"), "Diseñamos", "Identidad y piezas de marca")}
-          ${mosTile("b", mosVid(R + "trailer-a.mp4#t=3", R + "trailer-a.jpg"), "Producimos", "Video y fotografía")}
-          ${mosTile("c", mosImg(R + "n-laptop.jpg"), "Desarrollamos", "Sitios y herramientas")}
+          ${mosTile("a", mosImg(R + "s20.webp"), "Diseñamos", "Identidad y piezas de marca")}
+          ${mosTile("b", mosVid(R + "trailer-a.mp4#t=3", R + "trailer-a.webp"), "Producimos", "Video y fotografía")}
+          ${mosTile("c", mosImg(R + "n-laptop.webp"), "Desarrollamos", "Sitios y herramientas")}
         </div>`;
 const MOS4 = `<div class="mos mos--l" aria-hidden="true">
-          ${mosTile("a", mosImg(R + "n-poster.jpg"), "Campaña publicada", "Piezas en circulación")}
-          ${mosTile("b", mosVid(R + "reel-1.mp4", R + "reel-1.jpg"), "Contenido en línea", "Reels y publicaciones", '<span class="mos__live"><i></i>En línea</span>')}
-          ${mosTile("c", mosImg(R + "n-monitor.jpg"), "Resultados", "Medimos y ajustamos")}
+          ${mosTile("a", mosImg(R + "n-poster.webp"), "Campaña publicada", "Piezas en circulación")}
+          ${mosTile("b", mosVid(R + "reel-1.mp4", R + "reel-1.webp"), "Contenido en línea", "Reels y publicaciones", '<span class="mos__live"><i></i>En línea</span>')}
+          ${mosTile("c", mosImg(R + "n-monitor.webp"), "Resultados", "Medimos y ajustamos")}
         </div>`;
 const procScenes = [CHAT, BRIEF, MOS3, MOS4];
 const procCls = ["pcard--dark pcard--chat", "pcard--cream pcard--brief", "pcard--dark pcard--mos", "pcard--cream pcard--mos pcard--mosl"];
@@ -480,7 +525,7 @@ const SHOWREEL = `<section class="reel" id="showreel">
     <div class="reel__row">
       <span class="reel__w reel__w--l">©2026</span>
       <button class="reel__box" type="button" data-reel="${R}showreel.mp4" aria-label="Reproducir showreel con sonido">
-        <video muted loop playsinline preload="none" data-autoplay poster="${R}showreel.jpg" aria-hidden="true"><source src="${R}showreel.mp4" type="video/mp4"></video>
+        <video muted loop playsinline preload="none" data-autoplay poster="${R}showreel.webp" aria-hidden="true">${vsrc(R + "showreel.mp4")}</video>
         <span class="reel__play"><span>Ver showreel</span><i>${PLAY}</i></span>
       </button>
       <span class="reel__w reel__w--r">Showreel</span>
@@ -490,10 +535,10 @@ const SHOWREEL = `<section class="reel" id="showreel">
 
 // REELS: solo los principales, todos del mismo tamaño (referencias; reemplazar por los mejores reels reales)
 const REEL_ITEMS = [
-  { v: R + "reel-1.mp4", img: R + "reel-1.jpg", t: "Teaser de producto", k: "Reel · referencia" },
-  { v: R + "reel-2.mp4", img: R + "reel-2.jpg", t: "Historia en vertical", k: "Reel · referencia" },
-  { v: R + "reel-3.mp4", img: R + "reel-3.jpg", t: "Corte para redes", k: "Reel · referencia" },
-  { img: R + "n-foot.jpg", t: "Lookbook de producto", k: "Foto · referencia" },
+  { v: R + "reel-1.mp4", img: R + "reel-1.webp", t: "Teaser de producto", k: "Reel · referencia" },
+  { v: R + "reel-2.mp4", img: R + "reel-2.webp", t: "Historia en vertical", k: "Reel · referencia" },
+  { v: R + "reel-3.mp4", img: R + "reel-3.webp", t: "Corte para redes", k: "Reel · referencia" },
+  { img: R + "n-foot.webp", t: "Lookbook de producto", k: "Foto · referencia" },
 ];
 const REELS = `<section class="sec" id="reels">
   <div class="wrap rhead">
@@ -503,7 +548,7 @@ const REELS = `<section class="sec" id="reels">
   <div class="wrap">
     <ul class="reels reels4">
       ${REEL_ITEMS.map((r) => `<li class="rcard"${r.v ? ` data-reel="${r.v}" tabindex="0" role="button" aria-label="Reproducir ${r.t} con sonido"` : ` data-lightbox="${r.img}" data-alt="${r.t}"`}>
-        ${r.v ? `<video muted loop playsinline preload="none"  poster="${r.img}" aria-hidden="true"><source src="${r.v}" type="video/mp4"></video>` : `<img src="${r.img}" alt="" loading="lazy">`}
+        ${r.v ? `<video muted loop playsinline preload="none"  poster="${r.img}" aria-hidden="true">${vsrc(r.v)}</video>` : `<img src="${r.img}" alt="" loading="lazy">`}
         <span class="rcard__top">${AVATAR}<b>amurek</b>${r.v ? `<i class="rcard__play">${PLAY}</i>` : ""}</span>
         <span class="rcard__cap"><span>${r.k}</span><b>${r.t}</b></span>
       </li>`).join("\n      ")}
@@ -525,7 +570,7 @@ const tcard2 = ([q, av, n, r]) => `<li class="tcard2" data-spot><blockquote>«${
 // CIFRAS DE REFERENCIA: reemplazar por los números reales de la agencia antes de publicar
 const STATS = [["+", 120, "", "Proyectos entregados"], ["+", 45, "", "Marcas acompañadas"], ["", 92, "%", "Clientes que repiten"], ["+", 300, "", "Piezas de contenido al mes"]];
 const tq5Card = ([q, av, n, r]) => `<li class="tq5__c"><blockquote>«${q}»</blockquote><figcaption><img src="${ref(av)}" alt=""><span><b>${n}</b>${r}</span></figcaption></li>`;
-const PORT = [[R + "t-retrato.jpg", "50% 14%"], [R + "c-2.jpg", "50% 22%"], [R + "c-4.jpg", "50% 22%"], [R + "c-1.jpg", "50% 22%"], [R + "c-5.jpg", "50% 22%"], [R + "c-3.jpg", "50% 22%"]];
+const PORT = [[R + "t-retrato.webp", "50% 14%"], [R + "c-2.webp", "50% 22%"], [R + "c-4.webp", "50% 22%"], [R + "c-1.webp", "50% 22%"], [R + "c-5.webp", "50% 22%"], [R + "c-3.webp", "50% 22%"]];
 const tsmCard = ([q, , n, r]) => `<li class="tsm__c"><blockquote>${q}</blockquote><p class="tsm__by"><b>${n}</b><span>${r}</span></p></li>`;
 const TESTI = `<section class="pad tsm" id="testimonios" data-placeholder="testimonios y cifras de referencia">
   <div class="panel tsm__panel">
@@ -557,7 +602,7 @@ const TEAM_HOME = TEAMW("Un equipo pequeño que trabaja contigo.", "Las decision
 const wordLetters = (w, base = 0) => w.split("").map((c, i) => `<i style="--i:${base + i}">${c}</i>`).join("");
 const STUDIO_HEAD = `<section class="studio wrap" id="top">
   <h1 class="sr">Nosotros: el estudio de AMUREK, agencia creativa en Ecuador.</h1>
-  <div class="studio__row" aria-hidden="true"><span class="studio__w">Nuestro</span><figure class="studio__img"><img src="${R}n-studio.jpg" alt=""></figure><span class="studio__w">Estudio</span></div>
+  <div class="studio__row" aria-hidden="true"><span class="studio__w">Nuestro</span><figure class="studio__img"><img src="${R}n-studio.webp" alt=""></figure><span class="studio__w">Estudio</span></div>
   <div class="studio__meta"><span>Agencia creativa</span><span>Ecuador</span><span>Cinco servicios, un equipo</span></div>
 </section>`;
 const ABOUT_GLASS = `<section class="pad aboutg">
@@ -584,7 +629,7 @@ const MEMBERS = "";
 const APPROACH = `<section class="sec" id="enfoque">
   <div class="wrap appr">
     <div class="rhead appr__head"><h2 class="h2 rv">Así trabajamos.</h2><p>Cuatro etapas, un mismo equipo: de la primera conversación al lanzamiento.</p></div>
-    <figure class="appr__vid"><video muted loop playsinline preload="none" data-autoplay poster="assets/identidad-poster.jpg" aria-hidden="true"><source src="assets/amurek-identidad.mp4" type="video/mp4"></video></figure>
+    <figure class="appr__vid"><video muted loop playsinline preload="none" data-autoplay poster="assets/identidad-poster.jpg" aria-hidden="true">${vsrc("assets/amurek-identidad.mp4")}</video></figure>
     <ol class="appr__steps">
       ${proc.map(([t, d], i) => `<li><span class="appr__n">${pad2(i + 1)}</span><b>${t}</b><p>${d}</p></li>`).join("\n      ")}
     </ol>
@@ -593,7 +638,7 @@ const APPROACH = `<section class="sec" id="enfoque">
 
 const BRAND_BAND = `<section class="pad brandband" aria-label="La animación de nuestro logotipo">
   <div class="panel brandband__panel">
-    <video muted loop playsinline preload="none" data-autoplay poster="assets/identidad-poster.jpg" aria-hidden="true"><source src="assets/amurek-identidad.mp4" type="video/mp4"></video>
+    <video muted loop playsinline preload="none" data-autoplay poster="assets/identidad-poster.jpg" aria-hidden="true">${vsrc("assets/amurek-identidad.mp4")}</video>
   </div>
 </section>`;
 
@@ -661,7 +706,7 @@ const SVC_DETAIL = SERVICES.map((s) => `<article class="sdet" id="${s.id}">
         </div>
         <div class="sdet__foot"><p><span>Ideal para</span>${s.ideal}</p><a class="btn btn--dark" href="contacto.html?servicio=${encodeURIComponent(s.t)}"><span>Cotizar ${s.short.toLowerCase()}</span><i class="dot"></i></a></div>
       </div>
-      <figure class="sdet__img">${s.video ? `<video muted loop playsinline preload="none" data-autoplay poster="${s.img}" aria-hidden="true"><source src="${s.video}" type="video/mp4"></video>` : `<img src="${s.img}" alt="" loading="lazy">`}<ul class="tags tags--glass">${s.tags.map((t) => `<li>${t}</li>`).join("")}</ul></figure>
+      <figure class="sdet__img">${s.video ? `<video muted loop playsinline preload="none" data-autoplay poster="${s.img}" aria-hidden="true">${vsrc(s.video)}</video>` : `<img src="${s.img}" alt="" loading="lazy">`}<ul class="tags tags--glass">${s.tags.map((t) => `<li>${t}</li>`).join("")}</ul></figure>
     </article>`).join("\n    ");
 
 // PROYECTOS — rejilla con filtros (cada tarjeta abre el visor)
@@ -683,14 +728,27 @@ const blocks = {
   PHERO_CONTACTO: PHERO({ a: "Contacto", p: "¿Tienes una idea? Cuéntanos qué quieres lograr y te respondemos con una propuesta clara." }),
 };
 const srcDir = path.join(here, "src");
+const built = [];
 for (const old of ["blog.html", "caso-amurek.html"]) fs.rmSync(path.join(here, old), { force: true });
 for (const f of fs.readdirSync(here).filter((f) => /^blog-.+\.html$/.test(f))) fs.rmSync(path.join(here, f));
 for (const file of fs.readdirSync(srcDir).filter((f) => f.endsWith(".html"))) {
   let src = fs.readFileSync(path.join(srcDir, file), "utf8");
   const m = JSON.parse(src.match(/<!--meta\s*([\s\S]*?)-->/)[1]);
+  m.file = file; if (!m.noindex) built.push(m);
   src = src.replace(/<!--meta[\s\S]*?-->\s*/, "");
   for (let pass = 0; pass < 2; pass++) for (const [k, v] of Object.entries(blocks)) src = src.split(`{{${k}}}`).join(v);
   const html = (HEAD(m) + NAV(m.page) + src + FOOT).replace(/<img /g, '<img decoding="async" ');
   fs.writeFileSync(path.join(here, file), html);
   console.log(file, html.length, "bytes");
 }
+
+/* ---------- v49: mapa del sitio y robots (para buscadores) ---------- */
+const today = new Date().toISOString().slice(0, 10);
+const prio = (m) => (m.file === "index.html" ? "1.0" : m.page === "legal" ? "0.3" : "0.8");
+fs.writeFileSync(path.join(here, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${built.sort((a, z) => prio(z) - prio(a)).map((m) => `  <url><loc>${pageUrl(m)}</loc><lastmod>${today}</lastmod><priority>${prio(m)}</priority></url>`).join("\n")}
+</urlset>
+`);
+fs.writeFileSync(path.join(here, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
+console.log("sitemap.xml", built.length, "páginas · robots.txt");

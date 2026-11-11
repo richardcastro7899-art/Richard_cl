@@ -6,14 +6,15 @@
      CONFIGURACIÓN — datos de contacto reales
      ============================================================ */
   const CONFIG = {
-    email: "hola@amurek.com",     // ← REEMPLAZAR por el correo real de la agencia
+    email: "hola@amurek.com",     // correo general (crear la casilla en el dominio). Para nuevos clientes conviene también proyectos@amurek.com
     whatsapp: "",                 // ← número con código de país, solo dígitos (ej. "5939XXXXXXXX"). Vacío = se oculta
     formEndpoint: "",             // ← opcional: URL de Formspree/Getform para recibir el formulario sin abrir el correo
     social: [                     // ← URL reales; las vacías no se muestran
-      { name: "Instagram", url: "" },
-      { name: "TikTok", url: "" },
-      { name: "LinkedIn", url: "" },
-      { name: "Behance", url: "" },
+      // un solo nombre en todas las redes: «amurek.estudio» (Behance no admite puntos). Crear o verificar las cuentas antes de publicar
+      { name: "Instagram", url: "https://www.instagram.com/amurek.estudio" },
+      { name: "TikTok", url: "https://www.tiktok.com/@amurek.estudio" },
+      { name: "LinkedIn", url: "https://www.linkedin.com/company/amurek-estudio" },
+      { name: "Behance", url: "https://www.behance.net/amurekestudio" },
     ],
   };
 
@@ -58,6 +59,34 @@
     location.href = "contacto.html?correo=" + encodeURIComponent(v) + "#form";
   }));
   $$("[data-year]").forEach((y) => (y.textContent = new Date().getFullYear()));
+
+  /* ---------- v49: consentimiento de cookies (LOPDP Ecuador). Elegir es tan fácil como aceptar; la elección se guarda y se puede cambiar
+     desde el pie. Las herramientas de análisis o marketing que se agreguen deben cargarse solo así:
+       addEventListener("amurek:consent", (e) => { if (e.detail.analytics) { ...cargar analítica... } });   (o leer window.amurekConsent) ---------- */
+  (() => {
+    const ck = $("#ck"); if (!ck) return;
+    const KEY = "amurek-consent", V = 1, prefs = $("#ckPrefs", ck), cfg = $('[data-ck="cfg"]', ck), root = document.documentElement;
+    let timer = 0;
+    const read = () => { try { const c = JSON.parse(localStorage.getItem(KEY) || "null"); return c && c.v === V ? c : null; } catch (_) { return null; } };
+    const apply = (c) => { window.amurekConsent = c; root.dataset.consent = [c.analytics && "analytics", c.marketing && "marketing"].filter(Boolean).join(" ") || "necessary"; dispatchEvent(new CustomEvent("amurek:consent", { detail: c })); };
+    const setPrefs = (on) => { prefs.hidden = !on; cfg.setAttribute("aria-expanded", String(on)); cfg.textContent = on ? "Guardar selección" : "Configurar"; cfg.dataset.ck = on ? "save" : "cfg"; };
+    const close = () => { ck.classList.remove("is-on"); root.classList.remove("ck-open"); clearTimeout(timer); timer = setTimeout(() => (ck.hidden = true), 500); };
+    const open = (withPrefs) => {
+      const c = read(); prefs.analytics.checked = !!(c && c.analytics); prefs.marketing.checked = !!(c && c.marketing);
+      setPrefs(withPrefs); clearTimeout(timer); ck.hidden = false; root.classList.add("ck-open"); requestAnimationFrame(() => requestAnimationFrame(() => ck.classList.add("is-on")));
+      if (withPrefs) setTimeout(() => prefs.analytics.focus({ preventScroll: true }), 60);
+    };
+    const save = (analytics, marketing) => { const c = { v: V, analytics, marketing, t: new Date().toISOString() }; try { localStorage.setItem(KEY, JSON.stringify(c)); } catch (_) { /* sin almacenamiento: vale para esta visita */ } apply(c); close(); };
+    ck.addEventListener("click", (e) => {
+      const k = e.target.closest("[data-ck]")?.dataset.ck;
+      if (k === "all") save(true, true); else if (k === "none") save(false, false);
+      else if (k === "cfg") { setPrefs(true); prefs.analytics.focus({ preventScroll: true }); } else if (k === "save") save(prefs.analytics.checked, prefs.marketing.checked);
+    });
+    prefs.addEventListener("submit", (e) => e.preventDefault());
+    $$("[data-consent-open]").forEach((bt) => bt.addEventListener("click", () => open(true)));
+    const c = read();
+    if (c) apply(c); else if (!still) setTimeout(() => open(false), 1800);
+  })();
   $$("[data-top]").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); }));
 
   /* ---------- pie: hora de Ecuador, copiar correo y letras que suben ---------- */

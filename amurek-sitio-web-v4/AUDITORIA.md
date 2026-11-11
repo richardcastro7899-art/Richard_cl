@@ -32,6 +32,12 @@ Medida en el navegador sobre los valores calculados de 6 páginas (Inicio, Servi
 - **Color**: crema `--bg` · tarjeta `--card` · tinta `--ink` / `--ink-2` / `--ink-3` · vino `--vino` · rosa `--rosa` · negro de marca `--noche` · texto sobre oscuro `--on-1/2/3`.
 - **Movimiento**: `--d-1` 0,3 s · `--d-2` 0,5 s · `--d-3` 0,8 s · curva `--ease`.
 
+## v49 — listo para publicar
+- **Hoja de estilos podada**: 202 KB → 183 KB (148 selectores sin uso). Verificado con 134 capturas antes/después (9 páginas × 2 anchos): misma altura en todas las páginas, sin cambios visibles.
+- **Medios de referencia**: imágenes en WebP y videos en WebM con MP4 más liviano de respaldo. `assets/ref` 7,5 MB → 5,1 MB; videos de marca de 1,2 MB a 0,23 MB en WebM.
+- **Buscadores y redes**: canonical, Open Graph con imagen 1200×630, tarjeta para X, datos estructurados (ProfessionalService), `sitemap.xml`, `robots.txt`, íconos 180/512 y página 404.
+- **Cookies**: aviso con «Aceptar todas», «Solo necesarias» y «Configurar» (necesarias, análisis, marketing); la elección se guarda y se cambia desde el pie. Nada de análisis o marketing se carga sin permiso.
+- **Textos alternativos**: revisados. Las imágenes decorativas o que repiten el texto de al lado van con `alt=""` (correcto para lectores de pantalla); retratos, galería y visor llevan descripción.
+
 ## Pendiente (no se cambió)
-- **Hoja de estilos**: `styles.css` arrastra capas de versiones anteriores (v7 a v48) con reglas que ya no se usan; funciona, pero conviene podarla antes de publicar.
 - **Contenido de referencia**: testimonios, cifras, tres miembros del equipo e imágenes de `assets/ref` son de referencia.

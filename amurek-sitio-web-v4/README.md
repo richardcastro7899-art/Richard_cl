@@ -1,3 +1,9 @@
+## v49 — listo para publicar en Cloudflare Pages
+- **Dominio**: cambia `SITE` en `build.mjs` si el dominio final no es `https://amurek.com` y vuelve a ejecutar `node build.mjs` (se usa en canonical, Open Graph, sitemap y datos estructurados).
+- **Contacto** (`main.js`, `CONFIG`): correo `hola@amurek.com`; redes con un solo nombre, `amurek.estudio` (Behance: `amurekestudio`). Crea o verifica esas cuentas antes de publicar. WhatsApp: escribe el número en `CONFIG.whatsapp` y aparece solo en Contacto, el pie y el menú, como enlace de texto (sin burbuja flotante).
+- **Cookies**: cualquier analítica o píxel futuro debe cargarse así: `addEventListener("amurek:consent", (e) => { if (e.detail.analytics) { /* cargar */ } })`.
+- **Medios**: imágenes en WebP; videos en WebM + MP4 de respaldo (el WebM se incluye solo si pesa menos).
+
 # AMUREK · Sitio web — versión 4 (propuesta v47)
 
 ## v47 — servicios en pantallas bajas y cierre presente; testimonios en panel vino
