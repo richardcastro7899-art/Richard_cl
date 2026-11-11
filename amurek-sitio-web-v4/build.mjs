@@ -198,7 +198,7 @@ const NAV = (page) => `<header class="nav" id="nav">
     <nav class="menu__links" aria-label="Menú">
       ${NAV_ITEMS.map(([id, h, t], i) => `<a href="${h}" data-page-link="${id}" style="--i:${i}"><span class="menu__t">${t}</span>${AR}</a>`).join("\n      ")}
     </nav>
-    <div class="menu__foot"><a class="btn btn--dark" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a class="menu__mail" href="contacto.html" data-mail>—</a><a class="menu__mail" href="#" data-wa data-wa-row hidden>WhatsApp</a></div>
+    <div class="menu__foot"><a class="btn btn--dark" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a></div>
   </div>
 </div>
 `;
@@ -358,7 +358,7 @@ const WORK = `<section class="pwork" id="proyectos">
     <div class="pwh__sticky">
       <div class="pwh__txt">
         ${PW.map((p, i) => `<div class="pwh__i${i === 0 ? " is-on" : ""}">
-          <p class="pwh__k">${S[p.s].short}</p>
+          
           <h3 class="pwh__t">${p.t}</h3>
           <p class="pwh__s">${p.sub}</p>
           <button type="button" class="btn btn--dark" data-project="${esc(pdata(p))}" aria-label="${cue(p)}: ${p.t}"><span>${cue(p)}</span><i class="dot"></i></button>
@@ -388,7 +388,6 @@ const SERVICES_PANEL = `<section class="pad svh" id="servicios">
     <div class="panel svh__panel">
       <div class="svh__head">
         <div><p class="eyb"><i></i>Servicios</p><h2 class="h1 rv">Todo lo que tu marca necesita, en un solo equipo.</h2></div>
-        <div class="svh__meta"><span class="svh__now" aria-hidden="true">${SERVICES[0].t}</span><div class="svh__bar" aria-hidden="true"><i></i></div></div>
       </div>
       <div class="svh__view">
         <ul class="svh__track">
@@ -405,7 +404,7 @@ const SERVICES_PANEL = `<section class="pad svh" id="servicios">
             <p class="eyb"><i></i>Todo junto</p>
             <h3>¿Necesitas más de uno?</h3>
             <p>Arma el equipo completo para tu proyecto: una sola conversación, una sola propuesta.</p>
-            <ul class="svh__all">${SERVICES.map((s) => `<li>${s.short}</li>`).join("")}</ul>
+            
             <div class="svh__act"><a class="btn btn--light" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a class="svh__more" href="servicios.html"><span>Ver todos los servicios</span>${AR}</a></div>
           </li>
         </ul>
@@ -602,7 +601,7 @@ const TEAM_HOME = TEAMW("Un equipo pequeño que trabaja contigo.", "Las decision
 const wordLetters = (w, base = 0) => w.split("").map((c, i) => `<i style="--i:${base + i}">${c}</i>`).join("");
 const STUDIO_HEAD = `<section class="studio wrap" id="top">
   <h1 class="sr">Nosotros: el estudio de AMUREK, agencia creativa en Ecuador.</h1>
-  <div class="studio__row" aria-hidden="true"><span class="studio__w">Nuestro</span><figure class="studio__img"><img src="${R}n-studio.webp" alt=""></figure><span class="studio__w">Estudio</span></div>
+  <div class="studio__row" aria-hidden="true"><span class="studio__w">Nuestro</span><span class="studio__w">Estudio</span></div>
   <div class="studio__meta"><span>Agencia creativa</span><span>Ecuador</span><span>Cinco servicios, un equipo</span></div>
 </section>`;
 const ABOUT_GLASS = `<section class="pad aboutg">
@@ -712,7 +711,7 @@ const SVC_DETAIL = SERVICES.map((s) => `<article class="sdet" id="${s.id}">
 // PROYECTOS — rejilla con filtros (cada tarjeta abre el visor)
 const gcard = (p) => `<button type="button" class="gcard" data-cats="${p.s}" data-project="${esc(pdata(p))}" aria-label="Abrir proyecto ${p.t}">
         <span class="gcard__media" data-tilt>${pmedia(p)}<span class="pill pill--glass"><span>${cue(p)}</span></span></span>
-        <span class="gcard__cap"><b>${p.t}</b><span>${p.sub}</span><span class="gcard__m">${S[p.s].short}</span></span>
+        <span class="gcard__cap"><b>${p.t}</b><span>${p.sub}</span></span>
       </button>`;
 const GRID = PROJECTS.map(gcard).join("\n      ");
 const FILTER_BTNS = [["todo", "Todo"], ...SERVICES.map((s) => [s.id, s.short])].map(([k, t], i) => `<button type="button" data-filter="${k}" aria-pressed="${i === 0}">${t}</button>`).join("");

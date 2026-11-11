@@ -2644,3 +2644,27 @@ html [data-page] .menu__links a{grid-template-columns:minmax(0,1fr) auto}
 html [data-page] .vcard{min-height:0;padding-top:clamp(22px,2.4vw,34px)}
 /* título del campo del pie: texto, no etiqueta */
 html [data-page] .foot7__form label{font:500 var(--t-small)/1.3 var(--f-body);letter-spacing:0;text-transform:none}
+
+/* ============================================================
+   v53 — ajustes puntuales
+   ============================================================ */
+/* Contacto: el separador del titular corrido es el isotipo, no un punto */
+.bigmarq__iso{display:inline-flex;flex:none;align-self:center;width:clamp(22px,3.4vw,52px);margin:0 .45em;color:var(--vino)}
+.bigmarq__iso svg{display:block;width:100%;height:auto}
+/* Contacto: dos datos (correo y WhatsApp) */
+html [data-page] .connect__info{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:900px){html [data-page] .connect__info{grid-template-columns:1fr}}
+/* Nosotros: «Nuestro Estudio» en una línea, sin imagen */
+html [data-page] .studio__row{justify-content:flex-start;flex-wrap:wrap;gap:0 .26em}
+/* Nosotros: cada etapa en su tarjeta */
+html [data-page] .appr__steps{gap:var(--card-gap)}
+html [data-page] .appr__steps li{display:flex;flex-direction:column;padding:clamp(22px,2.2vw,32px);border:0;border-radius:var(--r-text);background:var(--card)}
+html [data-page] .appr__steps b{margin-bottom:.6rem}
+@media (max-width:1100px) and (min-width:701px){html [data-page] .appr__steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){html [data-page] .appr__steps{grid-template-columns:1fr}}
+/* Servicios: el encabezado ya no lleva la línea de progreso */
+html [data-page] .svh__head{grid-template-columns:minmax(0,1fr)}
+html [data-page] .studio__row{gap:0 clamp(14px,2.2vw,36px)}
+/* Nosotros: los datos bajo el título también son etiquetas */
+html [data-page] .studio__meta{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:.4rem}
+html [data-page] .studio__meta span{display:inline-flex;align-items:center;padding:.42rem .8rem;border-radius:999px;border:1px solid color-mix(in srgb,currentColor 30%,transparent);font:500 var(--t-tag)/1.15 var(--f-body);letter-spacing:0;text-transform:none;white-space:nowrap}
