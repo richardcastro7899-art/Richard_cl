@@ -1,4 +1,11 @@
-# AMUREK · Sitio web — versión 4 (propuesta v46)
+# AMUREK · Sitio web — versión 4 (propuesta v47)
+
+## v47 — servicios en pantallas bajas y cierre presente; testimonios en panel vino
+- **Servicios en portátiles de 768 px o menos de alto**: encabezado compacto (titular en dos líneas, menos relleno) para que cada servicio quepa entero con sus botones. Probado en 1350×640 (MacBook Air 11").
+- **Foco que acompaña el avance**: el resaltado va del primer servicio (al entrar) a la tarjeta de cierre (al salir), así el cierre se ve iluminado. El cierre es más ancho, recuerda los cinco servicios y se sostiene más tiempo (38 % de una pantalla).
+- **Testimonios**: panel vino de marca con tarjetas crema; se distingue de reels y equipo (claros) y de servicios y planes (oscuros).
+
+
 
 ## v46 — servicios en pista horizontal y testimonios minimalistas
 - **Servicios**: el panel queda fijo y la pista de servicios avanza en horizontal, de forma continua, con el scroll (`SERVICES_PANEL` en `build.mjs`, bloque «v46 · SERVICIOS» en `main.js`). El servicio en foco se ilumina; los vecinos se atenúan y su imagen se desplaza en sentido contrario. Cada servicio lleva dentro su botón «Cotizar …» y el enlace «Qué incluye». Al final, una tarjeta «¿Necesitas más de uno?» se sostiene antes de soltar el panel. Arriba a la derecha, el nombre del servicio activo y una barra de avance. El alto de la sección lo calcula `main.js` según el largo de la pista.

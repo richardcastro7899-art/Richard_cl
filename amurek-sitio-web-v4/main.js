@@ -500,7 +500,7 @@ void main(){
       vw = view.clientWidth || 1;
       pos = items.map((s) => [s.offsetLeft, s.offsetWidth]);
       dist = Math.max(0, track.scrollWidth - vw);
-      hold = innerHeight * 0.22;                                           // al final, la tarjeta de cierre se sostiene un momento antes de soltar
+      hold = innerHeight * 0.38;                                           // al final, la tarjeta de cierre se sostiene un momento antes de soltar
       svh.style.height = Math.round(pin.offsetHeight + dist + hold) + "px";
       lastX = -1;
     };
@@ -509,7 +509,8 @@ void main(){
       const x = Math.min(dist, Math.max(0, pinTop() - r.top));
       if (x === lastX) return; lastX = x;
       track.style.transform = `translate3d(${(-x).toFixed(1)}px,0,0)`;
-      const focus = vw * 0.4; let best = 0, bd = 1e9;
+      const pr = dist ? x / dist : 0, f0 = (pos[0][0] + pos[0][1] / 2) / vw, f1 = (pos[pos.length - 1][0] + pos[pos.length - 1][1] / 2 - dist) / vw;
+      const focus = vw * (f0 + (f1 - f0) * pr); let best = 0, bd = 1e9;   // el foco va del primer servicio (inicio) a la tarjeta de cierre (final)
       items.forEach((s, i) => {
         const d = (pos[i][0] + pos[i][1] / 2 - x - focus) / vw, a = Math.min(1, Math.abs(d) * 1.5);
         s.style.opacity = (1 - a * 0.78).toFixed(3); s.style.transform = `scale(${(1 - a * 0.05).toFixed(4)})`;

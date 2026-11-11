@@ -360,6 +360,7 @@ const SERVICES_PANEL = `<section class="pad svh" id="servicios">
             <p class="eyb"><i></i>Todo junto</p>
             <h3>¿Necesitas más de uno?</h3>
             <p>Arma el equipo completo para tu proyecto: una sola conversación, una sola propuesta.</p>
+            <p class="svh__all">${SERVICES.map((s) => s.short).join(" · ")}</p>
             <div class="svh__act"><a class="btn btn--light" href="contacto.html"><span>Cotiza tu proyecto</span><i class="dot"></i></a><a class="svh__more" href="servicios.html"><span>Ver todos los servicios</span>${AR}</a></div>
           </li>
         </ul>
@@ -526,12 +527,14 @@ const STATS = [["+", 120, "", "Proyectos entregados"], ["+", 45, "", "Marcas aco
 const tq5Card = ([q, av, n, r]) => `<li class="tq5__c"><blockquote>«${q}»</blockquote><figcaption><img src="${ref(av)}" alt=""><span><b>${n}</b>${r}</span></figcaption></li>`;
 const PORT = [[R + "t-retrato.jpg", "50% 14%"], [R + "c-2.jpg", "50% 22%"], [R + "c-4.jpg", "50% 22%"], [R + "c-1.jpg", "50% 22%"], [R + "c-5.jpg", "50% 22%"], [R + "c-3.jpg", "50% 22%"]];
 const tsmCard = ([q, , n, r]) => `<li class="tsm__c"><blockquote>${q}</blockquote><p class="tsm__by"><b>${n}</b><span>${r}</span></p></li>`;
-const TESTI = `<section class="sec tsm" id="testimonios" data-placeholder="testimonios y cifras de referencia">
-  <div class="wrap rhead"><h2 class="h2 rv">Lo que dicen nuestros clientes.</h2><p>Opiniones y cifras de referencia. Aquí irán las de tus clientes reales.</p></div>
-  <div class="tsm__view" role="region" aria-label="Testimonios">
-    <div class="tsm__track"><ul class="tsm__set">${TQ.map(tsmCard).join("")}</ul><ul class="tsm__set" aria-hidden="true">${TQ.map(tsmCard).join("")}</ul></div>
+const TESTI = `<section class="pad tsm" id="testimonios" data-placeholder="testimonios y cifras de referencia">
+  <div class="panel tsm__panel">
+    <div class="rhead tsm__head"><div><p class="eyb"><i></i>Clientes</p><h2 class="h2 rv">Lo que dicen nuestros clientes.</h2></div><p>Opiniones y cifras de referencia. Aquí irán las de tus clientes reales.</p></div>
+    <div class="tsm__view" role="region" aria-label="Testimonios">
+      <div class="tsm__track"><ul class="tsm__set">${TQ.map(tsmCard).join("")}</ul><ul class="tsm__set" aria-hidden="true">${TQ.map(tsmCard).join("")}</ul></div>
+    </div>
+    <ul class="tsm__stats" aria-label="Cifras de referencia">${STATS.map(([pre, n, suf, l]) => `<li><b>${pre}<span data-count="${n}">${n}</span>${suf}</b><p>${l}</p></li>`).join("")}</ul>
   </div>
-  <div class="wrap"><ul class="tsm__stats" aria-label="Cifras de referencia">${STATS.map(([pre, n, suf, l]) => `<li><b>${pre}<span data-count="${n}">${n}</span>${suf}</b><p>${l}</p></li>`).join("")}</ul></div>
 </section>`;
 
 // EQUIPO: las cuatro personas a la vez, con el mismo tamaño, en zigzag y con un leve vaivén; al pasar el puntero (o tocar) se endereza y cuenta qué hace
