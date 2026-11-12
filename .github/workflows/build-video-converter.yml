@@ -35,8 +35,12 @@ jobs:
         if: matrix.bundle_ffmpeg
         working-directory: video-converter
         run: |
-          curl -fsSL --retry 3 -o ff.zip https://evermeet.cx/ffmpeg/getrelease/zip
-          unzip -o ff.zip ffmpeg && rm ff.zip && chmod +x ffmpeg
+          # ffmpeg 7.1 estático de imageio-ffmpeg: macOS 11+, solo librerías del sistema,
+          # incluye libvpx (WebM), libopus y libwebp.
+          python -m pip download -q imageio-ffmpeg --no-deps --only-binary=:all: \
+            --platform macosx_10_9_x86_64 -d /tmp/iff
+          unzip -o -q /tmp/iff/*.whl -d /tmp/iff/w
+          cp /tmp/iff/w/imageio_ffmpeg/binaries/ffmpeg-macos-x86_64-* ffmpeg && chmod +x ffmpeg
           file ffmpeg
           ./ffmpeg -hide_banner -version | head -1
           echo "--- dependencias (no debe haber /opt/homebrew ni /usr/local):"
