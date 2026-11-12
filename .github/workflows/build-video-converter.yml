@@ -19,9 +19,11 @@ jobs:
           - os: macos-15
             label: Apple Silicon M1-M4
             optional: false
+            bundle_ffmpeg: false
           - os: macos-15-intel
             label: Intel
             optional: true
+            bundle_ffmpeg: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -29,9 +31,44 @@ jobs:
           python-version: "3.12"
       - name: Comprobar Tk
         run: python -c "import tkinter; print('Tk', tkinter.TkVersion)"
+      - name: Descargar ffmpeg estático (Intel) para incluirlo en la app
+        if: matrix.bundle_ffmpeg
+        working-directory: video-converter
+        run: |
+          curl -fsSL --retry 3 -o ff.zip https://evermeet.cx/ffmpeg/getrelease/zip
+          unzip -o ff.zip ffmpeg && rm ff.zip && chmod +x ffmpeg
+          file ffmpeg
+          ./ffmpeg -hide_banner -version | head -1
+          echo "--- dependencias (no debe haber /opt/homebrew ni /usr/local):"
+          otool -L ffmpeg
+          ./ffmpeg -hide_banner -encoders | grep -E "libvpx-vp9|libopus|libwebp "
       - name: Compilar .app y .dmg
         working-directory: video-converter
         run: PYTHON=python bash build_mac.sh
+      - name: Versión mínima de macOS de cada archivo de la app
+        working-directory: video-converter
+        run: |
+          find "dist/Convertidor de Video.app" -type f -print0 | while IFS= read -r -d '' f; do
+            if file "$f" | grep -q Mach-O; then
+              v=$(otool -l "$f" | awk '/LC_BUILD_VERSION/{b=1} b&&/minos/{print $2; exit} /LC_VERSION_MIN_MACOSX/{m=1} m&&/ version/{print $2; exit}')
+              echo "${v:-?} ${f#dist/}"
+            fi
+          done | sort -V > minos.txt
+          echo "Los 10 archivos que piden la versión de macOS más alta:"
+          tail -10 minos.txt
+          MAX=$(tail -1 minos.txt | cut -d' ' -f1)
+          echo "MÁXIMA VERSIÓN MÍNIMA REQUERIDA: macOS $MAX"
+      - name: Probar conversión con el ffmpeg incluido en la app
+        if: matrix.bundle_ffmpeg
+        run: |
+          FF=$(find "video-converter/dist/Convertidor de Video.app" -name ffmpeg -type f | head -1)
+          echo "ffmpeg dentro de la app: $FF"
+          test -n "$FF"
+          "$FF" -loglevel error -y -f lavfi -i testsrc=duration=3:size=320x240:rate=20 -f lavfi -i sine=duration=3 -shortest /tmp/t.mp4
+          cd video-converter
+          python convert.py /tmp/t.mp4 webm -o /tmp/out
+          python convert.py /tmp/t.mp4 webp --width 160 -o /tmp/out
+          ls -la /tmp/out
       - name: Comprobar que la app arranca
         working-directory: video-converter
         run: |
