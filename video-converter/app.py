@@ -31,6 +31,16 @@ RESOLUCIONES = {"Original": None, "1920 px (Full HD)": 1920, "1280 px (HD)": 128
                 "854 px (480p)": 854, "640 px": 640, "480 px": 480, "320 px": 320}
 FPS_OPCIONES = {"Original": None, "60": 60, "30": 30, "24": 24, "15": 15, "10": 10}
 
+IS_MAC = sys.platform == "darwin"
+# Fuente nativa de cada sistema; en Mac los puntos se ven más pequeños, se agranda un poco.
+FONT = "Segoe UI" if os.name == "nt" else ("Helvetica Neue" if IS_MAC else "DejaVu Sans")
+FONT_EXTRA = 3 if IS_MAC else 0
+
+
+def font(size: int, *style: str) -> tuple:
+    return (FONT, size + FONT_EXTRA, *style)
+
+
 COLOR_BG = "#f4f6fb"
 COLOR_ACCENT = "#3b5bdb"
 COLOR_OK = "#2b8a3e"
@@ -90,30 +100,37 @@ class App(BaseTk):
         if not self.ffmpeg:
             self.after(300, lambda: messagebox.showwarning(
                 APP_NAME,
-                "No se encontró ffmpeg.\n\nInstálalo (por ejemplo en Windows: "
-                "'winget install ffmpeg') o coloca ffmpeg.exe en la misma carpeta "
-                "que este programa, y vuelve a abrirlo."))
+                "No se encontró ffmpeg.\n\n" + (
+                    "Instálalo abriendo la app Terminal y escribiendo:\n\n"
+                    "    brew install ffmpeg\n\n"
+                    "(si no tienes Homebrew, instálalo antes desde https://brew.sh)"
+                    if IS_MAC else
+                    "Instálalo (por ejemplo en Windows: 'winget install ffmpeg') o coloca "
+                    "ffmpeg.exe en la misma carpeta que este programa.")
+                + "\n\nLuego vuelve a abrir el programa."))
 
     # ------------------------------------------------------------------ UI
     def _setup_style(self) -> None:
         st = ttk.Style(self)
         if "vista" in st.theme_names():
             st.theme_use("vista")
+        elif IS_MAC and "aqua" in st.theme_names():
+            st.theme_use("aqua")
         elif "clam" in st.theme_names():
             st.theme_use("clam")
-        st.configure(".", font=("Segoe UI", 10))
+        st.configure(".", font=font(10))
         st.configure("TFrame", background=COLOR_BG)
         st.configure("TLabel", background=COLOR_BG)
         st.configure("TLabelframe", background=COLOR_BG)
-        st.configure("TLabelframe.Label", background=COLOR_BG, font=("Segoe UI", 10, "bold"))
+        st.configure("TLabelframe.Label", background=COLOR_BG, font=font(10, "bold"))
         st.configure("TRadiobutton", background=COLOR_BG)
         st.configure("TCheckbutton", background=COLOR_BG)
-        st.configure("Title.TLabel", font=("Segoe UI", 18, "bold"), foreground="#1c2541")
+        st.configure("Title.TLabel", font=font(18, "bold"), foreground="#1c2541")
         st.configure("Sub.TLabel", foreground="#5c677d")
         st.configure("Status.TLabel", foreground="#495057")
-        st.configure("Accent.TButton", font=("Segoe UI", 11, "bold"), padding=(18, 8))
+        st.configure("Accent.TButton", font=font(11, "bold"), padding=(18, 8))
         st.configure("Treeview", rowheight=28)
-        st.configure("Treeview.Heading", font=("Segoe UI", 10, "bold"))
+        st.configure("Treeview.Heading", font=font(10, "bold"))
         st.configure("green.Horizontal.TProgressbar", troughcolor="#e9ecef")
 
     def _build_ui(self) -> None:
@@ -169,7 +186,7 @@ class App(BaseTk):
         self.empty_label = ttk.Label(
             self.tree, text="Aún no hay videos.\nPulsa «Agregar videos» para empezar.",
             justify="center", foreground="#adb5bd", background="white",
-            font=("Segoe UI", 12))
+            font=font(12))
         self.empty_label.place(relx=0.5, rely=0.5, anchor="center")
 
         # Opciones

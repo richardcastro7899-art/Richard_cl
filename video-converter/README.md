@@ -45,6 +45,30 @@ un programa que se abre con doble clic y no necesita Python.
 Si antes de ejecutarlo copias `ffmpeg.exe` a esta carpeta, quedará incluido dentro del
 `.exe` y el programa funcionará en cualquier PC sin instalar nada más.
 
+## Versión para Mac (.app / .dmg)
+
+**Descargarla ya compilada:** cada vez que se suben cambios, GitHub Actions compila
+automáticamente el `.dmg` para Mac (Apple Silicon e Intel) y el `.exe` para Windows.
+Para descargarlos, entra en la pestaña **Actions** del repositorio, abre la última ejecución
+de «Compilar Convertidor de Video» y busca la sección **Artifacts**.
+
+**Compilarla tú mismo en el Mac:** en la app Terminal, dentro de esta carpeta, ejecuta:
+
+```bash
+bash build_mac.sh
+```
+
+Se generan `dist/Convertidor de Video.app` y un instalador `dist/ConvertidorVideo-mac-*.dmg`.
+
+**Instalación en el Mac:**
+
+1. Abre el `.dmg` y arrastra **Convertidor de Video** a la carpeta **Aplicaciones**.
+2. La primera vez, haz **clic derecho → Abrir → Abrir**. Como la app no está firmada por
+   Apple, macOS lo pide solo esa primera vez. Si dice que «está dañada», ejecuta en la Terminal:
+   `xattr -cr "/Applications/Convertidor de Video.app"`
+3. Instala ffmpeg con [Homebrew](https://brew.sh): `brew install ffmpeg`.
+   La app lo encuentra sola, aunque la abras desde el Finder.
+
 ## Línea de comandos (opcional)
 
 ```bash
@@ -66,3 +90,4 @@ Opciones: `-o` (carpeta de salida), `--quality 1-100`, `--width`, `--fps`, `--no
 | `converter_core.py` | Motor de conversión (usa ffmpeg) |
 | `convert.py` | Versión de línea de comandos |
 | `build_windows.bat` | Genera el `.exe` para Windows |
+| `build_mac.sh` | Genera la `.app` y el `.dmg` para Mac |

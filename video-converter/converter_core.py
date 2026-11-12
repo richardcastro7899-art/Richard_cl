@@ -44,7 +44,10 @@ def find_ffmpeg() -> Optional[str]:
     name = "ffmpeg.exe" if os.name == "nt" else "ffmpeg"
     bases = []
     if getattr(sys, "frozen", False):
-        bases.append(Path(sys.executable).parent)
+        exe_dir = Path(sys.executable).parent
+        bases.append(exe_dir)
+        if exe_dir.name == "MacOS":  # dentro de un .app: Contents/MacOS → Contents/Resources
+            bases.append(exe_dir.parent / "Resources")
         if hasattr(sys, "_MEIPASS"):
             bases.append(Path(sys._MEIPASS))
     bases.append(Path(__file__).resolve().parent)
@@ -52,7 +55,15 @@ def find_ffmpeg() -> Optional[str]:
         for cand in (base / name, base / "ffmpeg" / name, base / "ffmpeg" / "bin" / name):
             if cand.is_file():
                 return str(cand)
-    return shutil.which("ffmpeg")
+    found = shutil.which("ffmpeg")
+    if found:
+        return found
+    # Una app de Mac abierta desde el Finder no hereda el PATH de la Terminal,
+    # así que se buscan las rutas habituales de Homebrew / MacPorts.
+    for cand in ("/opt/homebrew/bin/ffmpeg", "/usr/local/bin/ffmpeg", "/opt/local/bin/ffmpeg"):
+        if os.path.isfile(cand) and os.access(cand, os.X_OK):
+            return cand
+    return None
 
 
 def _to_seconds(value: Optional[str]) -> Optional[float]:
