@@ -445,7 +445,7 @@ img{max-width:100%}
 .film-x{position:absolute;top:18px;right:18px;width:46px;height:46px;border-radius:6px;border:0;background:#fff;color:var(--ink);display:grid;place-items:center;font-size:18px;cursor:pointer}
 .drw-h{background:#fff}
 .toast{background:var(--ink);color:#fff}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){html:not(.anim-on) *,html:not(.anim-on) *::before,html:not(.anim-on) *::after{animation:none!important;transition:none!important}}
 @media (max-width:600px){
   .metrics-bars{height:330px;gap:8px}.mb-t b{font-size:clamp(20px,6.4vw,28px)}.mb-t span{font-size:10.5px;letter-spacing:.03em}
   .proof{flex-direction:column;text-align:center;gap:12px}.proof-t p{justify-content:center}

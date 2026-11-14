@@ -307,7 +307,7 @@ section[id]{scroll-margin-top:var(--hdr)}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
+  html:not(.anim-on) *,html:not(.anim-on) *::before,html:not(.anim-on) *::after{animation:none!important;transition:none!important}
 }
 /* =====================  ESENCIA: láminas, capítulos y ánimos de Sacha  ===================== */
 .cine .tab{color:#F4EFE6}

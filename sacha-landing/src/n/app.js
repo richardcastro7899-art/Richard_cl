@@ -94,7 +94,12 @@ var BANK=[['Banco','Banco Internacional'],['Cuenta corriente','1400625249'],['A 
 
 /* ======================  UTILIDADES  ====================== */
 var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
-var reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,sysReduced=reduced;
+/* «Reducir movimiento» del sistema apaga todas las animaciones. En equipos de trabajo suele venir activado; el aviso de abajo permite verlas igual. */
+function animForced(){var v='';try{v=localStorage.getItem('sachaAnim')||''}catch(e){}if(!v){try{v=sessionStorage.getItem('sachaAnim')||''}catch(e){}}if(!v&&/sachaAnim=1/.test(window.name||''))v='1';return v==='1'}
+if(reduced&&animForced()){reduced=false;document.documentElement.classList.add('anim-on')}
+function forceAnim(){try{localStorage.setItem('sachaAnim','1')}catch(e){}try{sessionStorage.setItem('sachaAnim','1')}catch(e){}window.name=(window.name||'')+' sachaAnim=1';location.reload()}
+if(sysReduced&&reduced){(function(){var st=document.createElement('style');st.textContent='.moask{position:fixed;left:max(12px,env(safe-area-inset-left,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:150;display:flex;align-items:center;gap:12px;max-width:min(460px,calc(100% - 24px));padding:10px 10px 10px 16px;border-radius:12px;background:#13201A;color:#fff;font:14px/1.35 system-ui,sans-serif;box-shadow:0 14px 40px -10px rgba(0,0,0,.5)}.moask button{flex:none;height:36px;padding:0 16px;border:0;border-radius:8px;background:#D9B97A;color:#13201A;font:600 14px system-ui,sans-serif;cursor:pointer}.moask button:hover{background:#fff}';document.head.appendChild(st);var d=document.createElement('div');d.className='moask';d.setAttribute('role','status');d.innerHTML='<span>Tu equipo tiene «Reducir movimiento» activado, por eso no se ven las animaciones.</span><button type="button">Activar animaciones</button>';d.querySelector('button').addEventListener('click',forceAnim);document.body.appendChild(d)})()}
 var canIO='IntersectionObserver' in window;
 if(!reduced&&canIO)document.documentElement.classList.add('js');
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}

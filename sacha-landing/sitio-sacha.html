@@ -104,7 +104,7 @@
 .sx .em.tear{left:20%;top:20%;width:12%;height:10%}
 .sx .em.zzz{right:-14%;top:2%;width:42%;height:26%}
 .sx .em.paws{left:50%;top:-4%;width:46%;height:20%;transform:translateX(-50%)}
-@media (prefers-reduced-motion:reduce){.sx>img,.sx .em .i{animation:none!important}.sx .em .i{opacity:1}}
+@media (prefers-reduced-motion:reduce){html:not(.anim-on) .sx>img,html:not(.anim-on) .sx .em .i{animation:none!important}html:not(.anim-on) .sx .em .i{opacity:1}}
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -415,7 +415,7 @@ section[id]{scroll-margin-top:var(--hdr)}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
+  html:not(.anim-on) *,html:not(.anim-on) *::before,html:not(.anim-on) *::after{animation:none!important;transition:none!important}
 }
 /* =====================  ESENCIA: láminas, capítulos y ánimos de Sacha  ===================== */
 .cine .tab{color:#F4EFE6}
@@ -1689,7 +1689,7 @@ img{max-width:100%}
 .film-x{position:absolute;top:18px;right:18px;width:46px;height:46px;border-radius:6px;border:0;background:#fff;color:var(--ink);display:grid;place-items:center;font-size:18px;cursor:pointer}
 .drw-h{background:#fff}
 .toast{background:var(--ink);color:#fff}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){html:not(.anim-on) *,html:not(.anim-on) *::before,html:not(.anim-on) *::after{animation:none!important;transition:none!important}}
 @media (max-width:600px){
   .metrics-bars{height:330px;gap:8px}.mb-t b{font-size:clamp(20px,6.4vw,28px)}.mb-t span{font-size:10.5px;letter-spacing:.03em}
   .proof{flex-direction:column;text-align:center;gap:12px}.proof-t p{justify-content:center}
@@ -2460,7 +2460,12 @@ var BANK=[['Banco','Banco Internacional'],['Cuenta corriente','1400625249'],['A 
 
 /* ======================  UTILIDADES  ====================== */
 var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
-var reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,sysReduced=reduced;
+/* «Reducir movimiento» del sistema apaga todas las animaciones. En equipos de trabajo suele venir activado; el aviso de abajo permite verlas igual. */
+function animForced(){var v='';try{v=localStorage.getItem('sachaAnim')||''}catch(e){}if(!v){try{v=sessionStorage.getItem('sachaAnim')||''}catch(e){}}if(!v&&/sachaAnim=1/.test(window.name||''))v='1';return v==='1'}
+if(reduced&&animForced()){reduced=false;document.documentElement.classList.add('anim-on')}
+function forceAnim(){try{localStorage.setItem('sachaAnim','1')}catch(e){}try{sessionStorage.setItem('sachaAnim','1')}catch(e){}window.name=(window.name||'')+' sachaAnim=1';location.reload()}
+if(sysReduced&&reduced){(function(){var st=document.createElement('style');st.textContent='.moask{position:fixed;left:max(12px,env(safe-area-inset-left,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:150;display:flex;align-items:center;gap:12px;max-width:min(460px,calc(100% - 24px));padding:10px 10px 10px 16px;border-radius:12px;background:#13201A;color:#fff;font:14px/1.35 system-ui,sans-serif;box-shadow:0 14px 40px -10px rgba(0,0,0,.5)}.moask button{flex:none;height:36px;padding:0 16px;border:0;border-radius:8px;background:#D9B97A;color:#13201A;font:600 14px system-ui,sans-serif;cursor:pointer}.moask button:hover{background:#fff}';document.head.appendChild(st);var d=document.createElement('div');d.className='moask';d.setAttribute('role','status');d.innerHTML='<span>Tu equipo tiene «Reducir movimiento» activado, por eso no se ven las animaciones.</span><button type="button">Activar animaciones</button>';d.querySelector('button').addEventListener('click',forceAnim);document.body.appendChild(d)})()}
 var canIO='IntersectionObserver' in window;
 if(!reduced&&canIO)document.documentElement.classList.add('js');
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
