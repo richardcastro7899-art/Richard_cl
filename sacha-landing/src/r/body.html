@@ -60,7 +60,6 @@
       <button class="zh-burger" id="zBurger" aria-expanded="false" aria-controls="zMenu" aria-label="Abrir menú"><span></span><span></span><span></span></button>
     </div>
   </div>
-  <div class="zh-prog" aria-hidden="true"><i id="zProg"></i></div>
 </header>
 <nav class="zmenu" id="zMenu" aria-label="Menú" hidden>
   <div class="zmenu-in"><a href="#video" data-go="video">Video institucional</a><a href="#nosotros" data-go="nosotros">Nuestra historia</a><a href="#proceso" data-go="proceso">Cómo trabajamos</a><a href="#reels" data-go="reels">Reels</a><a href="#podcast" data-go="podcast">Podcast y casos</a><a href="#galeria" data-go="galeria">Galería</a><a href="#encuentras" data-go="encuentras">Si encuentras un animal</a><a href="#ayuda" data-go="ayuda" class="zmenu-don">Dona y apadrina</a></div>
@@ -70,7 +69,7 @@
 
 <!-- PORTADA: solo el video de fondo y el texto en la esquina -->
 <section class="hx" id="inicio" aria-label="Inicio">
-  <div class="hx-bg" id="hxBg" aria-hidden="true"><video id="zhVid" muted loop playsinline preload="auto" poster="assets/video/final/hero.jpg"><source src="assets/video/final/hero.mp4" type="video/mp4"><source src="assets/video/final/hero.webm" type="video/webm"></video></div>
+  <div class="hx-bg" id="hxBg" aria-hidden="true"><img src="assets/photos/ocelote-hero.jpg" alt="" fetchpriority="high"></div>
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="hx-in">
     <div class="hx-copy">
@@ -87,24 +86,22 @@
       <span>animales silvestres cuidados en nuestro centro desde 2018</span>
     </aside>
   </div>
-  <button class="hx-pp" id="hxPP" aria-label="Pausar el video de fondo"><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg></button>
   <a class="hx-cue" href="#video" data-go="video" aria-label="Bajar"><i></i></a>
-  <span class="credit hx-credit">Video de referencia · Mixkit</span>
 </section>
 
 <!-- VIDEO INSTITUCIONAL: la ventana crece con el scroll; luego, solo el video -->
 <section class="imm" id="video" aria-labelledby="immT">
   <div class="imm-pin" id="immPin">
     <div class="imm-head" id="immHead">
-      <p class="lbl"><span>01</span>Conoce a Sacha</p>
+      <p class="lbl">Conoce a Sacha</p>
       <h2 class="zt" id="immT">Un minuto dentro del centro de rescate</h2>
     </div>
+    <p class="imm-w imm-wl" id="immWL" aria-hidden="true">Rescatar</p>
+    <p class="imm-w imm-wr" id="immWR" aria-hidden="true">Cuidar</p>
     <div class="imm-frame" id="immFrame">
       <video id="immVid" muted loop playsinline preload="auto" poster="assets/video/final/inst.jpg"><source src="assets/video/final/inst.mp4" type="video/mp4"><source src="assets/video/final/inst.webm" type="video/webm"></video>
       <div class="imm-shade" id="immShade" aria-hidden="true"></div>
-      <button class="imm-play" id="immPlay" type="button"><span class="imm-play-i"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg></span><span class="imm-play-t"><b id="immPlayT">Ver con sonido</b><small>Video institucional · 1:00</small></span></button>
-      <div class="imm-ctl" id="immCtl"><button id="immPP" aria-label="Pausar"><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg></button><div class="imm-bar"><i id="immBar"></i></div><button id="immSnd" aria-label="Activar sonido"><svg class="ic" aria-hidden="true"><use href="#i-mute"/></svg></button></div>
-      <span class="credit imm-credit">Video de referencia · Mixkit</span>
+      <div class="imm-ctl" id="immCtl"><div class="imm-bar"><i id="immBar"></i></div><button class="imm-snd" id="immSnd" aria-label="Activar sonido"><svg class="ic" aria-hidden="true"><use href="#i-mute"/></svg><span>Activar sonido</span></button></div>
     </div>
   </div>
 </section>
@@ -114,7 +111,7 @@
   <div class="zwrap">
     <div class="hist-g">
       <div class="hist-l">
-        <p class="lbl"><span>02</span>Nuestra historia</p>
+        <p class="lbl">Nuestra historia</p>
         <h2 class="zt" id="nosT">Todo empezó con un ocelote llamado Sacha</h2>
         <figure class="mcard mcard-hist" id="histCard">
           <div class="mcard-pat" aria-hidden="true"></div>
@@ -123,7 +120,7 @@
         </figure>
       </div>
       <div class="hist-r">
-        <p class="hist-lead">En junio de 2018, un ciudadano vio a un pequeño ocelote exhibido en una caja, en una tienda de Vinces, esperando ser vendido. Lo llevó a la consulta de la doctora Eliana Molineros. Lo llamamos Sacha, «selva» en kichwa.</p>
+        <p class="hist-lead">En junio de 2018, un ciudadano vio a un pequeño ocelote exhibido en una caja, en una tienda de Vinces, esperando ser vendido. Lo llevó a la consulta de la doctora Eliana Molineros. Lo llamamos Sacha, “selva” en kichwa.</p>
         <ol class="tl" id="tl"><i class="tl-line" aria-hidden="true"><b id="tlFill"></b></i></ol>
         <dl class="kpis" id="kpis">
           <div><dt>Animales cuidados</dt><dd data-count="5400" data-pre="+">+5.400</dd></div>
@@ -140,7 +137,7 @@
   <div class="proc-pin" id="procPin">
     <div class="zwrap proc-g">
       <div class="proc-l">
-        <p class="lbl"><span>03</span>Cómo trabajamos</p>
+        <p class="lbl">Cómo trabajamos</p>
         <h2 class="zt" id="procT">De la llamada a la liberación</h2>
         <ol class="proc-nav" id="procNav"></ol>
       </div>
@@ -152,7 +149,7 @@
 <!-- REELS -->
 <section class="zsec zsec-dark" id="reels" aria-labelledby="reelsT">
   <div class="zwrap">
-    <div class="sh"><div><p class="lbl light"><span>04</span>Reels</p><h2 class="zt light" id="reelsT">Un minuto para conocerlos</h2></div><p class="sh-p">Cápsulas verticales que también publicamos en TikTok e Instagram. Pasa el cursor para detenerlas, arrastra para moverlas y toca una para verla.</p></div>
+    <div class="sh"><div><p class="lbl light">Reels</p><h2 class="zt light" id="reelsT">Un minuto para conocerlos</h2></div><p class="sh-p">Cápsulas verticales que también publicamos en TikTok e Instagram. Pasa el cursor para detenerlas, arrastra para moverlas y toca una para verla.</p></div>
   </div>
   <div class="krl" id="krl" aria-roledescription="carrusel" aria-label="Reels en video"><div class="krl-t" id="reelsT2"></div></div>
 </section>
@@ -163,7 +160,7 @@
     <div class="podx">
       <div class="podx-pat" aria-hidden="true"></div>
       <div class="podx-h">
-        <div><p class="lbl light"><span>05</span>Podcast y casos</p><h2 class="zt light" id="podT">Protegiendo a la fauna silvestre</h2></div>
+        <div><p class="lbl light">Podcast y casos</p><h2 class="zt light" id="podT">Protegiendo a la fauna silvestre</h2></div>
         <div class="podx-h-r"><div class="ptabs" id="ptabs" role="tablist" aria-label="Tipo de video"><button role="tab" aria-selected="true" data-pt="pod">Episodios del podcast</button><button role="tab" aria-selected="false" data-pt="cas">Casos en video</button><i class="ptabs-i" aria-hidden="true"></i></div><a class="zbtn zbtn-light" href="#" data-follow="youtube"><span class="zbtn-t">Suscribirse en YouTube</span><span class="zbtn-c"><svg class="ic" aria-hidden="true"><use href="#i-arrow-ur"/></svg><svg class="ic" aria-hidden="true"><use href="#i-arrow-ur"/></svg></span></a></div>
       </div>
       <div class="ytp" id="ytp">
@@ -176,14 +173,14 @@
 
 <!-- GALERÍA: carrusel de fotos que avanza solo y se arrastra -->
 <section class="zsec zsec-alt gal" id="galeria" aria-labelledby="galT">
-  <div class="zwrap"><div class="sh"><div><p class="lbl"><span>06</span>Galería</p><h2 class="zt" id="galT">Momentos en el centro</h2></div><p class="sh-p">Arrastra para recorrer. Toca una foto para verla completa.</p></div></div>
-  <div class="loop" id="galLoop" aria-roledescription="carrusel" aria-label="Galería de fotos"><div class="loop-t" id="galTrack"></div></div>
+  <div class="zwrap"><div class="sh"><div><p class="lbl">Galería</p><h2 class="zt" id="galT">Momentos en el centro</h2></div><p class="sh-p">Arrastra para recorrer. Toca una foto para verla completa.</p></div></div>
+  <div class="gal-stage"><div class="gal-band" aria-hidden="true"></div><div class="loop" id="galLoop" aria-roledescription="carrusel" aria-label="Galería de fotos"><div class="loop-t" id="galTrack"></div></div></div>
 </section>
 
 <!-- DONA Y APADRINA -->
 <section class="zsec" id="ayuda" aria-labelledby="ayT">
   <div class="zwrap">
-    <div class="sh"><div><p class="lbl"><span>07</span>Dona y apadrina</p><h2 class="zt" id="ayT">Cada aporte se convierte en cuidado</h2></div>
+    <div class="sh"><div><p class="lbl">Dona y apadrina</p><h2 class="zt" id="ayT">Cada aporte se convierte en cuidado</h2></div>
       <div class="atabs" id="atabs" role="tablist" aria-label="Cómo ayudar"><button role="tab" aria-selected="true" data-at="don">Donar</button><button role="tab" aria-selected="false" data-at="pad">Apadrinar</button><i aria-hidden="true"></i></div></div>
     <div class="apane" id="paneDon">
       <div class="don">
@@ -205,7 +202,7 @@
       </div>
     </div>
     <div class="apane" id="panePad" hidden>
-      <div class="pad-h"><p>Apadrinar es acompañar a un paciente concreto: tu aporte mensual cubre su alimento, sus medicinas y su rehabilitación, y recibes noticias de su avance hasta el día en que vuelve a su hábitat.</p><p class="pad-note"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg>Es simbólico: los animales no se visitan ni se entregan.</p></div>
+      <div class="pad-h"><p>Apadrinar es apoyar a un paciente concreto: tu aporte ayuda a cubrir su alimento, sus medicinas y su rehabilitación. Aportas cuando quieras y con el monto que puedas.</p><p class="pad-note"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg>El apadrinamiento es simbólico: los animales no se pueden visitar ni entregar.</p></div>
       <div class="loop loop-pat" id="patLoop" aria-roledescription="carrusel" aria-label="Pacientes para apadrinar"><div class="loop-t" id="pat"></div></div>
     </div>
   </div>
@@ -216,7 +213,7 @@
   <div class="zwrap">
     <div class="enc">
       <div class="enc-l">
-        <p class="lbl"><span>08</span>Si encuentras un animal</p>
+        <p class="lbl">Si encuentras un animal</p>
         <h2 class="zt" id="encT">Reconócelo, protégelo y avísanos</h2>
         <ol class="enc-steps" id="encSteps">
           <li><i aria-hidden="true"><svg class="ic"><use href="#i-eye"/></svg></i><div><b>Obsérvalo con calma</b><p>¿Está herido, atrapado o es una cría sola? Una cría puede tener a su madre cerca.</p></div></li>
@@ -240,7 +237,7 @@
   <div class="zfoot-pat" aria-hidden="true"></div>
   <div class="zfoot-in">
     <div class="zfoot-top">
-      <div><svg class="logo" viewBox="0 0 1157 438" role="img" aria-label="Proyecto Sacha, conservación de fauna silvestre"><use href="#sy-logo"/></svg><p class="zfoot-slogan">Si los reconoces, los cuidas.</p></div>
+      <div><svg class="logo" viewBox="0 0 1157 438" role="img" aria-label="Proyecto Sacha, conservación de fauna silvestre"><use href="#sy-logo"/></svg></div>
       <div class="zfoot-don"><p>Tu aporte sostiene medicinas, alimento y traslados para cada animal que llega.</p><a class="zbtn" href="#" data-go="ayuda"><span class="zbtn-t">Donar a Proyecto Sacha</span><span class="zbtn-c"><svg class="ic" aria-hidden="true"><use href="#i-arrow-ur"/></svg><svg class="ic" aria-hidden="true"><use href="#i-arrow-ur"/></svg></span></a></div>
     </div>
     <div class="zfoot-cols">
