@@ -408,18 +408,26 @@ ivPaint();
    Fuentes: la web de la fundación, Expreso (2023) y el canal de YouTube de Proyecto Sacha. */
 var TL=[
  {y:'2018',t:'Llega Sacha',d:'Un ocelote de días de nacido, rescatado de una tienda en Vinces. Comía cada dos o tres horas y pasó sus primeros días en incubadora.',ph:'ocelote'},
- {y:'2018',t:'Zafira y Vicenta',d:'Una ocelote con quemaduras en las patas y una monita aulladora bebé. Entendimos que la fauna silvestre necesitaba un lugar.',ph:'mono'},
- {y:'2021',t:'“Tu casa no es mi hábitat”',d:'Campaña para desalentar el tráfico de fauna silvestre y alianza para conservar la fauna y sus ecosistemas.',ph:'iguana'},
- {y:'2022',t:'Serpientes del Guayas',d:'Programa de conservación de serpientes y guía para reaccionar si aparece una en casa.',ph:'serpiente'},
- {y:'2022',t:'Rescate en el incendio forestal',d:'Rescate de fauna durante el incendio de Cerro Azul, en Guayaquil. Ese año se auxiliaron cerca de 1.100 animales.',ph:'tamandua'},
+ {y:'2018',t:'Zafira y Vicenta',d:'Una ocelote con quemaduras en las patas y una monita aulladora bebé. Con ellas entendimos que la fauna silvestre necesitaba un lugar propio.',ph:'mono'},
+ {y:'2021',t:'“Tu casa no es mi hábitat”',d:'Una campaña para frenar el tráfico de fauna silvestre, junto a aliados que conservan sus ecosistemas.',ph:'iguana'},
+ {y:'2022',t:'Serpientes del Guayas',d:'Un programa para conservar serpientes y una guía para saber qué hacer si aparece una en casa.',ph:'serpiente'},
+ {y:'2022',t:'Rescate en el incendio forestal',d:'Rescatamos fauna durante el incendio de Cerro Azul, en Guayaquil. Ese año auxiliamos a cerca de 1.100 animales.',ph:'tamandua'},
  {y:'2023',t:'Más de 3.500 animales',d:'Rescatados, recuperados o reubicados desde 2018, en coordinación con la autoridad ambiental.',ph:'lechuza'},
- {y:'Hoy',t:'Más de 5.400 animales cuidados',d:'Sacha y Zafira ya son libres. Seguimos rescatando, rehabilitando y liberando, y contándolo: si los reconoces, los cuidas.',ph:'manglar'}
+ {y:'2025',t:'653 rescates en un año',d:'549 fueron en zonas urbanas. La fauna silvestre también vive en la ciudad.',ph:'zarigueya'},
+ {y:'Hoy',t:'Más de 5.400 animales cuidados',d:'Sacha y Zafira ya son libres. Seguimos rescatando, rehabilitando y liberando.',ph:'manglar'}
 ];
 $('#tl').insertAdjacentHTML('beforeend',TL.map(function(x,i){var p=PH[x.ph];return '<li class="tl-i" data-tl="'+i+'"><span class="tl-dot" aria-hidden="true"></span><div class="tl-y"><b>'+esc(x.y)+'</b></div><div class="tl-c"><h3>'+esc(x.t)+'</h3><p>'+esc(x.d)+'</p></div><figure class="tl-img"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"></figure></li>'}).join(''));
 $('#histCard').insertAdjacentHTML('afterbegin','<span class="mcard-year" id="histYear">2018</span>');
 function setTl(i){$$('.tl-i').forEach(function(li,k){li.classList.toggle('is-on',k<=i);li.classList.toggle('is-now',k===i)});var y=$('#histYear');if(y&&y.textContent!==TL[i].y){y.textContent=TL[i].y;if(window.gsap&&!reduced)gsap.fromTo(y,{yPercent:60,autoAlpha:0},{yPercent:0,autoAlpha:1,duration:.5,ease:'power3.out'})}}
 
 /* ---------- cómo trabajamos ---------- */
+[
+ {title:'Lo atendemos al llegar',text:'Evaluamos su estado y lo estabilizamos. Necesita exámenes y cuidados, como un perro o un gato.'},
+ {title:'Informamos a la autoridad',text:'Reportamos cada ingreso a la autoridad ambiental. Solo liberamos con su permiso.'},
+ {title:'Lo llevamos a Santa Elena',text:'Desde Guayaquil viaja a nuestro refugio rural. Cada traslado necesita vehículo, combustible y alguien que lo cuide en el camino.'},
+ {title:'Lo cuidamos hasta que pueda volver',text:'La rehabilitación puede tomar meses. Si un animal no puede volver a su hábitat, se queda bajo nuestro cuidado.'}
+].forEach(function(x,i){Object.assign(STEPS[i],x)});
+[['Mitos sobre la','zarigüeya'],['Encontré una cría:','¿qué hago?'],['Cómo convivir con la fauna','de la ciudad'],['Quiénes','somos'],['Un día en','Proyecto Sacha'],['Así es un','rescate'],['El viaje a','Santa Elena'],['Rehabilitación','y liberación']].forEach(function(x,i){if(CAPS[i]){CAPS[i].pre=x[0];CAPS[i].title=x[1]}});
 $('#procNav').innerHTML=STEPS.map(function(s,i){return '<li data-pi="'+i+'"><button type="button" data-pgo="'+i+'"><b>'+esc(s.title)+'</b></button><p>'+esc(s.text)+'</p><i aria-hidden="true"><em></em></i></li>'}).join('');
 $('#procCards').innerHTML=STEPS.map(function(s,i){var p=PH[s.ph];return '<article class="pcard" data-pc="'+i+'"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"><div class="pcard-sh" aria-hidden="true"></div><div class="pcard-t"><h3>'+esc(s.title)+'</h3><p class="pcard-p">'+esc(s.text)+'</p></div></article>'}).join('');
 var PI=-1;function setProc(i){if(i===PI)return;PI=i;$$('#procNav li').forEach(function(li,k){li.classList.toggle('is-on',k===i);li.classList.toggle('is-done',k<i)})}
@@ -504,7 +512,7 @@ var YP={tab:'pod',i:0};
 function ytFrame(){return /^https?:$/.test(location.protocol)}
 function renderYT(anim){
   var L=YT[YP.tab],v=L[YP.i];
-  $('#ytpV').innerHTML='<img src="assets/yt/'+v.id+'.jpg" alt=""><span class="ytp-ov"></span><span class="ytp-tag">'+ico(YP.tab==='pod'?'i-mic':'i-yt')+(YP.tab==='pod'?'Podcast':'Caso en video')+'</span><button class="ytp-play" data-ytplay aria-label="Reproducir: '+esc(v.t)+'">'+ico('i-play')+'</button><div class="ytp-cap"><b>'+esc(v.t)+'</b></div>';
+  $('#ytpV').innerHTML='<img src="assets/yt/'+v.id+'.jpg" alt=""><span class="ytp-ov"></span><span class="ytp-tag">'+ico(YP.tab==='pod'?'i-mic':'i-yt')+(YP.tab==='pod'?'Entrevista':'Caso en video')+'</span><button class="ytp-play" data-ytplay aria-label="Reproducir: '+esc(v.t)+'">'+ico('i-play')+'</button><div class="ytp-cap"><b>'+esc(v.t)+'</b></div>';
   $('#ytpList').innerHTML=L.map(function(x,i){return '<li><button data-yti="'+i+'" aria-current="'+(i===YP.i)+'"><span class="ytp-th"><img src="assets/yt/'+x.id+'.jpg" alt="" loading="lazy"><i>'+ico('i-play')+'</i></span><span class="ytp-t"><b>'+esc(x.t)+'</b></span></button></li>'}).join('');
   if(anim&&window.gsap&&!reduced){gsap.fromTo('#ytpV img',{scale:1.12,opacity:.4},{scale:1,opacity:1,duration:.9,ease:'power3.out'});gsap.from('#ytpV .ytp-cap > *',{y:20,autoAlpha:0,duration:.6,stagger:.06,ease:'power3.out'});gsap.from('#ytpList li',{x:30,autoAlpha:0,duration:.5,stagger:.04,ease:'power3.out'})}
 }
@@ -547,10 +555,10 @@ var row1=Loop($('#row1'),{speed:34}),row2=Loop($('#row2'),{speed:-34});
 /* ---------- donar ----------
    Donar es general (todo el centro, eliges el destino). Apadrinar es por un paciente concreto. */
 var CAUSES=[
- {t:'Alimenta una vida',d:'Su ración diaria de comida y suplementos.',ph:'zarigueya'},
- {t:'Sana sus heridas',d:'Tratamientos, analgésicos y curaciones.',ph:'tamandua'},
- {t:'Construye su camino a la libertad',d:'Encierros naturales para recuperar fuerza.',ph:'mono'},
- {t:'Libera una vida',d:'Las etapas finales y el día de la liberación.',ph:'manglar'}
+ {t:'Alimenta una vida',v:'alimentar una vida',d:'Su ración diaria de comida y suplementos.',ph:'zarigueya'},
+ {t:'Sana sus heridas',v:'sanar sus heridas',d:'Tratamientos, analgésicos y curaciones.',ph:'tamandua'},
+ {t:'Construye su camino a la libertad',v:'construir su camino a la libertad',d:'Encierros amplios donde recupera fuerza.',ph:'mono'},
+ {t:'Libera una vida',v:'liberar una vida',d:'Las últimas etapas antes de volver a su hábitat.',ph:'manglar'}
 ];
 var DAMT={u:[10,25,50,100],m:[5,10,20,50]},YEAR=350000;
 var D={c:0,fq:'u',a:0,other:''};
@@ -560,8 +568,8 @@ function renderDon(){
   $$('#donFreq [data-fq]').forEach(function(b){b.setAttribute('aria-checked',String(b.getAttribute('data-fq')===D.fq))});
   $('#amts2').innerHTML=DAMT[D.fq].map(function(a){return '<button role="radio" aria-checked="'+(!D.other&&a===D.a)+'" data-amt="'+a+'">$'+a+'</button>'}).join('');
   var a=damt(),c=CAUSES[D.c],min=Math.round(a/YEAR*525600);
-  $('#donSum').innerHTML=a?'Con <b>$'+a+(D.fq==='m'?' al mes':'')+'</b> nos ayudas a <b>'+esc(c.t.charAt(0).toLowerCase()+c.t.slice(1))+'</b>: equivale a unos '+nf(min)+' minutos de cuidado en el centro.':'Cualquier monto ayuda. Elige uno si quieres ver a cuánto cuidado equivale.';
-  $('#donGoT').textContent=a?'Donar $'+a+(D.fq==='m'?' al mes':''):'Ver cómo donar';
+  $('#donSum').innerHTML=a?'Con <b>$'+a+(D.fq==='m'?' al mes':'')+'</b> nos ayudas a <b>'+esc(c.v)+'</b>. Equivale a unos '+nf(min)+' minutos de cuidado para todo el centro.':'Cualquier monto ayuda. Elige uno y te mostramos cuánto cuidado sostiene.';
+  $('#donGoT').textContent=a?'Donar $'+a+(D.fq==='m'?' al mes':'')+' por transferencia':'Ver cómo donar';
 }
 document.addEventListener('click',function(e){
   var c=e.target.closest('[data-cause]');if(c){D.c=+c.getAttribute('data-cause');renderDon();return}
@@ -570,7 +578,7 @@ document.addEventListener('click',function(e){
   var cp=e.target.closest('[data-copyv]');if(cp)copy(cp.getAttribute('data-copyv'),cp.getAttribute('data-copyv')+' copiado');
 });
 $('#donOther').addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'').slice(0,5);D.other=this.value;renderDon()});
-$('#donGo').addEventListener('click',function(){var b=$('#donBank');b.innerHTML='<p class="bank-h">Por ahora recibimos transferencias; pronto, tarjeta y PayPal.</p><dl>'+BANK.map(function(r){return '<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'<button class="cpy" data-copyv="'+esc(r[1])+'" aria-label="Copiar '+esc(r[0])+'">'+ico('i-copy')+'</button></dd></div>'}).join('')+'</dl><p class="bank-n">Cuéntanos en el correo tu nombre y el destino que elegiste. Maqueta: aún no se procesa ningún pago.</p>';if(b.hidden){b.hidden=false;if(window.gsap&&!reduced)gsap.from(b,{height:0,autoAlpha:0,duration:.6,ease:'power3.out',clearProps:'height'})}});
+$('#donGo').addEventListener('click',function(){var b=$('#donBank');b.innerHTML='<p class="bank-h">Recibimos donaciones por transferencia bancaria.</p><dl>'+BANK.map(function(r){return '<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'<button class="cpy" data-copyv="'+esc(r[1])+'" aria-label="Copiar '+esc(r[0])+'">'+ico('i-copy')+'</button></dd></div>'}).join('')+'</dl><p class="bank-n">Al enviar el comprobante, cuéntanos tu nombre y a qué destinaste tu donación.</p>';if(b.hidden){b.hidden=false;if(window.gsap&&!reduced)gsap.from(b,{height:0,autoAlpha:0,duration:.6,ease:'power3.out',clearProps:'height'})}});
 function setTab(t){$$('#atabs [data-at]').forEach(function(b){b.setAttribute('aria-selected',String(b.getAttribute('data-at')===t))});var don=t==='don',show=don?$('#paneDon'):$('#panePad'),hide=don?$('#panePad'):$('#paneDon');moveInd('#atabs','i');if(!show.hidden)return;
   var done=function(){if(!don&&patLoop)patLoop.refill()};
   if(window.gsap&&!reduced){gsap.to(hide,{autoAlpha:0,y:-20,duration:.3,ease:'power2.in',onComplete:function(){hide.hidden=true;gsap.set(hide,{clearProps:'all'});show.hidden=false;done();gsap.fromTo(show,{autoAlpha:0,y:30},{autoAlpha:1,y:0,duration:.6,ease:'power3.out'})}})}
@@ -579,28 +587,28 @@ $('#atabs').addEventListener('click',function(e){var b=e.target.closest('[data-a
 
 /* ---------- apadrinar ---------- */
 var PATS=[
- {n:'Meg',sp:'Ocelote',sci:'Leopardus pardalis',img:PH.ocelote.src,pos:PH.ocelote.pos,st:'Rehabilitación',pct:68,since:'5 meses en el centro',story:'Llegó como cría, en riesgo por la quema de plantaciones. Hoy aprende a cazar sola.'},
- {n:'Luna',sp:'Mona araña',sci:'Ateles fusciceps',img:PH.mono2.src,pos:PH.mono2.pos,st:'Atención médica',pct:40,since:'2 meses en el centro',story:'La mordió un caimán. Otra fundación la rescató y pidió ayuda a Sacha para operarla.'},
- {n:'Kuri',sp:'Oso hormiguero',sci:'Tamandua mexicana',img:PH.tamandua.src,pos:'50% 70%',st:'Rehabilitación',pct:54,since:'2 meses en el centro',story:'Herido por perros en la ciudad. Ya se alimenta solo y recupera fuerza para trepar.'},
- {n:'Nina',sp:'Búho',sci:'Ave rapaz nocturna',img:'assets/video/final/p-buho.jpg',st:'Preliberación',pct:90,since:'4 meses en el centro',story:'Cayó del nido siendo polluela. Ya vuela en el recinto de vuelo: falta poco.'},
- {n:'Bruma',sp:'Perezosa de tres dedos',sci:'Bradypus variegatus',img:'assets/video/final/p-perezosa.jpg',st:'Atención médica',pct:35,since:'3 semanas en el centro',story:'Encontrada junto a una vía con una fractura. Está en reposo, con controles semanales.'},
- {n:'Pepa',sp:'Zarigüeya',sci:'Didelphis marsupialis',img:PH.zarigueya.src,pos:PH.zarigueya.pos,st:'Rehabilitación',pct:72,since:'6 semanas en el centro',story:'Huérfana tras un atropello. Crece junto a sus hermanos y pronto volverá al bosque.'},
- {n:'Tito',sp:'Guacamayo',sci:'Ara ararauna',img:'assets/video/final/p-guacamayo.jpg',st:'Rehabilitación',pct:46,since:'3 meses en el centro',story:'Decomisado del tráfico con las alas cortadas. Espera a que le vuelvan a crecer.'},
- {n:'Coco',sp:'Iguana verde',sci:'Iguana iguana',img:PH.iguana.src,pos:PH.iguana.pos,st:'Preliberación',pct:85,since:'2 meses en el centro',story:'Rescatada de un techo durante las lluvias. Ya come sola y está lista para volver.'}
+ {n:'Meg',sp:'Ocelote',sci:'Leopardus pardalis',img:PH.ocelote.src,pos:PH.ocelote.pos,story:'Llegó siendo cría, después de la quema de una plantación. Ahora aprende a cazar por su cuenta.'},
+ {n:'Luna',sp:'Mona araña',sci:'Ateles fusciceps',img:PH.mono2.src,pos:PH.mono2.pos,story:'La mordió un caimán. Otra fundación la rescató y nos pidió ayuda para operarla.'},
+ {n:'Kuri',sp:'Oso hormiguero',sci:'Tamandua mexicana',img:PH.tamandua.src,pos:'50% 70%',story:'Lo hirieron perros en la ciudad. Ya come solo y recupera fuerza para trepar.'},
+ {n:'Nina',sp:'Búho',sci:'Ave rapaz nocturna',img:'assets/video/final/p-buho.jpg',story:'Cayó del nido siendo polluela. Hoy practica el vuelo en un recinto amplio.'},
+ {n:'Bruma',sp:'Perezosa de tres dedos',sci:'Bradypus variegatus',img:'assets/video/final/p-perezosa.jpg',story:'La encontraron junto a una vía, con una fractura. Necesita reposo y controles veterinarios.'},
+ {n:'Pepa',sp:'Zarigüeya',sci:'Didelphis marsupialis',img:PH.zarigueya.src,pos:PH.zarigueya.pos,story:'Quedó huérfana tras un atropello. Crece junto a sus hermanos, con alimento y calor.'},
+ {n:'Tito',sp:'Guacamayo',sci:'Ara ararauna',img:'assets/video/final/p-guacamayo.jpg',story:'Lo decomisaron del tráfico con las alas cortadas. Necesita tiempo para que le vuelvan a crecer.'},
+ {n:'Coco',sp:'Iguana verde',sci:'Iguana iguana',img:PH.iguana.src,pos:PH.iguana.pos,story:'La rescataron de un techo durante las lluvias. Se recupera con sol, alimento y espacio.'}
 ];
-var PLANS=[{a:10,t:'Alimentación',d:'Su comida por un tiempo.'},{a:20,t:'Atención médica',d:'Medicinas y controles.'},{a:50,t:'Rehabilitación',d:'Alimento, medicinas y cuidado.'}];
+var PLANS=[{a:10,t:'Alimentación',d:'Ayuda con su comida.'},{a:20,t:'Atención médica',d:'Medicinas y controles.'},{a:50,t:'Rehabilitación',d:'Alimento, medicinas y cuidado diario.'}];
 var AP={i:0,plan:1,other:'',name:'',mail:'',tried:false,ok:false};
 function apAmt(){var o=parseInt(AP.other,10);return o>0?o:PLANS[AP.plan].a}
 $('#pat').innerHTML=PATS.map(function(p,i){return '<article class="loop-i pt"><button class="pt-f" data-ap="'+i+'" tabindex="-1" aria-hidden="true"><img src="'+p.img+'" alt="" draggable="false" loading="lazy" style="object-position:'+(p.pos||'50% 30%')+'"></button><div class="pt-b"><small>'+esc(p.sp)+'</small><h3>'+esc(p.n)+'</h3><p>'+esc(p.story)+'</p><button class="zbtn zbtn-ghost pt-go" data-ap="'+i+'"><span class="zbtn-t">Apadrinar a '+esc(p.n)+'</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></button></div></article>'}).join('');
 var patLoop=Loop($('#patLoop'),{speed:30});
 function renderAp(){
   var p=PATS[AP.i],a=apAmt(),el=$('#ap');$('#apDrT').textContent='Apadrina a '+p.n;
-  if(AP.ok){el.innerHTML='<div class="ap-ok"><span class="ap-ok-i">'+ico('i-check')+'</span><h3>Gracias, '+esc(AP.name.split(' ')[0])+'.</h3><p>Tu aporte de $'+a+' ayudará a cuidar a <b>'+esc(p.n)+'</b>. Te escribiremos a '+esc(AP.mail)+' con los datos para completar la donación.</p><p class="ap-note">Maqueta: todavía no se cobra ni se envía ningún correo.</p><button class="zbtn" data-drclose><span class="zbtn-t">Volver al sitio</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></button></div>';return}
+  if(AP.ok){el.innerHTML='<div class="ap-ok"><span class="ap-ok-i">'+ico('i-check')+'</span><h3>Gracias, '+esc(AP.name.split(' ')[0])+'.</h3><p>Tu aporte de $'+a+' ayudará a cuidar a <b>'+esc(p.n)+'</b>. Te escribiremos a '+esc(AP.mail)+' con los datos para completar tu donación.</p><p class="ap-note">Vista de prueba: todavía no se cobra ni se envía ningún correo.</p><button class="zbtn" data-drclose><span class="zbtn-t">Volver al sitio</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></button></div>';return}
   el.innerHTML='<div class="ap-h"><img src="'+p.img+'" alt="" style="object-position:'+(p.pos||'50% 30%')+'"><div><small>'+esc(p.sp)+'</small><b>'+esc(p.n)+'</b><p>'+esc(p.story)+'</p></div></div>'+
-   '<p class="ap-k">Elige con cuánto quieres ayudar</p><div class="ap-plans" role="radiogroup" aria-label="Monto del apadrinamiento">'+PLANS.map(function(x,i){return '<button role="radio" aria-checked="'+(!AP.other&&i===AP.plan)+'" data-plan="'+i+'"><b>$'+x.a+'</b><span>'+esc(x.t)+'</span><em>'+esc(x.d)+'</em></button>'}).join('')+'</div>'+
+   '<p class="ap-k">¿Con cuánto quieres ayudar?</p><div class="ap-plans" role="radiogroup" aria-label="Monto del apadrinamiento">'+PLANS.map(function(x,i){return '<button role="radio" aria-checked="'+(!AP.other&&i===AP.plan)+'" data-plan="'+i+'"><b>$'+x.a+'</b><span>'+esc(x.t)+'</span><em>'+esc(x.d)+'</em></button>'}).join('')+'</div>'+
    '<label class="other ap-other"><span>Otro monto</span><input id="apOther" inputmode="numeric" placeholder="$" autocomplete="off" value="'+esc(AP.other)+'"></label>'+
    '<form id="apForm" novalidate><div class="fields">'+fld('apName','Tu nombre *','<input id="apName" autocomplete="name" value="'+esc(AP.name)+'">',AP.tried&&!AP.name.trim(),'Escribe tu nombre')+fld('apMail','Tu correo *','<input id="apMail" type="email" autocomplete="email" value="'+esc(AP.mail)+'">',AP.tried&&!validMail(AP.mail),'Escribe un correo válido, por ejemplo nombre@correo.com')+'</div>'+
-   '<button class="zbtn ap-go" type="submit"><span class="zbtn-t">Apadrinar a '+esc(p.n)+' con $'+a+'</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></button><p class="ap-note">El apadrinamiento es simbólico: '+esc(p.n)+' no se puede visitar ni entregar. Tu aporte ayuda a cubrir su cuidado en el centro.</p></form>';
+   '<button class="zbtn ap-go" type="submit"><span class="zbtn-t">Apadrinar a '+esc(p.n)+' con $'+a+'</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></button><p class="ap-note">El apadrinamiento es simbólico: '+esc(p.n)+' sigue en el centro y no se puede visitar. Tu aporte ayuda a cubrir su cuidado.</p></form>';
 }
 function openAp(i){AP.i=i;AP.ok=false;AP.tried=false;renderAp();openDr('apDr')}
 document.addEventListener('input',function(e){if(e.target.id!=='apOther')return;var v=e.target.value.replace(/[^0-9]/g,'').slice(0,5);e.target.value=v;AP.other=v;$$('#ap [data-plan]').forEach(function(b){b.setAttribute('aria-checked',String(!v&&+b.getAttribute('data-plan')===AP.plan))});var t=$('#ap .ap-go .zbtn-t');if(t)t.textContent='Apadrinar a '+PATS[AP.i].n+' con $'+apAmt()});

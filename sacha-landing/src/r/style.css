@@ -1078,3 +1078,7 @@ html:not(.proc-on) .pcard-p{display:block}
   .kpis dd{font-size:34px;min-width:120px}
   .hist-lead{margin-bottom:28px}
 }
+
+/* =====================  TEXTOS NUEVOS  ===================== */
+.podx-sub{margin:12px 0 0;max-width:46ch;font-size:16px;line-height:1.5;color:rgba(255,255,255,.78)}
+.enc-lead{margin:-8px 0 28px;max-width:52ch;font-size:17px;line-height:1.55;color:var(--zink)}
