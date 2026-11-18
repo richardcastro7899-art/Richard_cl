@@ -331,37 +331,38 @@ var CASES=[
 function renderCredits(){var seen={};$('#credits').innerHTML=Object.keys(PH).filter(function(k){var u=PH[k].url;if(seen[u])return false;seen[u]=1;return true}).map(function(k){var p=PH[k];return '<li>'+esc(p.alt)+': <a href="'+p.url+'" target="_blank" rel="noopener">'+esc(p.by)+'</a> · '+p.lic+'</li>'}).join('')}
 
 
-/* ======================  SACHA ZAIZOO · VERSIÓN SOBRIA  ======================
-   La composición gira alrededor de los videos: video de portada, video institucional con scroll inmersivo,
-   reels verticales, podcast y casos en YouTube, y una galería de fotos que se recorre en horizontal.
-   CONTENIDO EDITABLE: líneas del video en IMM, videos de YouTube en YT, fotos en GAL, causas de donación en CAUSES,
-   montos en DAMT, pacientes para apadrinar en PATS. */
+/* ======================  SACHA ZAIZOO II  ======================
+   Los videos son el eje: portada en video, video institucional que se abre con el scroll, reels en carrusel
+   continuo, podcast y casos en YouTube. Alrededor: historia en línea de tiempo, proceso por etapas, galería,
+   donar y apadrinar, y la guía para quien encuentra un animal.
+   CONTENIDO EDITABLE: TL (línea de tiempo), YT (videos de YouTube), GAL (fotos), CAUSES y DAMT (donación),
+   PATS y PLANS (apadrinamiento). */
 VIDEOS.caps=[0,1,2,3,4,5,6,7].map(function(i){return 'assets/video/final/r'+i+'.mp4'});
 (function(){var t=document.createElement('video');if(t.canPlayType&&!t.canPlayType('video/mp4; codecs="avc1.42E01E"'))VIDEOS.caps=VIDEOS.caps.map(function(u){return u.replace('.mp4','.webm')})})();
 NETS.instagram.url='https://www.instagram.com/proyectosacha/';NETS.instagram.handle='@proyectosacha';
 NETS.youtube.url='https://www.youtube.com/@proyectosacha3474';NETS.youtube.handle='@proyectosacha3474';
-BANK=[['Banco','Banco Internacional'],['Cuenta corriente','1400625249'],['A nombre de','Fundación Proyecto Sacha'],['RUC','0993242721001'],['Correo','donaciones.tc@proyectosacha.org']];
+var BANK=[['Banco','Banco Internacional'],['Cuenta corriente','1400625249'],['A nombre de','Fundación Proyecto Sacha'],['Comprobante a','donaciones.tc@proyectosacha.org']];
+function nf(n){return Math.round(n).toLocaleString('es-EC')}
 
-/* ---------- navegación ---------- */
-var HDRH=76;
-function hdrH(){var z=$('#zh');return z?z.offsetHeight:HDRH}
+/* ---------- navegación y cabecera ---------- */
+function hdrH(){var z=$('#zh');return z?z.offsetHeight:76}
 function closeMenu(){var m=$('#zMenu');if(!m)return;m.hidden=true;$('#zBurger').setAttribute('aria-expanded','false');document.documentElement.classList.remove('menu-open')}
 $('#zBurger').addEventListener('click',function(){var o=$('#zMenu').hidden;$('#zMenu').hidden=!o;this.setAttribute('aria-expanded',String(o));document.documentElement.classList.toggle('menu-open',o)});
-function go(id){closeMenu();var el=document.getElementById(id);if(!el)return;
-  var target=id==='inicio'?0:el;
-  if(window.__lenis){window.__lenis.scrollTo(target,{offset:id==='video'?0:-hdrH()+1,duration:1.4});return}
-  var y=id==='inicio'?0:Math.max(0,el.getBoundingClientRect().top+scrollY-(id==='video'?0:hdrH())+1);window.scrollTo({top:y,behavior:reduced?'auto':'smooth'})}
+function go(id){closeMenu();var el=document.getElementById(id);if(!el)return;var off=id==='video'?0:-hdrH()+1;
+  if(window.__lenis){window.__lenis.scrollTo(id==='inicio'?0:el,{offset:off,duration:1.4});return}
+  window.scrollTo({top:id==='inicio'?0:Math.max(0,el.getBoundingClientRect().top+scrollY+off),behavior:reduced?'auto':'smooth'})}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
-var SPY=['video','nosotros','reels','podcast','galeria','ayuda','encuentras'],lastA='__';
+var SPY=['video','nosotros','proceso','reels','podcast','galeria','ayuda','encuentras'],lastA='__';
 function onScroll(){
-  var H=document.documentElement.scrollHeight-innerHeight,a=null;
+  var H=document.documentElement.scrollHeight-innerHeight,a=null,hero=$('#inicio'),top=hero?hero.offsetHeight-hdrH()-10:300;
   $('#zProg').style.transform='scaleX('+(H>0?Math.min(1,scrollY/H):0).toFixed(4)+')';
-  $('#zh').classList.toggle('is-s',scrollY>40);
+  $('#zh').classList.toggle('is-top',scrollY<top);$('#zh').classList.toggle('is-s',scrollY>40);
   SPY.forEach(function(id){var el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<=hdrH()+160)a=id});
   if(a==='encuentras')a='ayuda';
   if(a!==lastA){lastA=a;$$('#znav a').forEach(function(l){l.setAttribute('aria-current',l.getAttribute('data-go')===a?'true':'false')})}
 }
 addEventListener('scroll',function(){if(!onScroll.r){onScroll.r=requestAnimationFrame(function(){onScroll.r=0;onScroll()})}},{passive:true});
+addEventListener('resize',onScroll);
 document.addEventListener('click',function(e){
   var a=e.target.closest('a[href="#"]');if(a&&!a.hasAttribute('data-follow'))e.preventDefault();
   var f=e.target.closest('a[href^="#"][data-go]');if(f)e.preventDefault();
@@ -369,62 +370,103 @@ document.addEventListener('click',function(e){
 });
 
 /* ---------- videos que se reproducen solos cuando están en pantalla ---------- */
-function autoVid(v,th){if(!v)return;var play=function(){var p=v.play();if(p&&p.catch)p.catch(function(){})};if(reduced){v.removeAttribute('autoplay');return}
+function autoVid(v,th){if(!v)return;var play=function(){var p=v.play();if(p&&p.catch)p.catch(function(){})};if(reduced)return;
   if(!canIO){play();return}new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){if(!v.__userPaused)play()}else v.pause()})},{threshold:th||.15}).observe(v)}
-autoVid($('#zhVid'));
-$('#zhAva').insertAdjacentHTML('afterbegin',['ocelote','zarigueya','tamandua','lechuza'].map(function(k){var p=PH[k];return '<img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'">'}).join(''));
+var hv=$('#zhVid');autoVid(hv);
+function paintPP(){var b=$('#hxPP');b.innerHTML=ico(hv.paused?'i-play':'i-pause');b.setAttribute('aria-label',hv.paused?'Reproducir el video de fondo':'Pausar el video de fondo')}
+$('#hxPP').addEventListener('click',function(){if(hv.paused){hv.__userPaused=false;var p=hv.play();if(p&&p.catch)p.catch(function(){})}else{hv.__userPaused=true;hv.pause()}});
+hv.addEventListener('play',paintPP);hv.addEventListener('pause',paintPP);paintPP();
 
-/* ---------- video institucional con scroll inmersivo ----------
-   Las líneas son del guion del tráiler «Un día en Sacha»; cada una aparece en su tramo del recorrido. */
-var IMM=[
- {t:'Cada día empieza con alguien que necesita cuidado.',k:'Amanecer en el centro'},
- {t:'Preparamos su alimento y atendemos sus necesidades.',k:'Cocina y clínica'},
- {t:'El rescate no termina al llegar. Ahí empieza el cuidado.',k:'Quirófano'},
- {t:'Cada animal necesita atención y tiempo.',k:'Recuperación'}
-];
-var iv=$('#immVid');
-$('#immLines').innerHTML=IMM.map(function(l,i){return '<p class="imm-l" data-i="'+i+'"><small>'+pad2(i+1)+' · '+esc(l.k)+'</small><span>'+esc(l.t)+'</span></p>'}).join('');
-autoVid(iv,.05);
-function immSound(){var on=iv.muted;iv.muted=!on;if(on){iv.loop=false;try{iv.currentTime=0}catch(e){}iv.__userPaused=false;var p=iv.play();if(p&&p.catch)p.catch(function(){})}else iv.loop=true;
-  $('#immSndT').textContent=iv.muted?'Ver con sonido':'Silenciar';$('#immSnd .imm-snd-i').innerHTML=ico(iv.muted?'i-vol':'i-mute');$('#immFrame').classList.toggle('is-sound',!iv.muted)}
-$('#immSnd').addEventListener('click',immSound);
+/* ---------- video institucional ---------- */
+var iv=$('#immVid'),fr=$('#immFrame');autoVid(iv,.05);
+function ivPaint(){fr.classList.toggle('is-sound',!iv.muted);$('#immSnd').innerHTML=ico(iv.muted?'i-mute':'i-vol');$('#immSnd').setAttribute('aria-label',iv.muted?'Activar sonido':'Silenciar');$('#immPP').innerHTML=ico(iv.paused?'i-play':'i-pause');$('#immPP').setAttribute('aria-label',iv.paused?'Reproducir':'Pausar')}
+function ivPlay(){iv.__userPaused=false;var p=iv.play();if(p&&p.catch)p.catch(function(){})}
+$('#immPlay').addEventListener('click',function(){iv.muted=false;iv.loop=false;try{iv.currentTime=0}catch(e){}ivPlay();ivPaint()});
+$('#immSnd').addEventListener('click',function(){iv.muted=!iv.muted;if(!iv.muted&&iv.paused)ivPlay();ivPaint()});
+$('#immPP').addEventListener('click',function(){if(iv.paused)ivPlay();else{iv.__userPaused=true;iv.pause()}});
+['play','pause','volumechange'].forEach(function(ev){iv.addEventListener(ev,ivPaint)});
 iv.addEventListener('timeupdate',function(){if(iv.duration)$('#immBar').style.width=(iv.currentTime/iv.duration*100)+'%'});
-iv.addEventListener('ended',function(){iv.muted=true;iv.loop=true;$('#immSndT').textContent='Ver con sonido';$('#immSnd .imm-snd-i').innerHTML=ico('i-vol');$('#immFrame').classList.remove('is-sound');var p=iv.play();if(p&&p.catch)p.catch(function(){})});
+iv.addEventListener('ended',function(){iv.muted=true;iv.loop=true;ivPlay();ivPaint()});
+$('.imm-bar').addEventListener('click',function(e){if(!iv.duration)return;var r=this.getBoundingClientRect();iv.currentTime=Math.max(0,Math.min(.99,(e.clientX-r.left)/r.width))*iv.duration});
+ivPaint();
 
-/* ---------- cómo trabajamos (cuatro etapas, compacto) ---------- */
-$('#steps').innerHTML='<p class="steps-h">Así trabajamos con cada animal</p>'+STEPS.map(function(s,i){var p=PH[s.ph];return '<article class="stp"><figure class="zimg"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"></figure><span class="stp-n">'+pad2(i+1)+'</span><h3>'+esc(s.title)+'</h3><p>'+esc(s.text)+'</p></article>'}).join('');
+/* ---------- nuestra historia: línea de tiempo ----------
+   Fuentes: la web de la fundación, Expreso (2023) y el canal de YouTube de Proyecto Sacha. */
+var TL=[
+ {y:'2018',k:'Junio',t:'Llega Sacha',d:'Un ocelote de días de nacido, rescatado de una tienda en Vinces. Comía cada dos o tres horas y pasó sus primeros días en incubadora.',ph:'ocelote'},
+ {y:'2018',k:'Semanas después',t:'Zafira y Vicenta',d:'Una ocelote con quemaduras en las patas y una monita aulladora bebé. Entendimos que la fauna silvestre necesitaba un lugar.',ph:'mono'},
+ {y:'2021',k:'Diciembre',t:'«Tu casa no es mi hábitat»',d:'Campaña para desalentar el tráfico de fauna silvestre y alianza para conservar la fauna y sus ecosistemas.',ph:'iguana'},
+ {y:'2022',k:'Febrero',t:'Serpientes del Guayas',d:'Programa de conservación de serpientes y guía para reaccionar si aparece una en casa.',ph:'serpiente'},
+ {y:'2022',k:'Cerro Azul',t:'Rescate en el incendio forestal',d:'Rescate de fauna durante el incendio de Cerro Azul, en Guayaquil. Ese año se auxiliaron cerca de 1.100 animales.',ph:'tamandua'},
+ {y:'2023',k:'Expreso',t:'Más de 3.500 animales',d:'Rescatados, recuperados o reubicados desde 2018, en coordinación con la autoridad ambiental.',ph:'lechuza'},
+ {y:'Hoy',k:'Guayaquil y Santa Elena',t:'Más de 5.400 animales cuidados',d:'Sacha y Zafira ya son libres. Seguimos rescatando, rehabilitando y liberando, y contándolo: si los reconoces, los cuidas.',ph:'manglar'}
+];
+$('#tl').insertAdjacentHTML('beforeend',TL.map(function(x,i){var p=PH[x.ph];return '<li class="tl-i" data-tl="'+i+'"><span class="tl-dot" aria-hidden="true"></span><div class="tl-y"><b>'+esc(x.y)+'</b><small>'+esc(x.k)+'</small></div><div class="tl-c"><h3>'+esc(x.t)+'</h3><p>'+esc(x.d)+'</p></div><figure class="tl-img"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"></figure></li>'}).join(''));
+$('#histCard').insertAdjacentHTML('afterbegin','<span class="mcard-year" id="histYear">2018</span>');
+function setTl(i){$$('.tl-i').forEach(function(li,k){li.classList.toggle('is-on',k<=i);li.classList.toggle('is-now',k===i)});var y=$('#histYear');if(y&&y.textContent!==TL[i].y){y.textContent=TL[i].y;if(window.gsap&&!reduced)gsap.fromTo(y,{yPercent:60,autoAlpha:0},{yPercent:0,autoAlpha:1,duration:.5,ease:'power3.out'})}}
 
-/* ---------- reels: carrusel con la tarjeta central nítida ---------- */
-var R={i:0,list:[],timer:0,inView:false,prog:0};
-function renderChips(){$('#capChips').innerHTML=[{n:'Todos',k:-1}].concat(EJES.map(function(e,i){return {n:e.name,k:i}})).map(function(x){return '<button role="tab" aria-selected="'+(C.tab===x.k)+'" data-capt="'+x.k+'">'+esc(x.n)+'</button>'}).join('')}
+/* ---------- cómo trabajamos ---------- */
+$('#procNav').innerHTML=STEPS.map(function(s,i){return '<li data-pi="'+i+'"><span>'+pad2(i+1)+'</span><b>'+esc(s.title)+'</b><i aria-hidden="true"><em></em></i></li>'}).join('');
+$('#procCards').innerHTML=STEPS.map(function(s,i){var p=PH[s.ph];return '<article class="pcard" data-pc="'+i+'"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"><div class="pcard-sh" aria-hidden="true"></div><div class="pcard-t"><span class="pcard-n">'+pad2(i+1)+' / '+pad2(STEPS.length)+'</span><h3>'+esc(s.title)+'</h3><p>'+esc(s.text)+'</p><small>'+esc(s.who)+'</small></div><span class="credit">Foto de referencia</span></article>'}).join('');
+function setProc(i){$$('#procNav li').forEach(function(li,k){li.classList.toggle('is-on',k===i);li.classList.toggle('is-done',k<i)})}
+setProc(0);
+
+/* ---------- carrusel genérico que avanza solo y se arrastra (galería y pacientes) ---------- */
+function Loop(root,opt){
+  var track=$('.loop-t',root),html=track.innerHTML,L={x:0,v:0,drag:false,hover:false,vis:true,moved:0,speed:opt.speed||40};
+  function fill(){track.innerHTML=html;var setW=track.scrollWidth,n=Math.max(2,Math.ceil((innerWidth*2)/Math.max(1,setW))+1),s=html;for(var i=1;i<n;i++)s+=html.replace(/<(figure|article)/g,'<$1 aria-hidden="true" data-clone=""');track.innerHTML=s;L.setW=setW;$$('[data-clone] button,[data-clone] a',track).forEach(function(b){b.setAttribute('tabindex','-1')})}
+  fill();L.refill=fill;
+  function wrap(){if(L.setW>0){while(L.x<=-L.setW)L.x+=L.setW;while(L.x>0)L.x-=L.setW}}
+  function paint(){track.style.transform='translate3d('+L.x.toFixed(1)+'px,0,0)';if(opt.scale){var cx=innerWidth/2;$$('.loop-i',track).forEach(function(it){var r=it.getBoundingClientRect(),d=Math.min(1,Math.abs(r.left+r.width/2-cx)/(innerWidth*.6));it.style.setProperty('--k',(1-d).toFixed(3))})}}
+  var last=performance.now();
+  function tick(now){var dt=Math.min(.05,(now-last)/1000);last=now;if(!L.drag){if(!L.hover&&L.vis&&!document.body.classList.contains('lock')&&!reduced)L.x-=L.speed*dt;L.x+=L.v*dt;L.v*=Math.pow(.04,dt)}wrap();paint();requestAnimationFrame(tick)}
+  requestAnimationFrame(tick);
+  var sx=0,lx=0,lt=0;
+  root.addEventListener('pointerdown',function(e){if(e.button>0)return;L.drag=true;L.moved=0;sx=lx=e.clientX;lt=performance.now();L.v=0;root.classList.add('is-drag')});
+  addEventListener('pointermove',function(e){if(!L.drag)return;var dx=e.clientX-lx,now=performance.now();L.x+=dx;L.moved+=Math.abs(dx);L.v=dx/Math.max(.008,(now-lt)/1000)*.6;lx=e.clientX;lt=now},{passive:true});
+  addEventListener('pointerup',function(){if(!L.drag)return;L.drag=false;root.classList.remove('is-drag')});
+  root.addEventListener('click',function(e){if(L.moved>6){e.stopPropagation();e.preventDefault()}},true);
+  root.addEventListener('dragstart',function(e){e.preventDefault()});
+  if(matchMedia('(hover:hover)').matches){root.addEventListener('mouseenter',function(){L.hover=true});root.addEventListener('mouseleave',function(){L.hover=false})}
+  if(canIO)new IntersectionObserver(function(es){L.vis=es[0].isIntersecting},{threshold:0}).observe(root);
+  var rz=0;addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){fill();wrap()},200)});
+  return L;
+}
+
+/* ---------- reels: carrusel circular que gira solo ---------- */
+var R={list:[],pos:0,drag:false,hover:false,inView:false,cur:-1,speed:1/3.2};
 function renderReels(){R.list=capList();
   $('#reelsT2').innerHTML=R.list.map(function(ci,k){var c=CAPS[ci],n=NETS[c.net];return '<button class="reel" data-cursor="Ver" data-rk="'+k+'" aria-label="Ver el reel '+(ci+1)+': '+esc(c.pre+' '+c.title)+'">'+
     '<video muted loop playsinline preload="none" poster="assets/video/final/r'+ci+'.jpg"><source src="assets/video/final/r'+ci+'.mp4" type="video/mp4"><source src="assets/video/final/r'+ci+'.webm" type="video/webm"></video>'+
-    '<span class="reel-bars"><i><b></b></i></span><span class="reel-top"><span class="reel-n">'+pad2(ci+1)+'</span><span class="reel-net">'+esc(n.name)+'</span></span>'+
-    '<span class="reel-b"><small>'+esc(EJES[c.tab].name)+' · '+fmt(c.dur)+'</small><b>'+esc(c.pre)+' '+esc(c.title)+'</b><em>'+ico('i-play')+'Ver reel</em></span></button>'}).join('');
-  $('#reelDots').innerHTML=R.list.map(function(){return '<i></i>'}).join('');R.i=Math.max(0,Math.min(R.i,R.list.length-1));layoutReels(true)}
-function layoutReels(instant){
-  var cards=$$('.reel'),W=innerWidth,cw=cards[0]?cards[0].offsetWidth:280,gap=Math.min(36,W*.03);
-  cards.forEach(function(el,k){var n=cards.length,d=k-R.i;if(d>n/2)d-=n;if(d<-n/2)d+=n;var ad=Math.abs(d),
-    x=d*(cw*.82+gap),rot=ad?(d>0?-18:18):0,sc=ad?Math.max(.74,.9-.06*(ad-1)):1,bl=ad?Math.min(6,1+ad*1.6):0,op=ad>3?0:(ad?1-.2*ad:1);
-    if(W<700){x=d*(cw+14);rot=0;sc=ad?.92:1;bl=ad?2:0;op=ad>1?0:1}
-    var st={x:x,rotationY:rot,scale:sc,filter:'blur('+bl+'px)',opacity:op,zIndex:20-ad};
-    if(window.gsap&&!reduced&&!instant)gsap.to(el,Object.assign({duration:.8,ease:'power3.out',overwrite:true},st));else if(window.gsap)gsap.set(el,st);
-    else{el.style.transform='translateX('+x+'px) rotateY('+rot+'deg) scale('+sc+')';el.style.filter='blur('+bl+'px)';el.style.opacity=op;el.style.zIndex=20-ad}
-    el.classList.toggle('is-on',d===0);el.setAttribute('tabindex',ad<=1?'0':'-1');el.setAttribute('aria-hidden',ad>2?'true':'false');
-    var v=$('video',el);if(d===0&&R.inView&&!reduced){try{v.currentTime=0}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause()});
-  $$('#reelDots i').forEach(function(d,k){d.classList.toggle('on',k===R.i)})}
-function reelGo(d){if(!R.list.length)return;R.i=(R.i+d+R.list.length)%R.list.length;R.prog=0;layoutReels()}
-function reelAuto(){clearInterval(R.timer);if(reduced)return;var t0=Date.now(),D=6000;R.timer=setInterval(function(){if(!R.inView||ST.open||document.hidden){t0=Date.now()-R.prog*D;return}var r=(Date.now()-t0)/D;R.prog=r;var b=$('.reel.is-on .reel-bars b');if(b)b.style.width=Math.min(100,r*100)+'%';if(r>=1){t0=Date.now();R.prog=0;reelGo(1)}},60)}
-$('#reelPrev').addEventListener('click',function(){reelGo(-1);reelAuto()});$('#reelNext').addEventListener('click',function(){reelGo(1);reelAuto()});
-$('#reelsT2').addEventListener('click',function(e){var b=e.target.closest('[data-rk]');if(!b)return;var k=+b.getAttribute('data-rk');if(k!==R.i){R.i=k;layoutReels();reelAuto()}else openStory(R.list[k])});
-$('#capChips').addEventListener('click',function(e){var b=e.target.closest('[data-capt]');if(!b)return;C.tab=+b.getAttribute('data-capt');R.i=0;renderChips();renderReels();reelAuto()});
-(function(){var sx=0,dx=0,on=false,el=$('#krl');el.addEventListener('pointerdown',function(e){on=true;sx=e.clientX;dx=0});addEventListener('pointerup',function(){if(!on)return;on=false;if(Math.abs(dx)>50){reelGo(dx<0?1:-1);reelAuto()}});addEventListener('pointermove',function(e){if(on)dx=e.clientX-sx},{passive:true});el.addEventListener('click',function(e){if(Math.abs(dx)>8){e.stopPropagation();e.preventDefault()}},true)})();
-if(canIO)new IntersectionObserver(function(es){es.forEach(function(e){R.inView=e.isIntersecting;layoutReels(true)})},{threshold:.3}).observe($('#krl'));else R.inView=true;
-document.addEventListener('keydown',function(e){if(e.target.closest&&e.target.closest('#krl')){if(e.key==='ArrowRight'){reelGo(1);reelAuto()}if(e.key==='ArrowLeft'){reelGo(-1);reelAuto()}}});
+    '<span class="reel-top"><span class="reel-n">'+pad2(ci+1)+'</span><span class="reel-net">'+esc(n.name)+'</span></span>'+
+    '<span class="reel-b"><small>'+fmt(c.dur)+'</small><b>'+esc(c.pre)+' '+esc(c.title)+'</b><em>'+ico('i-play')+'Ver reel</em></span></button>'}).join('');
+  layoutReels()}
+function layoutReels(){
+  var cards=$$('.reel'),n=cards.length,W=innerWidth,cw=cards[0]?cards[0].offsetWidth:280,gap=Math.min(36,W*.03),step=W<700?cw+14:cw*.82+gap;
+  var near=((Math.round(R.pos)%n)+n)%n;
+  cards.forEach(function(el,k){var d=k-R.pos;d=((d%n)+n)%n;if(d>n/2)d-=n;var ad=Math.abs(d),
+    x=d*step,rot=W<700?0:Math.max(-1,Math.min(1,d))*-22,sc=W<700?1-.08*Math.min(1,ad):Math.max(.72,1-.1*ad),bl=W<700?Math.min(2,ad*2):Math.min(6,ad*2.2),op=W<700?(ad>1.5?0:1):(ad>3.2?0:1-.2*Math.min(3,ad));
+    el.style.transform='translateX('+x.toFixed(1)+'px) rotateY('+rot.toFixed(2)+'deg) scale('+sc.toFixed(3)+')';el.style.filter='blur('+bl.toFixed(2)+'px)';el.style.opacity=op.toFixed(3);el.style.zIndex=String(50-Math.round(ad*10));
+    el.classList.toggle('is-on',k===near);el.setAttribute('tabindex',ad<1.5?'0':'-1');el.setAttribute('aria-hidden',ad>2?'true':'false')});
+  if(near!==R.cur){R.cur=near;cards.forEach(function(el,k){var v=$('video',el);if(k===near&&R.inView&&!reduced){var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause()})}
+}
+(function(){var last=performance.now();function tick(now){var dt=Math.min(.05,(now-last)/1000);last=now;if(!R.drag&&!R.hover&&R.inView&&!ST.open&&!document.hidden&&!reduced&&!R.tw){R.pos+=R.speed*dt;layoutReels()}requestAnimationFrame(tick)}requestAnimationFrame(tick)})();
+function reelTo(target){if(window.gsap&&!reduced){R.tw=gsap.to(R,{pos:target,duration:.7,ease:'power3.out',onUpdate:layoutReels,onComplete:function(){R.tw=null}})}else{R.pos=target;layoutReels()}}
+(function(){var el=$('#krl'),sx=0,lx=0,moved=0;
+  el.addEventListener('pointerdown',function(e){if(e.button>0)return;R.drag=true;moved=0;sx=lx=e.clientX;if(R.tw){R.tw.kill();R.tw=null}el.classList.add('is-drag')});
+  addEventListener('pointermove',function(e){if(!R.drag)return;var c=$('.reel'),cw=c?c.offsetWidth:280,step=innerWidth<700?cw+14:cw*.82+30,dx=e.clientX-lx;moved+=Math.abs(dx);R.pos-=dx/step;lx=e.clientX;layoutReels()},{passive:true});
+  addEventListener('pointerup',function(){if(!R.drag)return;R.drag=false;el.classList.remove('is-drag');reelTo(Math.round(R.pos))});
+  el.addEventListener('click',function(e){if(moved>6){e.stopPropagation();e.preventDefault();return}var b=e.target.closest('[data-rk]');if(!b)return;var k=+b.getAttribute('data-rk'),n=R.list.length,d=k-R.pos;d=((d%n)+n)%n;if(d>n/2)d-=n;if(Math.abs(d)>.5)reelTo(Math.round(R.pos+d));else openStory(R.list[k])},true);
+  el.addEventListener('dragstart',function(e){e.preventDefault()});
+  if(matchMedia('(hover:hover)').matches){el.addEventListener('mouseenter',function(){R.hover=true});el.addEventListener('mouseleave',function(){R.hover=false})}
+  el.addEventListener('focusin',function(){R.hover=true});el.addEventListener('focusout',function(){R.hover=false});
+  el.addEventListener('keydown',function(e){if(e.key==='ArrowRight')reelTo(Math.round(R.pos)+1);if(e.key==='ArrowLeft')reelTo(Math.round(R.pos)-1)});
+  if(canIO)new IntersectionObserver(function(es){R.inView=es[0].isIntersecting;R.cur=-1;layoutReels()},{threshold:.25}).observe(el);else R.inView=true;
+  addEventListener('resize',layoutReels);
+})();
 
 /* ---------- podcast y casos: videos de YouTube incrustados ----------
-   Para cambiar un episodio, reemplaza el id (lo que va después de «v=» en YouTube). */
+   Para cambiar un video, reemplaza el id (lo que va después de «v=» en YouTube). Sirven horizontales o verticales. */
 var YT={
  pod:[
   {id:'Md1QB3DbdmA',t:'Centro de Conservación de Vida Silvestre de Guayaquil',by:'Movimiento Animalista EC',d:'1:08:03',k:'Episodio 01'},
@@ -446,9 +488,9 @@ var YP={tab:'pod',i:0};
 function ytFrame(){return /^https?:$/.test(location.protocol)}
 function renderYT(anim){
   var L=YT[YP.tab],v=L[YP.i];
-  $('#ytpV').innerHTML='<img src="assets/yt/'+v.id+'.jpg" alt=""><span class="ytp-ov"></span><button class="ytp-play" data-ytplay aria-label="Reproducir: '+esc(v.t)+'">'+ico('i-play')+'</button><div class="ytp-cap"><small>'+esc(v.k)+(v.d?' · '+v.d:'')+'</small><b>'+esc(v.t)+'</b><span>'+esc(v.by)+' · YouTube</span></div>';
+  $('#ytpV').innerHTML='<img src="assets/yt/'+v.id+'.jpg" alt=""><span class="ytp-ov"></span><span class="ytp-tag">'+ico(YP.tab==='pod'?'i-mic':'i-yt')+(YP.tab==='pod'?'Podcast':'Caso en video')+'</span><button class="ytp-play" data-ytplay aria-label="Reproducir: '+esc(v.t)+'">'+ico('i-play')+'</button><div class="ytp-cap"><small>'+esc(v.k)+(v.d?' · '+v.d:'')+'</small><b>'+esc(v.t)+'</b><span>'+esc(v.by)+'</span></div>';
   $('#ytpList').innerHTML=L.map(function(x,i){return '<li><button data-yti="'+i+'" aria-current="'+(i===YP.i)+'"><span class="ytp-th"><img src="assets/yt/'+x.id+'.jpg" alt="" loading="lazy"><i>'+ico('i-play')+'</i></span><span class="ytp-t"><small>'+esc(x.k)+(x.d?' · '+x.d:'')+'</small><b>'+esc(x.t)+'</b><em>'+esc(x.by)+'</em></span></button></li>'}).join('');
-  if(anim&&window.gsap&&!reduced){gsap.fromTo('#ytpV img',{scale:1.12,opacity:.4},{scale:1,opacity:1,duration:.9,ease:'power3.out'});gsap.from('#ytpV .ytp-cap > *',{y:20,autoAlpha:0,duration:.6,stagger:.06,ease:'power3.out'})}
+  if(anim&&window.gsap&&!reduced){gsap.fromTo('#ytpV img',{scale:1.12,opacity:.4},{scale:1,opacity:1,duration:.9,ease:'power3.out'});gsap.from('#ytpV .ytp-cap > *',{y:20,autoAlpha:0,duration:.6,stagger:.06,ease:'power3.out'});gsap.from('#ytpList li',{x:30,autoAlpha:0,duration:.5,stagger:.04,ease:'power3.out'})}
 }
 function ytPlay(){var v=YT[YP.tab][YP.i],box=$('#ytpV');if($('iframe',box))return;
   if(!ytFrame()){if(!$('.ytp-msg',box))box.insertAdjacentHTML('beforeend','<div class="ytp-msg"><b>El video se reproduce aquí</b><p>Esta vista previa no permite videos incrustados. En el sitio publicado, el video de YouTube se ve en este mismo recuadro.</p><a class="zbtn zbtn-light" href="https://www.youtube.com/watch?v='+v.id+'" target="_blank" rel="noopener"><span class="zbtn-t">Abrir en YouTube</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></a></div>');return}
@@ -461,106 +503,110 @@ document.addEventListener('click',function(e){
 document.addEventListener('securitypolicyviolation',function(e){if(/youtube/.test(e.blockedURI||'')){var f=$('#ytpV iframe');if(f)f.remove();$('#ytpV').classList.remove('is-live')}});
 function moveInd(wrap,ind){var b=$(wrap+' [aria-selected="true"]'),i=$(wrap+' '+ind);if(!b||!i)return;var st={x:b.offsetLeft,width:b.offsetWidth};if(window.gsap&&!reduced)gsap.to(i,Object.assign({duration:.5,ease:'power3.out'},st));else{i.style.transform='translateX('+st.x+'px)';i.style.width=st.width+'px'}}
 
-/* ---------- galería: fotos de recurso ---------- */
+/* ---------- galería ---------- */
 var GAL=[
- {src:'assets/video/final/p-perezosa.jpg',t:'Perezosa de tres dedos',d:'Rehabilitación',by:'Mixkit',w:'p'},
+ {src:'assets/video/final/p-perezosa.jpg',t:'Perezosa de tres dedos',d:'En rehabilitación',by:'Mixkit',w:'p'},
  {src:PH.ocelote.src,t:'Ocelote',d:'La especie de Sacha',pos:PH.ocelote.pos,ph:'ocelote',w:'l'},
  {src:PH.tamandua.src,t:'Oso hormiguero',d:'Herido por perros en la ciudad',pos:'50% 70%',ph:'tamandua',w:'p'},
- {src:'assets/video/final/p-buho.jpg',t:'Búho',d:'Preliberación',by:'Mixkit',w:'p'},
- {src:PH.mono.src,t:'Mono aullador',d:'Rehabilitación',pos:PH.mono.pos,ph:'mono',w:'l'},
+ {src:'assets/video/final/p-buho.jpg',t:'Búho',d:'Antes de su liberación',by:'Mixkit',w:'p'},
+ {src:PH.mono.src,t:'Mono aullador',d:'En recuperación',pos:PH.mono.pos,ph:'mono',w:'l'},
  {src:PH.iguana.src,t:'Iguana',d:'Fauna urbana de Guayaquil',pos:PH.iguana.pos,ph:'iguana',w:'p'},
  {src:PH.zarigueya.src,t:'Zarigüeya',d:'Inofensiva y útil',pos:PH.zarigueya.pos,ph:'zarigueya',w:'l'},
- {src:'assets/video/final/p-guacamayo.jpg',t:'Guacamayo',d:'Tráfico de aves',by:'Mixkit',w:'p'},
+ {src:'assets/video/final/p-guacamayo.jpg',t:'Guacamayo',d:'Víctima del tráfico de aves',by:'Mixkit',w:'p'},
  {src:PH.lechuza.src,t:'Lechuza',d:'Rapaz nocturna',pos:PH.lechuza.pos,ph:'lechuza',w:'p'},
  {src:PH.manglar.src,t:'Manglar',d:'Donde vuelven a casa',pos:PH.manglar.pos,ph:'manglar',w:'l'}
 ];
 var LB=0;
-$('#galTrack').innerHTML=GAL.map(function(g,i){return '<figure class="gi gi-'+g.w+'"><button class="gi-b" data-cursor="Ampliar" data-gal="'+i+'" aria-label="Ampliar foto: '+esc(g.t)+'"><img src="'+g.src+'" alt="'+esc(g.t)+'" loading="lazy" style="object-position:'+(g.pos||'50% 50%')+'"></button><figcaption><span>'+pad2(i+1)+'</span><b>'+esc(g.t)+'</b><em>'+esc(g.d)+'</em></figcaption></figure>'}).join('');
+$('#galTrack').innerHTML=GAL.map(function(g,i){return '<figure class="loop-i gi gi-'+g.w+'"><button class="gi-b" data-cursor="Ampliar" data-gal="'+i+'" aria-label="Ampliar foto: '+esc(g.t)+'"><img src="'+g.src+'" alt="'+esc(g.t)+'" draggable="false" loading="lazy" style="object-position:'+(g.pos||'50% 50%')+'"></button><figcaption><b>'+esc(g.t)+'</b><em>'+esc(g.d)+'</em></figcaption></figure>'}).join('');
 function credOf(g){return g.ph&&PH[g.ph]?'Foto: '+PH[g.ph].by+' · '+PH[g.ph].lic:'Imagen de referencia · '+(g.by||'')}
 function openLb(i){LB=(i+GAL.length)%GAL.length;var g=GAL[LB];$('#lbxImg').src=g.src;$('#lbxImg').alt=g.t;$('#lbxCap').innerHTML='<b>'+esc(g.t)+'</b> · '+esc(g.d)+'<small>'+esc(credOf(g))+'</small>';if($('#lbx').hidden){$('#lbx').hidden=false;document.body.classList.add('lock');$('#lbxX').focus()}
   if(window.gsap&&!reduced)gsap.fromTo('#lbxImg',{scale:.94,autoAlpha:0},{scale:1,autoAlpha:1,duration:.5,ease:'power3.out'})}
 function closeLb(){$('#lbx').hidden=true;document.body.classList.remove('lock')}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-gal]');if(b){openLb(+b.getAttribute('data-gal'));return}var n=e.target.closest('[data-lbx]');if(n){openLb(LB+ +n.getAttribute('data-lbx'));return}if(e.target.closest('#lbxX')||e.target===$('#lbx'))closeLb()});
 document.addEventListener('keydown',function(e){if($('#lbx').hidden)return;if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')openLb(LB+1);if(e.key==='ArrowLeft')openLb(LB-1)});
+var galLoop=Loop($('#galLoop'),{speed:38,scale:true});
 
-/* ---------- apadrina y dona ---------- */
+/* ---------- donar ----------
+   Donar es general (todo el centro, eliges el destino). Apadrinar es por un paciente concreto. */
 var CAUSES=[
- {id:'alimenta',t:'Alimenta una vida',d:'La ración diaria de comida y suplementos de un paciente hospitalizado.',ic:'i-heart',ph:'zarigueya'},
- {id:'sana',t:'Sana sus heridas',d:'Tratamientos médicos, analgésicos y curaciones que devuelven la movilidad.',ic:'i-med',ph:'tamandua'},
- {id:'camino',t:'Construye su camino a la libertad',d:'Encierros naturales donde recuperan su fuerza antes de volver.',ic:'i-home',ph:'mono'},
- {id:'libera',t:'Libera una vida',d:'Las etapas finales de rehabilitación y el día de la liberación.',ic:'i-leaf',ph:'manglar'}
+ {t:'Alimenta una vida',d:'Su ración diaria de comida y suplementos.',ph:'zarigueya'},
+ {t:'Sana sus heridas',d:'Tratamientos, analgésicos y curaciones.',ph:'tamandua'},
+ {t:'Construye su camino a la libertad',d:'Encierros naturales para recuperar fuerza.',ph:'mono'},
+ {t:'Libera una vida',d:'Las etapas finales y el día de la liberación.',ph:'manglar'}
 ];
-var DAMT={m:[5,10,20,50],u:[10,25,50,100]};
-var D={c:0,fq:'m',a:10,other:''};
+var DAMT={u:[10,25,50,100],m:[5,10,20,50]},YEAR=350000;
+var D={c:0,fq:'u',a:0,other:''};
 function damt(){var o=parseInt(D.other,10);return o>0?o:D.a}
 function renderDon(){
-  $('#causes').innerHTML=CAUSES.map(function(c,i){var p=PH[c.ph];return '<button class="cause" role="radio" aria-checked="'+(i===D.c)+'" data-cause="'+i+'"><span class="cause-img"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"></span><span class="cause-t"><b>'+esc(c.t)+'</b><small>'+esc(c.d)+'</small></span><i class="cause-r" aria-hidden="true">'+ico('i-check')+'</i></button>'}).join('');
+  $('#causes').innerHTML=CAUSES.map(function(c,i){var p=PH[c.ph];return '<button class="cause" role="radio" aria-checked="'+(i===D.c)+'" data-cause="'+i+'"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"><span><b>'+esc(c.t)+'</b><small>'+esc(c.d)+'</small></span><i aria-hidden="true">'+ico('i-check')+'</i></button>'}).join('');
   $$('#donFreq [data-fq]').forEach(function(b){b.setAttribute('aria-checked',String(b.getAttribute('data-fq')===D.fq))});
   $('#amts2').innerHTML=DAMT[D.fq].map(function(a){return '<button role="radio" aria-checked="'+(!D.other&&a===D.a)+'" data-amt="'+a+'">$'+a+'</button>'}).join('');
-  var a=damt(),c=CAUSES[D.c],min=Math.round(a/YEAR_COST*525600);
-  $('#donSum').innerHTML='<b>$'+a+(D.fq==='m'?' al mes':'')+'</b> para <b>'+esc(c.t.toLowerCase())+'</b>. Cubre unos <b>'+nf(min)+' minutos</b> de operación del centro'+(D.fq==='m'?' cada mes':'')+'.';
-  $('#donGoT').textContent='Donar $'+a+(D.fq==='m'?' al mes':'');
+  var a=damt(),c=CAUSES[D.c],min=Math.round(a/YEAR*525600);
+  $('#donSum').innerHTML=a?'Con <b>$'+a+(D.fq==='m'?' al mes':'')+'</b> nos ayudas a <b>'+esc(c.t.charAt(0).toLowerCase()+c.t.slice(1))+'</b>: equivale a unos '+nf(min)+' minutos de cuidado en el centro.':'Cualquier monto ayuda. Elige uno si quieres ver a cuánto cuidado equivale.';
+  $('#donGoT').textContent=a?'Donar $'+a+(D.fq==='m'?' al mes':''):'Ver cómo donar';
 }
-function nf(n){return Math.round(n).toLocaleString('es-EC')}
 document.addEventListener('click',function(e){
   var c=e.target.closest('[data-cause]');if(c){D.c=+c.getAttribute('data-cause');renderDon();return}
-  var f=e.target.closest('[data-fq]');if(f&&f.closest('#donFreq')){D.fq=f.getAttribute('data-fq');D.a=DAMT[D.fq][1];D.other='';$('#donOther').value='';renderDon();return}
+  var f=e.target.closest('[data-fq]');if(f&&f.closest('#donFreq')){D.fq=f.getAttribute('data-fq');D.a=0;D.other='';$('#donOther').value='';renderDon();return}
   var a=e.target.closest('[data-amt]');if(a){D.a=+a.getAttribute('data-amt');D.other='';$('#donOther').value='';renderDon();return}
-  var cp=e.target.closest('[data-copyv]');if(cp){copy(cp.getAttribute('data-copyv'),cp.getAttribute('data-copyv')+' copiado')}
+  var cp=e.target.closest('[data-copyv]');if(cp)copy(cp.getAttribute('data-copyv'),cp.getAttribute('data-copyv')+' copiado');
 });
 $('#donOther').addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'').slice(0,5);D.other=this.value;renderDon()});
-$('#donGo').addEventListener('click',function(){var b=$('#donBank');b.innerHTML='<p class="bank-h">Por ahora recibimos transferencias. Pronto, tarjeta y PayPal.</p><dl>'+BANK.map(function(r){return '<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'<button class="cpy" data-copyv="'+esc(r[1])+'" aria-label="Copiar '+esc(r[0])+'">'+ico('i-copy')+'</button></dd></div>'}).join('')+'</dl><p class="bank-n">Envía el comprobante a donaciones.tc@proyectosacha.org con tu nombre y el destino elegido. Maqueta: aún no se procesa ningún pago.</p>';b.hidden=false;if(window.gsap&&!reduced)gsap.from(b,{height:0,autoAlpha:0,duration:.6,ease:'power3.out',clearProps:'height'})});
+$('#donGo').addEventListener('click',function(){var b=$('#donBank');b.innerHTML='<p class="bank-h">Por ahora recibimos transferencias; pronto, tarjeta y PayPal.</p><dl>'+BANK.map(function(r){return '<div><dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'<button class="cpy" data-copyv="'+esc(r[1])+'" aria-label="Copiar '+esc(r[0])+'">'+ico('i-copy')+'</button></dd></div>'}).join('')+'</dl><p class="bank-n">Cuéntanos en el correo tu nombre y el destino que elegiste. Maqueta: aún no se procesa ningún pago.</p>';if(b.hidden){b.hidden=false;if(window.gsap&&!reduced)gsap.from(b,{height:0,autoAlpha:0,duration:.6,ease:'power3.out',clearProps:'height'})}});
 function setTab(t){$$('#atabs [data-at]').forEach(function(b){b.setAttribute('aria-selected',String(b.getAttribute('data-at')===t))});var don=t==='don',show=don?$('#paneDon'):$('#panePad'),hide=don?$('#panePad'):$('#paneDon');moveInd('#atabs','i');if(!show.hidden)return;
-  if(window.gsap&&!reduced){gsap.to(hide,{autoAlpha:0,y:-20,duration:.3,ease:'power2.in',onComplete:function(){hide.hidden=true;gsap.set(hide,{clearProps:'all'});show.hidden=false;gsap.fromTo(show,{autoAlpha:0,y:30},{autoAlpha:1,y:0,duration:.6,ease:'power3.out'});gsap.from($$('.cause,.pt',show),{y:40,autoAlpha:0,duration:.7,stagger:.07,ease:'power3.out'})}})}
-  else{hide.hidden=true;show.hidden=false}}
+  var done=function(){if(!don&&patLoop)patLoop.refill()};
+  if(window.gsap&&!reduced){gsap.to(hide,{autoAlpha:0,y:-20,duration:.3,ease:'power2.in',onComplete:function(){hide.hidden=true;gsap.set(hide,{clearProps:'all'});show.hidden=false;done();gsap.fromTo(show,{autoAlpha:0,y:30},{autoAlpha:1,y:0,duration:.6,ease:'power3.out'})}})}
+  else{hide.hidden=true;show.hidden=false;done()}}
 $('#atabs').addEventListener('click',function(e){var b=e.target.closest('[data-at]');if(b)setTab(b.getAttribute('data-at'))});
 
+/* ---------- apadrinar ---------- */
 var PATS=[
  {n:'Meg',sp:'Ocelote',sci:'Leopardus pardalis',img:PH.ocelote.src,pos:PH.ocelote.pos,st:'Rehabilitación',pct:68,since:'5 meses en el centro',story:'Llegó como cría, en riesgo por la quema de plantaciones. Hoy aprende a cazar sola.'},
  {n:'Luna',sp:'Mona araña',sci:'Ateles fusciceps',img:PH.mono2.src,pos:PH.mono2.pos,st:'Atención médica',pct:40,since:'2 meses en el centro',story:'La mordió un caimán. Otra fundación la rescató y pidió ayuda a Sacha para operarla.'},
- {n:'Kuri',sp:'Oso hormiguero',sci:'Tamandua mexicana',img:PH.tamandua.src,pos:'50% 70%',st:'Rehabilitación',pct:54,since:'2 meses en el centro',story:'Herido por perros en la ciudad. Ya se alimenta por su cuenta y recupera fuerza para trepar.'},
- {n:'Nina',sp:'Búho',sci:'Ave rapaz nocturna',img:'assets/video/final/p-buho.jpg',st:'Preliberación',pct:90,since:'4 meses en el centro',story:'Cayó del nido siendo polluela. Ya vuela en el recinto de vuelo: falta poco para liberarla.'}
+ {n:'Kuri',sp:'Oso hormiguero',sci:'Tamandua mexicana',img:PH.tamandua.src,pos:'50% 70%',st:'Rehabilitación',pct:54,since:'2 meses en el centro',story:'Herido por perros en la ciudad. Ya se alimenta solo y recupera fuerza para trepar.'},
+ {n:'Nina',sp:'Búho',sci:'Ave rapaz nocturna',img:'assets/video/final/p-buho.jpg',st:'Preliberación',pct:90,since:'4 meses en el centro',story:'Cayó del nido siendo polluela. Ya vuela en el recinto de vuelo: falta poco.'},
+ {n:'Bruma',sp:'Perezosa de tres dedos',sci:'Bradypus variegatus',img:'assets/video/final/p-perezosa.jpg',st:'Atención médica',pct:35,since:'3 semanas en el centro',story:'Encontrada junto a una vía con una fractura. Está en reposo, con controles semanales.'},
+ {n:'Pepa',sp:'Zarigüeya',sci:'Didelphis marsupialis',img:PH.zarigueya.src,pos:PH.zarigueya.pos,st:'Rehabilitación',pct:72,since:'6 semanas en el centro',story:'Huérfana tras un atropello. Crece junto a sus hermanos y pronto volverá al bosque.'},
+ {n:'Tito',sp:'Guacamayo',sci:'Ara ararauna',img:'assets/video/final/p-guacamayo.jpg',st:'Rehabilitación',pct:46,since:'3 meses en el centro',story:'Decomisado del tráfico con las alas cortadas. Espera a que le vuelvan a crecer.'},
+ {n:'Coco',sp:'Iguana verde',sci:'Iguana iguana',img:PH.iguana.src,pos:PH.iguana.pos,st:'Preliberación',pct:85,since:'2 meses en el centro',story:'Rescatada de un techo durante las lluvias. Ya come sola y está lista para volver.'}
 ];
-var PLANS=[{a:10,t:'Alimentación',d:'Su dieta de un mes.'},{a:20,t:'Atención médica',d:'Medicinas, exámenes y controles.'},{a:50,t:'Rehabilitación completa',d:'Alimentación, medicinas y cuidado diario.'}];
+var PLANS=[{a:10,t:'Alimentación',d:'Su dieta de un mes.'},{a:20,t:'Atención médica',d:'Medicinas, exámenes y controles.'},{a:50,t:'Rehabilitación completa',d:'Alimento, medicinas y cuidado diario.'}];
 var AP={i:0,plan:1,name:'',mail:'',tried:false,ok:false};
-$('#pat').innerHTML=PATS.map(function(p,i){return '<article class="pt"><button class="pt-f" data-ap="'+i+'" tabindex="-1" aria-hidden="true"><img src="'+p.img+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 30%')+'"><span class="pt-st">'+esc(p.st)+'</span></button><div class="pt-b"><small>'+esc(p.sp)+' · <em>'+esc(p.sci)+'</em></small><h3>'+esc(p.n)+'</h3><p>'+esc(p.story)+'</p><div class="pt-prog"><span>Recuperación</span><b>'+p.pct+'%</b><i style="--w:'+p.pct+'%"></i></div><button class="zbtn zbtn-ghost pt-go" data-ap="'+i+'"><span class="zbtn-t">Apadrinar a '+esc(p.n)+'</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></button></div></article>'}).join('');
+$('#pat').innerHTML=PATS.map(function(p,i){return '<article class="loop-i pt"><button class="pt-f" data-ap="'+i+'" tabindex="-1" aria-hidden="true"><img src="'+p.img+'" alt="" draggable="false" loading="lazy" style="object-position:'+(p.pos||'50% 30%')+'"><span class="pt-st">'+esc(p.st)+'</span></button><div class="pt-b"><small>'+esc(p.sp)+' · <em>'+esc(p.sci)+'</em></small><h3>'+esc(p.n)+'</h3><p>'+esc(p.story)+'</p><div class="pt-prog"><span>Recuperación</span><b>'+p.pct+'%</b><i style="--w:'+p.pct+'%"></i></div><button class="zbtn zbtn-ghost pt-go" data-ap="'+i+'"><span class="zbtn-t">Apadrinar a '+esc(p.n)+'</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></button></div></article>'}).join('');
+var patLoop=Loop($('#patLoop'),{speed:30});
 function renderAp(){
   var p=PATS[AP.i],pl=PLANS[AP.plan],el=$('#ap');$('#apDrT').textContent='Apadrina a '+p.n;
   if(AP.ok){el.innerHTML='<div class="ap-ok"><span class="ap-ok-i">'+ico('i-check')+'</span><h3>Gracias, '+esc(AP.name.split(' ')[0])+'.</h3><p>Ya acompañas la recuperación de <b>'+esc(p.n)+'</b> con $'+pl.a+' al mes. Te escribiremos a '+esc(AP.mail)+' con su certificado y las primeras noticias.</p><p class="ap-note">Maqueta: todavía no se cobra ni se envía ningún correo.</p><button class="zbtn" data-drclose><span class="zbtn-t">Volver al sitio</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></button></div>';return}
-  el.innerHTML='<div class="ap-h"><img src="'+p.img+'" alt="" style="object-position:'+(p.pos||'50% 30%')+'"><div><small>'+esc(p.sp)+' · '+esc(p.st)+'</small><b>'+esc(p.n)+'</b><span>'+esc(p.since)+'</span><div class="pt-prog is-in"><span>Recuperación</span><b>'+p.pct+'%</b><i style="--w:'+p.pct+'%"></i></div></div></div>'+
-   '<p class="ap-k">Elige cómo quieres ayudar cada mes</p><div class="ap-plans" role="radiogroup" aria-label="Plan de apadrinamiento">'+PLANS.map(function(x,i){return '<button role="radio" aria-checked="'+(i===AP.plan)+'" data-plan="'+i+'"><b>$'+x.a+'<small>/mes</small></b><span>'+esc(x.t)+'</span><em>'+esc(x.d)+'</em></button>'}).join('')+'</div>'+
+  el.innerHTML='<div class="ap-h"><img src="'+p.img+'" alt="" style="object-position:'+(p.pos||'50% 30%')+'"><div><small>'+esc(p.sp)+' · '+esc(p.st)+'</small><b>'+esc(p.n)+'</b><span>'+esc(p.since)+'</span><div class="pt-prog"><span>Recuperación</span><b>'+p.pct+'%</b><i style="--w:'+p.pct+'%"></i></div></div></div>'+
+   '<p class="ap-k">Elige cómo quieres acompañarlo cada mes</p><div class="ap-plans" role="radiogroup" aria-label="Plan de apadrinamiento">'+PLANS.map(function(x,i){return '<button role="radio" aria-checked="'+(i===AP.plan)+'" data-plan="'+i+'"><b>$'+x.a+'<small>/mes</small></b><span>'+esc(x.t)+'</span><em>'+esc(x.d)+'</em></button>'}).join('')+'</div>'+
    '<form id="apForm" novalidate><div class="fields">'+fld('apName','Tu nombre *','<input id="apName" autocomplete="name" value="'+esc(AP.name)+'">',AP.tried&&!AP.name.trim(),'Escribe tu nombre')+fld('apMail','Tu correo *','<input id="apMail" type="email" autocomplete="email" value="'+esc(AP.mail)+'">',AP.tried&&!validMail(AP.mail),'Escribe un correo válido, por ejemplo nombre@correo.com')+'</div>'+
-   '<button class="zbtn ap-go" type="submit"><span class="zbtn-t">Apadrinar a '+esc(p.n)+' por $'+pl.a+' al mes</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></button><p class="ap-note">Puedes cancelar cuando quieras. El apadrinamiento es simbólico: '+esc(p.n)+' no se visita ni se entrega, porque el objetivo es que vuelva a la vida silvestre.</p></form>';
+   '<button class="zbtn ap-go" type="submit"><span class="zbtn-t">Apadrinar a '+esc(p.n)+' por $'+pl.a+' al mes</span><span class="zbtn-c">'+ico('i-arrow-ur')+ico('i-arrow-ur')+'</span></button><p class="ap-note">Recibes un certificado digital, noticias cada mes y el aviso del día en que vuelve a su hábitat. Puedes cancelar cuando quieras. Es simbólico: '+esc(p.n)+' no se visita ni se entrega.</p></form>';
 }
 function openAp(i){AP.i=i;AP.ok=false;AP.tried=false;renderAp();openDr('apDr')}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-ap]');if(b){openAp(+b.getAttribute('data-ap'));return}var pl=e.target.closest('[data-plan]');if(pl){AP.name=($('#apName')||{}).value||AP.name;AP.mail=($('#apMail')||{}).value||AP.mail;AP.plan=+pl.getAttribute('data-plan');renderAp();var n=$('[data-plan="'+AP.plan+'"]');if(n)n.focus()}});
 document.addEventListener('submit',function(e){if(e.target.id!=='apForm')return;e.preventDefault();AP.name=$('#apName').value;AP.mail=$('#apMail').value;AP.tried=true;if(!AP.name.trim()||!validMail(AP.mail)){renderAp();var bad=!AP.name.trim()?$('#apName'):$('#apMail');if(bad)bad.focus();return}AP.ok=true;renderAp()});
 
-/* ---------- aliados, redes, boletín y créditos ---------- */
-var STAR='<svg class="zstar" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1l2.6 8.4L23 12l-8.4 2.6L12 23l-2.6-8.4L1 12l8.4-2.6z"/></svg>';
-function marqHTML(items){var one=items.map(function(t){return '<span>'+t+'</span>'+STAR}).join('');return '<div class="zmarq-t">'+one+one+'</div>'}
-$('#zPress').innerHTML=marqHTML(['Ministerio del Ambiente','Tafur Animal Care','Mansión Mascota','Lente Verde','Vistazo','El Universo','Expreso','Ecuavisa','Primicias']);
+/* ---------- redes ---------- */
 var SOC={instagram:'i-ig',tiktok:'i-tt',youtube:'i-yt',facebook:'i-fb'};
 $('#zSoc').innerHTML=Object.keys(NETS).map(function(k){var n=NETS[k];return '<a href="'+(n.url||'#contacto')+'" data-follow="'+k+'" target="'+(n.url?'_blank':'_self')+'" rel="noopener" aria-label="'+n.name+'">'+ico(SOC[k])+'</a>'}).join('');
-$('#newsForm').addEventListener('submit',function(e){e.preventDefault();var v=$('#nMail').value.trim(),m=$('#nMsg');if(!validMail(v)){m.textContent='Escribe un correo válido, por ejemplo nombre@correo.com.';m.className='nmsg bad';$('#nMail').focus();return}m.textContent='Listo. Te avisaremos cuando salga el próximo reel. (Maqueta: aún no se envía.)';m.className='nmsg ok';this.reset()});
 
-renderChips();renderReels();reelAuto();renderYT(false);renderDon();renderCredits();onScroll();
-$('#credits').insertAdjacentHTML('beforeend','<li>Videos de portada, institucional y reels: clips de referencia de Mixkit (licencia gratuita de Mixkit).</li><li>Videos del podcast y casos: YouTube (Proyecto Sacha, Movimiento Animalista EC, Ecuavisa, El Universo).</li>');
-addEventListener('load',function(){layoutReels(true);moveInd('#ptabs','.ptabs-i');moveInd('#atabs','i')});
-var rz=0;addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){layoutReels(true);moveInd('#ptabs','.ptabs-i');moveInd('#atabs','i')},150)});
+renderReels();renderYT(false);renderDon();onScroll();
+window.__sacha={R:R,gal:galLoop,pat:patLoop};
+addEventListener('load',function(){layoutReels();moveInd('#ptabs','.ptabs-i');moveInd('#atabs','i')});
+var rz2=0;addEventListener('resize',function(){clearTimeout(rz2);rz2=setTimeout(function(){moveInd('#ptabs','.ptabs-i');moveInd('#atabs','i')},150)});
 
 
 /* ======================  ANIMACIONES (GSAP + ScrollTrigger + SplitText + Lenis)  ======================
-   Entradas con IntersectionObserver o ScrollTrigger, salidas ligadas al scroll, video institucional fijado
-   mientras se recorre, galería que avanza en horizontal. Si el marco de la vista previa no tiene scroll propio,
-   los efectos fijados se reemplazan por animaciones al aparecer. Con «Reducir movimiento» la página queda
-   estática y completa (el aviso inferior permite activarlas). */
+   Entradas al aparecer y salidas ligadas al scroll. Tres secciones se fijan mientras se recorren: el video
+   institucional (la ventana crece), la línea de tiempo (avanza año por año) y «Cómo trabajamos» (las etapas se
+   apilan). Si el marco de la vista previa no tiene scroll propio, esas secciones se muestran completas y animan
+   al aparecer. Con «Reducir movimiento» la página queda estática y completa (el aviso inferior permite activarlas). */
 var M={scrolls:false};
 function onView(el,fn,o){if(!el)return;var list=el.length!==undefined?el:[el];if(!canIO){list.forEach(fn);return}o=o||{};var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);fn(e.target)}})},{rootMargin:o.margin||'0px 0px -12% 0px',threshold:o.th||0});list.forEach(function(x){io.observe(x)})}
 function countTo(el,dur){var to=+el.getAttribute('data-count'),pre=el.getAttribute('data-pre')||'',o={v:0};if(!window.gsap||reduced){el.textContent=pre+nf(to);return}gsap.to(o,{v:to,duration:dur||1.8,ease:'power2.out',onUpdate:function(){el.textContent=pre+nf(o.v)}})}
 
 function initMotion(){
-  if(!window.gsap||reduced){document.documentElement.classList.add('zstatic');$$('[data-count]').forEach(function(b){countTo(b)});return}
+  if(!window.gsap||reduced){document.documentElement.classList.add('zstatic');setTl(TL.length-1);return}
   gsap.registerPlugin(ScrollTrigger,window.SplitText);
   M.scrolls=document.documentElement.scrollHeight-innerHeight>400;
   var de=document.documentElement;de.classList.add('zmo');de.classList.toggle('noscroll',!M.scrolls);
@@ -575,114 +621,110 @@ function initMotion(){
   }
 
   /* ---- portada: entrada ---- */
-  var FINAL=getComputedStyle($('#zhShape')).clipPath,START='polygon(0% 0%,100% 0%,100% 0%,65% 0%,61.5% 0%,0% 0%)';
-  var lines=$$('#zhT > span');lines.forEach(function(l){l.innerHTML='<span class="zl-in">'+l.innerHTML+'</span>'});
+  var lines=$$('#hxT > span');lines.forEach(function(l){l.innerHTML='<span class="hx-li">'+l.innerHTML+'</span>'});
   var tl=gsap.timeline({defaults:{ease:'power4.out'}});
-  tl.from('#zh',{yPercent:-100,duration:.9},0)
-    .fromTo('#zhShape',{clipPath:START},{clipPath:FINAL,duration:1.4,ease:'power4.inOut',clearProps:'clipPath'},0)
-    .fromTo('#zhBg',{scale:1.25},{scale:1,duration:2.4,ease:'power3.out'},0)
-    .from('.zh-eye',{y:24,autoAlpha:0,duration:.8},.5)
-    .from('#zhT .zl-in',{yPercent:118,duration:1.2,stagger:.13},.55)
-    .from('.zh-cta',{y:34,autoAlpha:0,duration:1},1.1)
-    .from('#zhCard',{x:-80,autoAlpha:0,duration:1.1},.85)
-    .from('#zhPlay',{scale:0,rotate:-45,duration:.9,ease:'back.out(2.2)'},1.25)
-    .from('#zhAva img,#zhAva button',{scale:0,duration:.6,stagger:.07,ease:'back.out(2)'},1.45)
-    .from('#zhQuick',{yPercent:110,duration:1},1.2)
-    .add(function(){var b=$('.zh-num b');if(b)countTo(b,1.9)},1.2);
+  tl.fromTo('#hxBg',{scale:1.18},{scale:1,duration:2.6,ease:'power3.out'},0)
+    .from('#zh .zh-in > *',{y:-30,autoAlpha:0,duration:.9,stagger:.08},.2)
+    .from('#hxEye',{y:24,autoAlpha:0,duration:.8},.45)
+    .from('#hxT .hx-li',{yPercent:110,duration:1.2,stagger:.14},.55)
+    .from('#hxP',{y:30,autoAlpha:0,duration:1},1)
+    .from('#hxAct > *',{y:30,autoAlpha:0,duration:.9,stagger:.1},1.15)
+    .from('#hxStat',{x:60,autoAlpha:0,duration:1.1},1.1)
+    .add(function(){countTo($('#hxStat b'),2)},1.2)
+    .from('#hxPP,.hx-cue,.hx-credit',{autoAlpha:0,duration:.8},1.5);
   /* portada: salida al bajar */
-  if(M.scrolls){
-    var hx={trigger:'#inicio',start:'top top',end:'bottom top',scrub:true};
-    gsap.to('#zhBg',{yPercent:14,scale:1.08,ease:'none',scrollTrigger:hx});
-    if(wide){gsap.to('.zh-copy',{y:-120,autoAlpha:0,ease:'none',scrollTrigger:hx});gsap.to('#zhCard',{y:-60,autoAlpha:0,ease:'none',scrollTrigger:hx});gsap.to('#zhQuick',{yPercent:100,ease:'none',scrollTrigger:{trigger:'#inicio',start:'top top',end:'30% top',scrub:true}})}
-  }
+  if(M.scrolls){var hx={trigger:'#inicio',start:'top top',end:'bottom top',scrub:true};
+    gsap.to('#hxBg',{yPercent:18,scale:1.06,ease:'none',scrollTrigger:hx});
+    gsap.to('.hx-copy',{y:-100,autoAlpha:0,ease:'none',scrollTrigger:{trigger:'#inicio',start:'top top',end:'70% top',scrub:true}});
+    gsap.to('#hxStat',{y:-60,autoAlpha:0,ease:'none',scrollTrigger:{trigger:'#inicio',start:'top top',end:'60% top',scrub:true}})}
 
-  /* ---- video institucional: scroll inmersivo ---- */
-  var lineEls=$$('.imm-l');
+  /* ---- video institucional: la ventana crece hasta pantalla completa ---- */
   if(M.scrolls){
     de.classList.add('imm-on');
-    var small=wide?'inset(37% 25% 6% 25% round 24px)':'inset(40% 6% 18% 6% round 18px)';
-    var it=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#video',start:'top top',end:'+=360%',pin:'#immPin',scrub:.6,anticipatePin:1}});
+    var small=wide?'inset(34% 22% 8% 22% round 24px)':'inset(36% 5% 22% 5% round 18px)';
+    var it=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#video',start:'top top',end:'+=140%',pin:'#immPin',scrub:.6,anticipatePin:1}});
     it.fromTo('#immFrame',{clipPath:small},{clipPath:'inset(0% 0% 0% 0% round 0px)',duration:2},0)
-      .fromTo('#immVid',{scale:1.18},{scale:1,duration:2},0)
-      .to('#immHead',{y:-90,autoAlpha:0,duration:1},.2)
-      .fromTo('#immShade',{opacity:0},{opacity:1,duration:1},1.2);
-    lineEls.forEach(function(l,i){var s=2+i*1.6;it.fromTo(l,{autoAlpha:0,y:60},{autoAlpha:1,y:0,duration:.6},s).to(l,{autoAlpha:0,y:-60,duration:.6},s+1.1)});
-    it.fromTo('#immEnd',{autoAlpha:0,y:50},{autoAlpha:1,y:0,duration:.8},2+lineEls.length*1.6).to({},{duration:.8});
+      .fromTo('#immVid',{scale:1.16},{scale:1,duration:2},0)
+      .to('#immHead',{y:-80,autoAlpha:0,duration:.9},.3)
+      .fromTo('#immPlay',{autoAlpha:0,scale:.8},{autoAlpha:1,scale:1,duration:.6},1.5)
+      .fromTo('#immCtl',{autoAlpha:0,y:20},{autoAlpha:1,y:0,duration:.5},1.6)
+      .to({},{duration:.4});
   }else{
     de.classList.add('imm-static');
-    onView($('#immFrame'),function(){gsap.fromTo('#immFrame',{clipPath:'inset(10% 10% 10% 10% round 24px)'},{clipPath:'inset(0% 0% 0% 0% round 24px)',duration:1.4,ease:'power4.inOut'});gsap.from('.imm-l',{y:30,autoAlpha:0,duration:.8,stagger:.12,ease:'power3.out',delay:.5})});
+    onView($('#immFrame'),function(){gsap.fromTo('#immFrame',{clipPath:'inset(8% 8% 8% 8% round 24px)'},{clipPath:'inset(0% 0% 0% 0% round 24px)',duration:1.4,ease:'power4.inOut'})});
   }
 
   /* ---- títulos por líneas (entrada) y encabezados que se despiden (salida) ---- */
   function splitHeads(){$$('.zt').forEach(function(el){if(el.closest('#immHead'))return;
-    SplitText.create(el,{type:'lines',mask:'lines',linesClass:'zline',maskClass:'zmask',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:112,duration:1.15,ease:'power4.out',stagger:.1,scrollTrigger:{trigger:el,start:'top 90%',once:true}})}})})}
+    SplitText.create(el,{type:'lines',mask:'lines',linesClass:'zline',maskClass:'zmask',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{yPercent:115,duration:1.15,ease:'power4.out',stagger:.1,scrollTrigger:{trigger:el,start:'top 90%',once:true}})}})})}
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){splitHeads();ScrollTrigger.refresh()});else splitHeads();
-  if(M.scrolls&&wide)$$('.zhead').forEach(function(h){gsap.to(h,{y:-50,autoAlpha:.15,ease:'none',scrollTrigger:{trigger:h,start:'top 12%',end:'top -25%',scrub:true}})});
+  gsap.set('.lbl',{autoAlpha:0,x:-20});onView($$('.lbl'),function(el){gsap.to(el,{autoAlpha:1,x:0,duration:.9,ease:'power3.out'})});
+  gsap.set('.sh-p,.hist-lead',{autoAlpha:0,y:30});onView($$('.sh-p,.hist-lead'),function(el){gsap.to(el,{autoAlpha:1,y:0,duration:1,ease:'power3.out',delay:.2})});
 
-  /* ---- entradas genéricas ---- */
-  gsap.set('.zfade,.zeye:not(#immHead .zeye)',{autoAlpha:0,y:36});
-  onView($$('.zfade,.zeye:not(#immHead .zeye)'),function(el){gsap.to(el,{autoAlpha:1,y:0,duration:1,ease:'power3.out'})});
-  gsap.set('.zhead-r',{autoAlpha:0,x:30});onView($$('.zhead-r'),function(el){gsap.to(el,{autoAlpha:1,x:0,duration:1,ease:'power3.out',delay:.3})});
-
-  /* ---- nosotros: la mascota sube, el disco de pelaje gira, la línea de tiempo se dibuja ---- */
-  gsap.set('#storyM img',{yPercent:30,autoAlpha:0});gsap.set('.sto-disc',{scale:.6,rotate:-40,autoAlpha:0});gsap.set('#storyM figcaption',{y:20,autoAlpha:0});
-  onView($('#storyM'),function(){gsap.to('.sto-disc',{scale:1,rotate:0,autoAlpha:1,duration:1.4,ease:'power4.out'});gsap.to('#storyM img',{yPercent:0,autoAlpha:1,duration:1.3,ease:'back.out(1.4)',delay:.25});gsap.to('#storyM figcaption',{y:0,autoAlpha:1,duration:.8,ease:'power3.out',delay:.8});gsap.to('#storyM img',{y:-10,duration:2.8,ease:'sine.inOut',yoyo:true,repeat:-1,delay:1.6})});
-  if(M.scrolls)gsap.to('.sto-disc',{rotate:90,ease:'none',scrollTrigger:{trigger:'.sto',start:'top bottom',end:'bottom top',scrub:true}});
-  gsap.set('#tl li',{x:-30,autoAlpha:0});onView($('#tl'),function(){gsap.to('#tl li',{x:0,autoAlpha:1,duration:.9,stagger:.14,ease:'power3.out'});$('#tl').classList.add('is-in')});
+  /* ---- historia: la línea se llena con el scroll y cada hito se enciende ---- */
+  var tis=$$('.tl-i');
+  if(M.scrolls){
+    gsap.fromTo('#tlFill',{scaleY:0},{scaleY:1,ease:'none',scrollTrigger:{trigger:'#tl',start:'top 60%',end:'bottom 60%',scrub:true}});
+    tis.forEach(function(li,i){ScrollTrigger.create({trigger:li,start:'top 62%',onEnter:function(){setTl(i)},onLeaveBack:function(){setTl(Math.max(0,i-1))}})});
+    setTl(0);
+  }else{setTl(TL.length-1);gsap.set('#tlFill',{scaleY:1})}
+  gsap.set(tis,{autoAlpha:0,y:50});onView(tis,function(el){gsap.to(el,{autoAlpha:1,y:0,duration:.9,ease:'power3.out'})},{margin:'0px 0px -8% 0px'});
+  gsap.set('#histCard img',{yPercent:25,autoAlpha:0});gsap.set('#histCard .mcard-pat',{scale:.85,autoAlpha:0});
+  onView($('#histCard'),function(){gsap.to('#histCard .mcard-pat',{scale:1,autoAlpha:1,duration:1.2,ease:'power4.out'});gsap.to('#histCard img',{yPercent:0,autoAlpha:1,duration:1.2,ease:'back.out(1.4)',delay:.2})});
   onView($('#kpis'),function(){gsap.from('#kpis > div',{y:40,autoAlpha:0,duration:.9,stagger:.1,ease:'power3.out'});$$('#kpis [data-count]').forEach(function(b){countTo(b,1.8)})});
 
-  /* ---- etapas: imagen que se revela + escalonado ---- */
-  gsap.set('.stp',{y:70,autoAlpha:0});
-  onView($('#steps'),function(){gsap.to('.stp',{y:0,autoAlpha:1,duration:1,stagger:.12,ease:'power3.out'});gsap.fromTo('.stp .zimg',{clipPath:'inset(100% 0% 0% 0%)'},{clipPath:'inset(0% 0% 0% 0%)',duration:1.3,stagger:.12,ease:'power4.inOut'});gsap.fromTo('.stp .zimg img',{scale:1.35},{scale:1,duration:1.8,stagger:.12,ease:'power3.out'})});
+  /* ---- cómo trabajamos: las etapas se apilan mientras la sección queda fija ---- */
+  var pcs=$$('.pcard');
+  if(M.scrolls&&wide){
+    de.classList.add('proc-on');
+    gsap.set(pcs.slice(1),{yPercent:110});
+    var pt=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#proceso',start:'top top',end:'+='+(pcs.length*70)+'%',pin:'#procPin',scrub:.6,anticipatePin:1,
+      onUpdate:function(s){var i=Math.min(pcs.length-1,Math.floor(s.progress*pcs.length*0.999));setProc(i);$$('#procNav li em').forEach(function(em,k){var f=Math.max(0,Math.min(1,s.progress*pcs.length-k));em.style.transform='scaleX('+f.toFixed(3)+')'})}}});
+    pcs.forEach(function(c,i){if(!i)return;pt.to(c,{yPercent:0,duration:1},i-1).to(pcs[i-1],{scale:.9,autoAlpha:.35,filter:'blur(3px)',duration:1},i-1).fromTo($('img',c),{scale:1.25},{scale:1,duration:1},i-1)});
+    pt.to({},{duration:.5});
+  }else{
+    gsap.set(pcs,{y:60,autoAlpha:0});onView(pcs,function(el){gsap.to(el,{y:0,autoAlpha:1,duration:1,ease:'power3.out'})});
+  }
 
   /* ---- reels: el carrusel entra girando ---- */
-  gsap.set('#reelsT2',{rotationY:-28,x:260,autoAlpha:0,transformPerspective:1600});
+  gsap.set('#reelsT2',{rotationY:-24,x:240,autoAlpha:0,transformPerspective:1600});
   onView($('#krl'),function(){gsap.to('#reelsT2',{rotationY:0,x:0,autoAlpha:1,duration:1.6,ease:'power4.out'})});
 
-  /* ---- podcast ---- */
+  /* ---- podcast: el panel se abre ---- */
+  if(M.scrolls)gsap.fromTo('.podx',{scale:.94,borderRadius:56},{scale:1,borderRadius:28,ease:'none',scrollTrigger:{trigger:'.podx',start:'top 98%',end:'top 45%',scrub:true}});
   gsap.set('#ytpV',{clipPath:'inset(0% 0% 100% 0% round 18px)'});gsap.set('.ytp-list li',{x:50,autoAlpha:0});
-  onView($('#ytp'),function(){gsap.to('#ytpV',{clipPath:'inset(0% 0% 0% 0% round 18px)',duration:1.3,ease:'power4.inOut',clearProps:'clipPath'});gsap.to('.ytp-list li',{x:0,autoAlpha:1,duration:.8,stagger:.08,ease:'power3.out',delay:.3})});
-  gsap.set('#ptabs',{y:20,autoAlpha:0});onView($('#ptabs'),function(){gsap.to('#ptabs',{y:0,autoAlpha:1,duration:.8,ease:'power3.out',onComplete:function(){moveInd('#ptabs','.ptabs-i')}})});
+  onView($('#ytp'),function(){gsap.to('#ytpV',{clipPath:'inset(0% 0% 0% 0% round 18px)',duration:1.3,ease:'power4.inOut',clearProps:'clipPath'});gsap.to('.ytp-list li',{x:0,autoAlpha:1,duration:.8,stagger:.07,ease:'power3.out',delay:.3})});
+  onView($('#ptabs'),function(){moveInd('#ptabs','.ptabs-i')});
 
-  /* ---- galería: recorrido horizontal mientras la sección queda fija ---- */
-  var track=$('#galTrack'),items=$$('.gi'),cnt=$('#galCount');
-  if(M.scrolls&&wide){
-    de.classList.add('gal-on');
-    var dist=function(){return Math.max(0,track.scrollWidth-innerWidth+80)};
-    gsap.to(track,{x:function(){return -dist()},ease:'none',scrollTrigger:{trigger:'#galeria',start:'top top',end:function(){return '+='+dist()},pin:'#galPin',scrub:.6,invalidateOnRefresh:true,anticipatePin:1,
-      onUpdate:function(s){$('#galProg').style.transform='scaleX('+s.progress.toFixed(3)+')';var k=Math.min(items.length,1+Math.floor(s.progress*items.length));cnt.textContent=pad2(k)+' / '+pad2(items.length)}}});
-    items.forEach(function(it){var im=$('img',it);gsap.fromTo(im,{xPercent:-8},{xPercent:8,ease:'none',scrollTrigger:{trigger:'#galeria',start:'top top',end:function(){return '+='+dist()},scrub:true,invalidateOnRefresh:true}})});
-  }else{
-    track.addEventListener('scroll',function(){var p=track.scrollLeft/Math.max(1,track.scrollWidth-track.clientWidth);$('#galProg').style.transform='scaleX('+p.toFixed(3)+')';cnt.textContent=pad2(Math.min(items.length,1+Math.floor(p*items.length)))+' / '+pad2(items.length)},{passive:true});
-  }
-  gsap.set(items,{y:80,autoAlpha:0});onView($('#galTrack'),function(){gsap.to(items,{y:0,autoAlpha:1,duration:1,stagger:.08,ease:'power3.out'})});
+  /* ---- galería y pacientes: entrada ---- */
+  gsap.set('#galLoop',{autoAlpha:0,x:120});onView($('#galLoop'),function(){gsap.to('#galLoop',{autoAlpha:1,x:0,duration:1.4,ease:'power3.out'})});
 
-  /* ---- apadrina y dona ---- */
-  gsap.set('.cause',{y:40,autoAlpha:0});onView($('#causes'),function(){gsap.to('.cause',{y:0,autoAlpha:1,duration:.8,stagger:.08,ease:'power3.out'})});
-  gsap.set('.don-card',{y:60,autoAlpha:0});gsap.set('.don-m',{yPercent:100});
-  onView($('#donR'),function(){gsap.to('.don-card',{y:0,autoAlpha:1,duration:1,ease:'power3.out'});gsap.to('.don-m',{yPercent:0,duration:1.1,ease:'back.out(1.6)',delay:.5,onComplete:function(){gsap.to('.don-m',{rotate:-3,duration:1.6,ease:'sine.inOut',yoyo:true,repeat:-1,transformOrigin:'50% 100%'})}})});
+  /* ---- donar ---- */
+  gsap.set('#donCard img',{yPercent:30,autoAlpha:0});gsap.set('#donCard .mcard-txt > *',{y:30,autoAlpha:0});
+  onView($('#donCard'),function(){gsap.to('#donCard .mcard-txt > *',{y:0,autoAlpha:1,duration:.9,stagger:.08,ease:'power3.out'});gsap.to('#donCard img',{yPercent:0,autoAlpha:1,duration:1.2,ease:'back.out(1.3)',delay:.3})});
+  gsap.set('.cause',{y:30,autoAlpha:0});onView($('#causes'),function(){gsap.to('.cause',{y:0,autoAlpha:1,duration:.7,stagger:.07,ease:'power3.out'})});
   onView($('#atabs'),function(){moveInd('#atabs','i')});
 
-  /* ---- si encuentras un animal ---- */
-  gsap.set('#encSteps li',{y:40,autoAlpha:0});onView($('#encSteps'),function(){gsap.to('#encSteps li',{y:0,autoAlpha:1,duration:.8,stagger:.1,ease:'power3.out'})});
-  gsap.set('#encR img',{x:80,autoAlpha:0});gsap.set('.enc-pat',{scale:.7,autoAlpha:0});
-  onView($('#encR'),function(){gsap.to('.enc-pat',{scale:1,autoAlpha:1,duration:1.2,ease:'power4.out'});gsap.to('#encR img',{x:0,autoAlpha:1,duration:1.2,ease:'power3.out',delay:.2})});
-
-  /* ---- marquesina que reacciona a la velocidad del scroll ---- */
-  var mt=$('#zPress .zmarq-t'),tw=mt?gsap.fromTo(mt,{xPercent:0},{xPercent:-50,repeat:-1,duration:40,ease:'none'}):null;
-  if(M.scrolls&&tw)ScrollTrigger.create({start:0,end:'max',onUpdate:function(s){var v=Math.min(6,Math.abs(s.getVelocity())/300);gsap.to(tw,{timeScale:(1+v)*s.direction,duration:.3,overwrite:true,onComplete:function(){gsap.to(tw,{timeScale:s.direction,duration:1})}})}});
+  /* ---- si encuentras un animal: los pasos aparecen uno a uno ---- */
+  var es=$$('#encSteps li');
+  if(M.scrolls){es.forEach(function(li){gsap.fromTo(li,{autoAlpha:.25,x:-24},{autoAlpha:1,x:0,ease:'none',scrollTrigger:{trigger:li,start:'top 88%',end:'top 62%',scrub:true}});gsap.fromTo($('i',li),{scale:.6,rotate:-30},{scale:1,rotate:0,ease:'none',scrollTrigger:{trigger:li,start:'top 88%',end:'top 62%',scrub:true}})})}
+  else{gsap.set(es,{y:30,autoAlpha:0});onView($('#encSteps'),function(){gsap.to(es,{y:0,autoAlpha:1,duration:.8,stagger:.12,ease:'power3.out'})})}
+  gsap.set('#encR img',{x:80,autoAlpha:0});gsap.set('#encR .mcard-pat',{scale:.85,autoAlpha:0});
+  onView($('#encR'),function(){gsap.to('#encR .mcard-pat',{scale:1,autoAlpha:1,duration:1.2,ease:'power4.out'});gsap.to('#encR img',{x:0,autoAlpha:1,duration:1.2,ease:'power3.out',delay:.2})});
 
   /* ---- pie ---- */
   gsap.set('.zfoot-top > *,.zfoot-cols > div',{y:50,autoAlpha:0});
-  onView($('.zfoot'),function(){gsap.to('.zfoot-top > *,.zfoot-cols > div',{y:0,autoAlpha:1,duration:1,stagger:.08,ease:'power3.out'});gsap.fromTo('.zfoot-m',{x:-120,autoAlpha:0},{x:0,autoAlpha:1,duration:1.6,ease:'power2.out',delay:.4})});
+  onView($('.zfoot'),function(){gsap.to('.zfoot-top > *,.zfoot-cols > div',{y:0,autoAlpha:1,duration:1,stagger:.08,ease:'power3.out'})});
 
-  /* ---- cursor contextual en fotos y reels ---- */
+  /* ---- cursor contextual y botones magnéticos ---- */
   if(fine){var c=document.createElement('div');c.className='zcur';c.setAttribute('aria-hidden','true');c.innerHTML='<span></span>';document.body.appendChild(c);
     var lab=$('span',c),qx=gsap.quickTo(c,'x',{duration:.3,ease:'power3'}),qy=gsap.quickTo(c,'y',{duration:.3,ease:'power3'}),on=false;gsap.set(c,{xPercent:-50,yPercent:-50,scale:.2,autoAlpha:0});
     addEventListener('mousemove',function(e){qx(e.clientX);qy(e.clientY)},{passive:true});
     document.addEventListener('mouseover',function(e){var t=e.target.closest('[data-cursor]'),show=!!t&&!(t.classList.contains('reel')&&!t.classList.contains('is-on'));if(show){lab.textContent=t.getAttribute('data-cursor');if(!on){on=true;gsap.to(c,{scale:1,autoAlpha:1,duration:.35,ease:'back.out(2)'})}}else if(on){on=false;gsap.to(c,{scale:.2,autoAlpha:0,duration:.2})}});
-    $$('.zbtn,.zh-don').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();gsap.to(b,{x:(e.clientX-r.left-r.width/2)*.18,y:(e.clientY-r.top-r.height/2)*.3,duration:.4,ease:'power3.out'})});b.addEventListener('mouseleave',function(){gsap.to(b,{x:0,y:0,duration:.9,ease:'elastic.out(1,.4)'})})});
+    $$('.zbtn,.zh-don').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();gsap.to(b,{x:(e.clientX-r.left-r.width/2)*.16,y:(e.clientY-r.top-r.height/2)*.28,duration:.4,ease:'power3.out'})});b.addEventListener('mouseleave',function(){gsap.to(b,{x:0,y:0,duration:.9,ease:'elastic.out(1,.4)'})})});
   }
+  /* encabezados que se despiden al salir (se crean al final para medir después de las secciones fijas) */
+  if(M.scrolls&&wide)$$('.sh').forEach(function(h){gsap.to(h,{y:-40,autoAlpha:.2,ease:'none',scrollTrigger:{trigger:h,start:'top 14%',end:'top -20%',scrub:true}})});
   addEventListener('load',function(){ScrollTrigger.refresh()});var rt=0;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){ScrollTrigger.refresh()},200)});
 }
 initMotion();
