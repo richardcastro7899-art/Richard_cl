@@ -39,7 +39,7 @@ function initMotion(){
   if(M.scrolls){gsap.to('.hx-copy',{y:-100,autoAlpha:0,ease:'none',scrollTrigger:{trigger:'#inicio',start:'top top',end:'70% top',scrub:true}});}
 
   /* ---- video institucional: la ventana se abre entre dos palabras; al terminar, se reproduce ---- */
-  if(M.scrolls){
+  if(M.scrolls&&wide){
     de.classList.add('imm-on');
     var small=wide?'inset(35% 31% 18% 31% round 24px)':'inset(38% 8% 30% 8% round 18px)';
     var playing=false;
@@ -54,7 +54,7 @@ function initMotion(){
     gsap.from('.imm-w',{y:60,autoAlpha:0,duration:1.1,stagger:.14,ease:'power3.out',scrollTrigger:{trigger:'#video',start:'top 75%',once:true}});
     gsap.from('#immFrame',{y:80,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:'#video',start:'top 80%',once:true}});
   }else{
-    de.classList.add('imm-static');autoVid(iv,.3);gsap.from('.imm-w',{y:30,autoAlpha:0,duration:1,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'#video',start:'top 80%',once:true}});
+    de.classList.add('imm-static');autoVid(iv,.4);if(M.scrolls)gsap.fromTo('#immFrame',{scale:.86},{scale:1,ease:'none',scrollTrigger:{trigger:'#immFrame',start:'top 95%',end:'top 45%',scrub:.6}});gsap.from('.imm-w',{y:30,autoAlpha:0,duration:1,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'#video',start:'top 80%',once:true}});
     onView($('#immFrame'),function(){gsap.fromTo('#immFrame',{clipPath:'inset(8% 8% 8% 8% round 24px)'},{clipPath:'inset(0% 0% 0% 0% round 24px)',duration:1.4,ease:'power4.inOut'})});
   }
 

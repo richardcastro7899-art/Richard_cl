@@ -13,22 +13,19 @@ var BANK=[['Banco','Banco Internacional'],['Cuenta corriente','1400625249'],['A 
 function nf(n){return Math.round(n).toLocaleString('es-EC')}
 
 /* ---------- cortina de inicio ----------
-   Solo el logo. Al cargar, el verde se abre desde el ojo de Sacha (la «A» del logo), como una mirada que se abre. */
+   Solo el logo. Al cargar, el telón verde sube completo; su borde inferior se curva al subir. */
 var PRE={done:false,cbs:[]};
 function onPreDone(f){if(PRE.done)f();else PRE.cbs.push(f)}
-(function(){var el=$('#pre'),de=document.documentElement,t0=performance.now(),MIN=1300,MAX=3800,loaded=document.readyState==='complete',out=false;
+(function(){var el=$('#pre'),de=document.documentElement,t0=0,MIN=1300,MAX=3800,loaded=document.readyState==='complete',out=false;
   if(!el){PRE.done=true;return}
   de.classList.add('pre-on');addEventListener('load',function(){loaded=true});
-  function eye(){var lg=$('#preLogo').getBoundingClientRect();return {x:lg.left+lg.width*.268,y:lg.top+lg.height*.47}}
-  function finish(){if(out)return;out=true;var e=eye(),R=Math.hypot(Math.max(e.x,innerWidth-e.x),Math.max(e.y,innerHeight-e.y))+40;
-    el.style.setProperty('--ex',e.x+'px');el.style.setProperty('--ey',e.y+'px');
+  function finish(){if(out)return;out=true;
     var done=function(){PRE.done=true;PRE.cbs.splice(0).forEach(function(f){f()})},end=function(){de.classList.remove('pre-on');el.hidden=true};
-    if(window.gsap&&!reduced){var o={r:0};gsap.timeline({onComplete:end})
-      .to('#preLogo',{scale:1.06,duration:.35,ease:'power2.out'})
-      .add(function(){el.classList.add('is-open')})
-      .to(o,{r:R,duration:1.15,ease:'power3.inOut',onUpdate:function(){el.style.setProperty('--r',o.r.toFixed(1)+'px')}},'+=.02')
-      .to('#preLogo',{scale:1.6,autoAlpha:0,duration:.7,ease:'power2.in'},'<')
-      .add(done,'<.35')}
+    if(window.gsap&&!reduced){var w=innerWidth,curve=Math.min(220,innerHeight*.22);
+      gsap.timeline({onComplete:end})
+        .to('#preLogo',{y:-40,autoAlpha:0,duration:.55,ease:'power2.in'})
+        .add(done,'-=.1')
+        .fromTo(el,{yPercent:0,borderBottomLeftRadius:'0px 0px',borderBottomRightRadius:'0px 0px'},{yPercent:-100,borderBottomLeftRadius:(w/2)+'px '+curve+'px',borderBottomRightRadius:(w/2)+'px '+curve+'px',duration:1.1,ease:'power4.inOut'},'-=.15')}
     else{done();end()}}
   requestAnimationFrame(function(){t0=performance.now();(function tick(){var t=performance.now()-t0;if((loaded&&t>=MIN)||t>MAX){finish();return}requestAnimationFrame(tick)})()});
 })();
@@ -92,7 +89,7 @@ function setTl(i){$$('.tl-i').forEach(function(li,k){li.classList.toggle('is-on'
 
 /* ---------- cómo trabajamos ---------- */
 $('#procNav').innerHTML=STEPS.map(function(s,i){return '<li data-pi="'+i+'"><button type="button" data-pgo="'+i+'"><b>'+esc(s.title)+'</b></button><p>'+esc(s.text)+'</p><i aria-hidden="true"><em></em></i></li>'}).join('');
-$('#procCards').innerHTML=STEPS.map(function(s,i){var p=PH[s.ph];return '<article class="pcard" data-pc="'+i+'"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"><div class="pcard-sh" aria-hidden="true"></div><div class="pcard-t"><span class="pcard-ic">'+ico(s.icon)+'</span><h3>'+esc(s.title)+'</h3></div></article>'}).join('');
+$('#procCards').innerHTML=STEPS.map(function(s,i){var p=PH[s.ph];return '<article class="pcard" data-pc="'+i+'"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"><div class="pcard-sh" aria-hidden="true"></div><div class="pcard-t"><h3>'+esc(s.title)+'</h3><p class="pcard-p">'+esc(s.text)+'</p></div></article>'}).join('');
 var PI=-1;function setProc(i){if(i===PI)return;PI=i;$$('#procNav li').forEach(function(li,k){li.classList.toggle('is-on',k===i);li.classList.toggle('is-done',k<i)})}
 function procFill(p){$$('#procNav li em').forEach(function(em,k){em.style.transform='scaleX('+Math.max(0,Math.min(1,p*STEPS.length-k)).toFixed(3)+')'})}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-pgo]');if(!b)return;var i=+b.getAttribute('data-pgo'),st=window.__procST;if(st){var y=st.start+(st.end-st.start)*((i+.5)/STEPS.length);if(window.__lenis)__lenis.scrollTo(y,{duration:1.1});else scrollTo({top:y,behavior:'smooth'})}else setProc(i)});

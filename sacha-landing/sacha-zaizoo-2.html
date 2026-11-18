@@ -2288,6 +2288,44 @@ html:not(.proc-on) .pcard-t::after{content:none}
 .ph-b:hover .ph-cap{transform:none}
 @media (max-width:700px){.ph-b{width:68vw}}
 
+/* =====================  AJUSTES FINALES  ===================== */
+/* cortina: un solo telón */
+.pre{-webkit-mask-image:none!important;mask-image:none!important;will-change:transform}
+/* etiquetas pequeñas en tipo normal (sin mayúsculas espaciadas) */
+.hx-eye{text-transform:none;letter-spacing:.01em;font-size:15px}
+.mcard-k{text-transform:none;letter-spacing:0;font-size:14px;font-family:var(--font-display);font-weight:600}
+/* fotos de etapas sin ícono; descripción solo cuando no hay lista lateral */
+.pcard-ic{display:none}
+.pcard-p{display:none;max-width:44ch;font-size:15px;line-height:1.5;color:#DCE8E0}
+html:not(.proc-on) .pcard-p{display:block}
+/* bordes limpios en imágenes y tarjetas que se mueven o giran */
+.reel,.pcard,.ph-b,.pt-f,.cause img,.ytp-v,.ytp-th,.tl-img,.mcard-pat,.imm-frame,.gi-b,.fc-img{backface-visibility:hidden;-webkit-backface-visibility:hidden;-webkit-mask-image:-webkit-radial-gradient(white,black)}
+.reel{outline:1px solid transparent}
+.reel video,.pcard img,.ph-b img,.pt-f img{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+/* video institucional en celulares: 16:9 completo, frase arriba */
+@media (max-width:899px){
+  .imm-static .imm-pin{padding:64px 16px 72px}
+  .imm-static .imm-w{font-size:clamp(28px,8.4vw,40px);text-align:left;margin:0}
+  .imm-static .imm-wr{margin:0 0 22px;text-align:left}
+  .imm-static .imm-frame{border-radius:18px;aspect-ratio:16/9}
+  .imm-static .imm-ctl{left:10px;right:10px;bottom:10px}
+  .imm-static .imm-ctl .imm-snd{width:38px;height:38px;padding:0;justify-content:center}
+  .imm-static .imm-ctl .imm-snd span{display:none}
+  .imm-static .imm-ctl .imm-fs{width:38px;height:38px}
+}
+/* ritmo vertical en celulares */
+@media (max-width:899px){
+  .zsec,.gal{padding-block:64px}
+  html:not(.proc-on) .proc-pin{padding:64px 0}
+  .proc-l .zt{margin-bottom:24px}
+  .sh{margin-bottom:28px}
+  .kpis{grid-template-columns:1fr}
+  .kpis div{flex-direction:row-reverse;justify-content:flex-end;align-items:center;gap:16px;padding:16px 20px}
+  .kpis div+div{box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+  .kpis dd{font-size:34px;min-width:120px}
+  .hist-lead{margin-bottom:28px}
+}
+
 </style>
 </head>
 <body>
@@ -2462,7 +2500,7 @@ html:not(.proc-on) .pcard-t::after{content:none}
     <h2 class="imm-w imm-wl" id="immWL">Si los reconoces,</h2>
     <p class="imm-w imm-wr" id="immWR">los cuidas.</p>
     <div class="imm-frame" id="immFrame">
-      <video id="immVid" muted loop playsinline preload="auto" poster="assets/video/final/inst.jpg"><source src="assets/video/final/inst.mp4" type="video/mp4"><source src="assets/video/final/inst.webm" type="video/webm"></video>
+      <video id="immVid" muted loop playsinline preload="metadata" poster="assets/video/final/inst.jpg"><source src="assets/video/final/inst.mp4" type="video/mp4"><source src="assets/video/final/inst.webm" type="video/webm"></video>
       <div class="imm-shade" id="immShade" aria-hidden="true"></div>
       <div class="imm-ctl" id="immCtl"><div class="imm-bar"><i id="immBar"></i></div><button class="imm-snd" id="immSnd" aria-label="Activar sonido"><svg class="ic" aria-hidden="true"><use href="#i-mute"/></svg><span>Activar sonido</span></button><button class="imm-fs" id="immFs" aria-label="Ver en pantalla completa"><svg class="ic" aria-hidden="true"><use href="#i-fs"/></svg></button></div>
     </div>
@@ -2512,7 +2550,7 @@ html:not(.proc-on) .pcard-t::after{content:none}
 <!-- REELS -->
 <section class="zsec zsec-dark" id="reels" aria-labelledby="reelsT">
   <div class="zwrap">
-    <div class="sh"><div><p class="lbl light">Reels</p><h2 class="zt light" id="reelsT">Un minuto para conocerlos</h2></div><p class="sh-p">Cápsulas verticales que también publicamos en TikTok e Instagram. Pasa el cursor para detenerlas, arrastra para moverlas y toca una para verla.</p></div>
+    <div class="sh"><div><p class="lbl light">Reels</p><h2 class="zt light" id="reelsT">Un minuto para conocerlos</h2></div><p class="sh-p">Cápsulas verticales que también publicamos en TikTok e Instagram. Pasan solas; arrastra para moverlas o toca una para verla.</p></div>
   </div>
   <div class="krl" id="krl" aria-roledescription="carrusel" aria-label="Reels en video"><div class="krl-t" id="reelsT2"></div></div>
 </section>
@@ -3093,22 +3131,19 @@ var BANK=[['Banco','Banco Internacional'],['Cuenta corriente','1400625249'],['A 
 function nf(n){return Math.round(n).toLocaleString('es-EC')}
 
 /* ---------- cortina de inicio ----------
-   Solo el logo. Al cargar, el verde se abre desde el ojo de Sacha (la «A» del logo), como una mirada que se abre. */
+   Solo el logo. Al cargar, el telón verde sube completo; su borde inferior se curva al subir. */
 var PRE={done:false,cbs:[]};
 function onPreDone(f){if(PRE.done)f();else PRE.cbs.push(f)}
-(function(){var el=$('#pre'),de=document.documentElement,t0=performance.now(),MIN=1300,MAX=3800,loaded=document.readyState==='complete',out=false;
+(function(){var el=$('#pre'),de=document.documentElement,t0=0,MIN=1300,MAX=3800,loaded=document.readyState==='complete',out=false;
   if(!el){PRE.done=true;return}
   de.classList.add('pre-on');addEventListener('load',function(){loaded=true});
-  function eye(){var lg=$('#preLogo').getBoundingClientRect();return {x:lg.left+lg.width*.268,y:lg.top+lg.height*.47}}
-  function finish(){if(out)return;out=true;var e=eye(),R=Math.hypot(Math.max(e.x,innerWidth-e.x),Math.max(e.y,innerHeight-e.y))+40;
-    el.style.setProperty('--ex',e.x+'px');el.style.setProperty('--ey',e.y+'px');
+  function finish(){if(out)return;out=true;
     var done=function(){PRE.done=true;PRE.cbs.splice(0).forEach(function(f){f()})},end=function(){de.classList.remove('pre-on');el.hidden=true};
-    if(window.gsap&&!reduced){var o={r:0};gsap.timeline({onComplete:end})
-      .to('#preLogo',{scale:1.06,duration:.35,ease:'power2.out'})
-      .add(function(){el.classList.add('is-open')})
-      .to(o,{r:R,duration:1.15,ease:'power3.inOut',onUpdate:function(){el.style.setProperty('--r',o.r.toFixed(1)+'px')}},'+=.02')
-      .to('#preLogo',{scale:1.6,autoAlpha:0,duration:.7,ease:'power2.in'},'<')
-      .add(done,'<.35')}
+    if(window.gsap&&!reduced){var w=innerWidth,curve=Math.min(220,innerHeight*.22);
+      gsap.timeline({onComplete:end})
+        .to('#preLogo',{y:-40,autoAlpha:0,duration:.55,ease:'power2.in'})
+        .add(done,'-=.1')
+        .fromTo(el,{yPercent:0,borderBottomLeftRadius:'0px 0px',borderBottomRightRadius:'0px 0px'},{yPercent:-100,borderBottomLeftRadius:(w/2)+'px '+curve+'px',borderBottomRightRadius:(w/2)+'px '+curve+'px',duration:1.1,ease:'power4.inOut'},'-=.15')}
     else{done();end()}}
   requestAnimationFrame(function(){t0=performance.now();(function tick(){var t=performance.now()-t0;if((loaded&&t>=MIN)||t>MAX){finish();return}requestAnimationFrame(tick)})()});
 })();
@@ -3172,7 +3207,7 @@ function setTl(i){$$('.tl-i').forEach(function(li,k){li.classList.toggle('is-on'
 
 /* ---------- cómo trabajamos ---------- */
 $('#procNav').innerHTML=STEPS.map(function(s,i){return '<li data-pi="'+i+'"><button type="button" data-pgo="'+i+'"><b>'+esc(s.title)+'</b></button><p>'+esc(s.text)+'</p><i aria-hidden="true"><em></em></i></li>'}).join('');
-$('#procCards').innerHTML=STEPS.map(function(s,i){var p=PH[s.ph];return '<article class="pcard" data-pc="'+i+'"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"><div class="pcard-sh" aria-hidden="true"></div><div class="pcard-t"><span class="pcard-ic">'+ico(s.icon)+'</span><h3>'+esc(s.title)+'</h3></div></article>'}).join('');
+$('#procCards').innerHTML=STEPS.map(function(s,i){var p=PH[s.ph];return '<article class="pcard" data-pc="'+i+'"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"><div class="pcard-sh" aria-hidden="true"></div><div class="pcard-t"><h3>'+esc(s.title)+'</h3><p class="pcard-p">'+esc(s.text)+'</p></div></article>'}).join('');
 var PI=-1;function setProc(i){if(i===PI)return;PI=i;$$('#procNav li').forEach(function(li,k){li.classList.toggle('is-on',k===i);li.classList.toggle('is-done',k<i)})}
 function procFill(p){$$('#procNav li em').forEach(function(em,k){em.style.transform='scaleX('+Math.max(0,Math.min(1,p*STEPS.length-k)).toFixed(3)+')'})}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-pgo]');if(!b)return;var i=+b.getAttribute('data-pgo'),st=window.__procST;if(st){var y=st.start+(st.end-st.start)*((i+.5)/STEPS.length);if(window.__lenis)__lenis.scrollTo(y,{duration:1.1});else scrollTo({top:y,behavior:'smooth'})}else setProc(i)});
@@ -3408,7 +3443,7 @@ function initMotion(){
   if(M.scrolls){gsap.to('.hx-copy',{y:-100,autoAlpha:0,ease:'none',scrollTrigger:{trigger:'#inicio',start:'top top',end:'70% top',scrub:true}});}
 
   /* ---- video institucional: la ventana se abre entre dos palabras; al terminar, se reproduce ---- */
-  if(M.scrolls){
+  if(M.scrolls&&wide){
     de.classList.add('imm-on');
     var small=wide?'inset(35% 31% 18% 31% round 24px)':'inset(38% 8% 30% 8% round 18px)';
     var playing=false;
@@ -3423,7 +3458,7 @@ function initMotion(){
     gsap.from('.imm-w',{y:60,autoAlpha:0,duration:1.1,stagger:.14,ease:'power3.out',scrollTrigger:{trigger:'#video',start:'top 75%',once:true}});
     gsap.from('#immFrame',{y:80,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:'#video',start:'top 80%',once:true}});
   }else{
-    de.classList.add('imm-static');autoVid(iv,.3);gsap.from('.imm-w',{y:30,autoAlpha:0,duration:1,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'#video',start:'top 80%',once:true}});
+    de.classList.add('imm-static');autoVid(iv,.4);if(M.scrolls)gsap.fromTo('#immFrame',{scale:.86},{scale:1,ease:'none',scrollTrigger:{trigger:'#immFrame',start:'top 95%',end:'top 45%',scrub:.6}});gsap.from('.imm-w',{y:30,autoAlpha:0,duration:1,stagger:.12,ease:'power3.out',scrollTrigger:{trigger:'#video',start:'top 80%',once:true}});
     onView($('#immFrame'),function(){gsap.fromTo('#immFrame',{clipPath:'inset(8% 8% 8% 8% round 24px)'},{clipPath:'inset(0% 0% 0% 0% round 24px)',duration:1.4,ease:'power4.inOut'})});
   }
 

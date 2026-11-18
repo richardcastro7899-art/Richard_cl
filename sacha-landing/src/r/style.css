@@ -1040,3 +1040,41 @@ html:not(.proc-on) .pcard-t::after{content:none}
 .ph-b:hover::after{opacity:1}
 .ph-b:hover .ph-cap{transform:none}
 @media (max-width:700px){.ph-b{width:68vw}}
+
+/* =====================  AJUSTES FINALES  ===================== */
+/* cortina: un solo telón */
+.pre{-webkit-mask-image:none!important;mask-image:none!important;will-change:transform}
+/* etiquetas pequeñas en tipo normal (sin mayúsculas espaciadas) */
+.hx-eye{text-transform:none;letter-spacing:.01em;font-size:15px}
+.mcard-k{text-transform:none;letter-spacing:0;font-size:14px;font-family:var(--font-display);font-weight:600}
+/* fotos de etapas sin ícono; descripción solo cuando no hay lista lateral */
+.pcard-ic{display:none}
+.pcard-p{display:none;max-width:44ch;font-size:15px;line-height:1.5;color:#DCE8E0}
+html:not(.proc-on) .pcard-p{display:block}
+/* bordes limpios en imágenes y tarjetas que se mueven o giran */
+.reel,.pcard,.ph-b,.pt-f,.cause img,.ytp-v,.ytp-th,.tl-img,.mcard-pat,.imm-frame,.gi-b,.fc-img{backface-visibility:hidden;-webkit-backface-visibility:hidden;-webkit-mask-image:-webkit-radial-gradient(white,black)}
+.reel{outline:1px solid transparent}
+.reel video,.pcard img,.ph-b img,.pt-f img{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+/* video institucional en celulares: 16:9 completo, frase arriba */
+@media (max-width:899px){
+  .imm-static .imm-pin{padding:64px 16px 72px}
+  .imm-static .imm-w{font-size:clamp(28px,8.4vw,40px);text-align:left;margin:0}
+  .imm-static .imm-wr{margin:0 0 22px;text-align:left}
+  .imm-static .imm-frame{border-radius:18px;aspect-ratio:16/9}
+  .imm-static .imm-ctl{left:10px;right:10px;bottom:10px}
+  .imm-static .imm-ctl .imm-snd{width:38px;height:38px;padding:0;justify-content:center}
+  .imm-static .imm-ctl .imm-snd span{display:none}
+  .imm-static .imm-ctl .imm-fs{width:38px;height:38px}
+}
+/* ritmo vertical en celulares */
+@media (max-width:899px){
+  .zsec,.gal{padding-block:64px}
+  html:not(.proc-on) .proc-pin{padding:64px 0}
+  .proc-l .zt{margin-bottom:24px}
+  .sh{margin-bottom:28px}
+  .kpis{grid-template-columns:1fr}
+  .kpis div{flex-direction:row-reverse;justify-content:flex-end;align-items:center;gap:16px;padding:16px 20px}
+  .kpis div+div{box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+  .kpis dd{font-size:34px;min-width:120px}
+  .hist-lead{margin-bottom:28px}
+}
