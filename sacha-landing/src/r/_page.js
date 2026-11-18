@@ -13,7 +13,7 @@ var BANK=[['Banco','Banco Internacional'],['Cuenta corriente','1400625249'],['A 
 function nf(n){return Math.round(n).toLocaleString('es-EC')}
 
 /* ---------- cortina de inicio ----------
-   Solo el logo. Al cargar, el telón verde sube completo; su borde inferior se curva al subir. */
+   Solo el logo. Al cargar, cinco paneles verdes suben escalonados, en capas. */
 var PRE={done:false,cbs:[]};
 function onPreDone(f){if(PRE.done)f();else PRE.cbs.push(f)}
 (function(){var el=$('#pre'),de=document.documentElement,t0=0,MIN=1300,MAX=3800,loaded=document.readyState==='complete',out=false;
@@ -21,11 +21,11 @@ function onPreDone(f){if(PRE.done)f();else PRE.cbs.push(f)}
   de.classList.add('pre-on');addEventListener('load',function(){loaded=true});
   function finish(){if(out)return;out=true;
     var done=function(){PRE.done=true;PRE.cbs.splice(0).forEach(function(f){f()})},end=function(){de.classList.remove('pre-on');el.hidden=true};
-    if(window.gsap&&!reduced){var w=innerWidth,curve=Math.min(220,innerHeight*.22);
+    if(window.gsap&&!reduced){
       gsap.timeline({onComplete:end})
-        .to('#preLogo',{y:-40,autoAlpha:0,duration:.55,ease:'power2.in'})
-        .add(done,'-=.1')
-        .fromTo(el,{yPercent:0,borderBottomLeftRadius:'0px 0px',borderBottomRightRadius:'0px 0px'},{yPercent:-100,borderBottomLeftRadius:(w/2)+'px '+curve+'px',borderBottomRightRadius:(w/2)+'px '+curve+'px',duration:1.1,ease:'power4.inOut'},'-=.15')}
+        .to('#preLogo',{y:-50,autoAlpha:0,duration:.55,ease:'power2.in'})
+        .add(done,'-=.15')
+        .to('#pre .pre-panels i',{yPercent:-104,duration:1.1,ease:'power4.inOut',stagger:.085},'-=.2')}
     else{done();end()}}
   requestAnimationFrame(function(){t0=performance.now();(function tick(){var t=performance.now()-t0;if((loaded&&t>=MIN)||t>MAX){finish();return}requestAnimationFrame(tick)})()});
 })();
@@ -92,10 +92,10 @@ function setTl(i){$$('.tl-i').forEach(function(li,k){li.classList.toggle('is-on'
 [
  {title:'Lo atendemos al llegar',text:'Evaluamos su estado y lo estabilizamos. Necesita exámenes y cuidados, como un perro o un gato.'},
  {title:'Informamos a la autoridad',text:'Reportamos cada ingreso a la autoridad ambiental. Solo liberamos con su permiso.'},
- {title:'Lo llevamos a Santa Elena',text:'Desde Guayaquil viaja a nuestro refugio rural. Cada traslado necesita vehículo, combustible y alguien que lo cuide en el camino.'},
+ {title:'Lo llevamos al refugio',text:'Desde Guayaquil viaja a nuestro refugio rural. Cada traslado necesita vehículo, combustible y alguien que lo cuide en el camino.'},
  {title:'Lo cuidamos hasta que pueda volver',text:'La rehabilitación puede tomar meses. Si un animal no puede volver a su hábitat, se queda bajo nuestro cuidado.'}
 ].forEach(function(x,i){Object.assign(STEPS[i],x)});
-[['Mitos sobre la','zarigüeya'],['Encontré una cría:','¿qué hago?'],['Cómo convivir con la fauna','de la ciudad'],['Quiénes','somos'],['Un día en','Proyecto Sacha'],['Así es un','rescate'],['El viaje a','Santa Elena'],['Rehabilitación','y liberación']].forEach(function(x,i){if(CAPS[i]){CAPS[i].pre=x[0];CAPS[i].title=x[1]}});
+[['Mitos sobre la','zarigüeya'],['Encontré una cría:','¿qué hago?'],['Cómo convivir con la fauna','de la ciudad'],['Quiénes','somos'],['Un día en','Proyecto Sacha'],['Así es un','rescate'],['El viaje','al refugio'],['Rehabilitación','y liberación']].forEach(function(x,i){if(CAPS[i]){CAPS[i].pre=x[0];CAPS[i].title=x[1]}});
 $('#procNav').innerHTML=STEPS.map(function(s,i){return '<li data-pi="'+i+'"><button type="button" data-pgo="'+i+'"><b>'+esc(s.title)+'</b></button><p>'+esc(s.text)+'</p><i aria-hidden="true"><em></em></i></li>'}).join('');
 $('#procCards').innerHTML=STEPS.map(function(s,i){var p=PH[s.ph];return '<article class="pcard" data-pc="'+i+'"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"><div class="pcard-sh" aria-hidden="true"></div><div class="pcard-t"><h3>'+esc(s.title)+'</h3><p class="pcard-p">'+esc(s.text)+'</p></div></article>'}).join('');
 var PI=-1;function setProc(i){if(i===PI)return;PI=i;$$('#procNav li').forEach(function(li,k){li.classList.toggle('is-on',k===i);li.classList.toggle('is-done',k<i)})}
@@ -288,6 +288,7 @@ var SOC={instagram:'i-ig',tiktok:'i-tt',youtube:'i-yt',facebook:'i-fb'};
 $('#zSoc').innerHTML=Object.keys(NETS).map(function(k){var n=NETS[k];return '<a href="'+(n.url||'#contacto')+'" data-follow="'+k+'" target="'+(n.url?'_blank':'_self')+'" rel="noopener" aria-label="'+n.name+'">'+ico(SOC[k])+'</a>'}).join('');
 
 renderReels();renderYT(false);renderDon();onScroll();
+(function(){var m=$('#locMap');if(!m)return;if(!('IntersectionObserver' in window)){m.classList.add('in');return}var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){m.classList.add('in');o.disconnect()}},{threshold:.35});o.observe(m)})();
 window.__sacha={R:R,gal:row1,pat:patLoop};
 addEventListener('load',function(){layoutReels();moveInd('#ptabs','.ptabs-i');moveInd('#atabs','i')});
 var rz2=0;addEventListener('resize',function(){clearTimeout(rz2);rz2=setTimeout(function(){moveInd('#ptabs','.ptabs-i');moveInd('#atabs','i')},150)});
