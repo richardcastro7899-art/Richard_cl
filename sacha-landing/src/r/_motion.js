@@ -25,11 +25,7 @@ function initMotion(){
     new MutationObserver(function(){if(document.body.classList.contains('lock'))lenis.stop();else lenis.start()}).observe(document.body,{attributes:true,attributeFilter:['class']});
   }
 
-  /* ---- cortina: el logo sube, los ojos miran a los lados ---- */
-  if($('#pre')){gsap.fromTo('#preLogo',{yPercent:30,autoAlpha:0,clipPath:'inset(100% 0% 0% 0%)'},{yPercent:0,autoAlpha:1,clipPath:'inset(0% 0% 0% 0%)',duration:1,ease:'power4.out',delay:.1});
-    gsap.from('.pre-bar,.pre-t',{y:16,autoAlpha:0,duration:.8,stagger:.08,ease:'power3.out',delay:.45});
-    var eyes=$('#preLogo svg'),look={x:0};gsap.timeline({repeat:-1,delay:.7,defaults:{duration:.35,ease:'power2.inOut'},onUpdate:function(){eyes.style.setProperty('--px',look.x.toFixed(1)+'px')}}).to(look,{x:-12}).to(look,{x:-12,duration:.35}).to(look,{x:12,duration:.5}).to(look,{x:12,duration:.35}).to(look,{x:0});
-    if(window.__lenis)__lenis.stop();onPreDone(function(){if(window.__lenis)__lenis.start()})}
+  if($('#pre')){if(window.__lenis)__lenis.stop();onPreDone(function(){if(window.__lenis)__lenis.start()})}
 
   /* ---- portada: la imagen queda fija; el texto entra ---- */
   var lines=$$('#hxT > span');lines.forEach(function(l){l.innerHTML='<span class="hx-li">'+l.innerHTML+'</span>'});
@@ -39,11 +35,8 @@ function initMotion(){
     .from('#hxT .hx-li',{yPercent:110,duration:1.2,stagger:.14},.45)
     .from('#hxP',{y:30,autoAlpha:0,duration:1},.9)
     .from('#hxAct > *',{y:30,autoAlpha:0,duration:.9,stagger:.1},1.05)
-    .from('#hxStat',{x:60,autoAlpha:0,duration:1.1},1)
-    .add(function(){countTo($('#hxStat b'),2)},1.1)
     .from('.hx-cue',{autoAlpha:0,duration:.8},1.5);
-  if(M.scrolls){gsap.to('.hx-copy',{y:-100,autoAlpha:0,ease:'none',scrollTrigger:{trigger:'#inicio',start:'top top',end:'70% top',scrub:true}});
-    gsap.to('#hxStat',{y:-60,autoAlpha:0,ease:'none',scrollTrigger:{trigger:'#inicio',start:'top top',end:'60% top',scrub:true}})}
+  if(M.scrolls){gsap.to('.hx-copy',{y:-100,autoAlpha:0,ease:'none',scrollTrigger:{trigger:'#inicio',start:'top top',end:'70% top',scrub:true}});}
 
   /* ---- video institucional: la ventana se abre entre dos palabras; al terminar, se reproduce ---- */
   if(M.scrolls){
@@ -52,10 +45,10 @@ function initMotion(){
     var playing=false;
     var it=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#video',start:'top top',end:'+=160%',pin:'#immPin',scrub:.6,anticipatePin:1,
       onUpdate:function(s){if(s.progress>.97&&!playing){playing=true;ivPlay()}else if(s.progress<.9&&playing){playing=false;ivStop()}}}});
-    it.fromTo('#immFrame',{clipPath:small},{clipPath:'inset(0% 0% 0% 0% round 0px)',duration:2},0)
+    it.fromTo('#immFrame',{clipPath:small},{clipPath:'inset(0% 0% 0% 0% round 0px)',duration:2,ease:'power1.in'},0)
       .fromTo('#immVid',{scale:1.2},{scale:1,duration:2},0)
-      .fromTo('#immWL',{xPercent:0},{xPercent:-120,autoAlpha:0,duration:1.6},0)
-      .fromTo('#immWR',{xPercent:0},{xPercent:120,autoAlpha:0,duration:1.6},0)
+      .fromTo('#immWL',{x:0},{x:-160,autoAlpha:0,duration:.75,ease:'power2.in'},0)
+      .fromTo('#immWR',{x:0},{x:160,autoAlpha:0,duration:.75,ease:'power2.in'},0)
       .fromTo('#immCtl',{autoAlpha:0,y:20},{autoAlpha:1,y:0,duration:.4},1.8)
       .to({},{duration:.3});
     gsap.from('.imm-w',{y:60,autoAlpha:0,duration:1.1,stagger:.14,ease:'power3.out',scrollTrigger:{trigger:'#video',start:'top 75%',once:true}});
@@ -67,7 +60,7 @@ function initMotion(){
 
   /* ---- títulos: las líneas suben y aparecen (sin máscara, así no se cortan letras como g, p o y) ---- */
   function splitHeads(){$$('.zt').forEach(function(el){if(el.closest('#immHead'))return;
-    SplitText.create(el,{type:'lines',linesClass:'zline',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{y:46,autoAlpha:0,rotationX:-40,transformOrigin:'50% 100%',duration:1.1,ease:'power3.out',stagger:.12,scrollTrigger:{trigger:el,start:'top 88%',once:true}})}})})}
+    SplitText.create(el,{type:'lines',linesClass:'zline',autoSplit:true,onSplit:function(self){return gsap.from(self.lines,{y:40,autoAlpha:0,duration:1,ease:'power3.out',stagger:.1,scrollTrigger:{trigger:el,start:'top 88%',once:true}})}})})}
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){splitHeads();ScrollTrigger.refresh()});else splitHeads();
   gsap.set('.lbl',{autoAlpha:0,y:16});onView($$('.lbl'),function(el){gsap.to(el,{autoAlpha:1,y:0,duration:.8,ease:'back.out(1.6)'})});
   gsap.set('.sh-p,.hist-lead',{autoAlpha:0,y:30});onView($$('.sh-p,.hist-lead'),function(el){gsap.to(el,{autoAlpha:1,y:0,duration:1,ease:'power3.out',delay:.2})});
@@ -92,8 +85,9 @@ function initMotion(){
     de.classList.add('proc-on');
     gsap.set(pcs.slice(1),{yPercent:110});
     var pt=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#proceso',start:'top top',end:'+='+(pcs.length*70)+'%',pin:'#procPin',scrub:.6,anticipatePin:1,
-      onUpdate:function(s){setProc(Math.min(pcs.length-1,Math.floor(s.progress*pcs.length*0.999)))}}});
-    pcs.forEach(function(c,i){if(!i)return;pt.to(c,{yPercent:0,duration:1},i-1).to(pcs[i-1],{scale:.9,autoAlpha:.4,duration:1},i-1).fromTo($('img',c),{scale:1.25},{scale:1,duration:1},i-1)});
+      onUpdate:function(s){setProc(Math.min(pcs.length-1,Math.floor(s.progress*pcs.length*0.999)));procFill(s.progress)}}});
+    window.__procST=pt.scrollTrigger;
+    pcs.forEach(function(c,i){if(!i)return;pt.to(c,{yPercent:0,duration:1,ease:'power2.inOut'},i-1).to(pcs[i-1],{scale:.9,autoAlpha:.4,duration:1},i-1).fromTo($('img',c),{scale:1.25},{scale:1,duration:1},i-1)});
     pt.to({},{duration:.5});
     gsap.from('.proc-l > *',{x:-60,autoAlpha:0,duration:1,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'#proceso',start:'top 60%',once:true}});
     gsap.from('#procCards',{x:120,autoAlpha:0,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:'#proceso',start:'top 60%',once:true}});
@@ -101,7 +95,7 @@ function initMotion(){
 
   /* ---- reels: el bloque oscuro se abre y el carrusel entra girando ---- */
   /* el bloque oscuro entra con un velo que sube (sin recortar la sección completa, que es costoso) */
-  if(M.scrolls)gsap.fromTo('#reels .zwrap',{y:60,autoAlpha:0},{y:0,autoAlpha:1,ease:'none',scrollTrigger:{trigger:'#reels',start:'top 90%',end:'top 40%',scrub:.6}});
+
   scrubIn($('#reelsT2'),{rotationY:-30,x:300,autoAlpha:0,transformPerspective:1600},{rotationY:0,x:0,autoAlpha:1},{trigger:'#krl',start:'top 100%',end:'top 45%'});
 
   /* ---- podcast: el panel crece y el reproductor se descubre ---- */
@@ -111,8 +105,8 @@ function initMotion(){
   onView($('#ptabs'),function(){moveInd('#ptabs','.ptabs-i')});
 
   /* ---- galería: la banda con textura se despliega y las fotos caen en su lugar ---- */
-  scrubIn($('.gal-l'),{x:-70,autoAlpha:0},{x:0,autoAlpha:1},{trigger:'#galeria'});
-  scrubIn($('#fan'),{y:140,autoAlpha:0,rotation:-4,scale:.9},{y:0,autoAlpha:1,rotation:0,scale:1},{trigger:'#galeria',start:'top 90%',end:'top 35%'});
+  scrubIn($('#row1'),{x:-160,autoAlpha:0},{x:0,autoAlpha:1},{trigger:'#rows',start:'top 100%',end:'top 55%'});
+  scrubIn($('#row2'),{x:160,autoAlpha:0},{x:0,autoAlpha:1},{trigger:'#rows',start:'top 95%',end:'top 50%'});
 
   /* ---- dona y apadrina ---- */
   scrubIn($('#donCard'),{x:-90,autoAlpha:0,rotation:-2},{x:0,autoAlpha:1,rotation:0});
@@ -132,7 +126,6 @@ function initMotion(){
   scrubIn($('.zfoot-in'),{y:100,autoAlpha:0},{y:0,autoAlpha:1},{trigger:'.zfoot',start:'top 100%',end:'top 50%'});
 
   /* ---- salidas: los encabezados se despiden al salir por arriba (se crean al final para medir bien) ---- */
-  if(M.scrolls&&wide)$$('.sh').forEach(function(h){gsap.to(h,{y:-40,autoAlpha:.2,ease:'none',scrollTrigger:{trigger:h,start:'top 14%',end:'top -20%',scrub:true}})});
   addEventListener('load',function(){ScrollTrigger.refresh()});var rt=0;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){ScrollTrigger.refresh()},200)});
 }
 initMotion();

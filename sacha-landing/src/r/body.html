@@ -49,12 +49,7 @@
 
 <!-- CORTINA DE INICIO -->
 <div class="pre" id="pre" aria-hidden="true">
-  <div class="pre-panels"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i></div>
-  <div class="pre-c" id="preC">
-    <div class="pre-logo" id="preLogo"><svg class="logo" viewBox="0 0 1157 438"><use href="#sy-logo"/></svg></div>
-    <div class="pre-bar"><i id="preBar"></i></div>
-    <p class="pre-t"><span id="preN">0</span>%<em>Rescate · Rehabilitación · Liberación</em></p>
-  </div>
+  <div class="pre-logo" id="preLogo"><svg class="logo" viewBox="0 0 1157 438"><use href="#sy-logo"/></svg></div>
 </div>
 
 <!-- CABECERA: transparente sobre la portada, blanca al bajar -->
@@ -83,7 +78,7 @@
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="hx-in">
     <div class="hx-copy">
-      <p class="hx-eye" id="hxEye">Fundación Proyecto Sacha · Ecuador</p>
+      <p class="hx-eye" id="hxEye">Fundación Proyecto Sacha</p>
       <h1 class="hx-t" id="hxT"><span>Cuidamos la</span> <span>fauna silvestre</span></h1>
       <p class="hx-p" id="hxP">Rescatamos, rehabilitamos y devolvemos a su hábitat a los animales silvestres heridos o víctimas del tráfico en Guayaquil y Santa Elena.</p>
       <div class="hx-act" id="hxAct">
@@ -91,10 +86,6 @@
         <a class="hx-link" href="#" data-go="ayuda">Apoyar un rescate</a>
       </div>
     </div>
-    <aside class="hx-stat" id="hxStat" aria-label="Cifra destacada">
-      <b data-count="5400" data-pre="+">+5.400</b>
-      <span>animales silvestres cuidados en nuestro centro desde 2018</span>
-    </aside>
   </div>
   <a class="hx-cue" href="#video" data-go="video" aria-label="Bajar"><i></i></a>
 </section>
@@ -121,7 +112,7 @@
         <h2 class="zt" id="nosT">Todo empezó con un ocelote llamado Sacha</h2>
         <figure class="mcard mcard-hist" id="histCard">
           <div class="mcard-pat" aria-hidden="true"></div>
-          <img src="assets/mascot/sacha-saluda.webp" alt="Sacha, la mascota de la fundación, saluda" loading="lazy">
+          <img src="assets/mascot/sacha-saluda-web.webp" alt="Sacha, la mascota de la fundación, saluda" width="700" height="1126" decoding="async">
           <figcaption><b>Sacha</b><span>Ocelote · <em>Leopardus pardalis</em></span></figcaption>
         </figure>
       </div>
@@ -177,16 +168,12 @@
   </div>
 </section>
 
-<!-- GALERÍA: abanico de fotografías -->
+<!-- GALERÍA: dos filas de fotos que se deslizan solas en sentidos opuestos -->
 <section class="zsec zsec-alt gal" id="galeria" aria-labelledby="galT">
-  <div class="zwrap gal-g">
-    <div class="gal-l">
-      <p class="lbl">Galería</p>
-      <h2 class="zt" id="galT">Momentos en el centro</h2>
-      <div class="gal-now" aria-live="polite"><span class="gal-n" id="galN">01</span><b id="galName"></b></div>
-      <div class="gal-ctl"><button class="arw" id="galPrev" aria-label="Foto anterior"><svg class="ic" aria-hidden="true"><use href="#i-left"/></svg></button><div class="gal-prog"><i id="galProg"></i></div><button class="arw" id="galNext" aria-label="Foto siguiente"><svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></button></div>
-    </div>
-    <div class="fan" id="fan" aria-roledescription="carrusel" aria-label="Galería de fotos"></div>
+  <div class="zwrap"><div class="sh"><div><p class="lbl">Galería</p><h2 class="zt" id="galT">Momentos en el centro</h2></div><p class="sh-p">Toca una foto para verla completa.</p></div></div>
+  <div class="rows" id="rows">
+    <div class="loop row" id="row1" aria-roledescription="carrusel" aria-label="Fotos, fila 1"><div class="loop-t" id="rowT1"></div></div>
+    <div class="loop row" id="row2" aria-roledescription="carrusel" aria-label="Fotos, fila 2"><div class="loop-t" id="rowT2"></div></div>
   </div>
 </section>
 
@@ -200,7 +187,7 @@
         <figure class="mcard mcard-don" id="donCard">
           <div class="mcard-pat" aria-hidden="true"></div>
           <div class="mcard-txt"><p class="mcard-k">Donar</p><h3>Tu ayuda llega a todos los animales del centro</h3><p>Medicinas, alimento, traslados y encierros de rehabilitación. Tú eliges a qué destinarla.</p></div>
-          <img src="assets/mascot/sacha-donar.webp" alt="" aria-hidden="true">
+          <img src="assets/mascot/sacha-donar-web.webp" alt="" aria-hidden="true" width="700" height="794" decoding="async">
         </figure>
         <div class="don-form">
           <p class="don-q">¿A qué quieres destinar tu aporte?</p>
@@ -238,7 +225,7 @@
       </div>
       <figure class="mcard mcard-enc" id="encR">
         <div class="mcard-pat" aria-hidden="true"></div>
-        <img src="assets/mascot/sacha-rescate.webp" alt="Sacha sostiene con cuidado a una cría rescatada" loading="lazy">
+        <img src="assets/mascot/sacha-rescate-web.webp" alt="Sacha sostiene con cuidado a una cría rescatada" width="700" height="966" decoding="async">
       </figure>
     </div>
   </div>
