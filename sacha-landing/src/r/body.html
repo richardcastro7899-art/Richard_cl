@@ -47,6 +47,16 @@
   <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></symbol>
 </svg>
 
+<!-- CORTINA DE INICIO -->
+<div class="pre" id="pre" aria-hidden="true">
+  <div class="pre-panels"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i></div>
+  <div class="pre-c" id="preC">
+    <div class="pre-logo" id="preLogo"><svg class="logo" viewBox="0 0 1157 438"><use href="#sy-logo"/></svg></div>
+    <div class="pre-bar"><i id="preBar"></i></div>
+    <p class="pre-t"><span id="preN">0</span>%<em>Rescate · Rehabilitación · Liberación</em></p>
+  </div>
+</div>
+
 <!-- CABECERA: transparente sobre la portada, blanca al bajar -->
 <header class="zh is-top" id="zh">
   <div class="zh-in">
@@ -73,9 +83,9 @@
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="hx-in">
     <div class="hx-copy">
-      <p class="hx-eye" id="hxEye">Fundación Proyecto Sacha · Guayaquil, Ecuador</p>
-      <h1 class="hx-t" id="hxT"><span>Si los reconoces,</span> <span>los cuidas.</span></h1>
-      <p class="hx-p" id="hxP">Rescatamos, rehabilitamos y devolvemos a su hábitat la fauna silvestre de la costa ecuatoriana.</p>
+      <p class="hx-eye" id="hxEye">Fundación Proyecto Sacha · Ecuador</p>
+      <h1 class="hx-t" id="hxT"><span>Cuidamos la</span> <span>fauna silvestre</span></h1>
+      <p class="hx-p" id="hxP">Rescatamos, rehabilitamos y devolvemos a su hábitat a los animales silvestres heridos o víctimas del tráfico en Guayaquil y Santa Elena.</p>
       <div class="hx-act" id="hxAct">
         <a class="zbtn" href="#" data-go="video"><span class="zbtn-t">Ver el video institucional</span><span class="zbtn-c"><svg class="ic" aria-hidden="true"><use href="#i-arrow-ur"/></svg><svg class="ic" aria-hidden="true"><use href="#i-arrow-ur"/></svg></span></a>
         <a class="hx-link" href="#" data-go="ayuda">Apoyar un rescate</a>
@@ -90,18 +100,14 @@
 </section>
 
 <!-- VIDEO INSTITUCIONAL: la ventana crece con el scroll; luego, solo el video -->
-<section class="imm" id="video" aria-labelledby="immT">
+<section class="imm" id="video" aria-labelledby="immWL">
   <div class="imm-pin" id="immPin">
-    <div class="imm-head" id="immHead">
-      <p class="lbl">Conoce a Sacha</p>
-      <h2 class="zt" id="immT">Un minuto dentro del centro de rescate</h2>
-    </div>
-    <p class="imm-w imm-wl" id="immWL" aria-hidden="true">Rescatar</p>
-    <p class="imm-w imm-wr" id="immWR" aria-hidden="true">Cuidar</p>
+    <h2 class="imm-w imm-wl" id="immWL">Si los reconoces,</h2>
+    <p class="imm-w imm-wr" id="immWR">los cuidas.</p>
     <div class="imm-frame" id="immFrame">
       <video id="immVid" muted loop playsinline preload="auto" poster="assets/video/final/inst.jpg"><source src="assets/video/final/inst.mp4" type="video/mp4"><source src="assets/video/final/inst.webm" type="video/webm"></video>
       <div class="imm-shade" id="immShade" aria-hidden="true"></div>
-      <div class="imm-ctl" id="immCtl"><div class="imm-bar"><i id="immBar"></i></div><button class="imm-snd" id="immSnd" aria-label="Activar sonido"><svg class="ic" aria-hidden="true"><use href="#i-mute"/></svg><span>Activar sonido</span></button></div>
+      <div class="imm-ctl" id="immCtl"><div class="imm-bar"><i id="immBar"></i></div><button class="imm-snd" id="immSnd" aria-label="Activar sonido"><svg class="ic" aria-hidden="true"><use href="#i-mute"/></svg><span>Activar sonido</span></button><button class="imm-fs" id="immFs" aria-label="Ver en pantalla completa"><svg class="ic" aria-hidden="true"><use href="#i-fs"/></svg></button></div>
     </div>
   </div>
 </section>
@@ -171,10 +177,17 @@
   </div>
 </section>
 
-<!-- GALERÍA: carrusel de fotos que avanza solo y se arrastra -->
+<!-- GALERÍA: abanico de fotografías -->
 <section class="zsec zsec-alt gal" id="galeria" aria-labelledby="galT">
-  <div class="zwrap"><div class="sh"><div><p class="lbl">Galería</p><h2 class="zt" id="galT">Momentos en el centro</h2></div><p class="sh-p">Arrastra para recorrer. Toca una foto para verla completa.</p></div></div>
-  <div class="gal-stage"><div class="gal-band" aria-hidden="true"></div><div class="loop" id="galLoop" aria-roledescription="carrusel" aria-label="Galería de fotos"><div class="loop-t" id="galTrack"></div></div></div>
+  <div class="zwrap gal-g">
+    <div class="gal-l">
+      <p class="lbl">Galería</p>
+      <h2 class="zt" id="galT">Momentos en el centro</h2>
+      <div class="gal-now" aria-live="polite"><span class="gal-n" id="galN">01</span><b id="galName"></b></div>
+      <div class="gal-ctl"><button class="arw" id="galPrev" aria-label="Foto anterior"><svg class="ic" aria-hidden="true"><use href="#i-left"/></svg></button><div class="gal-prog"><i id="galProg"></i></div><button class="arw" id="galNext" aria-label="Foto siguiente"><svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></button></div>
+    </div>
+    <div class="fan" id="fan" aria-roledescription="carrusel" aria-label="Galería de fotos"></div>
+  </div>
 </section>
 
 <!-- DONA Y APADRINA -->
