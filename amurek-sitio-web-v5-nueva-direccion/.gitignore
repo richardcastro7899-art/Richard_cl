@@ -1,0 +1,9 @@
+# Archivos temporales y de trabajo
+_*.txt
+styles.pruned.css
+*.backup.*
+node_modules/
+.DS_Store
+Thumbs.db
+
+assets/fonts/switzer-*
