@@ -60,6 +60,8 @@ function autoVid(v,th){if(!v)return;var play=function(){var p=v.play();if(p&&p.c
 /* ---------- video institucional ----------
    Se reproduce cuando la ventana termina de abrirse (lo controla la animación) o al aparecer, si no hay scroll. */
 var iv=$('#immVid'),fr=$('#immFrame');
+/* si está el video de presentación de la fundación, se muestra su primer cuadro en vez de la imagen fija */
+iv.addEventListener('loadedmetadata',function(){if(/presentacion\.mp4/.test(iv.currentSrc||'')){iv.removeAttribute('poster');iv.preload='auto';if(iv.currentTime<.1)try{iv.currentTime=.5}catch(e){}}});
 function ivPaint(){fr.classList.toggle('is-sound',!iv.muted);var b=$('#immSnd');b.innerHTML=ico(iv.muted?'i-mute':'i-vol')+'<span>'+(iv.muted?'Activar sonido':'Silenciar')+'</span>';b.setAttribute('aria-label',iv.muted?'Activar sonido':'Silenciar')}
 function ivPlay(){var p=iv.play();if(p&&p.catch)p.catch(function(){})}
 function ivStop(){iv.pause()}
@@ -82,7 +84,7 @@ var TL=[
  {y:'2022',t:'Rescate en el incendio forestal',d:'Rescatamos fauna durante el incendio de Cerro Azul, en Guayaquil. Ese año auxiliamos a cerca de 1.100 animales.',ph:'tamandua'},
  {y:'2023',t:'Más de 3.500 animales',d:'Rescatados, recuperados o reubicados desde 2018, en coordinación con la autoridad ambiental.',ph:'lechuza'},
  {y:'2025',t:'653 rescates en un año',d:'549 fueron en zonas urbanas. La fauna silvestre también vive en la ciudad.',ph:'zarigueya'},
- {y:'Hoy',t:'Más de 5.400 animales cuidados',d:'Sacha y Zafira ya son libres. Seguimos rescatando, rehabilitando y liberando.',ph:'manglar'}
+ {y:'Hoy',t:'Más de 5.400 animales cuidados',d:'Sacha y Zafira ya son libres. Seguimos rescatando en Guayaquil, rehabilitando en Santa Elena y liberando.',ph:'manglar'}
 ];
 $('#tl').insertAdjacentHTML('beforeend',TL.map(function(x,i){var p=PH[x.ph];return '<li class="tl-i" data-tl="'+i+'"><span class="tl-dot" aria-hidden="true"></span><div class="tl-y"><b>'+esc(x.y)+'</b></div><div class="tl-c"><h3>'+esc(x.t)+'</h3><p>'+esc(x.d)+'</p></div><figure class="tl-img"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"></figure></li>'}).join(''));
 $('#histCard').insertAdjacentHTML('afterbegin','<span class="mcard-year" id="histYear">2018</span>');
@@ -92,10 +94,10 @@ function setTl(i){$$('.tl-i').forEach(function(li,k){li.classList.toggle('is-on'
 [
  {title:'Lo atendemos al llegar',text:'Evaluamos su estado y lo estabilizamos. Necesita exámenes y cuidados, como un perro o un gato.'},
  {title:'Informamos a la autoridad',text:'Reportamos cada ingreso a la autoridad ambiental. Solo liberamos con su permiso.'},
- {title:'Lo llevamos al refugio',text:'Desde Guayaquil viaja a nuestro refugio rural. Cada traslado necesita vehículo, combustible y alguien que lo cuide en el camino.'},
- {title:'Lo cuidamos hasta que pueda volver',text:'La rehabilitación puede tomar meses. Si un animal no puede volver a su hábitat, se queda bajo nuestro cuidado.'}
+ {title:'Lo llevamos a Santa Elena',text:'Desde Guayaquil viaja a nuestro refugio rural en Chanduy. Cada traslado necesita vehículo, combustible y alguien que lo cuide en el camino.'},
+ {title:'Lo cuidamos hasta que pueda volver',text:'En el refugio de Santa Elena, la rehabilitación puede tomar meses. Si un animal no puede volver a su hábitat, se queda bajo nuestro cuidado.'}
 ].forEach(function(x,i){Object.assign(STEPS[i],x)});
-[['Mitos sobre la','zarigüeya'],['Encontré una cría:','¿qué hago?'],['Cómo convivir con la fauna','de la ciudad'],['Quiénes','somos'],['Un día en','Proyecto Sacha'],['Así es un','rescate'],['El viaje','al refugio'],['Rehabilitación','y liberación']].forEach(function(x,i){if(CAPS[i]){CAPS[i].pre=x[0];CAPS[i].title=x[1]}});
+[['Mitos sobre la','zarigüeya'],['Encontré una cría:','¿qué hago?'],['Cómo convivir con la fauna','de la ciudad'],['Quiénes','somos'],['Un día en','Proyecto Sacha'],['Así es un','rescate'],['El viaje a','Santa Elena'],['Rehabilitación','y liberación']].forEach(function(x,i){if(CAPS[i]){CAPS[i].pre=x[0];CAPS[i].title=x[1]}});
 $('#procNav').innerHTML=STEPS.map(function(s,i){return '<li data-pi="'+i+'"><button type="button" data-pgo="'+i+'"><b>'+esc(s.title)+'</b></button><p>'+esc(s.text)+'</p><i aria-hidden="true"><em></em></i></li>'}).join('');
 $('#procCards').innerHTML=STEPS.map(function(s,i){var p=PH[s.ph];return '<article class="pcard" data-pc="'+i+'"><img src="'+p.src+'" alt="" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"><div class="pcard-sh" aria-hidden="true"></div><div class="pcard-t"><h3>'+esc(s.title)+'</h3><p class="pcard-p">'+esc(s.text)+'</p></div></article>'}).join('');
 var PI=-1;function setProc(i){if(i===PI)return;PI=i;$$('#procNav li').forEach(function(li,k){li.classList.toggle('is-on',k===i);li.classList.toggle('is-done',k<i)})}
@@ -225,7 +227,7 @@ var row1=Loop($('#row1'),{speed:34}),row2=Loop($('#row2'),{speed:-34});
 var CAUSES=[
  {t:'Alimenta una vida',v:'alimentar una vida',d:'Su ración diaria de comida y suplementos.',ph:'zarigueya'},
  {t:'Sana sus heridas',v:'sanar sus heridas',d:'Tratamientos, analgésicos y curaciones.',ph:'tamandua'},
- {t:'Construye su camino a la libertad',v:'construir su camino a la libertad',d:'Encierros amplios donde recupera fuerza.',ph:'mono'},
+ {t:'Construye su camino a la libertad',v:'construir su camino a la libertad',d:'Encierros amplios en Santa Elena, donde recupera fuerza.',ph:'mono'},
  {t:'Libera una vida',v:'liberar una vida',d:'Las últimas etapas antes de volver a su hábitat.',ph:'manglar'}
 ];
 var DAMT={u:[10,25,50,100],m:[5,10,20,50]},YEAR=350000;
@@ -288,6 +290,7 @@ var SOC={instagram:'i-ig',tiktok:'i-tt',youtube:'i-yt',facebook:'i-fb'};
 $('#zSoc').innerHTML=Object.keys(NETS).map(function(k){var n=NETS[k];return '<a href="'+(n.url||'#contacto')+'" data-follow="'+k+'" target="'+(n.url?'_blank':'_self')+'" rel="noopener" aria-label="'+n.name+'">'+ico(SOC[k])+'</a>'}).join('');
 
 renderReels();renderYT(false);renderDon();onScroll();
+document.addEventListener('click',function(e){var b=e.target.closest('[data-loc]');if(!b)return;var k=b.getAttribute('data-loc');$$('#locMap [data-loc]').forEach(function(x){x.setAttribute('aria-selected',String(x===b))});$$('#locMap .loc-layer').forEach(function(l){l.classList.toggle('is-on',l.getAttribute('data-layer')===k)})});
 (function(){var m=$('#locMap');if(!m)return;if(!('IntersectionObserver' in window)){m.classList.add('in');return}var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){m.classList.add('in');o.disconnect()}},{threshold:.35});o.observe(m)})();
 window.__sacha={R:R,gal:row1,pat:patLoop};
 addEventListener('load',function(){layoutReels();moveInd('#ptabs','.ptabs-i');moveInd('#atabs','i')});
