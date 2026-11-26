@@ -110,5 +110,5 @@ Abre http://localhost:5179 (o http://localhost:5179/index.html?intro para ver la
 - El material de referencia (`assets/ref/`), los testimonios, las cifras y el equipo siguen igual que en amurek.com.
 - La analítica de Cloudflare se quitó de esta copia. Al publicar, Cloudflare Pages la vuelve a añadir.
 
-## Nota sobre este repositorio
-La carpeta `assets/ref/` (fotos y videos de referencia de otros autores) no está aquí porque el repositorio es público. Sin ella, esas imágenes y videos no se ven al abrir la web en local; la versión completa está en amurek.com.
+## Nota sobre el material de referencia
+Las fotos y videos de `assets/ref/` son de otros autores y están solo como referencia temporal. Hay que reemplazarlos por material propio.

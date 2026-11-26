@@ -1,5 +1,3 @@
-# Repositorio público: el material de referencia (fotos y videos de otros autores) no se publica
-assets/ref/
 __pycache__/
 node_modules/
 .DS_Store
